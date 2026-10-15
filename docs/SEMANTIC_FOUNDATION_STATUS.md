@@ -2,6 +2,9 @@
 
 **GitHub packaging and local API access — 15 October 2026:** The MCP adapter now has a GitHub `uvx` configuration matching the AML project pattern.
 Local API, Swagger, and MCP checks support explicit loopback-only access without a consumer token.
+Code is published at https://github.com/FerdinandZhong/semantic-hub.
+The GitHub-installed adapter passed all twelve tool calls, returned 74.1 for the supported cohort, and returned `no_data` for 1999–2020.
+See [GitHub installation verification](semantic-hub-github-mcp-verification.json). The importable MCP configuration pins that tested commit.
 The local consumer token was removed at the user's request. Model-provider credentials remain separate.
 CAI `cdsw_v2_key` authentication and AMP packaging are planned, not implemented.
 The saved GPT-5.4 connection returned HTTP 200 after URL normalization and generation-parameter fixes.

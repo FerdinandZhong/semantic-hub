@@ -65,3 +65,11 @@ Production acceptance and downstream adoption remain open.
 The current workspace now has a dedicated published-model API and MCP adapter.
 Enterprise identity, live imports, and hosted CAI acceptance remain integration work.
 The legacy MCP document index remains separate and disabled in the local demo.
+
+### GitHub MCP handoff
+
+- [Importable MCP configuration](../apps/semantic-hub-mcp/agent-studio.mcp.json): pinned GitHub installation through uvx.
+- [GitHub MCP verification](semantic-hub-github-mcp-verification.json): twelve tools tested against the local API without a consumer token.
+- [Short finance and manufacturing stories](finance-manufacturing-simple-demo.md): questions, expected starter values, and validation SQL.
+
+CAI token authentication and AMP packaging remain planned.

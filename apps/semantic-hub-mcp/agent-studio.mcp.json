@@ -4,7 +4,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@5c0a376966ac838e27961b99e6fd839781a6f29b#subdirectory=apps/semantic-hub-mcp",
         "semantic-hub-mcp"
       ],
       "env": {

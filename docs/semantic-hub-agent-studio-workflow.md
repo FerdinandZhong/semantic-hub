@@ -72,7 +72,7 @@ Do not paste a token into agent prompts or workflow exports.
 Import the [GitHub MCP configuration](../apps/semantic-hub-mcp/agent-studio.mcp.json).
 It uses `uvx --from` to install `apps/semantic-hub-mcp` from `FerdinandZhong/semantic-hub`.
 The [package README](../apps/semantic-hub-mcp/README.md) contains the full configuration and requirements.
-Replace `@main` with a tested commit SHA for a repeatable demo.
+The supplied configuration pins the verified GitHub commit for a repeatable demo.
 Set `SEMANTIC_HUB_URL` to the reachable consumer API origin.
 Omit `SEMANTIC_HUB_API_TOKEN` for the local demo.
 The package supports stdio transport; it does not host an HTTP MCP endpoint.

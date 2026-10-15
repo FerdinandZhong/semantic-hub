@@ -20,7 +20,7 @@ Import [agent-studio.mcp.json](agent-studio.mcp.json), then set the consumer API
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@5c0a376966ac838e27961b99e6fd839781a6f29b#subdirectory=apps/semantic-hub-mcp",
         "semantic-hub-mcp"
       ],
       "env": {
@@ -36,7 +36,7 @@ The default API port is 8086; this workspace uses 8096.
 Use a reachable HTTPS URL for CAI. Its localhost is not your laptop.
 The adapter uses stdio and does not host an HTTP MCP endpoint.
 
-For reproducible demos, replace `@main` with the full commit SHA that you tested.
+The supplied configuration pins the verified commit. Update it only after testing a newer commit.
 A moving branch can use cached code. Run `uvx --refresh --from '<Git URL>' semantic-hub-mcp` to refresh it.
 Do not place tokens in the Git URL, command arguments, or agent prompts.
 
@@ -149,3 +149,6 @@ To verify the GitHub-installed package instead of the local source, add:
 ```
 
 This starts `uvx` through the real MCP client. It does not inject the local package into `PYTHONPATH`.
+
+The [GitHub installation report](../../docs/semantic-hub-github-mcp-verification.json) records the tested commit and twelve successful tool calls.
+This verifies local stdio and HTTP execution, not deployment to CAI.

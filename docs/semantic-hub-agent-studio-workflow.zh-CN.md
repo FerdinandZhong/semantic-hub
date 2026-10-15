@@ -82,7 +82,7 @@ MCP 自动添加 API 前缀。
 所有工具均为只读操作。
 导入 [GitHub MCP 配置](../apps/semantic-hub-mcp/agent-studio.mcp.json)。
 启动命令为 `uvx`；参数通过 `--from` 指定 GitHub 仓库中的 MCP 包。
-演示时将 `@main` 替换为经过测试的提交 SHA。
+配置文件已固定经过验证的 GitHub 提交 SHA。
 本地配置只需 API 地址。
 该包使用 stdio，不提供 HTTP MCP 服务地址。
 部分只读操作使用 HTTP POST。
