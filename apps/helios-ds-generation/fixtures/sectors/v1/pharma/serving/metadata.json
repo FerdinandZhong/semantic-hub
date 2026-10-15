@@ -1,0 +1,56 @@
+{
+  "datasets": [
+    {
+      "name": "products",
+      "fields": [
+        "product_id",
+        "product_name",
+        "dosage_form"
+      ]
+    },
+    {
+      "name": "batches",
+      "fields": [
+        "batch_id",
+        "product_id",
+        "manufactured_date",
+        "review_status"
+      ]
+    },
+    {
+      "name": "lab_results",
+      "fields": [
+        "result_id",
+        "batch_id",
+        "test_name",
+        "assay_percent",
+        "unit",
+        "result_status"
+      ]
+    },
+    {
+      "name": "deviations",
+      "fields": [
+        "deviation_id",
+        "batch_id",
+        "category",
+        "status"
+      ]
+    }
+  ],
+  "timezone": "UTC",
+  "relationships": [
+    {
+      "from": "batches.product_id",
+      "to": "products.product_id"
+    },
+    {
+      "from": "lab_results.batch_id",
+      "to": "batches.batch_id"
+    },
+    {
+      "from": "deviations.batch_id",
+      "to": "batches.batch_id"
+    }
+  ]
+}

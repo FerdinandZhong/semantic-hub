@@ -1,0 +1,334 @@
+{
+  "version": "0.2.0.dev0",
+  "name": "synthetic_power",
+  "datasets": [
+    {
+      "name": "substations",
+      "source": "substations",
+      "fields": [
+        {
+          "name": "substation_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "substation_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "region",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "region"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "feeders",
+      "source": "feeders",
+      "fields": [
+        {
+          "name": "feeder_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "feeder_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "substation_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "substation_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "voltage_kv",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "voltage_kv"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "meters",
+      "source": "meters",
+      "fields": [
+        {
+          "name": "meter_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "meter_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "feeder_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "feeder_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "customer_class",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "customer_class"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "meter_readings",
+      "source": "meter_readings",
+      "fields": [
+        {
+          "name": "reading_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "reading_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "meter_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "meter_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "interval_start_utc",
+          "datatype": "DateTimeTz",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "interval_start_utc"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "reading_date",
+          "datatype": "Date",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "reading_date"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": true
+          }
+        },
+        {
+          "name": "region",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "region"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "import_kwh",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "import_kwh"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "quality_status",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "quality_status"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "is_estimated",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "is_estimated"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_sample_date",
+          "datatype": "Date",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_sample_date"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": true
+          }
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "name": "feeders_substation_id_substations",
+      "from": "feeders",
+      "to": "substations",
+      "from_columns": [
+        "substation_id"
+      ],
+      "to_columns": [
+        "substation_id"
+      ]
+    },
+    {
+      "name": "meters_feeder_id_feeders",
+      "from": "meters",
+      "to": "feeders",
+      "from_columns": [
+        "feeder_id"
+      ],
+      "to_columns": [
+        "feeder_id"
+      ]
+    },
+    {
+      "name": "meter_readings_meter_id_meters",
+      "from": "meter_readings",
+      "to": "meters",
+      "from_columns": [
+        "meter_id"
+      ],
+      "to_columns": [
+        "meter_id"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "name": "measured_import_kwh",
+      "description": "Measured imported energy, kWh. Only VALID, non-estimated readings; dates use Asia/Singapore.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "SUM(CASE WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false' THEN meter_readings.import_kwh ELSE 0 END)"
+          }
+        ]
+      }
+    }
+  ]
+}

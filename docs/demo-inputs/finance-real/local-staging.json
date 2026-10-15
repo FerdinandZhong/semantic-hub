@@ -1,0 +1,18 @@
+{
+  "removed_document_ids": [
+    "material-4cf2ce63588d47979cacb8b49b74d158",
+    "material-e258a9292f0c47eba7418a1b650cac8b"
+  ],
+  "backup": "/tmp/finance-materials-before-replacement-20261014-213027.sqlite",
+  "uploaded": {
+    "document_id": "material-c0da81bd53db4ef6b5e0524a1cd4c20d",
+    "filename": "hsbc-smartform-completion-guide.pdf",
+    "revision": 1,
+    "status": "extracted",
+    "sha256": "fb61efbc119294b4e4c7c66b13884055fc04f942a1ffd174593a8dd7962cdd2d",
+    "chunk_count": 13
+  },
+  "model_workspaces_unchanged": true,
+  "other_library_documents_unchanged": true,
+  "reviewed_or_published": false
+}

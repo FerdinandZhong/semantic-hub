@@ -1,0 +1,201 @@
+{
+  "model": "gpt-4o",
+  "state": "/var/folders/_2/7drxzkkn7q79cclmkxs0kj3m0000gn/T/helios-document-qa-_zdga8oh",
+  "document_id": "material-913d0779af4742d9981fc594bf2d0025",
+  "checks": [
+    {
+      "question": "What was North America’s share of the total prescription pharmaceutical market in 2025?",
+      "kind": "document",
+      "status": "passed",
+      "seconds": 4.7,
+      "answer": {
+        "status": "answered",
+        "message": "",
+        "claims": [
+          {
+            "text": "In 2025, North America's share of the total prescription pharmaceutical market was 54.7%.",
+            "citations": [
+              {
+                "id": "passage-2714b6ea1b8eb731995c7ca7",
+                "title": "efpia-industry-figures-2026",
+                "location": "page 14",
+                "citation": "material-913d0779af4742d9981fc594bf2d0025@1#chunk_e2ced750d02c19dc95a99d02",
+                "document_id": "material-913d0779af4742d9981fc594bf2d0025",
+                "document_revision": 1,
+                "original_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+                "attachment_sha256": "b51fd86714341e8c7bbe347db5142f5bfc1d7ecc0c1055f0ebea006cebfca765",
+                "attachment_id": "document-4bf85c54ee5af1b2151ae0fa9f658c6c",
+                "preview_url": "/demo/api/materials/material-913d0779af4742d9981fc594bf2d0025/preview?revision=1&page=14",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:industry_observations.indicator",
+                    "reviewer": "Isolated automated test",
+                    "note": "Page 14 describes North America total prescription market. It is distinct from new-medicine cohort sales."
+                  }
+                ],
+                "quote": "EFPIA Key Data | 2026 14 PHARMACEUTICAL SALES PRICE STRUCTURE The world pharmaceutical (prescription) market was worth an estimated € 1,475,815 million ($ 1,667,671 million) at ex-manufacturer prices in 2025. The North American market (USA & Canada) remained the world’s largest market with a 54.7% share, well ahead of Europe, China and Japan. Distribution margins, which are generally fixed by governments, and VAT rates differ significantly from country to country in Europe."
+              }
+            ]
+          }
+        ],
+        "kind": "document",
+        "plan_id": "z-5r1LRMEJGR9OEdoBS8BZk2UtlhK-gO",
+        "question": "What was North America’s share of the total prescription pharmaceutical market in 2025?",
+        "context_version": "v1",
+        "context_sha256": "4caa2568e6155ab6be6e03c22380ae31ca36bbcab5d22230ce4ae8861fba4491",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "artifact_sha256": "871ff669fd59993262f06fe4bf17638ca9398c3c2537dae4d7e485c29f6390e1",
+        "result_sha256": "1337b11dd092569f01e7da6eac575879c577107fc2c23df59e771414b9dc1bbd",
+        "retrieval": {
+          "method": "keyword",
+          "candidate_count": 1,
+          "selected_count": 1,
+          "search_query": "North America prescription pharmaceutical market share 2025",
+          "scope": "selected published release only"
+        },
+        "planner": {
+          "method": "document_evidence",
+          "provider": "openai",
+          "model": "gpt-4o"
+        },
+        "notice": "Source-reported evidence, not a SQL calculation. Link approval is not certification of every document assertion."
+      }
+    },
+    {
+      "question": "北美在2025年整个处方药市场中占多少？",
+      "kind": "document",
+      "status": "passed",
+      "seconds": 4.81,
+      "answer": {
+        "status": "answered",
+        "message": "",
+        "claims": [
+          {
+            "text": "In 2025, North America accounted for 54.7% of the global prescription pharmaceutical market.",
+            "citations": [
+              {
+                "id": "passage-2714b6ea1b8eb731995c7ca7",
+                "title": "efpia-industry-figures-2026",
+                "location": "page 14",
+                "citation": "material-913d0779af4742d9981fc594bf2d0025@1#chunk_e2ced750d02c19dc95a99d02",
+                "document_id": "material-913d0779af4742d9981fc594bf2d0025",
+                "document_revision": 1,
+                "original_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+                "attachment_sha256": "b51fd86714341e8c7bbe347db5142f5bfc1d7ecc0c1055f0ebea006cebfca765",
+                "attachment_id": "document-4bf85c54ee5af1b2151ae0fa9f658c6c",
+                "preview_url": "/demo/api/materials/material-913d0779af4742d9981fc594bf2d0025/preview?revision=1&page=14",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:industry_observations.indicator",
+                    "reviewer": "Isolated automated test",
+                    "note": "Page 14 describes North America total prescription market. It is distinct from new-medicine cohort sales."
+                  }
+                ],
+                "quote": "EFPIA Key Data | 2026 14 PHARMACEUTICAL SALES PRICE STRUCTURE The world pharmaceutical (prescription) market was worth an estimated € 1,475,815 million ($ 1,667,671 million) at ex-manufacturer prices in 2025. The North American market (USA & Canada) remained the world’s largest market with a 54.7% share, well ahead of Europe, China and Japan. Distribution margins, which are generally fixed by governments, and VAT rates differ significantly from country to country in Europe."
+              }
+            ]
+          }
+        ],
+        "kind": "document",
+        "plan_id": "ZN1uRXGXH5bK64Cb6mxVX3LpL9v8xRZZ",
+        "question": "北美在2025年整个处方药市场中占多少？",
+        "context_version": "v1",
+        "context_sha256": "4caa2568e6155ab6be6e03c22380ae31ca36bbcab5d22230ce4ae8861fba4491",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "artifact_sha256": "871ff669fd59993262f06fe4bf17638ca9398c3c2537dae4d7e485c29f6390e1",
+        "result_sha256": "102dcc0a5cf4b705b564ff9724fc6daf1883b0442b2c00e7a8c4f6db87fe37ad",
+        "retrieval": {
+          "method": "keyword",
+          "candidate_count": 1,
+          "selected_count": 1,
+          "search_query": "North America 2025 prescription market share",
+          "scope": "selected published release only"
+        },
+        "planner": {
+          "method": "document_evidence",
+          "provider": "openai",
+          "model": "gpt-4o"
+        },
+        "notice": "Source-reported evidence, not a SQL calculation. Link approval is not certification of every document assertion."
+      }
+    },
+    {
+      "question": "What is the US share of sales for new medicines launched during 2020–2024?",
+      "kind": "metric",
+      "status": "passed",
+      "seconds": 3.4,
+      "answer": {
+        "columns": [
+          "geography",
+          "us_new_medicine_sales_share_percent"
+        ],
+        "rows": [
+          [
+            "USA",
+            "74.10000000"
+          ]
+        ],
+        "plan_id": "jsTv_433DXZtECDwNpqg403_vZTdfU5u",
+        "question": "What is the US share of sales for new medicines launched during 2020–2024?",
+        "unit": "%",
+        "context_version": "v1",
+        "context_sha256": "4caa2568e6155ab6be6e03c22380ae31ca36bbcab5d22230ce4ae8861fba4491",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "sql": "SELECT\n  industry_observations.geography AS geography,\n  MAX(\n    CASE\n      WHEN industry_observations.geography = 'USA'\n      THEN industry_observations.value\n    END\n  ) AS us_new_medicine_sales_share_percent\nFROM industry_observations AS industry_observations\nWHERE\n  industry_observations.geography = 'USA'\nGROUP BY\n  industry_observations.geography\nLIMIT 101",
+        "sql_sha256": "b4efb264f46185583e83bf6bb2778b1a3ea80a06c7b2770d91215f594f73bb18",
+        "result_sha256": "91943017a916f0270c7b1374b3604eed686c09fdc0fff3c32124637b3b113848",
+        "truncated": false,
+        "display_limit": 100,
+        "planner": {
+          "method": "llm_typed_request",
+          "provider": "openai",
+          "model": "gpt-4o"
+        }
+      }
+    },
+    {
+      "question": "How many FDA CDER novel drugs were approved in 2025?",
+      "kind": "metric",
+      "status": "passed",
+      "seconds": 2.94,
+      "answer": {
+        "columns": [
+          "novel_approval_count"
+        ],
+        "rows": [
+          [
+            46
+          ]
+        ],
+        "plan_id": "HRStX3LbAkKsYyBmLmQ4EP2dfB5PGlrf",
+        "question": "How many FDA CDER novel drugs were approved in 2025?",
+        "unit": "approvals",
+        "context_version": "v1",
+        "context_sha256": "4caa2568e6155ab6be6e03c22380ae31ca36bbcab5d22230ce4ae8861fba4491",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "sql": "SELECT\n  COUNT(approval_events.approval_id) AS novel_approval_count\nFROM approval_events AS approval_events\nLIMIT 101",
+        "sql_sha256": "eee10be0e9d476fc9aeed3a918d42398aeced453eab3ba9c920e06a12bf6a1d4",
+        "result_sha256": "93a7c213bcdd4babb065041e0a1a551b2c1e13a73797fcb074f613cc63c14290",
+        "truncated": false,
+        "display_limit": 100,
+        "planner": {
+          "method": "llm_typed_request",
+          "provider": "openai",
+          "model": "gpt-4o"
+        }
+      }
+    }
+  ],
+  "date": "2026-10-14",
+  "automated_tests": {
+    "passed": 48,
+    "command": "python -m pytest apps/helios/tests/test_document_answers.py apps/helios/tests/test_demo_playground.py apps/helios/tests/test_materials_api.py apps/helios/tests/test_materials.py -q"
+  },
+  "browser_checks": {
+    "saved_metrics": "finance, manufacturing, pharma, power at 1440 and 390 px",
+    "document_answers": "citations, no SQL, metric switch, and mode reset at 1440 and 390 px",
+    "llm": "deterministic test double in browser; live GPT-4o tests separately recorded below"
+  }
+}

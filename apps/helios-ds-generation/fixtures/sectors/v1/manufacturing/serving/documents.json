@@ -1,0 +1,98 @@
+[
+  {
+    "document_id": "SYN-WO000",
+    "path": "documents/SYN-WO000.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO000",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO001",
+    "path": "documents/SYN-WO001.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO001",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO002",
+    "path": "documents/SYN-WO002.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO002",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO003",
+    "path": "documents/SYN-WO003.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO003",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO004",
+    "path": "documents/SYN-WO004.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO004",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO005",
+    "path": "documents/SYN-WO005.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO005",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO006",
+    "path": "documents/SYN-WO006.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO006",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO007",
+    "path": "documents/SYN-WO007.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO007",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO008",
+    "path": "documents/SYN-WO008.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO008",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO009",
+    "path": "documents/SYN-WO009.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO009",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO010",
+    "path": "documents/SYN-WO010.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO010",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-WO011",
+    "path": "documents/SYN-WO011.md",
+    "entity_table": "work_orders",
+    "entity_id": "SYN-WO011",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  }
+]

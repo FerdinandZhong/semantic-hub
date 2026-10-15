@@ -1,6 +1,9 @@
-# helios
+# Semantic Hub
 
-**Connect it to your Cloudera data lake and it helps your users speak to their data.**
+**Build, review, version, and publish semantic models for applications and agents.**
+
+Semantic Hub is the application name. Helios remains the internal engine and package name.
+Semantic Studio provides authoring; the Model playground tests published versions.
 
 helios is an engine that runs inside Cloudera AI Workbench, inspects an existing Cloudera lakehouse — whatever engine fronts it: Impala, Hive, Spark — and generates the layers of meaning that sit between raw tables and a human (or agent) asking a question in plain language:
 
@@ -11,6 +14,25 @@ helios is an engine that runs inside Cloudera AI Workbench, inspects an existing
 Each layer is *proposed* by helios from evidence in the warehouse, then *reviewed and published* by a human through the helios console. Published layers are exposed to agents and applications through an MCP server, so any agentic flow can ask "what does net paid mean", "how do I get sales by store for last quarter", or "which customers returned more than average" and get a governed answer instead of guessing at SQL.
 
 Everything runs self-hosted: the models, the runtime, the applications.
+
+## Current semantic foundation progress
+
+See the [current implementation status](docs/SEMANTIC_FOUNDATION_STATUS.md) for delivered features and remaining work.
+Start with [the local demo guide](docs/DEMO_START_HERE.md).
+Use [finance and manufacturing stories](docs/finance-manufacturing-simple-demo.md) for a short customer demonstration.
+
+Studio supports source-scoped drafts, graph editing, supporting documents, validation, review, and immutable published versions.
+The supporting-material library supports document analysis, reviewed visual facts, and evidence links to semantic models.
+Model configuration separates drafting, query, and embedding providers.
+The Playground tests published metrics and reviewed document evidence with explicit scope checks.
+
+External agents use the [consumer API](docs/semantic-hub-consumer-api.md) and its Swagger UI.
+The [MCP adapter](apps/semantic-hub-mcp/README.md) installs directly from this GitHub repository with `uvx`.
+The [Agent Studio workflow](docs/semantic-hub-agent-studio-workflow.md) provides the demo setup and agent prompts.
+
+The local consumer API exposes published models through explicit loopback-only no-auth mode.
+Enterprise authorization and live CAI deployment remain separate integration work.
+The broader architecture below includes planned capabilities; it does not establish a live Atlas or Ranger integration in this demo.
 
 ---
 
@@ -281,3 +303,9 @@ A second, less canonical dataset (Wide World Importers or the Olist e-commerce s
 - Apache Atlas glossary REST API
 - Cloudera Impala TPC-DS kit — https://github.com/cloudera/impala-tpcds-kit
 - TPC-DS specification — http://www.tpc.org/tpcds/
+
+## Observability semantic context extension
+
+The `observability_semantic_context` branch adds metadata discovery, reviewed context releases and token retrieval for Elasticsearch/Kibana, Prometheus and Grafana.
+See [setup, review and limitations](docs/observability-semantic-context.md).
+This extension keeps native observability context separate from Ossie SQL models; NiFi discovery remains deferred.

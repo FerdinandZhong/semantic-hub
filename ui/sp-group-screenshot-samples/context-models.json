@@ -1,0 +1,252 @@
+{
+  "synthetic": true,
+  "format": "screenshot.context.fixture.v1",
+  "models": [
+    {
+      "name": "power_measured_import",
+      "kind": "Lakehouse \u00b7 Ossie",
+      "description": "Measured imported energy by Singapore date and service region.",
+      "source": "iceberg.power.meter_readings",
+      "grain": "One meter reading per half-hour interval",
+      "units": "kWh; average demand uses kW",
+      "time": "UTC interval timestamps; reporting date in Asia/Singapore",
+      "metric": "measured_import_kwh",
+      "formula": "SUM(import_kwh) WHERE quality_status = 'VALID' AND is_estimated = 'false'",
+      "scope": "Exclude missing and estimated readings. Imports and exports are separate. Fictional SP Group prototype.",
+      "count": 10,
+      "columns": [
+        [
+          "reading_id",
+          "VARCHAR",
+          "Unique interval reading identifier"
+        ],
+        [
+          "import_kwh",
+          "DECIMAL",
+          "Imported energy during the half-hour interval; kWh"
+        ],
+        [
+          "reading_date",
+          "DATE",
+          "Reporting date in Asia/Singapore"
+        ],
+        [
+          "region",
+          "VARCHAR",
+          "Fictional service region"
+        ]
+      ],
+      "aliases": [
+        "electricity consumption",
+        "measured imported energy",
+        "meter readings"
+      ],
+      "definitions": [
+        [
+          "reading_id",
+          "VARCHAR",
+          "Unique interval reading identifier"
+        ],
+        [
+          "import_kwh",
+          "DECIMAL",
+          "Imported energy during the half-hour interval; kWh"
+        ],
+        [
+          "reading_date",
+          "DATE",
+          "Reporting date in Asia/Singapore"
+        ],
+        [
+          "region",
+          "VARCHAR",
+          "Fictional service region"
+        ],
+        [
+          "meter_id",
+          "VARCHAR",
+          "Meter identifier linked to its feeder"
+        ],
+        [
+          "interval_start_utc",
+          "TIMESTAMP WITH TIME ZONE",
+          "UTC start of the half-hour interval"
+        ],
+        [
+          "quality_status",
+          "VARCHAR",
+          "VALID or MISSING; missing energy stays null"
+        ],
+        [
+          "is_estimated",
+          "BOOLEAN",
+          "Estimated readings are excluded by default"
+        ],
+        [
+          "feeder_id",
+          "VARCHAR",
+          "Meter mapping supplies feeder identity"
+        ],
+        [
+          "substation_id",
+          "VARCHAR",
+          "Feeder mapping supplies substation identity"
+        ]
+      ]
+    },
+    {
+      "name": "power_feeder_demand",
+      "kind": "Lakehouse \u00b7 Ossie",
+      "description": "Proposed feeder demand model derived from interval readings.",
+      "source": "iceberg.power.feeder_demand (proposed derived view)",
+      "grain": "One feeder per half-hour interval",
+      "units": "kW",
+      "time": "Interval start in UTC; display in Asia/Singapore",
+      "metric": "average_feeder_demand_kw",
+      "formula": "SUM(valid non-estimated import_kwh) / 0.5 hours",
+      "scope": "Derived view planned. Incomplete intervals must be flagged; no feeder capacity or overload claim.",
+      "count": 4,
+      "columns": [
+        [
+          "feeder_id",
+          "VARCHAR",
+          "Feeder linked to a substation"
+        ],
+        [
+          "avg_demand_kw",
+          "DECIMAL",
+          "Interval imported energy divided by 0.5 hours"
+        ],
+        [
+          "interval_start_utc",
+          "TIMESTAMP WITH TIME ZONE",
+          "Start of the half-hour measurement window"
+        ],
+        [
+          "region",
+          "VARCHAR",
+          "Fictional service region"
+        ]
+      ],
+      "aliases": [
+        "feeder load",
+        "interval demand",
+        "substation demand"
+      ],
+      "definitions": [
+        [
+          "feeder_id",
+          "VARCHAR",
+          "Feeder linked to a substation"
+        ],
+        [
+          "avg_demand_kw",
+          "DECIMAL",
+          "Interval imported energy divided by 0.5 hours"
+        ],
+        [
+          "interval_start_utc",
+          "TIMESTAMP WITH TIME ZONE",
+          "Start of the half-hour measurement window"
+        ],
+        [
+          "region",
+          "VARCHAR",
+          "Fictional service region"
+        ]
+      ]
+    },
+    {
+      "name": "meter_ingestion_observability",
+      "kind": "Observability \u00b7 separate context",
+      "description": "Operational metric definitions for meter-reading ingestion.",
+      "source": "Meter ingestion logs and Prometheus metrics",
+      "grain": "A timestamped log event or a metric series observation",
+      "units": "Events, percentages and milliseconds",
+      "time": "UTC event timestamp; display in Asia/Singapore",
+      "metric": "error_event_count",
+      "formula": "COUNT(error events in the requested window)",
+      "scope": "Typed observability definitions. Helios does not plan log or metric queries.",
+      "count": 10,
+      "columns": [
+        [
+          "@timestamp",
+          "date",
+          "Event occurrence time in UTC"
+        ],
+        [
+          "error_code",
+          "keyword",
+          "Stable category used to group errors"
+        ],
+        [
+          "processor_id",
+          "keyword",
+          "NiFi processor identifier in each log event"
+        ],
+        [
+          "process_cpu_percent",
+          "gauge",
+          "Process CPU utilization as a percentage"
+        ]
+      ],
+      "aliases": [
+        "service errors",
+        "processor failures",
+        "CPU utilization"
+      ],
+      "definitions": [
+        [
+          "@timestamp",
+          "date",
+          "Event occurrence time in UTC"
+        ],
+        [
+          "error_code",
+          "keyword",
+          "Stable category used to group errors"
+        ],
+        [
+          "processor_id",
+          "keyword",
+          "NiFi processor identifier in each log event"
+        ],
+        [
+          "process_cpu_percent",
+          "gauge",
+          "Process CPU utilization as a percentage"
+        ],
+        [
+          "service_name",
+          "keyword",
+          "Service associated with the event"
+        ],
+        [
+          "host_name",
+          "keyword",
+          "Host emitting the log or metric"
+        ],
+        [
+          "log.level",
+          "keyword",
+          "Event severity"
+        ],
+        [
+          "message",
+          "text",
+          "Original event message"
+        ],
+        [
+          "request_duration_ms",
+          "gauge",
+          "Observed request duration in milliseconds"
+        ],
+        [
+          "up",
+          "gauge",
+          "Prometheus target health: one means available"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-13",
+  "milestone": "M3A supporting-material preparation",
+  "scope": "local synthetic fixtures; working tree, not a release commit",
+  "backend": {
+    "passed": 141,
+    "test_files": [
+      "test_materials.py",
+      "test_materials_api.py",
+      "test_document_parser.py",
+      "test_demo_embeddings.py",
+      "test_demo_llm_settings.py",
+      "test_demo_llm_api.py",
+      "test_builder_artifacts.py",
+      "test_demo_context.py",
+      "test_builder_proposals.py",
+      "test_demo_playground.py"
+    ]
+  },
+  "browser": {
+    "script": "apps/helios/workbench/check_materials_browser.py",
+    "passed_widths": [
+      1440,
+      390
+    ],
+    "studio_canvas": "Desktop Studio inspector/provenance and semantic evidence edge passed during both material workflows"
+  },
+  "live": {
+    "status": "passed",
+    "analysis_model": "gpt-4o",
+    "embedding_model": "text-embedding-3-small",
+    "dimensions": 1536,
+    "claims": 6,
+    "sections": 1,
+    "linked_sources": [
+      "finance",
+      "manufacturing"
+    ],
+    "links": 4,
+    "repeat_embedding_calls": 0,
+    "user_state_modified": false
+  },
+  "remaining": [
+    "Authenticated document authorization and scoped passage retrieval",
+    "Combined SQL and cited-document answers",
+    "Consumer registry adapters for UOB and Guardrails",
+    "Independent model identity",
+    "Remote source imports",
+    "OCR"
+  ]
+}

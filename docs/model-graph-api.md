@@ -1,5 +1,9 @@
 # Model graph API
 
+**Scope:** this is the authenticated model graph API used by the React application.
+Local Studio uses `/demo/api/context/source-graph` plus source-scoped document evidence.
+Its canvas integration does not replace or extend this API contract.
+
 `GET /api/v1/models/{model_id}/graph` returns an authorized, schema-agnostic
 projection of one Helios Model. The contract is independent of React Flow or any
 other rendering library.

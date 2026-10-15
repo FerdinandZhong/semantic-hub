@@ -6,6 +6,7 @@ __pycache__/
 /requirements.lock
 .helios-python/
 state/
+.model-secrets/
 *.db-wal
 *.db-shm
 node_modules/
@@ -13,3 +14,9 @@ apps/ui/dist/
 apps/helios/ui/dist/
 apps/helios/ui/src/content/docs/
 *.tsbuildinfo
+
+# Local machine and build artifacts
+.DS_Store
+*.egg-info/
+.pytest_cache/
+.venv/

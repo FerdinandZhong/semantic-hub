@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": [
+    "selection inspector",
+    "layout draft isolation",
+    "neighbor filter",
+    "search zoom lens",
+    "columns to neighbors reversal",
+    "fullscreen entry and exit",
+    "saved-view controls removed",
+    "invalid and valid relationship form",
+    "drag connection"
+  ],
+  "errors": []
+}

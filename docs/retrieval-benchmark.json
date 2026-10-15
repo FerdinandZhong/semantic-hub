@@ -1,0 +1,2300 @@
+{
+  "fixture": {
+    "tables": 2000,
+    "fields_per_table": 40,
+    "fields": 80000,
+    "metrics": 20,
+    "queries": 40,
+    "warmup_queries": 3,
+    "seed": "deterministic-v1",
+    "python": "3.13.9",
+    "platform": "Darwin",
+    "architecture": "arm64",
+    "cpu_count": 10
+  },
+  "index_build_ms": 5049.354,
+  "service_register_ms": 5861.91,
+  "service_uncached_resolve": {
+    "samples": 40,
+    "p50_ms": 26.233,
+    "p95_ms": 26.781
+  },
+  "service_repeated_resolve": {
+    "samples": 40,
+    "p50_ms": 0.096,
+    "p95_ms": 0.105
+  },
+  "service_ready_uncached_resolve": {
+    "samples": 40,
+    "p50_ms": 26.233,
+    "p95_ms": 26.781
+  },
+  "service_actual_cached_resolve": {
+    "samples": 40,
+    "p50_ms": 0.096,
+    "p95_ms": 0.105
+  },
+  "successful_full_bundle": {
+    "samples": 40,
+    "p50_ms": 26.362,
+    "p95_ms": 27.543
+  },
+  "service_cache_hits": 40,
+  "service_checks": [
+    {
+      "question": "Show aviation booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "aviation margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show bakery booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "bakery margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show ceramics booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "ceramics margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show dentistry booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "dentistry margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show electronics booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "electronics margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show forestry booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "forestry margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show gardening booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "gardening margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show hospitality booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "hospitality margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show insurance booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "insurance margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show jewelry booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "jewelry margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show logistics booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "logistics margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show mining booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "mining margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show nutrition booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "nutrition margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show optics booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "optics margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show pharmacy booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "pharmacy margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show quilting booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "quilting margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show robotics booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "robotics margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show shipping booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "shipping margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show textiles booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "textiles margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "Show utilities booked profit by region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    },
+    {
+      "question": "utilities margin grouped by customer region",
+      "first_status": "ready",
+      "second_status": "ready",
+      "second_cache_hit": true,
+      "same_bundle_id": true
+    }
+  ],
+  "warm_search": {
+    "samples": 40,
+    "p50_ms": 18.88,
+    "p95_ms": 19.464
+  },
+  "warm_full_bundle": {
+    "samples": 40,
+    "p50_ms": 26.362,
+    "p95_ms": 27.543
+  },
+  "candidate_recall_at_1": 0.5,
+  "candidate_recall_at_5": 1,
+  "candidate_recall_at_10": 1,
+  "dependency_recall": 1.0,
+  "successful_bundles": 40,
+  "bundle_failures": {},
+  "document_chars": {
+    "p50": 1903.0,
+    "max": 1963
+  },
+  "budget_token_count": {
+    "method": "conservative UTF-8 byte upper bound",
+    "p50": 1903.0,
+    "max": 1963
+  },
+  "permission_negative": {
+    "allowed_fields": [
+      "aviation_customers.region"
+    ],
+    "unauthorized_fields": [],
+    "returned_metric_names": [],
+    "evidence": {
+      "error_type": "Clarification",
+      "clarification": "No permitted semantic definition matched."
+    }
+  },
+  "clarification_probe": {
+    "question": "Show revenue by region",
+    "evidence": {
+      "error_type": "Clarification",
+      "clarification": "Selected definitions have no permitted join path."
+    }
+  },
+  "budget_probe": {
+    "max_chars": 700,
+    "max_tokens": 175,
+    "evidence": {
+      "error_type": "Clarification",
+      "clarification": "Required semantic dependencies exceed the context budget."
+    }
+  },
+  "scope_limits": "Offline, in-process core benchmark on synthetic data. Index build and service registration are separate startup measurements. Service resolve includes trusted scope validation, retrieval, bundle construction, evidence and caching. Excludes HTTP transport, authentication middleware, network, real tokenizer, model inference and SQL execution.",
+  "analysis": "Candidate recall 1.000; dependency recall 1.000. Successful bundles 40/40. Failed bundles count as zero dependency recall. Payload sizes cover successful bundles only. Inspect missing fields and clarification evidence; no success threshold is assumed.",
+  "queries": [
+    {
+      "question": "Show aviation booked profit by region",
+      "expected_metric": "aviation_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "aviation_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "aviation_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "aviation_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "aviation margin grouped by customer region",
+      "expected_metric": "aviation_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "aviation_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "aviation_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "aviation_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "aviation_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "aviation_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show bakery booked profit by region",
+      "expected_metric": "bakery_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1863,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "bakery_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "bakery_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "bakery_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1863,
+        "context_tokens": 1863,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "bakery margin grouped by customer region",
+      "expected_metric": "bakery_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1863,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "bakery_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "bakery_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "bakery_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "bakery_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "bakery_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1863,
+        "context_tokens": 1863,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show ceramics booked profit by region",
+      "expected_metric": "ceramics_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "ceramics_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "ceramics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "ceramics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "ceramics margin grouped by customer region",
+      "expected_metric": "ceramics_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "ceramics_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "ceramics_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "ceramics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "ceramics_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "ceramics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show dentistry booked profit by region",
+      "expected_metric": "dentistry_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "dentistry_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "dentistry_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "dentistry_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "dentistry margin grouped by customer region",
+      "expected_metric": "dentistry_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "dentistry_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "dentistry_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "dentistry_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "dentistry_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "dentistry_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show electronics booked profit by region",
+      "expected_metric": "electronics_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1963,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "electronics_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "electronics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "electronics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1963,
+        "context_tokens": 1963,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "electronics margin grouped by customer region",
+      "expected_metric": "electronics_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1963,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "electronics_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "electronics_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "electronics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "electronics_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "electronics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1963,
+        "context_tokens": 1963,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show forestry booked profit by region",
+      "expected_metric": "forestry_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "forestry_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "forestry_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "forestry_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "forestry margin grouped by customer region",
+      "expected_metric": "forestry_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "forestry_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "forestry_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "forestry_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "forestry_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "forestry_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show gardening booked profit by region",
+      "expected_metric": "gardening_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "gardening_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "gardening_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "gardening_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "gardening margin grouped by customer region",
+      "expected_metric": "gardening_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "gardening_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "gardening_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "gardening_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "gardening_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "gardening_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show hospitality booked profit by region",
+      "expected_metric": "hospitality_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1963,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "hospitality_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "hospitality_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "hospitality_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1963,
+        "context_tokens": 1963,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "hospitality margin grouped by customer region",
+      "expected_metric": "hospitality_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1963,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "hospitality_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "hospitality_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "hospitality_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "hospitality_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "hospitality_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1963,
+        "context_tokens": 1963,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show insurance booked profit by region",
+      "expected_metric": "insurance_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "insurance_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "insurance_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "insurance_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "insurance margin grouped by customer region",
+      "expected_metric": "insurance_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "insurance_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "insurance_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "insurance_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "insurance_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "insurance_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show jewelry booked profit by region",
+      "expected_metric": "jewelry_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1883,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "jewelry_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "jewelry_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "jewelry_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1883,
+        "context_tokens": 1883,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "jewelry margin grouped by customer region",
+      "expected_metric": "jewelry_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1883,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "jewelry_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "jewelry_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "jewelry_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "jewelry_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "jewelry_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1883,
+        "context_tokens": 1883,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show logistics booked profit by region",
+      "expected_metric": "logistics_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "logistics_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "logistics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "logistics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "logistics margin grouped by customer region",
+      "expected_metric": "logistics_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "logistics_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "logistics_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "logistics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "logistics_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "logistics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show mining booked profit by region",
+      "expected_metric": "mining_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1863,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "mining_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "mining_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "mining_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1863,
+        "context_tokens": 1863,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "mining margin grouped by customer region",
+      "expected_metric": "mining_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1863,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "mining_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "mining_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "mining_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "mining_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "mining_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1863,
+        "context_tokens": 1863,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show nutrition booked profit by region",
+      "expected_metric": "nutrition_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "nutrition_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "nutrition_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "nutrition_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "nutrition margin grouped by customer region",
+      "expected_metric": "nutrition_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "nutrition_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "nutrition_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "nutrition_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "nutrition_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "nutrition_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show optics booked profit by region",
+      "expected_metric": "optics_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1863,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "optics_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "optics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "optics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1863,
+        "context_tokens": 1863,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "optics margin grouped by customer region",
+      "expected_metric": "optics_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1863,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "optics_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "optics_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "optics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "optics_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "optics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1863,
+        "context_tokens": 1863,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show pharmacy booked profit by region",
+      "expected_metric": "pharmacy_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "pharmacy_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "pharmacy_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "pharmacy_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "pharmacy margin grouped by customer region",
+      "expected_metric": "pharmacy_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "pharmacy_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "pharmacy_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "pharmacy_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "pharmacy_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "pharmacy_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show quilting booked profit by region",
+      "expected_metric": "quilting_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "quilting_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "quilting_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "quilting_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "quilting margin grouped by customer region",
+      "expected_metric": "quilting_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "quilting_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "quilting_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "quilting_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "quilting_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "quilting_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show robotics booked profit by region",
+      "expected_metric": "robotics_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "robotics_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "robotics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "robotics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "robotics margin grouped by customer region",
+      "expected_metric": "robotics_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "robotics_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "robotics_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "robotics_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "robotics_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "robotics_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show shipping booked profit by region",
+      "expected_metric": "shipping_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "shipping_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "shipping_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "shipping_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "shipping margin grouped by customer region",
+      "expected_metric": "shipping_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "shipping_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "shipping_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "shipping_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "shipping_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "shipping_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show textiles booked profit by region",
+      "expected_metric": "textiles_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "textiles_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "textiles_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "textiles_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "textiles margin grouped by customer region",
+      "expected_metric": "textiles_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1903,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "textiles_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "textiles_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "textiles_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "textiles_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "textiles_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1903,
+        "context_tokens": 1903,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "Show utilities booked profit by region",
+      "expected_metric": "utilities_margin",
+      "candidate_recall_at_1": 1,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "utilities_margin",
+            "score": 15
+          },
+          {
+            "kind": "field",
+            "name": "utilities_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "utilities_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    },
+    {
+      "question": "utilities margin grouped by customer region",
+      "expected_metric": "utilities_margin",
+      "candidate_recall_at_1": 0,
+      "candidate_recall_at_5": 1,
+      "candidate_recall_at_10": 1,
+      "bundle_succeeded": true,
+      "dependency_recall": 1.0,
+      "missing_fields": [],
+      "document_chars": 1923,
+      "evidence": {
+        "release_sha256": "f46b29464f45baf423289b063bdce9dbec044514c06835bd4cc242efad605369",
+        "method": "permission-filtered SQLite FTS5",
+        "matches": [
+          {
+            "kind": "metric",
+            "name": "utilities_margin",
+            "score": 9
+          },
+          {
+            "kind": "field",
+            "name": "utilities_customers.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "utilities_customers.region",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "utilities_orders.customer_id",
+            "score": 10
+          },
+          {
+            "kind": "field",
+            "name": "utilities_orders.region",
+            "score": 10
+          }
+        ],
+        "dataset_count": 2,
+        "field_count": 6,
+        "context_chars": 1923,
+        "context_tokens": 1923,
+        "token_count_method": "conservative UTF-8 byte upper bound",
+        "limits": {
+          "datasets": 5,
+          "fields": 100,
+          "context_chars": 24000,
+          "context_tokens": 6000
+        }
+      }
+    }
+  ]
+}

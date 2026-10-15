@@ -1,0 +1,19 @@
+# Only send the local demo runtime and fixtures to the image builder.
+**
+!shared/
+!shared/**
+!apps/
+!apps/helios/
+!apps/helios/**
+!apps/helios-ds-generation/
+!apps/helios-ds-generation/fixtures/
+!apps/helios-ds-generation/fixtures/sectors/
+!apps/helios-ds-generation/fixtures/sectors/v1/
+!apps/helios-ds-generation/fixtures/sectors/v1/**
+!start_demo.py
+**/__pycache__
+**/*.pyc
+**/node_modules
+**/.env
+**/.env.*
+**/evaluation

@@ -1,0 +1,37 @@
+{
+  "synthetic": false,
+  "timezone": "UTC",
+  "dataset_meanings": {
+    "source_documents": "Public evidence provenance, including original URLs, checksums, and capture dates.",
+    "drugs": "46 distinct products in FDA CDER novel drug approvals for calendar year 2025.",
+    "approval_events": "46 original US FDA CDER approval events; not all FDA actions or global approvals.",
+    "trials": "One published original-approval trial evidence subset, not a complete trial registry.",
+    "trial_cohorts": "Two disjoint prior-treatment cohorts in the selected 105-person efficacy population.",
+    "trial_results": "Four published endpoint percentages, with explicit cohort and endpoint denominators.",
+    "trial_demographics": "Eleven aggregate demographic categories across four overlapping dimensions; no individual patient records.",
+    "industry_observations": "Five regional chart shares for sales of new medicines launched during 2020-2024."
+  },
+  "glossary_terms": [
+    {
+      "term": "RegulatoryApproval",
+      "definition": "An original FDA CDER approval event in the bounded 2025 list; not an NDC listing."
+    },
+    {
+      "term": "TrialPopulation",
+      "definition": "The 105-person original-approval efficacy subset, not every participant in the trial."
+    },
+    {
+      "term": "ObjectiveResponseRate",
+      "definition": "Published response percentage in one cohort; denominator is 71 or 34 patients."
+    },
+    {
+      "term": "DurationOfResponse",
+      "definition": "Observed response duration among responders; denominators are 53 and 15."
+    },
+    {
+      "term": "NewMedicineSalesShare",
+      "definition": "Regional share for the chart-defined 2020-2024 launch cohort, not total drug-market share."
+    }
+  ],
+  "curation_method": "Deterministic FDA HTML table extraction plus explicit curation of trial facts and visually checked EFPIA page 4 chart. No AI/OCR extraction is claimed."
+}

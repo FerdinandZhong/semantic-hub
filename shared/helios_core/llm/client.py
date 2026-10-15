@@ -129,6 +129,16 @@ class LLMClient:
     def _openai(self, system: str, user: str) -> str:
         return self._openai_usage(system, user)[0]
 
+    def _openai_generation_options(self) -> dict[str, Any]:
+        # GPT-5 Chat Completions uses the completion budget, including reasoning.
+        # Omit sampling controls for reasoning models; retain compatible endpoint defaults otherwise.
+        if re.match(r'^gpt-5(?:[.\-]|$)',self.model):
+            options={'max_completion_tokens':self.max_tokens}
+            if re.match(r'^gpt-5\.[1-9]\d*(?:[.\-]|$)',self.model):
+                options['reasoning_effort']='none'
+            return options
+        return {'max_tokens':self.max_tokens,'temperature':self.temperature}
+
     def _anthropic_usage(self, system: str, user: str) -> tuple[str, int, int]:
         r = httpx.post("https://api.anthropic.com/v1/messages", timeout=self._http_timeout(),
                        headers={"x-api-key": self.api_key or "", "anthropic-version": "2023-06-01",
@@ -146,7 +156,7 @@ class LLMClient:
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
         r = httpx.post(f"{(self.base_url or '').rstrip('/')}/chat/completions", timeout=self._http_timeout(), headers=headers,
-                       json={"model": self.model, "max_tokens": self.max_tokens, "temperature": self.temperature,
+                       json={"model": self.model, **self._openai_generation_options(),
                              "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]})
         r.raise_for_status()
         body = r.json()
@@ -343,8 +353,7 @@ class LLMClient:
             headers=headers,
             json={
                 "model": self.model,
-                "max_tokens": self.max_tokens,
-                "temperature": self.temperature,
+                **self._openai_generation_options(),
                 "messages": openai_messages,
                 "tools": [
                     {

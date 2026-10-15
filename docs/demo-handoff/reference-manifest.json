@@ -1,0 +1,249 @@
+{
+  "captured_at": "2026-10-10",
+  "purpose": "Selective source and design references, not an installed application",
+  "copied_files": [
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/semantic_retrieval.py",
+      "destination": "docs/demo-handoff/reference/uob/app/semantic_retrieval.py",
+      "sha256": "1da194f62c5746d31722604971e294f9ed44332ca1d1707ae9dc06f2d77ee668"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/metadata_inventory.py",
+      "destination": "docs/demo-handoff/reference/uob/app/metadata_inventory.py",
+      "sha256": "9e4c8eb1da6dea5af394b982ef12416f5d0193e18fb77601a2a84b172adeb4bf"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/orchestration.py",
+      "destination": "docs/demo-handoff/reference/uob/app/orchestration.py",
+      "sha256": "f35f19ff956f5cd179e497cc9f0c835b55badcb59815fd8a11b53c480898162b"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/semantics.py",
+      "destination": "docs/demo-handoff/reference/uob/app/semantics.py",
+      "sha256": "fbda39febe6dd53ca7d226140541e2553c1fa9df8af2ef2b2065b02ca33d0f27"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/semantic_workflow.py",
+      "destination": "docs/demo-handoff/reference/uob/app/semantic_workflow.py",
+      "sha256": "7057771f242665c264dc2eea8b36e1fad5ba7d4ed3f51bb9829811d8748abdb7"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/source_workflow.py",
+      "destination": "docs/demo-handoff/reference/uob/app/source_workflow.py",
+      "sha256": "6f616b969ae5635d234e26ad70b27cdf6473b83b2316753fe40b52cd539af846"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/banking_access.py",
+      "destination": "docs/demo-handoff/reference/uob/app/banking_access.py",
+      "sha256": "4665e89709ef1f0a510e0985301fc7b2b4a286ec0b7e3d2a751caf08ca7886a7"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/contracts.py",
+      "destination": "docs/demo-handoff/reference/uob/app/contracts.py",
+      "sha256": "bbaf6c2ba8d1fb2436ae65de15bd5675fb847f9275e78f53362960628c65ef9b"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/financial_planner.py",
+      "destination": "docs/demo-handoff/reference/uob/app/financial_planner.py",
+      "sha256": "82f10d32fca2beaab09102f427ee42db6963dd3598a47eb28395b88c82bbc912"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/sample_finance.py",
+      "destination": "docs/demo-handoff/reference/uob/app/sample_finance.py",
+      "sha256": "ddf5c3c446acd45d3b9899d1ed1fd9850793714fb54e8fc3f3cfcc20bceeebc6"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/description_model.py",
+      "destination": "docs/demo-handoff/reference/uob/app/description_model.py",
+      "sha256": "bc9702a9a08c1524a7d6b5485635dd766274330b19412abf7a9ba4113a444f80"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/planner.py",
+      "destination": "docs/demo-handoff/reference/uob/app/planner.py",
+      "sha256": "68496d1a87d321218c4d85eb618f3c818becd63bd50d71898b61943fc4b2dade"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/app/answers.py",
+      "destination": "docs/demo-handoff/reference/uob/app/answers.py",
+      "sha256": "416c3d4c9ecdd15f9512a8acf16ed72dcc87e258b9b998ea4330dcbaa66a69f6"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/tests/test_banking_retrieval.py",
+      "destination": "docs/demo-handoff/reference/uob/tests/test_banking_retrieval.py",
+      "sha256": "feeb056b3565d36ccff89d4bef4a5882f31e74fb5f42df9cd805c8a4f657095e"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/tests/test_semantic_workflow.py",
+      "destination": "docs/demo-handoff/reference/uob/tests/test_semantic_workflow.py",
+      "sha256": "98ec9574bf276ae0064ea9b3e2b8e33c06b014822fb6fda818f4b3d7d3fb2d11"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/tests/test_orchestration.py",
+      "destination": "docs/demo-handoff/reference/uob/tests/test_orchestration.py",
+      "sha256": "8cf5dc0b61d013fe31cdc474b9f21c59c3581cebc9c92f0fea47049aaad1c1be"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/app.js",
+      "destination": "docs/demo-handoff/reference/uob/static/app.js",
+      "sha256": "68ee025ebd36f50974df349c7c12e1e23de85ffcd31f6af54e1ab47df41bf929"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/evidence.js",
+      "destination": "docs/demo-handoff/reference/uob/static/evidence.js",
+      "sha256": "40c349825397ab2f3fba05f566afc818d75e981d73c47ad5fcf352e8a82d9d3f"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/index.html",
+      "destination": "docs/demo-handoff/reference/uob/static/index.html",
+      "sha256": "5d3355a71f19c73eded034de23496270591faaee21c87e6d36ca8c7b75c6d624"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/lakehouse.js",
+      "destination": "docs/demo-handoff/reference/uob/static/lakehouse.js",
+      "sha256": "6bf14ef14ce86c076081d2c8aa2a6b7bde7f71bfa6f70ec5ab2da190e88b143c"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/observability-context.js",
+      "destination": "docs/demo-handoff/reference/uob/static/observability-context.js",
+      "sha256": "91a3146a6c1606672b32e1555e49ff20cf90a910f30dc9b2f11f1941c5204df1"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/settings.js",
+      "destination": "docs/demo-handoff/reference/uob/static/settings.js",
+      "sha256": "7aeef015b7fda03c38adfdc3e655a64f05d6fc2296cc1c7147c39eb84fd064d4"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/styles.css",
+      "destination": "docs/demo-handoff/reference/uob/static/styles.css",
+      "sha256": "b6efd304a138009a0af1bb2c8ba3289f1bb96d32e76cee79130dc88e49a4ca56"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/ui.js",
+      "destination": "docs/demo-handoff/reference/uob/static/ui.js",
+      "sha256": "2448f60c47ac4d7a989d40ab429279a2616ef5af4100c1f7a5417cc3316fe5ee"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/static/workflow.js",
+      "destination": "docs/demo-handoff/reference/uob/static/workflow.js",
+      "sha256": "da4f9e3941cba0ef009c6847cfa2c7f85abc8cc0d0d02aef63a7df53539d4bd3"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/DESIGN.md",
+      "destination": "docs/demo-handoff/reference/uob/docs/DESIGN.md",
+      "sha256": "9863c8271c83636e3e2e05f7357424c6ef3ef3e1aa6bbae617c61932e4cbbdd9"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/architecture.md",
+      "destination": "docs/demo-handoff/reference/uob/docs/architecture.md",
+      "sha256": "a8aaeb32b6325b2c2b3b89ca47126b9fa3827c1d4c3ebd7613f7a389967b9ccc"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/component-api.md",
+      "destination": "docs/demo-handoff/reference/uob/docs/component-api.md",
+      "sha256": "de2cb2400a4ece67b33757315f48bbd85616d4a943996f69e88f07c554a5a49c"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/FINANCIAL_FOUNDATION.md",
+      "destination": "docs/demo-handoff/reference/uob/docs/FINANCIAL_FOUNDATION.md",
+      "sha256": "54e78c6d62502e08f570978b678ede4128d2aab3665af728691d70a115de9f0d"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/demo/HELIOS_HARDENING_PLAN.md",
+      "destination": "docs/demo-handoff/reference/uob/docs/HELIOS_HARDENING_PLAN.md",
+      "sha256": "7ca919512666a5957dbe6806c569fa543543f901b0a2ca4923800bcecdc1bad9"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/gel_data_query_pilot/docs/nl_to_sql_literature_review.md",
+      "destination": "docs/demo-handoff/research/nl-to-sql-literature-review.md",
+      "sha256": "3f1837155980f36e9a078a4e6c74e373c5fec6f47ce372c48cab9a99559ade53"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/anti_money_laundry_blueprint/docs/semantic_investigation.md",
+      "destination": "docs/demo-handoff/reference/aml/semantic_investigation.md",
+      "sha256": "769e2607431e29fd9912179a2d61712018702f0b6e88fb3e0f323980ceca75e4"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/anti_money_laundry_blueprint/docs/kyc_semantic_controls.md",
+      "destination": "docs/demo-handoff/reference/aml/kyc_semantic_controls.md",
+      "sha256": "b6b7df680f921877ee13509de4a9756d4f26bdb135edd3d079e0847e3d94939d"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/anti_money_laundry_blueprint/docs/kyc_audit_and_multimodal_demo.md",
+      "destination": "docs/demo-handoff/reference/aml/kyc_audit_and_multimodal_demo.md",
+      "sha256": "f2a8d83a12897be106e5106df2878af957301229f4dfd4f32185d3b0d2405e31"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/README.md",
+      "destination": "ui/sp-group-screenshot-samples/README.md",
+      "sha256": "ccfc1d948e249e6adc973ac41a5930f25f3d03b4f2896caf884b085024378200"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/build_power_pages.py",
+      "destination": "ui/sp-group-screenshot-samples/build_power_pages.py",
+      "sha256": "198784f6a4b17a959db14ccc401b0bed5b7df97d7be88d24896311365ff1a1ce"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/cache_logo.py",
+      "destination": "ui/sp-group-screenshot-samples/cache_logo.py",
+      "sha256": "a5defefd3279f95c2f65b64f43a339cd97047d9bb1f523bc2fcfa101c7f5a571"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/check_pages.py",
+      "destination": "ui/sp-group-screenshot-samples/check_pages.py",
+      "sha256": "7d15756a8a1b81f20267936517f7a9cc9ffb9e3249f67b37caf054e2f9924eb9"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/check_static.py",
+      "destination": "ui/sp-group-screenshot-samples/check_static.py",
+      "sha256": "bf47196ee90f9c8ff7bf86b5141206be15be7969f9ebec8a4f85fc452b3a03c6"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/context-models.json",
+      "destination": "ui/sp-group-screenshot-samples/context-models.json",
+      "sha256": "4c7170888eccc079a30bde76869603b7a4f02ae85c1c07cae8d863ded250668a"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/context.html",
+      "destination": "ui/sp-group-screenshot-samples/context.html",
+      "sha256": "f53b1c645701b76ea437f353abd2c8e1e2b15cf333af3705c9fef5d8a40783fc"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/data.html",
+      "destination": "ui/sp-group-screenshot-samples/data.html",
+      "sha256": "659d99185f8ac90e3552276926ac64f76ebdc16b24cf0548f4448b47d6016546"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/index.html",
+      "destination": "ui/sp-group-screenshot-samples/index.html",
+      "sha256": "bd43b9a911a28d1f118d73b4c7f2a5116296979861a6f67da11379982222297f"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/nifi.html",
+      "destination": "ui/sp-group-screenshot-samples/nifi.html",
+      "sha256": "c2e6637eda2204e4ecf93365d43954065231ec160fb1375608cee82638a3487e"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/observability.html",
+      "destination": "ui/sp-group-screenshot-samples/observability.html",
+      "sha256": "55f34823647b32dc2a8d46c94ac1dddbb88b5c6a2f87ef7cad58f82010653389"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/sample-data.json",
+      "destination": "ui/sp-group-screenshot-samples/sample-data.json",
+      "sha256": "8a345072724c26d13f02c85196a5e5d6c44cebbebfa38b9f84dcf2945d769e8c"
+    },
+    {
+      "source": "/Users/zhongqishuai/Projects/cldr_projects/uob-ai-data-operations-workspace/ui/sp-group-screenshot-samples/source-manifest.json",
+      "destination": "ui/sp-group-screenshot-samples/source-manifest.json",
+      "sha256": "32eb0e9929dcee06c994fc9a9b12b41d6dcf9eb56445f55c99828b16c2b03914"
+    }
+  ],
+  "excluded": [
+    "operator settings",
+    "credentials",
+    "environment files",
+    "runtime conversations",
+    "model caches",
+    "deployment database binaries"
+  ]
+}

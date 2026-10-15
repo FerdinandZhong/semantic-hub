@@ -1,0 +1,471 @@
+{
+  "date": "2026-10-12",
+  "scope": "Synthetic local four-pack builder acceptance; no business approval",
+  "provider": "openai",
+  "model": "gpt-4o",
+  "base_url": "https://api.openai.com/v1",
+  "tests": {
+    "builder_runtime_artifact_retrieval": 106,
+    "compiler_mcp_conversation": 24,
+    "browser_lifecycle": 8,
+    "browser_builder_increment": 8
+  },
+  "live_proposals": [
+    {
+      "pack": "finance",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "scope": "live proposal from synthetic serving evidence; not human-approved",
+      "source_documents": 0,
+      "metrics": [
+        {
+          "name": "total_transaction_amount",
+          "description": "The total amount of money involved in all transactions, in the original currency.",
+          "unit": "unspecified",
+          "grain": "Aggregate over transactions source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "SUM(transactions.amount)",
+          "sql": "SELECT\n  SUM(transactions.amount) AS total_transaction_amount\nFROM transactions AS transactions\nLIMIT 201",
+          "rows": [
+            [
+              "845096.27000000"
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": []
+        },
+        {
+          "name": "total_amount_in_sgd_transactions",
+          "description": "The total transaction amount converted to Singapore Dollars (SGD).",
+          "unit": "unspecified",
+          "grain": "Aggregate over transactions source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "SUM(transactions.amount_sgd)",
+          "sql": "SELECT\n  SUM(transactions.amount_sgd) AS total_amount_in_sgd_transactions\nFROM transactions AS transactions\nLIMIT 201",
+          "rows": [
+            [
+              "708871.38000000"
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": []
+        },
+        {
+          "name": "total_amount_in_sgd_ledger_postings",
+          "description": "The total monetary amount of ledger postings, expressed in Singapore Dollars.",
+          "unit": "unspecified",
+          "grain": "Aggregate over ledger_postings source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "SUM(ledger_postings.amount_sgd)",
+          "sql": "SELECT\n  SUM(ledger_postings.amount_sgd) AS total_amount_in_sgd_ledger_postings\nFROM ledger_postings AS ledger_postings\nLIMIT 201",
+          "rows": [
+            [
+              "0E-8"
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": []
+        },
+        {
+          "name": "total_amount_sgd",
+          "description": "Settled sender outflow, SGD; fixed synthetic FX.",
+          "unit": "SGD",
+          "grain": "One aggregate over the selected source records",
+          "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+          "expression": "SUM(payments.amount_sgd)",
+          "sql": "SELECT\n  SUM(payments.amount_sgd) AS total_amount_sgd\nFROM payments AS payments\nLIMIT 201",
+          "rows": [
+            [
+              "686572.96000000"
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": []
+        },
+        {
+          "name": "number_of_payments",
+          "description": "The total number of payment transactions recorded.",
+          "unit": "unspecified",
+          "grain": "Aggregate over payments source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "COUNT(payments.transaction_id)",
+          "sql": "SELECT\n  COUNT(payments.transaction_id) AS number_of_payments\nFROM payments AS payments\nLIMIT 201",
+          "rows": [
+            [
+              4850
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": []
+        }
+      ],
+      "status": "generated_and_executable",
+      "proposal_warnings": [
+        "total_transaction_amount: source rows contain multiple currencies; require a currency group, explicit currency filter, or verified FX conversion rule before approval.",
+        "total_amount_sgd: preserved declared name and business description for the exact source formula; raw LLM wording remains in proposer_output."
+      ],
+      "artifact_warnings": [
+        "Serving snapshot contains no source documents",
+        "accounts: no inferred identifier; explicit entity links remain available for verified unique keys",
+        "fx_rates: no inferred identifier; explicit entity links remain available for verified unique keys"
+      ],
+      "field_count": 26,
+      "draft_unchanged": true,
+      "attached_sample": true,
+      "document_coverage": {
+        "selected_citations": [
+          "attachment:document-a22161232da77e8ad885ff76509eddaa"
+        ],
+        "selected_count": 1,
+        "total_count": 1,
+        "source_count": 0,
+        "attachment_count": 1,
+        "document_limit": 5,
+        "characters_per_document": 1500
+      },
+      "business_review": "required; SQL execution is not business correctness",
+      "llm_calls": 7,
+      "elapsed_seconds": 23.05,
+      "final_artifact_audit": {
+        "rebuilt_from_unchanged_live_proposal": true,
+        "same_semantic_layer": true,
+        "document_citations_resolve": true,
+        "graph_edges_resolve": true,
+        "source_documents": 0,
+        "appended_documents": 1,
+        "authored_provenance": "draft_with_llm_provenance"
+      }
+    },
+    {
+      "pack": "manufacturing",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "scope": "live proposal from synthetic serving evidence; not human-approved",
+      "source_documents": 12,
+      "metrics": [
+        {
+          "name": "planned_downtime_minutes",
+          "description": "Total planned maintenance minutes; not observed downtime.",
+          "unit": "minutes",
+          "grain": "One aggregate over the selected source records",
+          "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+          "expression": "SUM(work_orders.downtime_minutes)",
+          "sql": "SELECT\n  SUM(work_orders.downtime_minutes) AS planned_downtime_minutes\nFROM work_orders AS work_orders\nLIMIT 201",
+          "rows": [
+            [
+              "312.00000000"
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "work_orders.downtime_minutes"
+          ]
+        },
+        {
+          "name": "average_air_temperature",
+          "description": "The average air temperature measured in Kelvin across all sensor readings.",
+          "unit": "Kelvin",
+          "grain": "Aggregate over sensor_readings source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "AVG(sensor_readings.air_temperature_k)",
+          "sql": "SELECT\n  AVG(sensor_readings.air_temperature_k) AS average_air_temperature\nFROM sensor_readings AS sensor_readings\nLIMIT 201",
+          "rows": [
+            [
+              299.91541666666666
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "sensor_readings.air_temperature_k"
+          ]
+        },
+        {
+          "name": "average_process_temperature",
+          "description": "The average process temperature measured in Kelvin across all sensor readings.",
+          "unit": "Kelvin",
+          "grain": "Aggregate over sensor_readings source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "AVG(sensor_readings.process_temperature_k)",
+          "sql": "SELECT\n  AVG(sensor_readings.process_temperature_k) AS average_process_temperature\nFROM sensor_readings AS sensor_readings\nLIMIT 201",
+          "rows": [
+            [
+              309.91545833333333
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "sensor_readings.process_temperature_k"
+          ]
+        },
+        {
+          "name": "average_rotational_speed",
+          "description": "The average rotational speed measured in RPM across all sensor readings.",
+          "unit": "RPM",
+          "grain": "Aggregate over sensor_readings source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "AVG(sensor_readings.rotational_speed_rpm)",
+          "sql": "SELECT\n  AVG(sensor_readings.rotational_speed_rpm) AS average_rotational_speed\nFROM sensor_readings AS sensor_readings\nLIMIT 201",
+          "rows": [
+            [
+              1518.775
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "sensor_readings.rotational_speed_rpm"
+          ]
+        },
+        {
+          "name": "average_torque",
+          "description": "The average torque measured in Newton-meters across all sensor readings.",
+          "unit": "Newton-meters",
+          "grain": "Aggregate over sensor_readings source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "AVG(sensor_readings.torque_nm)",
+          "sql": "SELECT\n  AVG(sensor_readings.torque_nm) AS average_torque\nFROM sensor_readings AS sensor_readings\nLIMIT 201",
+          "rows": [
+            [
+              40.59770833333334
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "sensor_readings.torque_nm"
+          ]
+        },
+        {
+          "name": "average_tool_wear",
+          "description": "The average tool wear measured in minutes of operation across all sensor readings.",
+          "unit": "minutes",
+          "grain": "Aggregate over sensor_readings source records",
+          "time_rule": "No date filter; confirm the reporting period",
+          "expression": "AVG(sensor_readings.tool_wear_min)",
+          "sql": "SELECT\n  AVG(sensor_readings.tool_wear_min) AS average_tool_wear\nFROM sensor_readings AS sensor_readings\nLIMIT 201",
+          "rows": [
+            [
+              124.07083333333334
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "Unspecified metadata requires human confirmation.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "sensor_readings.tool_wear_min"
+          ]
+        }
+      ],
+      "status": "generated_and_executable",
+      "proposal_warnings": [
+        "Document evidence covers 5 of 13 documents; selected citations are recorded in evidence.document_coverage.",
+        "planned_downtime_minutes: preserved declared name and business description for the exact source formula; raw LLM wording remains in proposer_output."
+      ],
+      "artifact_warnings": [
+        "work_orders: no inferred identifier; explicit entity links remain available for verified unique keys"
+      ],
+      "field_count": 15,
+      "draft_unchanged": true,
+      "attached_sample": true,
+      "document_coverage": {
+        "selected_citations": [
+          "attachment:document-51a284a35067add872b88d5ae8a7db97",
+          "document:SYN-WO000",
+          "document:SYN-WO001",
+          "document:SYN-WO002",
+          "document:SYN-WO003"
+        ],
+        "selected_count": 5,
+        "total_count": 13,
+        "source_count": 12,
+        "attachment_count": 1,
+        "document_limit": 5,
+        "characters_per_document": 1500
+      },
+      "business_review": "required; SQL execution is not business correctness",
+      "llm_calls": 4,
+      "elapsed_seconds": 13.97,
+      "final_artifact_audit": {
+        "rebuilt_from_unchanged_live_proposal": true,
+        "same_semantic_layer": true,
+        "document_citations_resolve": true,
+        "graph_edges_resolve": true,
+        "source_documents": 12,
+        "appended_documents": 1,
+        "authored_provenance": "draft_with_llm_provenance"
+      }
+    },
+    {
+      "pack": "pharma",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "scope": "live proposal from synthetic serving evidence; not human-approved",
+      "source_documents": 30,
+      "metrics": [
+        {
+          "name": "average_assay_percent",
+          "description": "Mean draft assay percentage. No product-release or clinical decision is implied.",
+          "unit": "%",
+          "grain": "One aggregate over the selected source records",
+          "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+          "expression": "AVG(lab_results.assay_percent)",
+          "sql": "SELECT\n  AVG(lab_results.assay_percent) AS average_assay_percent\nFROM lab_results AS lab_results\nLIMIT 201",
+          "rows": [
+            [
+              98.275
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": []
+        }
+      ],
+      "status": "generated_and_executable",
+      "proposal_warnings": [
+        "Document evidence covers 5 of 31 documents; selected citations are recorded in evidence.document_coverage."
+      ],
+      "artifact_warnings": [
+        "deviations: no inferred identifier; explicit entity links remain available for verified unique keys",
+        "lab_results: no inferred identifier; explicit entity links remain available for verified unique keys"
+      ],
+      "field_count": 17,
+      "draft_unchanged": true,
+      "attached_sample": true,
+      "document_coverage": {
+        "selected_citations": [
+          "attachment:document-957ac15b0c9022a4cd4638dcd3d4ceda",
+          "document:SYN-B000",
+          "document:SYN-D000",
+          "document:SYN-B001",
+          "document:SYN-B002"
+        ],
+        "selected_count": 5,
+        "total_count": 31,
+        "source_count": 30,
+        "attachment_count": 1,
+        "document_limit": 5,
+        "characters_per_document": 1500
+      },
+      "business_review": "required; SQL execution is not business correctness",
+      "llm_calls": 5,
+      "elapsed_seconds": 12.18,
+      "final_artifact_audit": {
+        "rebuilt_from_unchanged_live_proposal": true,
+        "same_semantic_layer": true,
+        "document_citations_resolve": true,
+        "graph_edges_resolve": true,
+        "source_documents": 30,
+        "appended_documents": 1,
+        "authored_provenance": "draft_with_llm_provenance"
+      }
+    },
+    {
+      "pack": "power",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "scope": "live proposal from synthetic serving evidence; not human-approved",
+      "source_documents": 0,
+      "metrics": [
+        {
+          "name": "measured_import_kwh",
+          "description": "Measured imported energy, kWh. Only VALID, non-estimated readings; dates use Asia/Singapore.",
+          "unit": "kWh",
+          "grain": "One aggregate over the selected source records",
+          "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+          "expression": "SUM(CASE WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false' THEN meter_readings.import_kwh ELSE 0 END)",
+          "sql": "SELECT\n  SUM(\n    CASE\n      WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false'\n      THEN meter_readings.import_kwh\n      ELSE 0\n    END\n  ) AS measured_import_kwh\nFROM meter_readings AS meter_readings\nLIMIT 201",
+          "rows": [
+            [
+              "8547.28200000"
+            ]
+          ],
+          "reference_sql_empty": true,
+          "assumptions": [
+            "The metric only includes readings that are marked as 'VALID' and not estimated.",
+            "LLM-generated candidate; business aggregation and inclusion rules require human review."
+          ],
+          "ontology_concepts": [
+            "meter_readings",
+            "meter_readings.import_kwh",
+            "meter_readings.quality_status",
+            "meter_readings.is_estimated"
+          ]
+        }
+      ],
+      "status": "generated_and_executable",
+      "proposal_warnings": [],
+      "artifact_warnings": [
+        "Serving snapshot contains no source documents",
+        "feeders: no inferred identifier; explicit entity links remain available for verified unique keys"
+      ],
+      "field_count": 17,
+      "draft_unchanged": true,
+      "attached_sample": true,
+      "document_coverage": {
+        "selected_citations": [
+          "attachment:document-db3f04649072778475eee2ecd31199b6"
+        ],
+        "selected_count": 1,
+        "total_count": 1,
+        "source_count": 0,
+        "attachment_count": 1,
+        "document_limit": 5,
+        "characters_per_document": 1500
+      },
+      "business_review": "required; SQL execution is not business correctness",
+      "llm_calls": 5,
+      "elapsed_seconds": 12.69,
+      "final_artifact_audit": {
+        "rebuilt_from_unchanged_live_proposal": true,
+        "same_semantic_layer": true,
+        "document_citations_resolve": true,
+        "graph_edges_resolve": true,
+        "source_documents": 0,
+        "appended_documents": 1,
+        "authored_provenance": "draft_with_llm_provenance"
+      }
+    }
+  ]
+}

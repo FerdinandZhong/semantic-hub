@@ -1,5 +1,8 @@
 # Helios MCP server
 
+For the current local Semantic Hub workspace, use the [consumer MCP adapter](../apps/semantic-hub-mcp/README.md) and [API contract](semantic-hub-consumer-api.md).
+The application described below serves the separate production artifact and authorization stack.
+
 The MCP Application exposes Helios's governed semantic and data tools to the
 Helios conversation client and to registered external agents. It speaks MCP
 Python SDK 2.x Streamable HTTP with stateless JSON responses.
@@ -11,7 +14,7 @@ the complete identity, LLM, authorization, and query flow.
 
 Create an Application with:
 
-- script `helios/apps/mcp/app.py`;
+- script `helios/apps/helios/mcp/app.py`;
 - a stable subdomain such as `helios-mcp`;
 - the same standard PBJ Python 3.12 runtime used by the API;
 - **Enable Unauthenticated Access** selected at the Cloudera gateway.
@@ -118,29 +121,29 @@ in normal Helios grant records. A shared bearer alone never grants access.
 
 ## Current tools
 
-- `list_models()` — grant-filtered available models.
-- `describe_model(model)` — datasets, fields, metrics, and relationships.
-- `search_semantics(question, limit, model)` — semantic matches.
-- `describe(name, model)` — one semantic object.
-- `compile_query(metrics, dimensions, filters, limit, engine, model)` —
-  compile semantic inputs to SQL.
-- `run_query(metrics, dimensions, filters, limit, model)` — compile and run
-  through delegated Impala; maximum 1,000 rows.
-- `explain_lineage(column, depth, model)` — Atlas column lineage.
+- `list_models()` — grant-filtered published model inventory.
+- `discover_models(question, limit)` — discover authorized published models.
+- `resolve_context(question, model)` — bounded definitions, dependencies, and a `bundle_id`.
+- `compile_query(metrics, dimensions, filters, limit, engine, model, bundle_id)` — compile only the validated bundle.
+- `run_query(metrics, dimensions, filters, limit, model, bundle_id)` — compile and execute with separate data authorization.
 
-Published `semantic.ossie.json` is the authoritative model source. MCP loads it
-through the same `SemanticModel` and `Compiler` used by other Helios consumers.
-If no model has been published, the latest proposal is converted to that
-canonical in-memory shape before any tool reads it.
+The conversation client exposes only these five tools.
+Compilation and execution require a current bundle bound to caller, policy, session, and published release.
+Missing or invalid bundles return `retrieval_bundle_required` or `retrieval_bundle_invalid`.
+`describe_model`, `describe`, and `search_semantics` remain Python helpers, not registered agent tools.
+The server separately exposes Atlas lineage and document/entity tools.
+Document tools are excluded from this conversation workflow until source/model filtering is verified.
 
-Dimensions and filters may use `dataset.field`, a physical
-`database.table.field`, or an unambiguous field name, label, or synonym. Metrics
-may use their canonical names or unambiguous synonyms. Filter objects accept
-`column` for backward compatibility or the equivalent `field` key.
-Search results include each field's Ossie datatype. The compiler validates
-filter values against that datatype, safely converts numeric strings to numeric
-SQL literals, and rejects unsafe combinations before contacting Impala with
-`invalid_filter_value_type`.
+Published Ossie artifacts are authoritative; the model store rejects unpublished proposal fallback.
+Compilation uses the shared compiler with the bounded model returned by retrieval validation.
+See [indexed retrieval and budgets](semantic-retrieval.md) for the current contract and limitations.
+
+Use metric names and field identifiers returned by `resolve_context`.
+The typed request must stay inside that bundle's datasets, fields, metrics and relationships.
+Legacy name normalization cannot authorize or add definitions outside the bundle.
+Filters accept `column` or the equivalent `field` key, with `op` and `value`.
+Preserve the returned datatype; use JSON numbers for numeric fields.
+The compiler validates values before execution and rejects invalid combinations with `invalid_filter_value_type`.
 
 Filters use objects such as:
 
@@ -152,7 +155,8 @@ Filters use objects such as:
     {"column": "sales.date.year", "op": "=", "value": 2001}
   ],
   "limit": 20,
-  "model": "sales-model"
+  "model": "sales-model",
+  "bundle_id": "REPLACE_WITH_RESOLVE_CONTEXT_BUNDLE_ID"
 }
 ```
 

@@ -1,0 +1,160 @@
+[
+  {
+    "id": "document",
+    "question": "What share of the entire prescription medicine market did North America have in 2025?",
+    "plan_status": "ready",
+    "message": null,
+    "agent": {
+      "framework": "DeepSeek Harness",
+      "sdk_version": "0.1.5rc1",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "turn_id": "turn-068fec21c406974f735fd9c7",
+      "tool_budget": 12,
+      "trace": [
+        {
+          "tool": "inspect_model",
+          "status": "checked"
+        },
+        {
+          "tool": "read_document_evidence",
+          "status": "checked"
+        },
+        {
+          "tool": "prepare_document",
+          "status": "ready",
+          "message": "AI will inspect published document evidence for your original question: What share of the entire prescription medicine market did North America have in 2025?"
+        }
+      ],
+      "failure_type": null,
+      "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+    },
+    "kind": "document",
+    "answer_status": "answered",
+    "claims": [
+      {
+        "text": "In 2025, North America (USA & Canada) had a 54.7% share of the world pharmaceutical (prescription) market.",
+        "citations": [
+          {
+            "id": "passage-2d4842999a1cb2b414335f91",
+            "title": "the-pharmaceutical-industry-in-figures-2026",
+            "location": "page 14",
+            "citation": "material-b97c44e29c874652a79eae7a4a2c7983@1#chunk_e2ced750d02c19dc95a99d02",
+            "document_id": "material-b97c44e29c874652a79eae7a4a2c7983",
+            "document_revision": 1,
+            "original_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+            "attachment_sha256": "a3afa105759d7486c7e95e58932e83ea1fc3331381c10555b8cc72efde431d38",
+            "attachment_id": "document-09a588c9089ff938381a3b164838dd1e",
+            "preview_url": "/demo/api/materials/material-b97c44e29c874652a79eae7a4a2c7983/preview?revision=1&page=14",
+            "extraction": "source_text",
+            "links": [
+              {
+                "target": "field:industry_observations.indicator",
+                "reviewer": "qishuai",
+                "note": "我已对照 EFPIA 2026 原始 PDF 核对物理页码 14。该页描述 2025 年按出厂价格计算的整体处方药市场，北美包含美国和加拿大。本次批准仅用于范围说明和排除依据，不证明也不替换第 4 页的美国新药销售占比 74.1%。本次不包含零售价格构成图。"
+              },
+              {
+                "target": "metric:us_new_medicine_sales_share_percent",
+                "reviewer": "qishuai",
+                "note": "我已对照 EFPIA 2026 原始 PDF 核对物理页码 14。该页描述 2025 年按出厂价格计算的整体处方药市场，北美包含美国和加拿大。本次批准仅用于范围说明和排除依据，不证明也不替换第 4 页的美国新药销售占比 74.1%。本次不包含零售价格构成图。"
+              }
+            ],
+            "quote": "EFPIA Key Data | 2026 14 PHARMACEUTICAL SALES PRICE STRUCTURE The world pharmaceutical (prescription) market was worth an estimated € 1,475,815 million ($ 1,667,671 million) at ex-manufacturer prices in 2025. The North American market (USA & Canada) remained the world’s largest market with a 54.7% share, well ahead of Europe, China and Japan. Distribution margins, which are generally fixed by governments, and VAT rates differ significantly from country to country in Europe."
+          }
+        ]
+      }
+    ],
+    "rows": null
+  },
+  {
+    "id": "document_wrong_period",
+    "question": "What share of the entire prescription medicine market did North America have from 2020 to 2024?",
+    "plan_status": "needs_clarification",
+    "message": "The question requests 2020–2024. The selected evidence does not cover that period (years present: 2024, 2025, 2026). Add evidence or explicitly change the question.",
+    "agent": {
+      "framework": "DeepSeek Harness",
+      "sdk_version": "0.1.5rc1",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "turn_id": "turn-c188d68821d054c35112a256",
+      "tool_budget": 12,
+      "trace": [
+        {
+          "tool": "inspect_model",
+          "status": "checked"
+        },
+        {
+          "tool": "request_clarification",
+          "status": "rejected",
+          "failure_type": "DemoError",
+          "message": "Inspect the published document evidence before concluding that this model cannot answer."
+        },
+        {
+          "tool": "read_document_evidence",
+          "status": "checked"
+        },
+        {
+          "tool": "prepare_document",
+          "status": "needs_clarification",
+          "message": "The question requests 2020–2024. The selected evidence does not cover that period (years present: 2024, 2025, 2026). Add evidence or explicitly change the question."
+        }
+      ],
+      "failure_type": null,
+      "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+    }
+  },
+  {
+    "id": "hybrid",
+    "question": "What is the US share of sales for new medicines launched during 2020–2024, and what share of the entire prescription medicine market did North America have in 2025?",
+    "plan_status": "needs_clarification",
+    "message": "For the US share of sales for new medicines launched during 2020–2024, the coverage tool requires a specific launch period range. This is needed because the launch period, sales year, and report year are distinct. Please specify the start and end years explicitly for the new medicine launch cohort. Without this clarification, only the North American market share from the document can be addressed.",
+    "agent": {
+      "framework": "DeepSeek Harness",
+      "sdk_version": "0.1.5rc1",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "turn_id": "turn-d6fd5bda5e271cbe86f7d8e2",
+      "tool_budget": 12,
+      "trace": [
+        {
+          "tool": "inspect_model",
+          "status": "checked"
+        },
+        {
+          "tool": "inspect_coverage",
+          "status": "needs_clarification",
+          "metric": "us_new_medicine_sales_share_percent",
+          "coverage": [
+            {
+              "table": "industry_observations",
+              "kind": "cohort",
+              "fields": [
+                "industry_observations.period_start",
+                "industry_observations.period_end"
+              ],
+              "periods": [
+                [
+                  2020,
+                  2024
+                ]
+              ],
+              "truncated": false
+            }
+          ],
+          "message": "Specify one launch cohort as a start year and end year. Launch period, sales year, and report year are different."
+        },
+        {
+          "tool": "read_document_evidence",
+          "status": "checked"
+        },
+        {
+          "tool": "request_clarification",
+          "status": "needs_clarification",
+          "message": "For the US share of sales for new medicines launched during 2020–2024, the coverage tool requires a specific launch period range. This is needed because the launch period, sales year, and report year are distinct. Please specify the start and end years explicitly for the new medicine launch cohort. Without this clarification, only the North American market share from the document can be addressed."
+        }
+      ],
+      "failure_type": null,
+      "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+    }
+  }
+]

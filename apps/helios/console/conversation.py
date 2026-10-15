@@ -29,6 +29,7 @@ from helios_core.metadata import MetadataRepository, SemanticRevision
 from helios_core.tracing import TraceRecorder, utcnow
 
 LOGGER = logging.getLogger(__name__)
+QUERY_TOOLS = frozenset({"list_models", "discover_models", "resolve_context", "compile_query", "run_query"})
 
 
 class ConversationUnavailable(RuntimeError):
@@ -110,6 +111,7 @@ async def inspect_mcp(
                             "description": tool.description or "",
                         }
                         for tool in listed.tools
+                        if tool.name in QUERY_TOOLS
                     ],
                 }
 
@@ -122,6 +124,8 @@ class ConversationService:
         *,
         max_tool_rounds: int = 6,
         max_result_chars: int = 50_000,
+        max_input_tokens: int = 16_000,
+        token_counter=None,
         trace_repository: MetadataRepository | None = None,
     ):
         self.llm = llm
@@ -131,6 +135,10 @@ class ConversationService:
         self.mcp = mcp
         self.max_tool_rounds = max_tool_rounds
         self.max_result_chars = max_result_chars
+        if type(max_input_tokens) is not int or max_input_tokens < 1:
+            raise ValueError("max_input_tokens must be a positive integer")
+        self.max_input_tokens = max_input_tokens
+        self.token_counter = token_counter
         self.trace_repository = trace_repository
 
     @classmethod
@@ -247,6 +255,7 @@ class ConversationService:
                                 ),
                             }
                             for tool in listed.tools
+                            if tool.name in QUERY_TOOLS
                         ]
                         return await self._tool_loop(
                             session,
@@ -306,9 +315,11 @@ class ConversationService:
         request_id: str | None = None,
         recorder: TraceRecorder | None = None,
     ) -> dict[str, Any]:
+        tools = [tool for tool in tools if tool["name"] in QUERY_TOOLS]
         tool_by_name = {tool["name"]: tool for tool in tools}
         messages: list[dict[str, Any]] = [
-            *_bounded_history(history or []),
+            *[{"role": item["role"], "content": item["content"]} for item in history or []
+              if item.get("role") in {"user", "assistant"} and isinstance(item.get("content"), str)],
             {"role": "user", "content": message}
         ]
         trace: list[dict[str, Any]] = []
@@ -319,27 +330,17 @@ class ConversationService:
         tokens_out = 0
         system = (
             "You are the Helios data assistant. Use only the supplied Helios "
-            "MCP tools for semantic metadata, compilation, lineage, structured and unstructured data. "
+            "MCP tools for published semantic metadata and structured warehouse queries. "
             f"The authorized model is {model_id!r}; never request another model.\n\n"
             "## Querying structured data (warehouse):\n"
-            "Before compiling or running a query, call search_semantics and copy metric names exactly "
+            "Before compiling or running a query, call resolve_context and supply its bundle_id. Copy metric names exactly "
             "from its results. Dimensions and filter columns must use exact database.table.column "
-            "identifiers returned by search_semantics or describe. Never invent, shorten, or convert "
+            "identifiers returned by resolve_context. Never invent, shorten, or convert "
             "semantic names. Preserve datatype: JSON numbers for numeric, booleans for Boolean, "
             "ISO strings for Date/Timestamp. If the tool reports an invalid query or filter value, "
-            "search again and correct identifiers and JSON types.\n\n"
-            "## Crawled documents (emails, chats, reports):\n"
-            "For what people wrote or said, such as complaints, reasons and requests, call "
-            "search_evidence with the user's question in their own words; it returns passages by "
-            "meaning, not by keyword, one per document. Answer from the text of the passages, "
-            "quoting what was written. For what documents "
-            "claim about one customer, item, store, sale or return, call entity_claims. Quote or "
-            "paraphrase only passages the tools returned, and say which document type they came from.\n\n"
-            "## Combining documents and tables:\n"
-            "Each passage lists the entities its document is linked to, with warehouse keys such as "
-            "tpcds.customer:c_customer_sk=12345. To add figures from the warehouse, use those key "
-            "values as filters in run_query, after finding the field with search_semantics. A "
-            "passage with no linked entity cannot be joined to a table; say so.\n\n"
+            "resolve context again and correct identifiers and JSON types.\n\n"
+            "Document questions are unsupported in this bounded query workflow. "
+            "Tell the user when a question requires document evidence.\n\n"
             "## General rules:\n"
             "Never label semantic validation, authorization, or tool-argument errors as an Impala outage. "
             "Explain results accurately and do not invent data. If a tool reports that it is "
@@ -373,6 +374,20 @@ class ConversationService:
             }
 
         for round_index in range(self.max_tool_rounds):
+            # Count the complete provider input each round, including schemas and results.
+            encoded_input = json.dumps({"system": system, "messages": messages, "tools": tools}, ensure_ascii=False)
+            try:
+                input_size = (self.token_counter(encoded_input) if self.token_counter
+                              else len(encoded_input.encode("utf-8")))
+                if type(input_size) is not int or input_size < 0:
+                    raise ValueError("invalid token count")
+            except Exception:
+                return failure_result({"error": "conversation_input_budget_invalid",
+                    "message": "The model input budget could not be verified.", "retryable": False})
+            if input_size > self.max_input_tokens:
+                return failure_result({"error": "conversation_input_budget_exceeded",
+                    "message": "The complete conversation exceeds the model input budget. Start a new conversation with a smaller request.",
+                    "retryable": False})
             llm_started = utcnow()
             try:
                 with anyio.fail_after(self.provider_timeout_seconds):
@@ -578,7 +593,7 @@ class ConversationService:
                         result = {
                             **result,
                             "recovery": (
-                                "Call search_semantics again. Copy metric "
+                                "Call resolve_context again and supply its bundle_id. Copy metric "
                                 "names exactly and use full "
                                 "database.table.column field identifiers "
                                 "from the tool results before retrying. "

@@ -1,0 +1,54 @@
+{
+  "method": "Real Chromium browser; saved metric interpretation uses the live server. Run responses are browser-intercepted fixtures. No LLM query or published-version mutation.",
+  "screenshot_review": "Reviewed no_data mobile and zero desktop screenshots with view_image; clear missing-result heading, visible scope, and no clipping.",
+  "cases": [
+    {
+      "case": "no_data",
+      "viewport_width": 1440,
+      "answer": "No matching value",
+      "context_visible": true,
+      "horizontal_overflow": false,
+      "screenshot": "/tmp/playground-no_data-1440.png"
+    },
+    {
+      "case": "no_data",
+      "viewport_width": 390,
+      "answer": "No matching value",
+      "context_visible": true,
+      "horizontal_overflow": false,
+      "screenshot": "/tmp/playground-no_data-390.png"
+    },
+    {
+      "case": "legacy_null",
+      "viewport_width": 1440,
+      "answer": "No matching value",
+      "context_visible": true,
+      "horizontal_overflow": false,
+      "screenshot": "/tmp/playground-legacy_null-1440.png"
+    },
+    {
+      "case": "legacy_null",
+      "viewport_width": 390,
+      "answer": "No matching value",
+      "context_visible": true,
+      "horizontal_overflow": false,
+      "screenshot": "/tmp/playground-legacy_null-390.png"
+    },
+    {
+      "case": "zero",
+      "viewport_width": 1440,
+      "answer": "0 %",
+      "context_visible": true,
+      "horizontal_overflow": false,
+      "screenshot": "/tmp/playground-zero-1440.png"
+    },
+    {
+      "case": "zero",
+      "viewport_width": 390,
+      "answer": "0 %",
+      "context_visible": true,
+      "horizontal_overflow": false,
+      "screenshot": "/tmp/playground-zero-390.png"
+    }
+  ]
+}

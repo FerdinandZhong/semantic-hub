@@ -1,0 +1,91 @@
+{
+  "sector": "pharma_intelligence",
+  "synthetic": false,
+  "state": "IN_REVIEW",
+  "generator_version": 1,
+  "source": {
+    "name": "FDA CDER and EFPIA curated public evidence",
+    "url": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025"
+  },
+  "source_inputs": [
+    {
+      "source_id": "FDA_APPROVALS_2025",
+      "title": "Novel Drug Approvals for 2025",
+      "publisher": "FDA CDER",
+      "publication_period": "2025",
+      "source_url": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025",
+      "sha256": "cf8d6fd54a9eb78439b9d579b7ccb04b96449f381dee03124b98538ab693dace",
+      "retrieved_date": "2026-10-13"
+    },
+    {
+      "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+      "title": "Drug Trials Snapshots: HERNEXEOS",
+      "publisher": "FDA",
+      "publication_period": "Original approval: 2025-08-08",
+      "source_url": "https://www.fda.gov/drugs/drug-trials-snapshots/drug-trials-snapshots-hernexeos",
+      "sha256": "ba9461f2c5e800a3672dcf925cf5341bb8b869115b3b4897e8a463c3aa174457",
+      "retrieved_date": "2026-10-13"
+    },
+    {
+      "source_id": "EFPIA_FIGURES_2026",
+      "title": "The Pharmaceutical Industry in Figures 2026",
+      "publisher": "EFPIA",
+      "publication_period": "2026 report; selected chart covers 2020-2024",
+      "source_url": "https://www.efpia.eu/media/owqczcqz/the-pharmaceutical-industry-in-figures-2026.pdf",
+      "sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+      "retrieved_date": "2026-10-13"
+    },
+    {
+      "source_id": "FDA_HERNEXEOS_FIGURE_1",
+      "title": "HERNEXEOS efficacy population by sex, Figure 1",
+      "publisher": "FDA",
+      "publication_period": "Original approval: 2025-08-08",
+      "source_url": "https://www.fda.gov/files/Picture1_90.png",
+      "sha256": "34a048841a1cbe333550a1e0ac9fa69bb9ba3245a98b4772a7dbd5bddfd6f282",
+      "retrieved_date": "2026-10-13"
+    }
+  ],
+  "external_records_used": true,
+  "source_records_read": 119,
+  "generation_mode": "public-source-derived; curated published facts",
+  "curation_snapshot_sha256": "25efa57b3a2ff9a38f69bbf5baae3822f268a8b7dd86cb3f3f10ce39c62e1b21",
+  "limitations": [
+    "Bounded reference dataset, not a complete pharmaceutical pipeline database.",
+    "Original approval evidence is historical; current indications can differ.",
+    "Source inconsistencies are retained; semantic review remains pending.",
+    "Original PDF and image bytes remain in the source cache; serving documents are curated evidence briefs."
+  ],
+  "row_counts": {
+    "source_documents": 4,
+    "drugs": 46,
+    "approval_events": 46,
+    "trials": 1,
+    "trial_cohorts": 2,
+    "trial_results": 4,
+    "trial_demographics": 11,
+    "industry_observations": 5
+  },
+  "documents": 4,
+  "serving_root": "serving",
+  "evaluation_root": "evaluation",
+  "evaluation_policy": "Never crawl evaluation or include it in query prompts.",
+  "checksums": {
+    "evaluation/reference.json": "593860afdbac23484751ae7993124c288b2352790edd3431070b2842d87a4c4a",
+    "evaluation/references.json": "ffc469279edab0850a8a8239535b3cd57335b71b41c63ef395ab34af40340e3f",
+    "serving/approval_events.csv": "dca954db1283ce9b65d0994c964ac5b4230edd4885c5bfd6dcd4d47a4a8ec48a",
+    "serving/documents/approval_scope.md": "ae1eb7f6584926dc3d654556e5344aa747df7ac85a2cd1df19006f2497df0884",
+    "serving/documents/demographic_scope.md": "026d99d14610559a18d70d7696d413c32f1958d2a09ac9d20e7d9eda426f7afe",
+    "serving/documents/industry_chart_scope.md": "610b47f25a43008c1fa134feebc6adf59106692a7d0efbd73926220dadf1972c",
+    "serving/documents/trial_denominators.md": "ae5d99f5e19a86303f26a030d499e067c805ae82361acc4e551406586786e1cc",
+    "serving/documents.json": "a3d65238edcad288fe25c02879e9b9001dc59ba1f66b4dcaf2efacf13a15b1a2",
+    "serving/draft.ossie.json": "190df2936325a0317264c45fc696233219ba89ef829d729efb17e39eb5f0852b",
+    "serving/drugs.csv": "5995d02acd4d5931b6821096533b119e64dee96ff7e7b9cde7f38742baad2bb6",
+    "serving/industry_observations.csv": "d8520817a344fad027ec6403f8ed6ce33ca333bda9dec897542c9b603ee17ccc",
+    "serving/metadata.json": "aec3dbe11d3fcad5327e3054f8021fe454da891f814d1fa416da6c4583aa8359",
+    "serving/source_documents.csv": "e9ea6db8134ef72a2d9ba7a5de67a26d5b3f60eb1f9739d79ea4aa0bdfbd0ed0",
+    "serving/trial_cohorts.csv": "cfd379fd1cf415270ca9a54fc5ddbc59e7adcd2b6a8eabc07c94b878f9e06cd7",
+    "serving/trial_demographics.csv": "a3cc39f38314dd818057a41a5beea5b1f8f4f2246c7d023b96e28938451c7957",
+    "serving/trial_results.csv": "cb87cf2814884228bf3393c949039731d3ac7bcf8c1db9e62d23cf811daee60b",
+    "serving/trials.csv": "f5c60fe7cbdbef10238d83040701acf8e5ddb66c9066718afb9c82aed036735e"
+  }
+}

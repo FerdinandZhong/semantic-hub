@@ -1,0 +1,227 @@
+{
+  "schema": "uob.metadata.inventory.v1",
+  "mode": "sample",
+  "datasets": [
+    {
+      "source": "iceberg.synthetic_finance.customers",
+      "fields": [
+        {
+          "name": "customer_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "display_name",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "jurisdiction",
+          "type": "varchar",
+          "origin": "synthetic"
+        }
+      ],
+      "enrichment": null,
+      "description": "Independent synthetic fixture: customers"
+    },
+    {
+      "source": "iceberg.synthetic_finance.accounts",
+      "fields": [
+        {
+          "name": "account_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "customer_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "currency",
+          "type": "varchar",
+          "origin": "synthetic"
+        }
+      ],
+      "enrichment": null,
+      "description": "Independent synthetic fixture: accounts"
+    },
+    {
+      "source": "iceberg.synthetic_finance.fx_rates",
+      "fields": [
+        {
+          "name": "currency",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "sgd_rate",
+          "type": "decimal(12,6)",
+          "origin": "synthetic"
+        }
+      ],
+      "enrichment": null,
+      "description": "Independent synthetic fixture: fx rates"
+    },
+    {
+      "source": "iceberg.synthetic_finance.transactions",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "sender_account_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "receiver_account_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "origin": "synthetic"
+        },
+        {
+          "name": "currency",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "amount",
+          "type": "decimal(18,2)",
+          "origin": "synthetic"
+        },
+        {
+          "name": "amount_sgd",
+          "type": "decimal(18,2)",
+          "origin": "synthetic"
+        },
+        {
+          "name": "status",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "channel",
+          "type": "varchar",
+          "origin": "synthetic"
+        }
+      ],
+      "enrichment": null,
+      "description": "Independent synthetic fixture: transactions"
+    },
+    {
+      "source": "iceberg.synthetic_finance.ledger_postings",
+      "fields": [
+        {
+          "name": "posting_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "transaction_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "account_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "amount_sgd",
+          "type": "decimal(18,2)",
+          "origin": "synthetic"
+        }
+      ],
+      "enrichment": null,
+      "description": "Independent synthetic fixture: ledger postings"
+    },
+    {
+      "source": "iceberg.synthetic_finance.payments",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "customer_id",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "amount_sgd",
+          "type": "decimal(18,2)",
+          "origin": "synthetic"
+        },
+        {
+          "name": "jurisdiction",
+          "type": "varchar",
+          "origin": "synthetic"
+        },
+        {
+          "name": "booking_date",
+          "type": "date",
+          "origin": "synthetic"
+        }
+      ],
+      "enrichment": null,
+      "description": "Independent synthetic fixture: payments"
+    }
+  ],
+  "relationships": [
+    {
+      "from": "accounts.customer_id",
+      "to": "customers.customer_id"
+    },
+    {
+      "from": "transactions.sender_account_id",
+      "to": "accounts.account_id"
+    },
+    {
+      "from": "transactions.receiver_account_id",
+      "to": "accounts.account_id"
+    },
+    {
+      "from": "ledger_postings.transaction_id",
+      "to": "transactions.transaction_id"
+    },
+    {
+      "from": "payments.customer_id",
+      "to": "customers.customer_id"
+    }
+  ],
+  "lineage": [
+    {
+      "inputs": [
+        "transactions",
+        "accounts",
+        "customers"
+      ],
+      "output": "payments",
+      "origin": "synthetic transformation contract",
+      "rule": "Settled sender outflow; convert to SGD before aggregation; UTC booking date."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "outward payment",
+      "meaning": "One settled transfer viewed from its sender; counted once."
+    },
+    {
+      "term": "amount_sgd",
+      "meaning": "Transfer amount converted with fixed illustrative fixture FX rates."
+    }
+  ],
+  "limitations": [
+    "All data and lineage are synthetic; Atlas has not been contacted.",
+    "Relationships and glossary are authored fixture contracts, not inferred source facts.",
+    "No permissions are enforced by metadata labels."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "datasets": [
+    {
+      "name": "substations",
+      "fields": [
+        "substation_id",
+        "region"
+      ]
+    },
+    {
+      "name": "feeders",
+      "fields": [
+        "feeder_id",
+        "substation_id",
+        "voltage_kv"
+      ]
+    },
+    {
+      "name": "meters",
+      "fields": [
+        "meter_id",
+        "feeder_id",
+        "customer_class"
+      ]
+    },
+    {
+      "name": "meter_readings",
+      "fields": [
+        "reading_id",
+        "meter_id",
+        "interval_start_utc",
+        "reading_date",
+        "region",
+        "import_kwh",
+        "quality_status",
+        "is_estimated",
+        "source_sample_date"
+      ]
+    }
+  ],
+  "timezone": "Asia/Singapore",
+  "relationships": [
+    {
+      "from": "feeders.substation_id",
+      "to": "substations.substation_id"
+    },
+    {
+      "from": "meters.feeder_id",
+      "to": "feeders.feeder_id"
+    },
+    {
+      "from": "meter_readings.meter_id",
+      "to": "meters.meter_id"
+    }
+  ]
+}

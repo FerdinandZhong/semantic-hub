@@ -6,8 +6,8 @@ Cloudera AI Project:
 ```mermaid
 flowchart LR
     B["User browser<br/>Cloudera SSO session"]
-    U["Helios UI Application<br/>apps/ui/app.py<br/>127.0.0.1:$CDSW_APP_PORT"]
-    A["Helios API Application<br/>apps/console/app.py<br/>127.0.0.1:$CDSW_APP_PORT"]
+    U["Helios UI Application<br/>apps/helios/ui/app.py<br/>127.0.0.1:$CDSW_APP_PORT"]
+    A["Helios API Application<br/>apps/helios/console/app.py<br/>127.0.0.1:$CDSW_APP_PORT"]
     M["Project filesystem<br/>state/helios.db · runs/ · models/"]
 
     B -->|"1. HTTPS GET<br/>Cloudera gateway terminates TLS"| U
@@ -83,10 +83,10 @@ depend on package-registry availability.
 cd "$CDSW_PROJECT_DIR"
 python3 -m pip install --upgrade \
   --target "$CDSW_PROJECT_DIR/.helios-python" \
-  -r helios/apps/console/requirements.lock
+  -r helios/apps/helios/console/requirements.lock
 ```
 
-`apps/console/app.py` automatically adds `.helios-python` to the child API
+`apps/helios/console/app.py` automatically adds `.helios-python` to the child API
 process. Set `HELIOS_PYTHON_DEPS` only when a different project-persistent
 directory is deliberately used.
 
@@ -116,7 +116,7 @@ not rebuild it.
 Create an authenticated Cloudera AI Application with:
 
 - **Name:** `Helios API`
-- **Script:** `helios/apps/console/app.py`
+- **Script:** `helios/apps/helios/console/app.py`
 - **Runtime:** the same standard PBJ Workbench Python 3.12 runtime used for
   dependency installation
 - **Subdomain:** a stable value such as `helios-api`
@@ -187,11 +187,11 @@ does not make Atlas, Impala, or inference calls.
 
 ## 2. Create the Helios UI Application
 
-Confirm `apps/ui/dist/index.html` exists, then create a second authenticated
+Confirm `apps/helios/ui/dist/index.html` exists, then create a second authenticated
 Application:
 
 - **Name:** `Helios UI`
-- **Script:** `helios/apps/ui/app.py`
+- **Script:** `helios/apps/helios/ui/app.py`
 - **Runtime:** a standard PBJ Workbench Python 3.12 runtime
 - **Subdomain:** a stable value such as `helios-ui`
 - **Unauthenticated access:** disabled
@@ -311,7 +311,7 @@ CORS configuration permits this header for credentialed browser calls.
 - Application containers are replaceable. Durable metadata, run artifacts,
   the built UI, and project-local dependencies must remain on the Project
   filesystem, not in container-only locations.
-- If Uvicorn exits, `apps/console/app.py` exits with the same status so
+- If Uvicorn exits, `apps/helios/console/app.py` exits with the same status so
   Cloudera records a failed Application rather than a false healthy state.
 - API network, authentication, authorization, and non-JSON login responses
   are classified in the UI as API unavailable, authentication failure, or
@@ -326,7 +326,7 @@ CORS configuration permits this header for credentialed browser calls.
 1. Cross-origin SSO and `OPTIONS` behavior depends on the deployed Cloudera AI
    release and gateway configuration; repository tests cannot reproduce that
    gateway.
-2. `apps/ui/dist` is not committed. A fresh checkout is undeployable until the
+2. `apps/helios/ui/dist` is not committed. A fresh checkout is undeployable until the
    build step succeeds or CI supplies the artifact.
 3. SQLite remains interim storage. `DELETE` journaling avoids unsafe cross-host
    WAL shared memory, but the project filesystem must still provide reliable

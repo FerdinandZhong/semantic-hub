@@ -1,0 +1,5 @@
+result_id,cohort_id,endpoint,value,unit,denominator_count,ci_lower,ci_upper,source_id,source_locator
+beamion_no_prior_adc_orr,beamion_no_prior_adc,ORR,75,percent,71,63,83,FDA_HERNEXEOS_SNAPSHOT,Table 2; ORR cohort denominator or DOR responder denominator; observed response duration
+beamion_no_prior_adc_dor_ge_6_months,beamion_no_prior_adc,DOR_GE_6_MONTHS,58,percent,53,,,FDA_HERNEXEOS_SNAPSHOT,Table 2; ORR cohort denominator or DOR responder denominator; observed response duration
+beamion_prior_adc_orr,beamion_prior_adc,ORR,44,percent,34,29,61,FDA_HERNEXEOS_SNAPSHOT,Table 2; ORR cohort denominator or DOR responder denominator; observed response duration
+beamion_prior_adc_dor_ge_6_months,beamion_prior_adc,DOR_GE_6_MONTHS,27,percent,15,,,FDA_HERNEXEOS_SNAPSHOT,Table 2; ORR cohort denominator or DOR responder denominator; observed response duration

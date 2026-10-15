@@ -41,11 +41,14 @@ export default function TopNavigation({ context }: TopNavigationProps) {
         }}
         aria-label="Helios home"
       >
-        <span className="brand__mark" aria-hidden="true">
-          H
-        </span>
         <span className="brand__identity">
-          <span className="brand__wordmark">Helios</span>
+          <img
+            className="brand__logo"
+            src={`${import.meta.env.BASE_URL}cloudera-wordmark.png`}
+            alt="Cloudera"
+            width="152"
+            height="19"
+          />
           <span className="brand__build">
             Build {__HELIOS_BUILD_NUMBER__}
           </span>

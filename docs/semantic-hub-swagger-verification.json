@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "url": "http://127.0.0.1:8096/docs",
+  "authentication": "local_no_auth",
+  "invalid_token_rejected": null,
+  "schema_loaded": true,
+  "try_it_out_status": 200,
+  "token_persisted": false,
+  "reload_clears_access": null,
+  "browser_errors": 0,
+  "screenshot": "docs/semantic-hub-swagger-verification.png"
+}

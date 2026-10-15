@@ -1,0 +1,186 @@
+{
+  "known_limitations": [
+    "The longer combined prompt naming rejected transfers and both ledger sides returned join clarification before execution. No incorrect total was returned."
+  ],
+  "scope": "Isolated test state; no user approvals or publications changed",
+  "checks": [
+    {
+      "name": "PDF text and image separation",
+      "pages": 4
+    },
+    {
+      "name": "Exact finance link candidates",
+      "links": [
+        {
+          "page": "page 1",
+          "target": "field:ledger_postings.amount_sgd",
+          "score": 1.0
+        },
+        {
+          "page": "page 2",
+          "target": "field:fx_rates.sgd_rate",
+          "score": 0.75
+        },
+        {
+          "page": "page 4",
+          "target": "field:payments.amount_sgd",
+          "score": 0.75
+        }
+      ]
+    },
+    {
+      "name": "Reference SQL, review, publish, and saved metric",
+      "rows": [
+        [
+          "686572.96000000"
+        ]
+      ]
+    },
+    {
+      "name": "Live GPT-4o document",
+      "question": "What fixed USD-to-SGD conversion rate does this synthetic fixture use?",
+      "answer": {
+        "status": "answered",
+        "message": "",
+        "claims": [
+          {
+            "text": "The synthetic fixture uses a fixed USD-to-SGD conversion rate of 1.300000.",
+            "citations": [
+              {
+                "id": "passage-01786581bb5fac81b71b8906",
+                "title": "synthetic-finance-supporting-evidence",
+                "location": "page 4",
+                "citation": "material-8245f08ed80f4fcfbe47af6ab4c0e063@1#chunk_10855402a5ac664fbfbb0fd3",
+                "document_id": "material-8245f08ed80f4fcfbe47af6ab4c0e063",
+                "document_revision": 1,
+                "original_sha256": "88a6f9acb4fdc6edc7470baaee62f6979830b0990e04398adcc9c9239552f5de",
+                "attachment_sha256": "f9053c8f078e946f226bcefd0cf83defb751957487906c68ea2d4d1d91eedca6",
+                "attachment_id": "document-195062e04b9b931d391fef0e2e638f19",
+                "preview_url": "/demo/api/materials/material-8245f08ed80f4fcfbe47af6ab4c0e063/preview?revision=1&page=4",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:payments.amount_sgd",
+                    "reviewer": "Isolated automated test",
+                    "note": "Checked fixture payment definition, fixed FX, and exact settlement memo against serving CSVs."
+                  }
+                ],
+                "quote": "Sender jurisdiction: HK. Original amount: 382.23 USD. Fixed rate: 1.300000 SGD per USD. Converted settled amount: 496.90 SGD."
+              },
+              {
+                "id": "passage-92c4f6dbcf617ff68c072653",
+                "title": "synthetic-finance-supporting-evidence",
+                "location": "page 2",
+                "citation": "material-8245f08ed80f4fcfbe47af6ab4c0e063@1#chunk_830c632c8725cbc3923af0f1",
+                "document_id": "material-8245f08ed80f4fcfbe47af6ab4c0e063",
+                "document_revision": 1,
+                "original_sha256": "88a6f9acb4fdc6edc7470baaee62f6979830b0990e04398adcc9c9239552f5de",
+                "attachment_sha256": "f9053c8f078e946f226bcefd0cf83defb751957487906c68ea2d4d1d91eedca6",
+                "attachment_id": "document-195062e04b9b931d391fef0e2e638f19",
+                "preview_url": "/demo/api/materials/material-8245f08ed80f4fcfbe47af6ab4c0e063/preview?revision=1&page=2",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:fx_rates.sgd_rate",
+                    "reviewer": "Isolated automated test",
+                    "note": "Checked fixture payment definition, fixed FX, and exact settlement memo against serving CSVs."
+                  }
+                ],
+                "quote": "No live market rates or customer exchange rates are represented. fx_rates.sgd_rate means SGD for one unit of the transaction currency. The fixed fixture rates are: SGD = 1.000000; USD = 1.300000; HKD = 0.170000. For each transactions row, multiply transactions.amount by the matching fx_rates.sgd_rate."
+              }
+            ]
+          }
+        ],
+        "kind": "document",
+        "plan_id": "Ip7GIh5SdvprC9I4AQ4E0ZFUNDnZiLlW",
+        "question": "What fixed USD-to-SGD conversion rate does this synthetic fixture use?",
+        "context_version": "v1",
+        "context_sha256": "7f8fc5449052c1cfb06db3914b8fe14ed1dc4e7e3c14737abfb97dc300439772",
+        "snapshot_sha256": "86d1ccf8147c245edf9b8f79358908f4a024ca80da5da16db825a69f9c090576",
+        "artifact_sha256": "f3c7e83058015398d9aadd8d3eaeaefe2618d8791e3f92b7780388bca033344f",
+        "result_sha256": "8286de7d70db32e8240858dac1436ed86a9a57346101c824ab2e1ffbac72baa8",
+        "retrieval": {
+          "method": "keyword",
+          "candidate_count": 3,
+          "selected_count": 3,
+          "search_query": "fixed USD to SGD conversion rate synthetic fixture",
+          "scope": "selected published release only"
+        },
+        "planner": {
+          "method": "document_evidence",
+          "provider": "openai",
+          "model": "gpt-4o"
+        },
+        "notice": "Source-reported evidence, not a SQL calculation. Link approval is not certification of every document assertion."
+      }
+    },
+    {
+      "name": "Combined finance question limitation",
+      "question": "What is total_amount_sgd, and what does this metric include and exclude?",
+      "status": "needs_clarification",
+      "response": {
+        "status": "needs_clarification",
+        "message": "Multiple permitted relationships require clarification.",
+        "choices": [
+          {
+            "name": "total_amount_sgd",
+            "description": "Settled sender outflow, SGD; fixed synthetic FX."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Live GPT-4o image chart extraction",
+      "observations": [
+        {
+          "page": 3,
+          "entity": "GB",
+          "metric": "Settled Sender Outflow",
+          "unit": "SGD",
+          "period": "1-30 September 2026",
+          "population": "Sender Jurisdiction",
+          "source_quote": "GB 44,454.90",
+          "uncertainty": "",
+          "value": 44454.9,
+          "denominator": null,
+          "extraction_kind": "chart",
+          "verification_status": "visual_unverified",
+          "review_status": "needs_human_review",
+          "location": "page 3"
+        },
+        {
+          "page": 3,
+          "entity": "HK",
+          "metric": "Settled Sender Outflow",
+          "unit": "SGD",
+          "period": "1-30 September 2026",
+          "population": "Sender Jurisdiction",
+          "source_quote": "HK 350,641.68",
+          "uncertainty": "",
+          "value": 350641.68,
+          "denominator": null,
+          "extraction_kind": "chart",
+          "verification_status": "visual_unverified",
+          "review_status": "needs_human_review",
+          "location": "page 3"
+        },
+        {
+          "page": 3,
+          "entity": "SG",
+          "metric": "Settled Sender Outflow",
+          "unit": "SGD",
+          "period": "1-30 September 2026",
+          "population": "Sender Jurisdiction",
+          "source_quote": "SG 291,476.38",
+          "uncertainty": "",
+          "value": 291476.38,
+          "denominator": null,
+          "extraction_kind": "chart",
+          "verification_status": "visual_unverified",
+          "review_status": "needs_human_review",
+          "location": "page 3"
+        }
+      ]
+    }
+  ]
+}

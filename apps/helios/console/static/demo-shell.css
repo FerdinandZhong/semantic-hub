@@ -1,0 +1,74 @@
+/* Shared workspace finish, based on the UOB workspace's compact blue navigation. */
+:root{--header:#152c65;--accent:#2d62df;--soft:#edf3ff;--line:#e4e9f2;--bg:#f7f8fc}
+body{font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.shell>aside{width:224px;padding:24px 14px 18px;background:var(--bg);position:sticky;top:0;height:100dvh;overflow-y:auto;align-self:flex-start}
+.shell>aside .brand{display:block;padding:0 10px 20px;border-bottom:1px solid var(--line);line-height:1.4}
+.shell>aside .brand img{margin:4px 0 12px}
+.shell>aside .brand span{font-size:9px;letter-spacing:1.4px;font-weight:650}
+.shell>aside nav{display:flex;flex-direction:column;gap:4px;margin-top:22px}
+.nav-label{margin:0 10px 6px;color:var(--muted);font-size:10px;font-weight:650;letter-spacing:.8px;text-transform:uppercase}
+.shell>aside nav a{display:flex;align-items:center;gap:10px;min-height:44px;padding:10px;border-radius:6px;font-size:12px;line-height:1.4;font-weight:500;color:#526079;transition:background-color .12s,color .12s}
+.nav-icon{width:18px;height:18px;flex:0 0 18px}
+.shell>aside nav a:hover{background:#eaf0fa;color:var(--header)}
+.shell>aside nav a.active{background:var(--accent);color:white;font-weight:600}
+.shell>aside .sidebar-source{margin:18px 10px 6px;padding-top:16px;font-size:11px;line-height:1.5;font-weight:600;color:#526079}
+.shell>aside .sidebar-note{margin: auto 10px 0;padding:28px 0 0;font-size:11px;line-height:1.8}
+.shell>main{padding:20px 28px 44px}
+.shell>main>header{min-height:38px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:11px}
+.heading{margin:24px 0 20px}
+h1{font-size:28px;letter-spacing:-.6px;font-weight:650}
+h2{font-size:16px;font-weight:650}
+.eyebrow{font-size:10px;letter-spacing:1px;color:#718099}
+.panel{padding:22px;border-radius:9px}
+.panel-heading h2{margin-bottom:0}
+button,.button-link{font-weight:500}
+button:not(:disabled):hover,.button-link:hover{filter:brightness(.97)}
+a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{outline-offset:2px}
+.secondary{color:#34578d;border-color:#d7dfec}
+.secondary:not(:disabled):hover,.button-link.secondary:hover{background:#f6f9ff;border-color:#a9bfeb;filter:none}
+.badge{display:inline-flex;align-items:center;font-weight:500;border-radius:5px}
+summary{line-height:1.5}
+summary:hover{color:#1748b7}
+.scope-note{border:1px solid #e2ebfc}
+.source-card{padding:20px;border-radius:9px;transition:border-color .15s}
+.source-card:hover{border-color:#b5c8ec}
+.source-card h3{font-size:16px;font-weight:650}
+.summary-tile{padding:16px 18px}
+.summary-tile strong{color:var(--header);font-variant-numeric:tabular-nums}
+.material-paths{gap:12px}
+.material-paths p{background:#f0f5fd;padding:14px 16px;font-size:12px}
+.material-workspace{gap:20px}
+.material-workspace>.panel>h3{font-size:16px;font-weight:650;margin:0 0 12px}
+.material-workspace>.panel>p.muted{font-size:13px}
+.material-stage h3{font-size:14px;font-weight:650}
+.library-item{background:white;border-color:var(--line);padding:13px;line-height:1.5}
+.library-item:hover{border-color:#b5c8ec;background:#f7faff;filter:none!important}
+.library-item[aria-pressed=true]{border-color:#9bb7f4;background:var(--soft);box-shadow:inset 3px 0 var(--accent)}
+.library-item small{margin-top:6px;font-size:11px}
+.material-link{padding:16px;background:#fff}
+.material-link .badge{font-size:10px;padding:3px 8px}
+#material-upload{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;grid-template-areas:"file destination action" "help help help";gap:12px 16px;align-items:end;margin-top:18px}
+#material-upload .upload-file-field{grid-area:file}
+#material-upload .upload-destination-field{grid-area:destination}
+#material-upload label{margin:0;line-height:1.5}
+#material-file,#upload-document,#upload-submit{height:44px;min-height:44px}
+#material-file,#upload-document{margin-top:6px}
+#material-file{font-size:12px;padding:7px 10px;line-height:28px}
+#material-file::file-selector-button{height:28px;margin-right:10px;padding:0 10px;border:1px solid #d7dfec;border-radius:4px;background:#f3f6fb;color:#34578d;font:inherit;cursor:pointer}
+#upload-submit{grid-area:action;align-self:end;white-space:nowrap;padding:0 16px;display:inline-flex;align-items:center;justify-content:center}
+#upload-help{grid-area:help;margin:0;font-size:12px}
+@media(max-width:1200px){.shell>aside{width:210px}.shell>main{padding:20px 22px 36px}}
+@media(max-width:1050px){#material-upload{grid-template-columns:1fr 1fr;grid-template-areas:"file destination" "help help" "action action"}#upload-submit{justify-self:end}}
+@media(max-width:700px){
+ .shell>aside{position:static;width:100%;height:auto;overflow:visible;padding:16px;border-right:0;border-bottom:1px solid var(--line)}
+ .shell>aside .brand{padding:0 0 12px;border:0}.shell>aside .brand img{width:140px;margin:0 0 8px}
+ .shell>aside nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:4px}
+ .shell>aside nav a{min-height:58px;flex-direction:column;justify-content:center;gap:5px;padding:8px 5px;font-size:11px;text-align:center}
+ .nav-label{display:none}.shell>aside .sidebar-source{grid-column:1/-1;margin:8px 0 2px;padding-top:10px}
+ .shell>aside .sidebar-note{display:none}.shell>main{padding:16px}
+ .heading{margin:20px 0 16px}h1{font-size:25px}.panel{padding:18px}
+ .shell>main>header{font-size:10px;gap:8px}.badge{font-size:10px}
+ .material-workspace{gap:16px}
+}
+@media(max-width:600px){#material-upload{grid-template-columns:minmax(0,1fr);grid-template-areas:"file" "destination" "help" "action"}#upload-submit{width:100%;justify-self:stretch}}
+@media(prefers-reduced-motion:reduce){.shell>aside nav a,.source-card{transition:none}}

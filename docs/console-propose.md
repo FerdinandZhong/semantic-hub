@@ -1,5 +1,8 @@
 # Reading a proposal
 
+**Scope:** the discovery/warehouse workflow described here is separate from the four-pack local Studio.
+For current local navigation and approval, use [context-builder.md](context-builder.md).
+
 A **proposal** is helios's first draft of what your warehouse means. It is built from a run's harvest and profile results (see *Reading a discovery run*) plus a language model's judgement, and it is the material the review pages will let you accept, edit or reject. Nothing on this page is published: opening it changes nothing in Atlas, in the semantic model, or in the warehouse.
 
 Open it from **Runs → a run → View proposal**. The button appears once the propose job has finished for that run.

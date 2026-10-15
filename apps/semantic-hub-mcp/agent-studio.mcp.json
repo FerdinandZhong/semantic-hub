@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "semantic-hub": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp",
+        "semantic-hub-mcp"
+      ],
+      "env": {
+        "SEMANTIC_HUB_URL": "http://127.0.0.1:8096"
+      }
+    }
+  }
+}

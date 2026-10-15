@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Hub · Model playground</title>
+  <link rel="stylesheet" href="/static/demo.css">
+  <link rel="stylesheet" href="/static/demo-canvas.css"><link rel="stylesheet" href="/static/demo-playground.css">
+  <script src="/static/demo-canvas.js" defer></script><script src="/static/demo.js" defer></script><script src="/static/demo-playground.js" defer></script>
+<link rel="stylesheet" href="/static/demo-shell.css?v=20261014"></head>
+<body>
+<div class="shell">
+  <aside>
+    <a class="brand" href="/demo" aria-label="Cloudera Semantic Hub home"><img src="/static/cloudera-wordmark.png" alt="Cloudera" width="152" height="19"><span>SEMANTIC HUB</span></a>
+    <nav aria-label="Workspace navigation"><p class="nav-label">Workspace</p>
+      <a href="/demo"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Semantic Hub</span></a>
+      <a href="/demo/llm"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg><span>Model configuration</span></a><a href="/demo/materials"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg><span>Supporting materials</span></a>
+      <p class="sidebar-source" id="source-nav-title">Selected source</p>
+      <a href="/demo/context" data-source-link><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3 9 5-9 5-9-5Zm-9 5v9l9 5 9-5V8M12 13v9"/></svg><span>Semantic Studio</span></a>
+      <a href="/demo/context#hub" data-source-link><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11a9 9 0 1 1 2 7M3 4v7h7M12 7v5l3 2"/></svg><span>Versions &amp; releases</span></a>
+      <a class="active" href="#query" aria-current="page"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7Z"/></svg><span>Model playground</span></a>
+    </nav>
+    <p class="sidebar-note">Define once.<br>Review with evidence.<br>Query a known version.</p>
+  </aside>
+  <main>
+    <header><span>Workspace / Model playground</span><span class="badge">Local sample workspace</span></header>
+    <section class="heading">
+      <p class="eyebrow" id="title">SELECTED DATASET</p>
+      <h1>Model playground</h1>
+      <p>Validate a published model with sample queries.</p>
+    </section>
+    <section class="panel" id="playground" aria-labelledby="playground-heading">
+      <div class="playground-header"><div><h2 id="playground-heading">Published model</h2><p id="playground-binding" class="muted">Loading published versions…</p></div>
+        <div class="playground-version"><label>Version<select id="playground-version" disabled></select></label><a id="playground-view" class="button-link secondary" hidden>View model</a></div></div>
+      <p id="playground-empty" hidden>Publish a reviewed version to test its semantic definitions here. <a href="/demo/context#hub" data-source-link>Open versions &amp; releases →</a></p>
+      <div id="playground-ready" hidden>
+        <form id="playground-form"><label for="playground-question">Ask this model<textarea id="playground-question" rows="2" maxlength="2000" required placeholder="For example: What is the total downtime?"></textarea></label><label class="playground-mode">Answer from<select id="playground-mode"><option value="auto">AI · query data + documents</option><option value="metric">Metric query</option><option value="document">Document evidence</option></select></label><button id="playground-ask" type="submit">Interpret question</button></form>
+        <p class="help" id="playground-llm-status"></p>
+        <p class="help">Advanced agents can use the versioned Hub APIs and MCP for natural-language queries.</p>
+        <details class="playground-examples"><summary>Saved metrics · run their reviewed definitions</summary><div id="playground-examples"></div></details>
+      </div>
+      <p id="playground-status" role="status" aria-live="polite"></p><p id="playground-error" role="alert" hidden></p>
+      <div id="playground-clarification" hidden><h3 id="playground-outcome-heading">Clarify the question</h3><p id="playground-clarification-text"></p><div id="playground-choices"></div></div>
+    </section>
+    <section class="panel" id="playground-agent-panel" hidden aria-labelledby="playground-agent-title">
+      <div class="panel-heading"><h2 id="playground-agent-title">Agent checks</h2><span class="badge subtle" id="playground-agent-engine"></span></div>
+      <p id="playground-agent-summary" class="help"></p>
+      <ol id="playground-agent-steps"></ol>
+      <details id="playground-scope-details" hidden><summary>Requested period and checked source coverage</summary><pre id="playground-scope-evidence"></pre></details>
+    </section>
+    <section class="panel" id="playground-interpretation" hidden>
+      <div class="panel-heading"><h2>AI query plan</h2><span class="badge subtle">Inspect before running</span></div>
+      <p id="playground-meaning"></p><dl id="playground-definition"></dl>
+      <p id="playground-rules" class="playground-callout"></p>
+      <details id="playground-sql-panel"><summary>Query SQL</summary><pre id="playground-sql"></pre></details>
+      <div id="playground-plan-passages" hidden></div><div class="playground-run"><button id="playground-run" type="button">Run this interpretation</button><p class="help" id="playground-run-help">Runs against the selected local sample. Your published model stays unchanged.</p></div>
+    </section>
+    <section class="panel" id="playground-answer" hidden><div class="panel-heading"><h2>Answer</h2><span id="playground-answer-kind" class="badge subtle">Metric query</span></div><p id="playground-answer-text" class="playground-answer-text"></p><p id="playground-answer-context" class="playground-callout" hidden></p><p id="playground-limit" class="help"></p><div id="playground-results" class="result-table"></div>
+      <div id="playground-cited-claims" hidden></div><details><summary>Version and answer evidence</summary><pre id="playground-executed-sql"></pre><dl id="playground-evidence"></dl></details>
+    </section>
+    <section class="panel" id="playground-graph-panel" hidden><h2>How this model answers</h2>
+      <p class="help">This graph shows the definitions and dependencies used by this interpretation. It does not show individual source records.</p>
+      <div id="playground-canvas"></div><details><summary>Selected graph object</summary><pre id="playground-object">Select an object to inspect it.</pre></details>
+      <details><summary>Supporting documents · background context</summary><p class="help">These saved documents relate to the model or selected tables. Their content was not used to produce this SQL answer.</p><div id="playground-documents"></div></details>
+      <details><summary>Semantic retrieval evidence</summary><pre id="playground-retrieval"></pre></details>
+    </section>
+    <details id="legacy-query"><summary>Original sample examples and active-version checks</summary>
+    <div class="workspace-bar"><div><strong id="query-status">Loading query context…</strong><p id="query-context" class="muted"></p></div><div class="actions"><a class="button-link secondary" href="/demo/context#hub" data-source-link>Manage versions</a></div></div>
+    <section class="panel" id="query" aria-labelledby="query-heading">
+      <div class="panel-heading"><h2 id="query-heading">Ask your data</h2><span class="badge subtle">Reviewed SQL · optional LLM explanation</span></div>
+      <p id="review-note" role="status">Loading the selected dataset…</p>
+      <form id="query-form">
+        <label for="example">Example question</label>
+        <select id="example" disabled></select>
+        <button id="run" type="submit" disabled>Run example</button>
+      </form>
+      <p id="error" role="alert" hidden></p>
+    </section>
+    <section class="panel" id="result" aria-labelledby="result-heading" hidden>
+      <p class="eyebrow">EXECUTED RESULT</p><h2 id="result-heading">Sample result</h2>
+      <div class="value"><span id="value"></span><small id="unit"></small></div>
+      <p id="result-question"></p><div id="result-table" class="result-table" hidden></div>
+      <details><summary>Execution evidence</summary><pre id="sql"></pre><dl id="evidence"></dl></details>
+      <div class="explanation-controls"><button id="explain-result" type="button" class="secondary" disabled>Explain result with LLM</button><a href="/demo/llm">Model configuration</a></div>
+      <p id="explanation-status" class="muted" role="status">Loading query LLM settings…</p>
+      <p id="explanation-error" role="alert" hidden></p>
+      <section id="explanation-panel" hidden><h3>LLM explanation</h3><p id="explanation-text"></p><p id="explanation-model" class="note"></p></section>
+    </section>
+    <section class="panel" id="context" aria-labelledby="context-heading">
+      <h2 id="context-heading">Sample context</h2><dl id="metadata"></dl>
+      <p id="data-origin-note" class="note">Review covers this local dataset only. Inspect source provenance before using its results.</p>
+    </section>
+    </details>
+  </main>
+</div>
+</body>
+</html>

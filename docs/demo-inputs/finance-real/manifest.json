@@ -1,0 +1,272 @@
+{
+  "checked": "2026-10-14",
+  "originals_unmodified": true,
+  "live_workspace_changed": false,
+  "ai_extraction_tested": false,
+  "sources": [
+    {
+      "filename": "hsbc-smartform-completion-guide.pdf",
+      "title": "Smartform Completion Guide",
+      "publisher": "HSBC Singapore",
+      "document_date": null,
+      "url": "https://www.hsbc.com.sg/content/dam/hsbc/sg/documents/forms/smartform-step-by-step-guide.pdf",
+      "pages_to_inspect": [
+        4,
+        5,
+        7,
+        8
+      ],
+      "use": "Visual form fields: debit account, remittance currency, amount, beneficiary and FX details",
+      "candidate_concepts": [
+        "transactions.sender_account_id",
+        "transactions.receiver_account_id",
+        "transactions.currency",
+        "transactions.amount",
+        "fx_rates.sgd_rate"
+      ],
+      "boundary": "Undated historical guide with illustrative screenshots. Field meanings only; blank/sample fields are not actual payments or evidence for the fixture FX values.",
+      "pages": 12,
+      "bytes": 2386238,
+      "sha256": "fb61efbc119294b4e4c7c66b13884055fc04f942a1ffd174593a8dd7962cdd2d",
+      "selected_page_image_counts": {
+        "4": 6,
+        "5": 4,
+        "7": 1,
+        "8": 4
+      },
+      "import_test": {
+        "status": "extracted",
+        "chunk_count": 13,
+        "visual_capable": true
+      },
+      "actual_finance_candidates": [
+        {
+          "target": "field:payments.amount_sgd",
+          "page": "page 5",
+          "score": 0.75
+        },
+        {
+          "target": "field:transactions.amount_sgd",
+          "page": "page 5",
+          "score": 0.3492
+        },
+        {
+          "target": "field:transactions.sender_account_id",
+          "page": "page 7",
+          "score": 0.3112
+        },
+        {
+          "target": "field:transactions.receiver_account_id",
+          "page": "page 7",
+          "score": 0.3022
+        }
+      ]
+    },
+    {
+      "filename": "dbs-remittance-online-faq.pdf",
+      "title": "FAQ for Application Form (Online)",
+      "publisher": "DBS Singapore",
+      "document_date": null,
+      "url": "https://www.dbs.com.sg/sme/pdf/faq-remittanceonline.pdf",
+      "pages_to_inspect": [
+        3
+      ],
+      "use": "Transfer-type, currency and processing-time comparison tables",
+      "candidate_concepts": [
+        "transactions.channel",
+        "transactions.currency"
+      ],
+      "boundary": "Bank product reference, not a measured settlement SLA for the synthetic transfers; publication date not established.",
+      "pages": 3,
+      "bytes": 162109,
+      "sha256": "7cf91c35ef783f27a209102d86504461cfc34e347a34cfb33a66c1906b3a3a26",
+      "selected_page_image_counts": {
+        "3": 1
+      },
+      "import_test": {
+        "status": "extracted",
+        "chunk_count": 3,
+        "visual_capable": true
+      },
+      "actual_finance_candidates": []
+    },
+    {
+      "filename": "abs-fast-faq-2026-07-23.pdf",
+      "title": "FAST and Secure Transfers \u2014 FAQ",
+      "publisher": "Association of Banks in Singapore",
+      "document_date": "2026-07-23",
+      "url": "https://abs.org.sg/docs/library/fast-faq---23-jul-2026.pdf",
+      "pages_to_inspect": [
+        1,
+        2
+      ],
+      "use": "Payment channels, SGD scope, transfer status and value-date distinction",
+      "candidate_concepts": [
+        "transactions.channel",
+        "transactions.currency",
+        "transactions.status",
+        "payments.booking_date"
+      ],
+      "boundary": "General FAST reference. Fixture channels do not establish FAST participation; booking_date is a UTC-derived date, not a real bank value date.",
+      "pages": 4,
+      "bytes": 135827,
+      "sha256": "1bf64e1ed5427b7dafa48cf3bc9019add67ebe0b6e2788dd826a35554273588e",
+      "selected_page_image_counts": {
+        "1": 1,
+        "2": 1
+      },
+      "import_test": {
+        "status": "extracted",
+        "chunk_count": 4,
+        "visual_capable": true
+      },
+      "actual_finance_candidates": [
+        {
+          "target": "table:customers",
+          "page": "page 1",
+          "score": 0.25
+        },
+        {
+          "target": "field:accounts.account_id",
+          "page": "page 2",
+          "score": 0.5
+        },
+        {
+          "target": "field:payments.transaction_id",
+          "page": "page 2",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "filename": "abs-fast-fact-sheet-2026-07-07.pdf",
+      "title": "FAST and Secure Transfers \u2014 Fact Sheet",
+      "publisher": "Association of Banks in Singapore",
+      "document_date": "2026-07-07",
+      "url": "https://abs.org.sg/docs/library/2026-07-07-fast-fact-sheet.pdf",
+      "pages_to_inspect": [
+        1
+      ],
+      "use": "Payment-mode comparison table and institution/account reference",
+      "candidate_concepts": [
+        "transactions.channel",
+        "accounts.account_id"
+      ],
+      "boundary": "Public ABS download has a CONFIDENTIAL footer. Synthetic account IDs are not real bank account numbers; do not apply institution format rules to SYN identifiers.",
+      "pages": 8,
+      "bytes": 166208,
+      "sha256": "4dcf0c3633cdbdce9ad0126990e1e39f9ac6d499a2d23dc01b08ce7ef55b16d8",
+      "selected_page_image_counts": {
+        "1": 1
+      },
+      "import_test": {
+        "status": "extracted",
+        "chunk_count": 8,
+        "visual_capable": true
+      },
+      "actual_finance_candidates": [
+        {
+          "target": "field:accounts.account_id",
+          "page": "page 1",
+          "score": 0.5
+        },
+        {
+          "target": "field:payments.amount_sgd",
+          "page": "page 1",
+          "score": 0.3314
+        }
+      ]
+    },
+    {
+      "filename": "abs-making-sense-of-giro-2009.pdf",
+      "title": "Making Sense of GIRO / FAQs on GIRO",
+      "publisher": "Association of Banks in Singapore",
+      "document_date": "2009-09-08",
+      "url": "https://www.abs.org.sg/docs/library/makingsensegiro_sept09.pdf",
+      "pages_to_inspect": [
+        1,
+        2
+      ],
+      "use": "Payment authorisation, account deductions, reconciliation and unsuccessful-payment concepts",
+      "candidate_concepts": [
+        "transactions.status",
+        "accounts.account_id",
+        "payments.transaction_id"
+      ],
+      "boundary": "Historical reference. Do not treat old fees or schedules as current rules. The fixture has no GIRO identifier, balance, billing mandate, or rejection reason.",
+      "pages": 6,
+      "bytes": 56876,
+      "sha256": "5f18cf9e6fabf366aff635c78f2534afd9249535c2e1298d803760a509dfa596",
+      "selected_page_image_counts": {
+        "1": 0,
+        "2": 0
+      },
+      "import_test": {
+        "status": "extracted",
+        "chunk_count": 10,
+        "visual_capable": true
+      },
+      "actual_finance_candidates": [
+        {
+          "target": "field:payments.booking_date",
+          "page": "page 1",
+          "score": 0.3038
+        },
+        {
+          "target": "table:customers",
+          "page": "page 1",
+          "score": 0.25
+        },
+        {
+          "target": "field:payments.booking_date",
+          "page": "page 1",
+          "score": 0.3038
+        },
+        {
+          "target": "table:payments",
+          "page": "page 1",
+          "score": 0.25
+        },
+        {
+          "target": "field:payments.amount_sgd",
+          "page": "page 2",
+          "score": 0.3314
+        },
+        {
+          "target": "field:payments.booking_date",
+          "page": "page 2",
+          "score": 0.3038
+        }
+      ]
+    },
+    {
+      "filename": "bis-cross-border-payments-survey-2024.pdf",
+      "title": "Moving on up: results of the 2024 cross-border payments monitoring survey",
+      "publisher": "BIS CPMI; Brief No 10",
+      "document_date": "2025-12",
+      "url": "https://www.bis.org/publications/cpmi-brief-10-moving-results-2024-cross-border-payments-monitoring-survey.pdf",
+      "pages_to_inspect": [
+        5
+      ],
+      "use": "Visual payment-system characteristics, currencies and settlement arrangements",
+      "candidate_concepts": [
+        "transactions.channel",
+        "transactions.currency",
+        "customers.jurisdiction"
+      ],
+      "boundary": "Survey statistics describe payment systems, not transaction volume or these customers. Extracted survey facts require a separate model with survey year and denominator.",
+      "pages": 26,
+      "bytes": 1528810,
+      "sha256": "2e069aa1a80d19004ebc442bb9435079af172a6c36be77b43881be894aecc189",
+      "selected_page_image_counts": {
+        "5": 0
+      },
+      "import_test": {
+        "status": "visual_pending",
+        "chunk_count": 0,
+        "visual_capable": true
+      },
+      "actual_finance_candidates": []
+    }
+  ]
+}

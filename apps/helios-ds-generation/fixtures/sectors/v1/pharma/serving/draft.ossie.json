@@ -1,0 +1,334 @@
+{
+  "version": "0.2.0.dev0",
+  "name": "synthetic_pharma",
+  "datasets": [
+    {
+      "name": "products",
+      "source": "products",
+      "fields": [
+        {
+          "name": "product_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "product_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "product_name",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "product_name"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "dosage_form",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "dosage_form"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "batches",
+      "source": "batches",
+      "fields": [
+        {
+          "name": "batch_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "batch_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "product_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "product_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "manufactured_date",
+          "datatype": "Date",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "manufactured_date"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": true
+          }
+        },
+        {
+          "name": "review_status",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "review_status"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "lab_results",
+      "source": "lab_results",
+      "fields": [
+        {
+          "name": "result_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "result_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "batch_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "batch_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "test_name",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "test_name"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "assay_percent",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "assay_percent"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "unit",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "unit"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "result_status",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "result_status"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "deviations",
+      "source": "deviations",
+      "fields": [
+        {
+          "name": "deviation_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "deviation_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "batch_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "batch_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "category",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "category"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "status",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "status"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "name": "batches_product_id_products",
+      "from": "batches",
+      "to": "products",
+      "from_columns": [
+        "product_id"
+      ],
+      "to_columns": [
+        "product_id"
+      ]
+    },
+    {
+      "name": "lab_results_batch_id_batches",
+      "from": "lab_results",
+      "to": "batches",
+      "from_columns": [
+        "batch_id"
+      ],
+      "to_columns": [
+        "batch_id"
+      ]
+    },
+    {
+      "name": "deviations_batch_id_batches",
+      "from": "deviations",
+      "to": "batches",
+      "from_columns": [
+        "batch_id"
+      ],
+      "to_columns": [
+        "batch_id"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "name": "average_assay_percent",
+      "description": "Mean draft assay percentage. No product-release or clinical decision is implied.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "AVG(lab_results.assay_percent)"
+          }
+        ]
+      }
+    }
+  ]
+}

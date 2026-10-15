@@ -1,0 +1,75 @@
+{
+  "ok": true,
+  "transport": "stdio -> HTTP",
+  "model_id": "pharma_intelligence",
+  "version": "v1.0",
+  "context_sha256": "307a9bc3d0bebf085ccba365afe45facdcc0382e6da78c504a1366eeb6d373d3",
+  "tools_discovered": 12,
+  "calls": [
+    "hub_status",
+    "list_semantic_models",
+    "get_semantic_model",
+    "list_model_versions",
+    "get_model_version",
+    "get_model_lineage",
+    "get_published_documents",
+    "search_semantics",
+    "search_semantics",
+    "resolve_semantic_context",
+    "inspect_metric_coverage",
+    "compile_semantic_query",
+    "query_sample_data"
+  ],
+  "missing_cohort_status": "no_data",
+  "sample_value": "74.10000000",
+  "generation_llm_calls": 0,
+  "model_writes": 0,
+  "capabilities": {
+    "service": "Semantic Hub",
+    "api_version": "v1",
+    "role": "Published semantic context for external agents",
+    "search": {
+      "keyword": true,
+      "embedding": true,
+      "embedding_storage": "Lance"
+    },
+    "version_pinning": true,
+    "bundle_ttl_seconds": 300,
+    "execution": {
+      "engine": "local_duckdb",
+      "max_rows": 100,
+      "arbitrary_sql": false
+    },
+    "authorization": "Shared read-only demo token; all published models in this workspace. No per-user grants.",
+    "capabilities": [
+      "inventory",
+      "versions",
+      "definitions",
+      "metadata",
+      "ontology",
+      "lineage",
+      "published_documents",
+      "search",
+      "resolve",
+      "coverage",
+      "compile",
+      "sample_query"
+    ],
+    "limitations": [
+      "No model editing or publication",
+      "No live enterprise query engine",
+      "Calling agent owns natural-language interpretation"
+    ]
+  },
+  "embedding_check": {
+    "method": "embedding",
+    "embedding_model": "text-embedding-3-small",
+    "storage": "Lance",
+    "result_count": 3,
+    "top_names": [
+      "us_new_medicine_sales_share_percent",
+      "industry_observations",
+      "industry_observations.indicator"
+    ]
+  }
+}

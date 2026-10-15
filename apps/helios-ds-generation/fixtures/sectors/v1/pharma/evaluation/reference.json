@@ -1,0 +1,7 @@
+{
+  "metric": "average_assay_percent",
+  "question": "What is average assay percent?",
+  "reference_sql": "SELECT AVG(assay_percent) AS value FROM lab_results",
+  "expected": "98.275",
+  "truth": {}
+}

@@ -1,0 +1,1250 @@
+{
+  "phase": "release",
+  "base": "http://127.0.0.1:8085",
+  "review_scope": "synthetic walkthrough only",
+  "state": {
+    "review": {
+      "items": [
+        {
+          "id": "context",
+          "kind": "context",
+          "name": "SP Group power prototype context",
+          "change": "modified",
+          "before": {
+            "title": "SP Group power prototype context",
+            "description": "Business definitions for the selected synthetic dataset. Review before use.",
+            "dataset_meanings": null,
+            "field_roles": null,
+            "glossary_terms": null,
+            "proposal_provenance": null
+          },
+          "after": {
+            "title": "SP Group power prototype context",
+            "description": "Business definitions for the selected synthetic dataset. Review before use.",
+            "dataset_meanings": {
+              "feeders": "The Feeders table contains information about electrical feeders, which are components of the electrical distribution system. Each feeder is associated with a substation and has a specific voltage level.",
+              "meter_readings": "This table records electricity consumption readings from various meters, capturing the amount of energy imported in kilowatt-hours (kWh).",
+              "meters": "The Meters table contains information about electricity meters, including their identifiers and associated customer classes. It is used to categorize and manage electricity consumption data.",
+              "substations": "This table contains information about substations, which are facilities in the electrical grid that transform voltage levels and distribute electricity to feeders."
+            },
+            "field_roles": {
+              "feeders.feeder_id": "identifier",
+              "feeders.substation_id": "foreign_key",
+              "feeders.voltage_kv": "dimension",
+              "meter_readings.import_kwh": "measure",
+              "meter_readings.interval_start_utc": "time",
+              "meter_readings.is_estimated": "dimension",
+              "meter_readings.meter_id": "foreign_key",
+              "meter_readings.quality_status": "dimension",
+              "meter_readings.reading_date": "time",
+              "meter_readings.reading_id": "identifier",
+              "meter_readings.region": "dimension",
+              "meter_readings.source_sample_date": "attribute",
+              "meters.customer_class": "dimension",
+              "meters.feeder_id": "foreign_key",
+              "meters.meter_id": "identifier",
+              "substations.region": "dimension",
+              "substations.substation_id": "identifier"
+            },
+            "glossary_terms": [
+              {
+                "columns": [
+                  "source.meters.customer_class"
+                ],
+                "confidence": 0.9,
+                "definition": "A category that defines the type of customer based on their electricity consumption characteristics.",
+                "name": "Customer class"
+              },
+              {
+                "columns": [
+                  "source.meter_readings.import_kwh"
+                ],
+                "confidence": 0.95,
+                "definition": "The quantity of electricity imported, measured in kilowatt-hours.",
+                "name": "Imported kWh"
+              },
+              {
+                "columns": [
+                  "source.meter_readings.is_estimated"
+                ],
+                "confidence": 0.9,
+                "definition": "A flag indicating if the reading is an estimate.",
+                "name": "Is estimated"
+              },
+              {
+                "columns": [
+                  "source.meter_readings.quality_status"
+                ],
+                "confidence": 0.9,
+                "definition": "The status indicating the validity of the meter reading.",
+                "name": "Quality status"
+              },
+              {
+                "columns": [
+                  "source.substations.region",
+                  "source.meter_readings.region"
+                ],
+                "confidence": 0.9,
+                "definition": "The geographical area or zone where a substation is situated, used for categorizing and analyzing data by location.",
+                "name": "Region"
+              },
+              {
+                "columns": [
+                  "source.feeders.voltage_kv"
+                ],
+                "confidence": 0.9,
+                "definition": "The voltage level of an electrical component, measured in kilovolts (kV).",
+                "name": "Voltage level"
+              }
+            ],
+            "proposal_provenance": {
+              "mode": "llm",
+              "provider": "openai",
+              "model": "gpt-4o",
+              "generated_at": "2026-10-12T02:39:52.202131+00:00",
+              "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+              "source": "source_schema_and_profile"
+            }
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860330+00:00"
+          }
+        },
+        {
+          "id": "document:document-ac7fd2ec3d335bb4a233d67752ccec46",
+          "kind": "document",
+          "name": "power-business-notes.md",
+          "change": "added",
+          "before": null,
+          "after": {
+            "id": "document-ac7fd2ec3d335bb4a233d67752ccec46",
+            "filename": "power-business-notes.md",
+            "sha256": "fae120c908f12fcf31eb75d338cac7b1c8c9c4173b3db3ab78894dc915626c57",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "entity_links": [
+              {
+                "column": "meter_id",
+                "table": "meters",
+                "value": "SYN-M000"
+              }
+            ]
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860664+00:00"
+          }
+        },
+        {
+          "id": "field:feeders.feeder_id",
+          "kind": "field",
+          "name": "feeders.feeder_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "A unique identifier for each feeder in the electrical distribution system.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860686+00:00"
+          }
+        },
+        {
+          "id": "field:feeders.substation_id",
+          "kind": "field",
+          "name": "feeders.substation_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "The identifier of the substation to which the feeder is connected.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860699+00:00"
+          }
+        },
+        {
+          "id": "field:feeders.voltage_kv",
+          "kind": "field",
+          "name": "feeders.voltage_kv",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "Decimal"
+          },
+          "after": {
+            "meaning": "The voltage level of the feeder, measured in kilovolts (kV).",
+            "type": "Decimal"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860710+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.import_kwh",
+          "kind": "field",
+          "name": "meter_readings.import_kwh",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "Decimal"
+          },
+          "after": {
+            "meaning": "The amount of electricity imported during the interval, measured in kilowatt-hours (kWh).",
+            "type": "Decimal"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860721+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.interval_start_utc",
+          "kind": "field",
+          "name": "meter_readings.interval_start_utc",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "DateTimeTz"
+          },
+          "after": {
+            "meaning": "The start time of the interval for which the reading was recorded, in UTC.",
+            "type": "DateTimeTz"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860730+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.is_estimated",
+          "kind": "field",
+          "name": "meter_readings.is_estimated",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "A flag indicating whether the reading is estimated or actual.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860739+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.meter_id",
+          "kind": "field",
+          "name": "meter_readings.meter_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "The identifier of the meter from which the reading was taken, linking to the meters table.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860781+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.quality_status",
+          "kind": "field",
+          "name": "meter_readings.quality_status",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "Indicates the validity of the reading, such as 'VALID' or 'INVALID'.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860792+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.reading_date",
+          "kind": "field",
+          "name": "meter_readings.reading_date",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "Date"
+          },
+          "after": {
+            "meaning": "The date on which the reading was recorded.",
+            "type": "Date"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860802+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.reading_id",
+          "kind": "field",
+          "name": "meter_readings.reading_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "A unique identifier for each meter reading entry.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860810+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.region",
+          "kind": "field",
+          "name": "meter_readings.region",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "The geographical region where the meter is located.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860819+00:00"
+          }
+        },
+        {
+          "id": "field:meter_readings.source_sample_date",
+          "kind": "field",
+          "name": "meter_readings.source_sample_date",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "Date"
+          },
+          "after": {
+            "meaning": "The date when the source data was sampled, not applicable in this dataset.",
+            "type": "Date"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860828+00:00"
+          }
+        },
+        {
+          "id": "field:meters.customer_class",
+          "kind": "field",
+          "name": "meters.customer_class",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "The classification of the customer based on their electricity usage profile.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860836+00:00"
+          }
+        },
+        {
+          "id": "field:meters.feeder_id",
+          "kind": "field",
+          "name": "meters.feeder_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "A reference to the feeder that supplies electricity to the meter.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860846+00:00"
+          }
+        },
+        {
+          "id": "field:meters.meter_id",
+          "kind": "field",
+          "name": "meters.meter_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "A unique identifier for each electricity meter.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860855+00:00"
+          }
+        },
+        {
+          "id": "field:substations.region",
+          "kind": "field",
+          "name": "substations.region",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "The geographical region where the substation is located.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860863+00:00"
+          }
+        },
+        {
+          "id": "field:substations.substation_id",
+          "kind": "field",
+          "name": "substations.substation_id",
+          "change": "modified",
+          "before": {
+            "meaning": "",
+            "type": "String"
+          },
+          "after": {
+            "meaning": "A unique identifier for each substation.",
+            "type": "String"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860872+00:00"
+          }
+        },
+        {
+          "id": "join-278bfcec25ab4d72b03d",
+          "kind": "join",
+          "name": "meters_feeder_id_feeders",
+          "change": "unchanged",
+          "before": {
+            "name": "meters_feeder_id_feeders",
+            "from_field": "meters.feeder_id",
+            "to_field": "feeders.feeder_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link meters to feeders by its declared key",
+            "id": "join-278bfcec25ab4d72b03d"
+          },
+          "after": {
+            "id": "join-278bfcec25ab4d72b03d",
+            "name": "meters_feeder_id_feeders",
+            "from_field": "meters.feeder_id",
+            "to_field": "feeders.feeder_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link meters to feeders by its declared key"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860880+00:00"
+          }
+        },
+        {
+          "id": "join-665d35ef5508c501638a",
+          "kind": "join",
+          "name": "meter_readings_meter_id_meters",
+          "change": "unchanged",
+          "before": {
+            "name": "meter_readings_meter_id_meters",
+            "from_field": "meter_readings.meter_id",
+            "to_field": "meters.meter_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link meter_readings to meters by its declared key",
+            "id": "join-665d35ef5508c501638a"
+          },
+          "after": {
+            "id": "join-665d35ef5508c501638a",
+            "name": "meter_readings_meter_id_meters",
+            "from_field": "meter_readings.meter_id",
+            "to_field": "meters.meter_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link meter_readings to meters by its declared key"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860888+00:00"
+          }
+        },
+        {
+          "id": "join-a8e854d319041281252b",
+          "kind": "join",
+          "name": "feeders_substation_id_substations",
+          "change": "unchanged",
+          "before": {
+            "name": "feeders_substation_id_substations",
+            "from_field": "feeders.substation_id",
+            "to_field": "substations.substation_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link feeders to substations by its declared key",
+            "id": "join-a8e854d319041281252b"
+          },
+          "after": {
+            "id": "join-a8e854d319041281252b",
+            "name": "feeders_substation_id_substations",
+            "from_field": "feeders.substation_id",
+            "to_field": "substations.substation_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link feeders to substations by its declared key"
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860897+00:00"
+          }
+        },
+        {
+          "id": "metric-41573afa74e774888241",
+          "kind": "metric",
+          "name": "measured_import_kwh",
+          "change": "modified",
+          "before": {
+            "name": "measured_import_kwh",
+            "description": "Measured imported energy, kWh. Only VALID, non-estimated readings; dates use Asia/Singapore.",
+            "expression": "SUM(CASE WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false' THEN meter_readings.import_kwh ELSE 0 END)",
+            "unit": "kWh",
+            "grain": "One aggregate over the selected source records",
+            "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+            "dimensions": [],
+            "reference_sql": "",
+            "id": "metric-41573afa74e774888241"
+          },
+          "after": {
+            "id": "metric-41573afa74e774888241",
+            "name": "measured_import_kwh",
+            "description": "Measured imported energy, kWh. Only VALID, non-estimated readings; dates use Asia/Singapore.",
+            "expression": "SUM(CASE WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false' THEN meter_readings.import_kwh ELSE 0 END)",
+            "unit": "kWh",
+            "grain": "One aggregate over the selected source records",
+            "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+            "dimensions": [],
+            "reference_sql": "SELECT SUM(import_kwh) AS measured_import_kwh\nFROM meter_readings\nWHERE quality_status = 'VALID'\n  AND is_estimated = 'false'",
+            "synonyms": [
+              "Measured electricity consumption",
+              "Verified imported energy"
+            ],
+            "example_questions": [
+              "What is the measured electricity consumption?"
+            ],
+            "owner": "Energy Analytics",
+            "inclusion_rules": [
+              "Include readings with quality_status = VALID."
+            ],
+            "exclusion_rules": [
+              "Exclude estimated readings."
+            ],
+            "ontology_concepts": [
+              "meter_readings",
+              "meter_readings.import_kwh",
+              "meter_readings.quality_status",
+              "meter_readings.is_estimated"
+            ],
+            "evidence_refs": [
+              "attachment:document-ac7fd2ec3d335bb4a233d67752ccec46"
+            ],
+            "assumptions": [
+              "The metric only includes readings with a quality status of 'VALID' and where 'is_estimated' is false.",
+              "LLM-generated candidate; business aggregation and inclusion rules require human review."
+            ],
+            "confidence": 1.0,
+            "rationale": "Proposer generated this candidate from source schema and profile.",
+            "filters": []
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860906+00:00"
+          }
+        },
+        {
+          "id": "ontology:source-mapping",
+          "kind": "ontology",
+          "name": "Source ontology mapping",
+          "change": "modified",
+          "before": {
+            "scope": "source_structure_proposal",
+            "entities": [
+              "substations",
+              "feeders",
+              "meters",
+              "meter_readings"
+            ],
+            "relationships": [
+              {
+                "name": "feeders_substation_id_substations",
+                "from_field": "feeders.substation_id",
+                "to_field": "substations.substation_id",
+                "cardinality": "many_to_one",
+                "meaning": "Link feeders to substations by its declared key",
+                "id": "join-a8e854d319041281252b"
+              },
+              {
+                "name": "meters_feeder_id_feeders",
+                "from_field": "meters.feeder_id",
+                "to_field": "feeders.feeder_id",
+                "cardinality": "many_to_one",
+                "meaning": "Link meters to feeders by its declared key",
+                "id": "join-278bfcec25ab4d72b03d"
+              },
+              {
+                "name": "meter_readings_meter_id_meters",
+                "from_field": "meter_readings.meter_id",
+                "to_field": "meters.meter_id",
+                "cardinality": "many_to_one",
+                "meaning": "Link meter_readings to meters by its declared key",
+                "id": "join-665d35ef5508c501638a"
+              }
+            ],
+            "metric_concepts": {
+              "measured_import_kwh": []
+            },
+            "glossary_terms": []
+          },
+          "after": {
+            "scope": "source_structure_proposal",
+            "entities": [
+              "substations",
+              "feeders",
+              "meters",
+              "meter_readings"
+            ],
+            "relationships": [
+              {
+                "id": "join-a8e854d319041281252b",
+                "name": "feeders_substation_id_substations",
+                "from_field": "feeders.substation_id",
+                "to_field": "substations.substation_id",
+                "cardinality": "many_to_one",
+                "meaning": "Link feeders to substations by its declared key"
+              },
+              {
+                "id": "join-278bfcec25ab4d72b03d",
+                "name": "meters_feeder_id_feeders",
+                "from_field": "meters.feeder_id",
+                "to_field": "feeders.feeder_id",
+                "cardinality": "many_to_one",
+                "meaning": "Link meters to feeders by its declared key"
+              },
+              {
+                "id": "join-665d35ef5508c501638a",
+                "name": "meter_readings_meter_id_meters",
+                "from_field": "meter_readings.meter_id",
+                "to_field": "meters.meter_id",
+                "cardinality": "many_to_one",
+                "meaning": "Link meter_readings to meters by its declared key"
+              }
+            ],
+            "metric_concepts": {
+              "measured_import_kwh": [
+                "meter_readings",
+                "meter_readings.import_kwh",
+                "meter_readings.quality_status",
+                "meter_readings.is_estimated"
+              ]
+            },
+            "glossary_terms": [
+              {
+                "columns": [
+                  "source.meters.customer_class"
+                ],
+                "confidence": 0.9,
+                "definition": "A category that defines the type of customer based on their electricity consumption characteristics.",
+                "name": "Customer class"
+              },
+              {
+                "columns": [
+                  "source.meter_readings.import_kwh"
+                ],
+                "confidence": 0.95,
+                "definition": "The quantity of electricity imported, measured in kilowatt-hours.",
+                "name": "Imported kWh"
+              },
+              {
+                "columns": [
+                  "source.meter_readings.is_estimated"
+                ],
+                "confidence": 0.9,
+                "definition": "A flag indicating if the reading is an estimate.",
+                "name": "Is estimated"
+              },
+              {
+                "columns": [
+                  "source.meter_readings.quality_status"
+                ],
+                "confidence": 0.9,
+                "definition": "The status indicating the validity of the meter reading.",
+                "name": "Quality status"
+              },
+              {
+                "columns": [
+                  "source.substations.region",
+                  "source.meter_readings.region"
+                ],
+                "confidence": 0.9,
+                "definition": "The geographical area or zone where a substation is situated, used for categorizing and analyzing data by location.",
+                "name": "Region"
+              },
+              {
+                "columns": [
+                  "source.feeders.voltage_kv"
+                ],
+                "confidence": 0.9,
+                "definition": "The voltage level of an electrical component, measured in kilovolts (kV).",
+                "name": "Voltage level"
+              }
+            ]
+          },
+          "eligible": true,
+          "reasons": [],
+          "status": "approved",
+          "decision": {
+            "pack_id": "power",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "revision": 4,
+            "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8",
+            "decision": "approve",
+            "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+            "note": "Demonstration only: checked source keys, business rules, document links, ontology mappings, and SQL agreement.",
+            "confirmed": true,
+            "decided_at": "2026-10-12T02:40:09.860914+00:00"
+          }
+        }
+      ],
+      "baseline_version": "starter",
+      "counts": {
+        "pending": 0,
+        "approved": 24,
+        "changes_requested": 0
+      }
+    },
+    "draft": {
+      "revision": 4,
+      "definition": {
+        "title": "SP Group power prototype context",
+        "description": "Business definitions for the selected synthetic dataset. Review before use.",
+        "metrics": [
+          {
+            "id": "metric-41573afa74e774888241",
+            "name": "measured_import_kwh",
+            "description": "Measured imported energy, kWh. Only VALID, non-estimated readings; dates use Asia/Singapore.",
+            "expression": "SUM(CASE WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false' THEN meter_readings.import_kwh ELSE 0 END)",
+            "unit": "kWh",
+            "grain": "One aggregate over the selected source records",
+            "time_rule": "Reporting timezone: Asia/Singapore; no date filter",
+            "dimensions": [],
+            "reference_sql": "SELECT SUM(import_kwh) AS measured_import_kwh\nFROM meter_readings\nWHERE quality_status = 'VALID'\n  AND is_estimated = 'false'",
+            "synonyms": [
+              "Measured electricity consumption",
+              "Verified imported energy"
+            ],
+            "example_questions": [
+              "What is the measured electricity consumption?"
+            ],
+            "owner": "Energy Analytics",
+            "inclusion_rules": [
+              "Include readings with quality_status = VALID."
+            ],
+            "exclusion_rules": [
+              "Exclude estimated readings."
+            ],
+            "ontology_concepts": [
+              "meter_readings",
+              "meter_readings.import_kwh",
+              "meter_readings.quality_status",
+              "meter_readings.is_estimated"
+            ],
+            "evidence_refs": [
+              "attachment:document-ac7fd2ec3d335bb4a233d67752ccec46"
+            ],
+            "assumptions": [
+              "The metric only includes readings with a quality status of 'VALID' and where 'is_estimated' is false.",
+              "LLM-generated candidate; business aggregation and inclusion rules require human review."
+            ],
+            "confidence": 1.0,
+            "rationale": "Proposer generated this candidate from source schema and profile.",
+            "filters": []
+          }
+        ],
+        "joins": [
+          {
+            "id": "join-a8e854d319041281252b",
+            "name": "feeders_substation_id_substations",
+            "from_field": "feeders.substation_id",
+            "to_field": "substations.substation_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link feeders to substations by its declared key"
+          },
+          {
+            "id": "join-278bfcec25ab4d72b03d",
+            "name": "meters_feeder_id_feeders",
+            "from_field": "meters.feeder_id",
+            "to_field": "feeders.feeder_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link meters to feeders by its declared key"
+          },
+          {
+            "id": "join-665d35ef5508c501638a",
+            "name": "meter_readings_meter_id_meters",
+            "from_field": "meter_readings.meter_id",
+            "to_field": "meters.meter_id",
+            "cardinality": "many_to_one",
+            "meaning": "Link meter_readings to meters by its declared key"
+          }
+        ],
+        "field_meanings": {
+          "feeders.feeder_id": "A unique identifier for each feeder in the electrical distribution system.",
+          "feeders.substation_id": "The identifier of the substation to which the feeder is connected.",
+          "feeders.voltage_kv": "The voltage level of the feeder, measured in kilovolts (kV).",
+          "meter_readings.import_kwh": "The amount of electricity imported during the interval, measured in kilowatt-hours (kWh).",
+          "meter_readings.interval_start_utc": "The start time of the interval for which the reading was recorded, in UTC.",
+          "meter_readings.is_estimated": "A flag indicating whether the reading is estimated or actual.",
+          "meter_readings.meter_id": "The identifier of the meter from which the reading was taken, linking to the meters table.",
+          "meter_readings.quality_status": "Indicates the validity of the reading, such as 'VALID' or 'INVALID'.",
+          "meter_readings.reading_date": "The date on which the reading was recorded.",
+          "meter_readings.reading_id": "A unique identifier for each meter reading entry.",
+          "meter_readings.region": "The geographical region where the meter is located.",
+          "meter_readings.source_sample_date": "The date when the source data was sampled, not applicable in this dataset.",
+          "meters.customer_class": "The classification of the customer based on their electricity usage profile.",
+          "meters.feeder_id": "A reference to the feeder that supplies electricity to the meter.",
+          "meters.meter_id": "A unique identifier for each electricity meter.",
+          "substations.region": "The geographical region where the substation is located.",
+          "substations.substation_id": "A unique identifier for each substation."
+        },
+        "proposal_provenance": {
+          "mode": "llm",
+          "provider": "openai",
+          "model": "gpt-4o",
+          "generated_at": "2026-10-12T02:39:52.202131+00:00",
+          "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+          "source": "source_schema_and_profile"
+        },
+        "document_attachments": [
+          {
+            "id": "document-ac7fd2ec3d335bb4a233d67752ccec46",
+            "filename": "power-business-notes.md",
+            "sha256": "fae120c908f12fcf31eb75d338cac7b1c8c9c4173b3db3ab78894dc915626c57",
+            "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+            "entity_links": [
+              {
+                "column": "meter_id",
+                "table": "meters",
+                "value": "SYN-M000"
+              }
+            ]
+          }
+        ],
+        "dataset_meanings": {
+          "feeders": "The Feeders table contains information about electrical feeders, which are components of the electrical distribution system. Each feeder is associated with a substation and has a specific voltage level.",
+          "meter_readings": "This table records electricity consumption readings from various meters, capturing the amount of energy imported in kilowatt-hours (kWh).",
+          "meters": "The Meters table contains information about electricity meters, including their identifiers and associated customer classes. It is used to categorize and manage electricity consumption data.",
+          "substations": "This table contains information about substations, which are facilities in the electrical grid that transform voltage levels and distribute electricity to feeders."
+        },
+        "field_roles": {
+          "feeders.feeder_id": "identifier",
+          "feeders.substation_id": "foreign_key",
+          "feeders.voltage_kv": "dimension",
+          "meter_readings.import_kwh": "measure",
+          "meter_readings.interval_start_utc": "time",
+          "meter_readings.is_estimated": "dimension",
+          "meter_readings.meter_id": "foreign_key",
+          "meter_readings.quality_status": "dimension",
+          "meter_readings.reading_date": "time",
+          "meter_readings.reading_id": "identifier",
+          "meter_readings.region": "dimension",
+          "meter_readings.source_sample_date": "attribute",
+          "meters.customer_class": "dimension",
+          "meters.feeder_id": "foreign_key",
+          "meters.meter_id": "identifier",
+          "substations.region": "dimension",
+          "substations.substation_id": "identifier"
+        },
+        "glossary_terms": [
+          {
+            "columns": [
+              "source.meters.customer_class"
+            ],
+            "confidence": 0.9,
+            "definition": "A category that defines the type of customer based on their electricity consumption characteristics.",
+            "name": "Customer class"
+          },
+          {
+            "columns": [
+              "source.meter_readings.import_kwh"
+            ],
+            "confidence": 0.95,
+            "definition": "The quantity of electricity imported, measured in kilowatt-hours.",
+            "name": "Imported kWh"
+          },
+          {
+            "columns": [
+              "source.meter_readings.is_estimated"
+            ],
+            "confidence": 0.9,
+            "definition": "A flag indicating if the reading is an estimate.",
+            "name": "Is estimated"
+          },
+          {
+            "columns": [
+              "source.meter_readings.quality_status"
+            ],
+            "confidence": 0.9,
+            "definition": "The status indicating the validity of the meter reading.",
+            "name": "Quality status"
+          },
+          {
+            "columns": [
+              "source.substations.region",
+              "source.meter_readings.region"
+            ],
+            "confidence": 0.9,
+            "definition": "The geographical area or zone where a substation is situated, used for categorizing and analyzing data by location.",
+            "name": "Region"
+          },
+          {
+            "columns": [
+              "source.feeders.voltage_kv"
+            ],
+            "confidence": 0.9,
+            "definition": "The voltage level of an electrical component, measured in kilovolts (kV).",
+            "name": "Voltage level"
+          }
+        ]
+      },
+      "validation": {
+        "revision": 4,
+        "definition_sha256": "e6db8acdaa4af8101fa959a90216843a33f2b9869acce62ec8f9a161b8daa9ea",
+        "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2",
+        "checked_at": "2026-10-12T02:39:55.473988+00:00",
+        "passed": true,
+        "metrics": [
+          {
+            "name": "measured_import_kwh",
+            "passed": true,
+            "sql": "SELECT\n  SUM(\n    CASE\n      WHEN meter_readings.quality_status = 'VALID' AND meter_readings.is_estimated = 'false'\n      THEN meter_readings.import_kwh\n      ELSE 0\n    END\n  ) AS measured_import_kwh\nFROM meter_readings AS meter_readings\nLIMIT 201",
+            "result": {
+              "columns": [
+                "measured_import_kwh"
+              ],
+              "rows": [
+                [
+                  "8547.28200000"
+                ]
+              ]
+            },
+            "reference_result": {
+              "columns": [
+                "measured_import_kwh"
+              ],
+              "rows": [
+                [
+                  "8547.28200000"
+                ]
+              ]
+            },
+            "reference_sql": "SELECT SUM(import_kwh) AS measured_import_kwh\nFROM meter_readings\nWHERE quality_status = 'VALID'\n  AND is_estimated = 'false'"
+          }
+        ],
+        "joins": [
+          {
+            "name": "feeders_substation_id_substations",
+            "passed": true,
+            "target_rows": 3,
+            "duplicate_keys": 0,
+            "null_target_keys": 0,
+            "unmatched_source_rows": 0
+          },
+          {
+            "name": "meters_feeder_id_feeders",
+            "passed": true,
+            "target_rows": 3,
+            "duplicate_keys": 0,
+            "null_target_keys": 0,
+            "unmatched_source_rows": 0
+          },
+          {
+            "name": "meter_readings_meter_id_meters",
+            "passed": true,
+            "target_rows": 12,
+            "duplicate_keys": 0,
+            "null_target_keys": 0,
+            "unmatched_source_rows": 0
+          }
+        ],
+        "errors": [],
+        "model_sha256": "69c39b9356387ee564c45916170dcb93381c644abf02c6bd09748186e06049e5",
+        "validation_sha256": "1527d0aa1374b9ed366fa0fc950f6c27d80e3b43b94ebb3fac2dfc46ca735ab8"
+      },
+      "baseline_version": "starter"
+    },
+    "versions": [
+      {
+        "version": "walkthrough-v1",
+        "context_sha256": "a6ef5b2a594ec32e3a3cf560a89748a302d680df5b80f9284071c2a1a792436b",
+        "reviewer": "Walkthrough automation \u2014 synthetic sample only",
+        "reviewed_at": "2026-10-12T02:40:10.122633+00:00",
+        "revision": 4,
+        "note": "Synthetic walkthrough release. Valid, non-estimated kWh reconciled against an independently written WHERE query.",
+        "published": true
+      }
+    ],
+    "active_version": "walkthrough-v1",
+    "pack_id": "power",
+    "snapshot_sha256": "2409d4552496fad8edc12b5ed48890c8e9b73f33f7236bfc008698ee540a0aa2"
+  },
+  "browser_errors": []
+}

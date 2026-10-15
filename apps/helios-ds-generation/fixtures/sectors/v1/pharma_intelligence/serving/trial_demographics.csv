@@ -1,0 +1,12 @@
+demographic_id,trial_id,dimension,subgroup,patient_count,reported_percent,denominator_count,source_id,source_locator,source_quality_note
+demographic_1,NCT04886804,Sex,Female,72,69,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_2,NCT04886804,Sex,Male,33,31,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_3,NCT04886804,Race,Asian,51,49,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_4,NCT04886804,Race,White,42,40,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_5,NCT04886804,Race,Missing,12,11,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_6,NCT04886804,Ethnicity,Hispanic or Latino,2,1.9,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_7,NCT04886804,Ethnicity,Not Hispanic or Latino,93,89,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_8,NCT04886804,Ethnicity,Missing,10,10,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",Table 1 gives missing ethnicity as 10%; Figure 4 text gives 9%. Table value preserved.
+demographic_9,NCT04886804,"Age, years",18 to <65,63,60,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_10,NCT04886804,"Age, years",65 to <75,31,30,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",
+demographic_11,NCT04886804,"Age, years",≥75,11,10,105,FDA_HERNEXEOS_SNAPSHOT,"Table 1, overall efficacy population",

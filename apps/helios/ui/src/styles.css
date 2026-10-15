@@ -4065,3 +4065,11 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+
+.brand__logo {
+  display: block;
+  width: 152px;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+}

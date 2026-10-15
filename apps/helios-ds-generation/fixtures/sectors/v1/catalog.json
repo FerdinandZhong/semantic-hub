@@ -1,0 +1,11 @@
+{
+  "schema": "helios.sector-fixtures.v1",
+  "packs": [
+    "finance",
+    "manufacturing",
+    "pharma",
+    "power",
+    "pharma_intelligence"
+  ],
+  "state": "IN_REVIEW"
+}

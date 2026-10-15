@@ -1,0 +1,45 @@
+{
+  "datasets": [
+    {
+      "name": "assets",
+      "fields": [
+        "asset_id",
+        "site",
+        "line"
+      ]
+    },
+    {
+      "name": "sensor_readings",
+      "fields": [
+        "reading_id",
+        "asset_id",
+        "observed_at_utc",
+        "air_temperature_k",
+        "process_temperature_k",
+        "rotational_speed_rpm",
+        "torque_nm",
+        "tool_wear_min"
+      ]
+    },
+    {
+      "name": "work_orders",
+      "fields": [
+        "work_order_id",
+        "asset_id",
+        "status",
+        "downtime_minutes"
+      ]
+    }
+  ],
+  "timezone": "UTC",
+  "relationships": [
+    {
+      "from": "sensor_readings.asset_id",
+      "to": "assets.asset_id"
+    },
+    {
+      "from": "work_orders.asset_id",
+      "to": "assets.asset_id"
+    }
+  ]
+}

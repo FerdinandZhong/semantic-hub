@@ -1,8 +1,9 @@
 # Helios UI backend contract (current state)
 
-This document records the backend interfaces available to a future Helios UI as
-of 2026-09-24. It describes the current implementation; it is not a replacement
-API design.
+This document records the authenticated React/API contract, originating on 24 September 2026.
+Monorepo paths were corrected on 12 October 2026.
+It does not describe the optional local `/demo` application.
+See [documentation alignment](DOCS_ALIGNMENT.md) for current scope and known gaps.
 
 ## Contract boundary
 
@@ -21,32 +22,33 @@ only when the API returns the corresponding `available_actions` or
 
 ## Application and startup
 
-The UI-facing API application is the FastAPI app `apps.console.main:app`.
-`apps/console/main.py` creates the app, migrates a
+The UI-facing API application is the FastAPI app `apps.helios.console.main:app`.
+`apps/helios/console/main.py` creates the app, migrates a
 `SQLiteMetadataRepository`, mounts `/static`, configures Jinja templates, and
 includes the `/api/v1` and review routers.
 
-In Cloudera AI Workbench, `apps/console/app.py` is the Application script.
+In Cloudera AI Workbench, `apps/helios/console/app.py` is the Application script.
 Because Workbench executes it in a Jupyter kernel, it starts uvicorn as a child
 process:
 
-`python -m uvicorn apps.console.main:app --host 127.0.0.1 --port $CDSW_APP_PORT`
+`python -m uvicorn apps.helios.console.main:app --host 127.0.0.1 --port $CDSW_APP_PORT`
 
 The checkout is resolved from `HELIOS_ROOT`, or from
 `$CDSW_PROJECT_DIR/helios`. `HELIOS_DEV=1` enables uvicorn reload.
 
-The repository also contains a separate MCP Application. `apps/mcp/app.py`
-starts `apps.mcp.server:app` in the same manner. MCP is an agent-facing
+The repository also contains a separate MCP Application. `apps/helios/mcp/app.py`
+starts `apps.helios.mcp.server:app` in the same manner. MCP is an agent-facing
 interface, not the browser UI contract.
 
-The separate React/TypeScript UI lives under `apps/ui`. Its Cloudera
-Application entry point, `apps/ui/app.py`, serves the Vite production build
-through `apps.ui.server:app`. Browser requests use the configured
+The separate React/TypeScript UI lives under `apps/helios/ui`. Its Cloudera
+Application entry point, `apps/helios/ui/app.py`, serves the Vite production build
+through `apps.helios.ui.server:app`. Browser requests use the configured
 `HELIOS_API_URL`; credentials are included so Cloudera's authenticated browser
 identity, rather than the UI Application's service identity, reaches the API.
 
-The custom runtime is built by `runtime/Dockerfile` and `runtime/build.sh` on a
-Cloudera PBJ Workbench Python 3.12 base. `runtime/requirements.txt` includes
+The original deployment used a custom Cloudera PBJ Python 3.12 runtime.
+Its referenced `runtime/Dockerfile`, `runtime/build.sh`, and `runtime/requirements.txt` are absent from this checkout.
+That historical dependency list includes
 FastAPI/uvicorn, MCP, HTTP clients, Impala/Hive clients, SQLGlot, DuckDB,
 Pydantic, JSON Schema, YAML, pandas, PyArrow, and LLM clients. Jinja2 is used by
 the console but is not explicitly pinned. Pytest is also not listed, so the
@@ -462,7 +464,7 @@ The browser stores an opaque UUID in `sessionStorage` and sends it as
 
 ## User interfaces
 
-The primary visual UI is the React/TypeScript application in `apps/ui`. It
+The primary visual UI is the React/TypeScript application in `apps/helios/ui`. It
 uses only this HTTP contract for selectors, conversations, overview, semantic
 model navigation, Inspector details, and proposal review. Helios uses a
 conversation-first information architecture: `/` redirects to `/talk`, the
@@ -506,7 +508,7 @@ relationship groups. Historical table detail renders key candidates, glossary
 matches, cardinality accuracy, and accepted relationship evidence.
 
 The legacy console also includes Jinja2 HTML with CSS in
-`apps/console/static`. It
+`apps/helios/console/static`. It
 contains health, Atlas glossary/term CRUD, discovery run browsing, proposal
 display, review, and publish pages. Review interactions use inline JavaScript
 `fetch`; despite the module docstring, the current templates do not use HTMX.

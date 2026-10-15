@@ -1,0 +1,41 @@
+{
+  "synthetic": true,
+  "seed": 8100,
+  "source": {
+    "name": "UCI Individual Household Electric Power Consumption",
+    "url": "https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption",
+    "download": "https://archive.ics.uci.edu/static/public/235/individual+household+electric+power+consumption.zip",
+    "license": "CC BY 4.0",
+    "doi": "10.24432/C58K54"
+  },
+  "external_records_used": false,
+  "source_records_read": 0,
+  "generation_mode": "source-informed synthetic; no source records downloaded",
+  "limitations": [
+    "Fictional demo data; not SP Group, a real plant, or a real manufacturer.",
+    "No production prediction, regulatory approval, or calibration is established."
+  ],
+  "sector": "power",
+  "state": "IN_REVIEW",
+  "generator_version": 1,
+  "row_counts": {
+    "substations": 3,
+    "feeders": 3,
+    "meters": 12,
+    "meter_readings": 4032
+  },
+  "documents": 0,
+  "serving_root": "serving",
+  "evaluation_root": "evaluation",
+  "evaluation_policy": "Never crawl evaluation or include it in query prompts.",
+  "checksums": {
+    "evaluation/reference.json": "115019bd5994a547dc814fc8ffc659928f8bcf1a7e9c405ec887e57fbbf1560d",
+    "serving/documents.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "serving/draft.ossie.json": "3eda5a3cc356aa2e38f4ede1e4cbe68f375a23d53eac6171fb076841e11e5497",
+    "serving/feeders.csv": "1d1c05c62eaa9a7b764c8bf6ec9a7dbc8a0cf6937c0d292a7e5dc9a9ebbbcd5b",
+    "serving/metadata.json": "766c942453ab0618a568e6e916b8536f85347244d0c31dede210c15df54237f5",
+    "serving/meter_readings.csv": "88891e65c5abc7fc3c0a5bf8bb32026ff91d0c989832ef4b1cd2f52f2330a1aa",
+    "serving/meters.csv": "743039a85349c215bc878a65a458203d2ca51267d7cd79cbcd39c1ac2ec2f418",
+    "serving/substations.csv": "911329f23a959ce355eeb03c4c0e8bde79060028beb5187d18dbd69ee77b35fd"
+  }
+}

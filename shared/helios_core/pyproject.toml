@@ -10,9 +10,11 @@ authors = [{name = "Helios Team"}]
 requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.0",
+    "cryptography>=46,<51",  # encrypted local model credentials
     "pyarrow>=14.0",
     "sqlalchemy>=2.0",
     "pyyaml>=6.0",  # ontology mappings (helios_core.ontology.mapping)
+    "sqlglot>=29,<30",  # semantic dependency parsing and compilation
 ]
 
 [project.optional-dependencies]

@@ -1,0 +1,13 @@
+FROM python:3.13-slim
+WORKDIR /app
+COPY apps/helios/demo-requirements.txt /tmp/demo-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/demo-requirements.txt
+COPY shared /app/shared
+COPY apps/helios /app/apps/helios
+COPY apps/helios-ds-generation/fixtures/sectors/v1 /app/apps/helios-ds-generation/fixtures/sectors/v1
+COPY start_demo.py /app/start_demo.py
+ENV PYTHONPATH=/app/shared:/app
+ENV HELIOS_DEMO_STATE=/state
+EXPOSE 8080
+ENTRYPOINT ["python", "start_demo.py"]
+CMD ["--host", "0.0.0.0", "--ui-mode", "query"]

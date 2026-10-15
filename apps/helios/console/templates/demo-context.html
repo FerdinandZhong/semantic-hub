@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Hub · Semantic Studio</title>
+  <link rel="stylesheet" href="/static/demo.css"><link rel="stylesheet" href="/static/demo-context.css">
+  <link rel="stylesheet" href="/static/demo-canvas.css"><script src="/static/demo-canvas.js" defer></script><script src="/static/demo-context.js" defer></script>
+<link rel="stylesheet" href="/static/demo-shell.css?v=20261014"></head>
+<body><div class="shell">
+  <aside><a class="brand" href="/demo" aria-label="Cloudera Semantic Hub home"><img src="/static/cloudera-wordmark.png" alt="Cloudera" width="152" height="19"><span>SEMANTIC HUB</span></a>
+    <nav aria-label="Workspace navigation"><p class="nav-label">Workspace</p><a href="/demo"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Semantic Hub</span></a><a href="/demo/llm"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="15" cy="17" r="3" fill="currentColor" stroke="none"/></svg><span>Model configuration</span></a><a href="/demo/materials"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg><span>Supporting materials</span></a><p class="sidebar-source" id="source-nav-title">Selected source</p><a class="active" href="/demo/context" data-source-link id="nav-studio" aria-current="page"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3 9 5-9 5-9-5Zm-9 5v9l9 5 9-5V8M12 13v9"/></svg><span>Semantic Studio</span></a><a href="#hub" id="nav-versions"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11a9 9 0 1 1 2 7M3 4v7h7M12 7v5l3 2"/></svg><span>Versions &amp; releases</span></a><a href="/demo/query" data-source-link><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7Z"/></svg><span>Model playground</span></a></nav>
+    <p class="sidebar-note">Define once.<br>Review with evidence.<br>Query a known version.</p>
+  </aside>
+  <main>
+    <header><span id="workspace-breadcrumb">Workspace / Semantic Studio</span><span class="badge">Local sample workspace</span></header>
+    <section class="heading"><p class="eyebrow" id="pack-title">SELECTED DATASET</p><h1 id="workspace-heading">Semantic Studio</h1>
+      <p id="workspace-description">Build and refine semantic definitions, inspect relationships, and validate changes before review.</p></section>
+    <div class="workspace-bar"><div><strong id="draft-status">Loading workspace…</strong><p id="active-status" class="muted"></p></div>
+      <div class="actions"><button id="reload" class="secondary" type="button">Reload</button><button id="save" type="button" disabled>Save draft</button><button id="edit-draft" type="button" hidden>Open draft in Studio</button></div></div>
+    <p id="error" role="alert" hidden></p><p id="notice" role="status" aria-live="polite"></p>
+    <div class="steps" role="tablist" aria-label="Context workflow">
+      <button id="tab-source" role="tab" aria-controls="step-source" aria-selected="false" data-step="source"><span>1</span>Source data</button>
+      <button id="tab-define" role="tab" aria-controls="step-define" aria-selected="true" tabindex="-1" data-step="define"><span>2</span>Studio</button>
+      <button id="tab-validate" role="tab" aria-controls="step-validate" aria-selected="false" tabindex="-1" data-step="validate"><span>3</span>Validation &amp; review</button>
+      <button id="tab-review" role="tab" aria-controls="step-review" aria-selected="false" tabindex="-1" data-step="review"><span>4</span>Versions &amp; releases</button>
+    </div>
+    <section id="step-source" role="tabpanel" aria-labelledby="tab-source" hidden>
+      <section class="panel documents-panel" id="source-documents" aria-labelledby="documents-heading">
+        <div class="panel-heading"><div><h2 id="documents-heading">Documents &amp; unstructured data</h2><p class="muted">Business definitions, policies, and notes that support your semantic model.</p></div><a id="add-supporting-material" class="button-link" href="/demo/materials">Add supporting material</a></div>
+        <p class="help">Upload → Analyze → Review links → Apply to draft. AI proposes claims and links to structured fields and metrics.</p>
+        <p class="help">Approved evidence retains document lineage. Document claims do not automatically create SQL relationships.</p>
+        <details id="local-document-notes"><summary>Optional: add a local plain-text note</summary>
+        <p class="help">Use this shortcut for a small note. Use Add supporting material for document analysis and reviewed model links.</p>
+        <button id="document-add" class="secondary" type="button" aria-expanded="false" aria-controls="document-upload-panel">Add local note</button>
+        <div id="document-upload-panel" hidden><form id="document-form">
+          <label>Choose a document<input id="document-file" type="file" accept=".txt,.md,text/plain,text/markdown" required aria-describedby="document-formats"></label>
+          <p class="help" id="document-formats">Plain text (.txt) or Markdown (.md), UTF-8, up to 256 KiB per file. Use Add supporting material for PDF and Word documents.</p>
+          <p id="document-file-status" role="status"></p><pre id="document-file-preview" hidden aria-label="Selected file preview"></pre>
+          <details id="document-link-options"><summary>Link to a data record (optional)</summary><p class="help">Use a unique table key and an existing value. Without a link, the document supports the whole model.</p><div class="form-grid two"><label>Table<input id="document-table" placeholder="For example: customers"></label><label>Key column<input id="document-column" placeholder="For example: customer_id"></label></div><label>Record value<input id="document-value" placeholder="The exact value in the source data"></label></details>
+          <div class="actions"><button id="document-upload" type="submit">Add to draft</button><button id="document-cancel" class="secondary" type="button">Cancel</button></div>
+        </form></div></details>
+        <p id="documents-status" class="help" role="status">Loading documents…</p><p id="documents-error" role="alert" hidden></p>
+        <div class="documents-workspace"><div id="document-list" aria-label="Source and uploaded documents"></div><section id="document-detail" aria-label="Document preview" hidden></section></div>
+        <div class="actions"><button id="documents-review" class="secondary" type="button">Review documents</button></div>
+      </section>
+      <div class="panel proposal-panel" id="evidence-draft"><div class="panel-heading"><h2>Build a candidate from evidence</h2><span class="badge subtle">Human review required</span></div>
+        <p class="muted">AI uses structured source data and attached documents to propose business meanings and metrics. Inspect the candidate before applying it. SQL relationships require separate validation.</p>
+        <div class="actions"><button id="propose-evidence" type="button">Create evidence draft</button><button id="propose-llm" class="secondary" type="button" disabled>Draft semantic definitions with AI</button></div>
+        <p id="proposal-status" class="help" role="status">Loading generation availability…</p>
+        <div id="proposal-preview" hidden></div><div id="proposal-history"></div>
+      </div>
+      <div class="panel"><div class="panel-heading"><h2>Source tables</h2><span class="badge subtle" id="table-count"></span></div>
+        <p class="muted">Explore typed columns and up to 10 sample rows. Add column meanings for your context.</p>
+        <div id="table-list" class="table-list"></div><div class="actions"><button id="previous-tables" class="secondary" type="button" disabled>Previous tables</button><button id="next-tables" class="secondary" type="button" disabled>Next tables</button></div>
+      </div>
+      <div class="panel" id="table-detail" hidden><div class="panel-heading"><h2 id="table-name"></h2><span id="table-rows" class="muted"></span></div>
+        <h3>Columns &amp; business meanings</h3><div class="scroll"><table><thead><tr><th>Column</th><th>DuckDB type</th><th>Business meaning</th></tr></thead><tbody id="columns"></tbody></table></div>
+        <h3>Sample rows</h3><div class="scroll" id="preview"></div>
+      </div>
+      <button type="button" data-next="define">Continue to definitions →</button>
+    </section>
+    <section id="step-define" role="tabpanel" aria-labelledby="tab-define"><div class="studio-layout"><section id="studio-tree" class="studio-tree" aria-label="Semantic object tree"></section><section id="studio-canvas" class="studio-canvas" aria-label="Relationship canvas"></section><section class="studio-inspector" aria-label="Object inspector"><div class="inspector-heading"><h2>Inspector</h2><span class="badge subtle">Editable draft</span></div><div class="inspector-tabs"><button data-inspector="context" type="button">Context</button><button data-inspector="metric" type="button">Metric</button><button data-inspector="join" type="button">Relationship</button><button data-inspector="source" type="button">Source</button><button data-inspector="changes" type="button">Changes</button></div><div id="source-inspector" class="panel" hidden></div><div id="changes-inspector" class="panel" hidden><p class="muted">Choose a change in the canvas to inspect its saved evidence.</p></div>
+      <div class="panel"><h2>Context identity</h2><div class="form-grid"><label>Context title<input id="context-title" maxlength="100"></label><label>Description<textarea id="context-description" rows="2" maxlength="1500"></textarea></label></div></div>
+      <div class="panel"><div class="panel-heading"><h2>Metric definitions</h2><button type="button" id="add-metric" class="secondary">+ Add metric</button></div>
+        <div class="metric-layout"><div id="metric-list" class="metric-list" aria-label="Metrics"></div><div id="metric-editor">
+          <div class="form-grid two"><label>Metric name<input id="metric-name" maxlength="64" spellcheck="false"></label><label>Unit<input id="metric-unit" maxlength="64"></label></div>
+          <label>Business question or description<textarea id="metric-description" rows="2" maxlength="1000"></textarea></label>
+          <div class="form-grid two"><label>Grain<input id="metric-grain" maxlength="500"></label><label>Time rule<input id="metric-time_rule" maxlength="500"></label></div>
+          <label>SQL aggregate expression<textarea id="metric-expression" class="code" rows="6" maxlength="4000" spellcheck="false"></textarea></label>
+          <p class="help">Use one SUM, AVG, COUNT(column), MIN or MAX over qualified table.column fields. Put inclusion rules in the expression.</p>
+          <label>Group by columns<input id="metric-dimensions" placeholder="For example: meters.customer_class" spellcheck="false"></label>
+          <p class="help">Optional: up to three comma-separated fields. Cross-table grouping requires a reviewed many-to-one relationship.</p>
+          <details class="semantic-fields"><summary>Structured SQL filters</summary><p class="help">Filters constrain source rows before aggregation. Use qualified fields from the metric's source table.</p><div id="metric-filters"></div><button id="add-filter" type="button" class="secondary">+ Add filter</button></details>
+          <label>Independent reference SQL<textarea id="metric-reference_sql" class="code" rows="5" maxlength="8000" spellcheck="false" placeholder="Write a SELECT that independently calculates the same metric."></textarea></label>
+          <p class="help" id="reference-help"></p>
+          <p class="help">Grain, unit and time descriptions document intent. SQL must implement the rules; the reviewer confirms their meaning.</p>
+          <details class="semantic-fields"><summary>Business meaning and evidence</summary>
+            <label>Synonyms<textarea id="metric-synonyms" rows="2" placeholder="One synonym per line"></textarea></label>
+            <label>Example questions<textarea id="metric-example_questions" rows="2" placeholder="One question per line"></textarea></label>
+            <label>Owner<input id="metric-owner" maxlength="120"></label>
+            <label>Inclusion rules<textarea id="metric-inclusion_rules" rows="2" placeholder="One rule per line"></textarea></label>
+            <label>Exclusion rules<textarea id="metric-exclusion_rules" rows="2" placeholder="One rule per line"></textarea></label>
+            <label>Ontology concepts<textarea id="metric-ontology_concepts" rows="2" placeholder="One concept per line"></textarea></label>
+            <label>Evidence references<textarea id="metric-evidence_refs" rows="2" placeholder="One reference per line"></textarea></label>
+            <label>Assumptions<textarea id="metric-assumptions" rows="2" placeholder="One assumption per line"></textarea></label>
+            <label>Rationale<textarea id="metric-rationale" rows="2"></textarea></label>
+            <label>Confidence<input id="metric-confidence" type="number" min="0" max="1" step="0.01"></label>
+          </details>
+          <button type="button" id="remove-metric" class="secondary danger">Remove metric</button>
+        </div></div>
+      </div>
+      <div class="panel"><div class="panel-heading"><h2>Many-to-one relationships</h2><button type="button" id="add-join" class="secondary">+ Add relationship</button></div>
+        <p class="muted">Validation checks unique target keys and complete source matches before a version can pass.</p><div id="joins"></div></div>
+</section></div><details class="code-drawer"><summary>Definition code · JSON preview</summary><pre id="definition-code"></pre></details><button type="button" data-next="validate">Open validation &amp; review →</button>
+    </section>
+    <section id="step-validate" role="tabpanel" aria-labelledby="tab-validate" hidden>
+      <div class="panel"><div class="panel-heading"><h2>Reconcile the saved draft</h2><button type="button" id="validate" disabled>Validate SQL</button></div>
+        <p class="muted">Execute compiled and reference SQL against the same typed source. Every metric and relationship must pass.</p>
+        <p class="help">Validation allows read-only queries, up to 200 result rows, and a five-second limit per query.</p><p id="validation-status" role="status"></p>
+      </div><div id="validation-results"></div><div class="panel review-workspace"><div class="panel-heading"><h2>Definition review</h2><p id="review-scope" class="help"></p><label>Compare against<select id="baseline"><option value="starter">Starter definitions</option></select></label></div><p class="help">Technical checks and human decisions are separate. Review applies only to this local source snapshot.</p><div class="review-toolbar"><label>Find objects<input id="review-filter" placeholder="Name or kind"></label><label>Change<select id="review-change"><option value="">All changes</option><option value="added">Added</option><option value="modified">Modified</option><option value="removed">Removed</option><option value="unchanged">Unchanged</option><option value="affected">Affected</option></select></label><button id="select-page" class="secondary" type="button">Select page</button><button id="select-all" class="secondary" type="button">Select all matching</button><button id="clear-selection" class="secondary" type="button">Clear</button></div><div id="review-comparison"></div><p id="selection-count" role="status"></p><div class="scroll"><table class="review-table"><thead><tr><th>Select</th><th>Object</th><th>Change</th><th>Technical status</th><th>Human decision</th><th>Evidence</th></tr></thead><tbody id="review-items"></tbody></table></div><div class="review-pagination">
+        <div class="review-page-info"><label for="review-page-size">Rows per page</label><select id="review-page-size"><option value="10">10</option><option value="25">25</option><option value="50">50</option></select><span id="review-range" role="status" aria-live="polite"></span></div>
+        <nav class="review-page-nav" aria-label="Review table pages"><button id="review-prev" class="secondary" type="button" aria-label="Previous page" title="Previous page">‹</button><div id="review-page-numbers"></div><button id="review-next" class="secondary" type="button" aria-label="Next page" title="Next page">›</button></nav>
+        <span id="review-page" class="review-page-announcement"></span>
+      </div><div id="review-batch-actions" class="review-batch-actions" hidden><span id="review-batch-count"></span><div class="actions"><button id="approve-selected" type="button">Approve selected</button><button id="request-selected" class="secondary" type="button">Request changes</button></div></div></div><button type="button" data-next="review">Open versions &amp; releases →</button>
+    </section>
+    <section id="step-review" role="tabpanel" aria-labelledby="tab-review" hidden>
+      <div class="panel"><h2>Create a reviewed version</h2><p class="muted" id="review-status">Save and validate the draft before review.</p><div id="review-blockers" hidden></div>
+        <form id="review-form" class="review-form"><fieldset id="review-fields" disabled>
+          <div class="form-grid two"><label>Version name<input id="version" required pattern="[a-zA-Z0-9][a-zA-Z0-9_.\-]{0,39}" maxlength="40" placeholder="v1"></label><label>Reviewer<input id="reviewer" required maxlength="120" autocomplete="name" placeholder="Your name"></label></div>
+          <label>Review note<textarea id="review-note" required minlength="3" maxlength="1000" rows="3" placeholder="Record the definitions and evidence you checked."></textarea></label>
+          <label class="check"><input id="confirmed" type="checkbox" required>I reviewed the definitions, relationships and SQL evidence for this local sample.</label>
+          <button type="submit" id="review">Approve whole version</button>
+        </fieldset></form>
+        <p class="help">A reviewed version is immutable. Publish it in this local workspace, then activate it for queries. Reviewer names are local attribution; no enterprise identity is connected.</p>
+      </div>
+      <div class="panel"><div class="panel-heading"><h2>Version history</h2><a href="/demo/query" data-source-link>Open playground →</a></div><div id="versions"></div></div>
+
+    </section>
+    <div id="version-navigation" hidden><a id="version-back" href="#hub">← Back to versions</a><span class="badge subtle">Read-only version</span></div>
+    <div id="version-detail" class="panel" hidden>
+      <div class="panel-heading"><h2 id="version-heading"></h2><button id="download-version" type="button" class="secondary">Download context JSON</button></div>
+      <div id="version-summary"></div>
+      <section class="version-section" id="version-graph-section"><h3>Version canvas</h3>
+        <p class="help">Explore the saved datasets, metrics, relationships, and supporting documents. This canvas is read-only.</p>
+        <p id="version-graph-status" role="status">Loading version graph…</p>
+        <div id="version-canvas"></div>
+        <div id="version-object-detail" class="version-object-detail"><p>Select an object or relationship to inspect its saved definition.</p></div>
+      </section><div id="version-content"></div>
+      <details><summary>Complete immutable context and validation evidence</summary><pre id="version-json"></pre></details>
+    </div>
+    <div class="panel artifact-panel" id="version-evidence" hidden><div class="panel-heading"><div class="evidence-heading"><h2>Version evidence</h2><p class="help">Inspect the business metadata, ontology, and supporting documents recorded for this version.</p></div><div class="actions"><label>Version<select id="artifact-version"><option value="draft">Draft</option></select></label><button id="artifact-refresh" type="button" class="secondary">View version evidence</button></div></div><div id="artifact-content"></div></div>
+    <details class="provenance"><summary>Source snapshot</summary><dl id="source-binding"></dl></details>
+  <dialog id="batch-dialog" aria-labelledby="batch-title" aria-describedby="batch-preview"><form id="batch-form"><h2 id="batch-title">Confirm review decision</h2><p id="batch-preview"></p><div id="batch-objects"></div><label>Reviewer<input id="batch-reviewer" required maxlength="120" placeholder="Your name"></label><label>Decision note<textarea id="batch-note" required minlength="3" maxlength="1000" rows="3"></textarea></label><label class="check"><input id="batch-confirmed" type="checkbox" required>I checked the selected definitions and their evidence.</label><div class="actions"><button id="batch-cancel" class="secondary" type="button">Cancel</button><button id="batch-submit" type="submit">Confirm decision</button></div></form></dialog></main>
+</div></body></html>

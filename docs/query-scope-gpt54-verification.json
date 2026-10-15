@@ -1,0 +1,498 @@
+{
+  "model": "gpt-5.4",
+  "checked_at": "2026-10-15T14:01:27.544135+00:00",
+  "connection_reply": "OK",
+  "cases": [
+    {
+      "id": "korea",
+      "question": "What is the Korea share of sales for new medicines launched during 2020–2024?",
+      "status": "unsupported_scope",
+      "kind": null,
+      "message": "Geography mismatch: the question requests Korea, but us_new_medicine_sales_share_percent fixes industry_observations.geography to USA. A filter cannot change that definition. The requested period matches the checked source coverage.",
+      "scope_check": {
+        "status": "unsupported_scope",
+        "requirements": {
+          "original_question": "What is the Korea share of sales for new medicines launched during 2020–2024?",
+          "year_ranges": [
+            [
+              2020,
+              2024
+            ]
+          ],
+          "years": [
+            2020,
+            2024
+          ],
+          "dates": [],
+          "relative": false
+        },
+        "coverage": [
+          {
+            "table": "industry_observations",
+            "kind": "cohort",
+            "fields": [
+              "industry_observations.period_start",
+              "industry_observations.period_end"
+            ],
+            "periods": [
+              [
+                2020,
+                2024
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        "filters": [
+          {
+            "field": "industry_observations.geography",
+            "op": "=",
+            "value": "Korea"
+          },
+          {
+            "field": "industry_observations.period_start",
+            "op": "=",
+            "value": 2020
+          },
+          {
+            "field": "industry_observations.period_end",
+            "op": "=",
+            "value": 2024
+          }
+        ],
+        "message": "Geography mismatch: the question requests Korea, but us_new_medicine_sales_share_percent fixes industry_observations.geography to USA. A filter cannot change that definition. The requested period matches the checked source coverage.",
+        "checks": [
+          {
+            "dimension": "period",
+            "status": "supported",
+            "message": "The requested period matches the checked source coverage."
+          },
+          {
+            "dimension": "geography",
+            "field": "industry_observations.geography",
+            "requested": "Korea",
+            "status": "unsupported_scope",
+            "message": "Geography mismatch: the question requests Korea, but us_new_medicine_sales_share_percent fixes industry_observations.geography to USA. A filter cannot change that definition.",
+            "fixed_values": [
+              "USA"
+            ],
+            "observed_values": [
+              "USA",
+              "Europe (Top 5)",
+              "Japan",
+              "Pharmerging",
+              "Rest of the World"
+            ],
+            "truncated": false
+          }
+        ],
+        "reason_dimensions": [
+          "geography"
+        ]
+      },
+      "agent": {
+        "framework": "DeepSeek Harness",
+        "sdk_version": "0.1.5rc1",
+        "provider": "openai",
+        "model": "gpt-5.4",
+        "turn_id": "turn-313d5d519fcfffe07115864d",
+        "tool_budget": 12,
+        "trace": [
+          {
+            "tool": "inspect_model",
+            "status": "checked"
+          },
+          {
+            "tool": "inspect_coverage",
+            "status": "inspect_alternative_evidence",
+            "metric": "us_new_medicine_sales_share_percent",
+            "coverage": [
+              {
+                "table": "industry_observations",
+                "kind": "cohort",
+                "fields": [
+                  "industry_observations.period_start",
+                  "industry_observations.period_end"
+                ],
+                "periods": [
+                  [
+                    2020,
+                    2024
+                  ]
+                ],
+                "truncated": false
+              }
+            ],
+            "message": "Geography mismatch: the question requests Korea, but us_new_medicine_sales_share_percent fixes industry_observations.geography to USA. A filter cannot change that definition. The requested period matches the checked source coverage. This check covers only the selected metric. Read the published passages before issuing a final refusal. Use a document answer only if its actual scope matches the question."
+          },
+          {
+            "tool": "read_document_evidence",
+            "status": "checked"
+          },
+          {
+            "tool": "request_clarification",
+            "status": "unsupported_scope",
+            "metric": "us_new_medicine_sales_share_percent",
+            "message": "Geography mismatch: the question requests Korea, but us_new_medicine_sales_share_percent fixes industry_observations.geography to USA. A filter cannot change that definition. The requested period matches the checked source coverage."
+          }
+        ],
+        "failure_type": null,
+        "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+      },
+      "passed": true
+    },
+    {
+      "id": "missing_period",
+      "question": "What is the US share of sales for new medicines launched during 1999–2020?",
+      "status": "no_data",
+      "kind": null,
+      "message": "No matching cohort data for 1999–2020. Checked industry_observations; available cohorts: 2020–2024. No other period was substituted.",
+      "scope_check": {
+        "status": "no_data",
+        "requirements": {
+          "original_question": "What is the US share of sales for new medicines launched during 1999–2020?",
+          "year_ranges": [
+            [
+              1999,
+              2020
+            ]
+          ],
+          "years": [
+            1999,
+            2020
+          ],
+          "dates": [],
+          "relative": false
+        },
+        "coverage": [
+          {
+            "table": "industry_observations",
+            "kind": "cohort",
+            "fields": [
+              "industry_observations.period_start",
+              "industry_observations.period_end"
+            ],
+            "periods": [
+              [
+                2020,
+                2024
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        "filters": [
+          {
+            "field": "industry_observations.geography",
+            "op": "=",
+            "value": "USA"
+          },
+          {
+            "field": "industry_observations.period_start",
+            "op": "=",
+            "value": 1999
+          },
+          {
+            "field": "industry_observations.period_end",
+            "op": "=",
+            "value": 2020
+          }
+        ],
+        "message": "No matching cohort data for 1999–2020. Checked industry_observations; available cohorts: 2020–2024. No other period was substituted.",
+        "checks": [
+          {
+            "dimension": "period",
+            "status": "no_data",
+            "message": "No matching cohort data for 1999–2020. Checked industry_observations; available cohorts: 2020–2024. No other period was substituted."
+          },
+          {
+            "dimension": "geography",
+            "field": "industry_observations.geography",
+            "requested": "USA",
+            "status": "supported",
+            "message": "USA exists in industry_observations.geography.",
+            "fixed_values": [
+              "USA"
+            ],
+            "observed_values": [
+              "USA",
+              "Europe (Top 5)",
+              "Japan",
+              "Pharmerging",
+              "Rest of the World"
+            ],
+            "truncated": false
+          }
+        ],
+        "reason_dimensions": [
+          "period"
+        ],
+        "metric_question": "What is the US share of sales for new medicines launched during 1999–2020?"
+      },
+      "agent": {
+        "framework": "DeepSeek Harness",
+        "sdk_version": "0.1.5rc1",
+        "provider": "openai",
+        "model": "gpt-5.4",
+        "turn_id": "turn-3fefb935871d0eac241f4677",
+        "tool_budget": 12,
+        "trace": [
+          {
+            "tool": "inspect_model",
+            "status": "checked"
+          },
+          {
+            "tool": "inspect_coverage",
+            "status": "inspect_alternative_evidence",
+            "metric": "us_new_medicine_sales_share_percent",
+            "coverage": [
+              {
+                "table": "industry_observations",
+                "kind": "cohort",
+                "fields": [
+                  "industry_observations.period_start",
+                  "industry_observations.period_end"
+                ],
+                "periods": [
+                  [
+                    2020,
+                    2024
+                  ]
+                ],
+                "truncated": false
+              }
+            ],
+            "message": "No matching cohort data for 1999–2020. Checked industry_observations; available cohorts: 2020–2024. No other period was substituted. This check covers only the selected metric. Read the published passages before issuing a final refusal. Use a document answer only if its actual scope matches the question."
+          },
+          {
+            "tool": "read_document_evidence",
+            "status": "checked"
+          },
+          {
+            "tool": "prepare_query",
+            "status": "no_data",
+            "metric": "us_new_medicine_sales_share_percent",
+            "request": {
+              "metric": "us_new_medicine_sales_share_percent",
+              "filters": [
+                {
+                  "field": "industry_observations.geography",
+                  "op": "=",
+                  "value": "USA"
+                },
+                {
+                  "field": "industry_observations.period_start",
+                  "op": "=",
+                  "value": 1999
+                },
+                {
+                  "field": "industry_observations.period_end",
+                  "op": "=",
+                  "value": 2020
+                }
+              ]
+            },
+            "message": "No matching cohort data for 1999–2020. Checked industry_observations; available cohorts: 2020–2024. No other period was substituted."
+          }
+        ],
+        "failure_type": null,
+        "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+      },
+      "passed": true
+    },
+    {
+      "id": "usa",
+      "question": "What is the US share of sales for new medicines launched during 2020–2024?",
+      "status": "ready",
+      "kind": "metric",
+      "message": null,
+      "scope_check": {
+        "status": "supported",
+        "requirements": {
+          "original_question": "What is the US share of sales for new medicines launched during 2020–2024?",
+          "year_ranges": [
+            [
+              2020,
+              2024
+            ]
+          ],
+          "years": [
+            2020,
+            2024
+          ],
+          "dates": [],
+          "relative": false
+        },
+        "coverage": [
+          {
+            "table": "industry_observations",
+            "kind": "cohort",
+            "fields": [
+              "industry_observations.period_start",
+              "industry_observations.period_end"
+            ],
+            "periods": [
+              [
+                2020,
+                2024
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        "filters": [
+          {
+            "field": "industry_observations.geography",
+            "op": "=",
+            "value": "USA"
+          },
+          {
+            "field": "industry_observations.period_start",
+            "op": "=",
+            "value": 2020
+          },
+          {
+            "field": "industry_observations.period_end",
+            "op": "=",
+            "value": 2024
+          }
+        ],
+        "message": "The requested period matches the checked source coverage.",
+        "checks": [
+          {
+            "dimension": "period",
+            "status": "supported",
+            "message": "The requested period matches the checked source coverage."
+          },
+          {
+            "dimension": "geography",
+            "field": "industry_observations.geography",
+            "requested": "USA",
+            "status": "supported",
+            "message": "USA exists in industry_observations.geography.",
+            "fixed_values": [
+              "USA"
+            ],
+            "observed_values": [
+              "USA",
+              "Europe (Top 5)",
+              "Japan",
+              "Pharmerging",
+              "Rest of the World"
+            ],
+            "truncated": false
+          }
+        ],
+        "metric_question": "What is the US share of sales for new medicines launched during 2020–2024?"
+      },
+      "agent": {
+        "framework": "DeepSeek Harness",
+        "sdk_version": "0.1.5rc1",
+        "provider": "openai",
+        "model": "gpt-5.4",
+        "turn_id": "turn-21b16673ca7508c44a60b36b",
+        "tool_budget": 12,
+        "trace": [
+          {
+            "tool": "inspect_model",
+            "status": "checked"
+          },
+          {
+            "tool": "inspect_coverage",
+            "status": "supported",
+            "metric": "us_new_medicine_sales_share_percent",
+            "coverage": [
+              {
+                "table": "industry_observations",
+                "kind": "cohort",
+                "fields": [
+                  "industry_observations.period_start",
+                  "industry_observations.period_end"
+                ],
+                "periods": [
+                  [
+                    2020,
+                    2024
+                  ]
+                ],
+                "truncated": false
+              }
+            ],
+            "message": "The requested period matches the checked source coverage."
+          },
+          {
+            "tool": "prepare_query",
+            "status": "ready",
+            "metric": "us_new_medicine_sales_share_percent",
+            "request": {
+              "metric": "us_new_medicine_sales_share_percent",
+              "filters": [
+                {
+                  "field": "industry_observations.geography",
+                  "op": "=",
+                  "value": "USA"
+                },
+                {
+                  "field": "industry_observations.period_start",
+                  "op": "=",
+                  "value": 2020
+                },
+                {
+                  "field": "industry_observations.period_end",
+                  "op": "=",
+                  "value": 2024
+                }
+              ]
+            },
+            "message": "AI will query the published metric for: What is the US share of sales for new medicines launched during 2020–2024?"
+          }
+        ],
+        "failure_type": null,
+        "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+      },
+      "passed": true,
+      "rows": [
+        [
+          "74.10000000"
+        ]
+      ]
+    },
+    {
+      "id": "document",
+      "question": "What is the North America share of the entire prescription medicine market in 2025?",
+      "status": "ready",
+      "kind": "document",
+      "message": null,
+      "scope_check": null,
+      "agent": {
+        "framework": "DeepSeek Harness",
+        "sdk_version": "0.1.5rc1",
+        "provider": "openai",
+        "model": "gpt-5.4",
+        "turn_id": "turn-7729a39261caff13f4097fcc",
+        "tool_budget": 12,
+        "trace": [
+          {
+            "tool": "inspect_model",
+            "status": "checked"
+          },
+          {
+            "tool": "read_document_evidence",
+            "status": "checked"
+          },
+          {
+            "tool": "prepare_document",
+            "status": "ready",
+            "message": "AI will inspect published document evidence for your original question: What is the North America share of the entire prescription medicine market in 2025?"
+          }
+        ],
+        "failure_type": null,
+        "memory_scope": "Selected published context and source snapshot; previous answers are not reused as facts."
+      },
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "automated_regressions_passed": 61
+}

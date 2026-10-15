@@ -65,7 +65,7 @@ Configure the UI Application:
 HELIOS_API_URL=https://helios-api.<workbench-domain>
 ```
 
-`apps/ui/app.py` exposes this value to the built frontend through a generated,
+`apps/helios/ui/app.py` exposes this value to the built frontend through a generated,
 non-cached `/config.js`. This is runtime configuration, so the API URL is not
 compiled into the production bundle.
 
@@ -92,19 +92,19 @@ Run the API with an explicit local UI origin and development principal:
 HELIOS_UI_ORIGINS=http://localhost:5173 \
 HELIOS_DEV=1 \
 HELIOS_DEV_USER=<principal-subject> \
-uvicorn apps.console.main:app --host 127.0.0.1 --port 8000
+uvicorn apps.helios.console.main:app --host 127.0.0.1 --port 8000
 ```
 
 The selected subject must have grants in the configured Helios metadata
 database. Do not use `HELIOS_DEV_USER` in Cloudera AI.
 
-Create `apps/ui/.env.local`:
+Create `apps/helios/ui/.env.local`:
 
 ```text
 VITE_HELIOS_API_URL=http://127.0.0.1:8000
 ```
 
-Then run `npm run dev` in `apps/ui`. The hostname is local configuration, not
+Then run `npm run dev` in `apps/helios/ui`. The hostname is local configuration, not
 application source.
 
 ## Diagnostic endpoints and page

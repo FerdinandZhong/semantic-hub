@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "width": 1440,
+      "case": "missing-cohort",
+      "status": "passed",
+      "trace": "Read published definitions \u00b7 checked\nIdentify unsupported or ambiguous scope \u00b7 rejected\n\nCheck actual data coverage before concluding that a requested period is unavailable.\n\nCheck actual data coverage \u00b7 no data\n\nus_new_medicine_sales_share_percent\n\nNo matching cohort data for 1999\u20132020. Checked industry_observations; available cohorts: 2020\u20132024. No other period was substituted."
+    },
+    {
+      "case": "valid-cohort",
+      "result": "74.1 %",
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "case": "missing-cohort",
+      "status": "passed",
+      "trace": "Read published definitions \u00b7 checked\nIdentify unsupported or ambiguous scope \u00b7 rejected\n\nCheck actual data coverage before concluding that a requested period is unavailable.\n\nCheck actual data coverage \u00b7 no data\n\nus_new_medicine_sales_share_percent\n\nNo matching cohort data for 1999\u20132020. Checked industry_observations; available cohorts: 2020\u20132024. No other period was substituted."
+    }
+  ],
+  "existing_state_databases_unchanged": 8
+}

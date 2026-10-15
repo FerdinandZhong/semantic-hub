@@ -1,0 +1,33 @@
+{
+  "synthetic": true,
+  "external_records_used": false,
+  "source": "finance serving CSVs only; evaluation files not used",
+  "period_start": "2026-09-01",
+  "period_end": "2026-09-30",
+  "total_amount_sgd": "686572.96",
+  "settled_payments": 4850,
+  "chart_rows": {
+    "GB": "44454.90",
+    "HK": "350641.68",
+    "SG": "291476.38"
+  },
+  "memo_transaction": "SYN-T00000000",
+  "input_sha256": {
+    "payments.csv": "2954d4ad3a589181afd3d7891aa6bfec46e0c51eb8c4979aadc22c07854f1b0b",
+    "transactions.csv": "570b5988dce4bd5bf290dd88a877fa2822b72fa2f59d4efcd81030743051aac4",
+    "accounts.csv": "5836942e823cc8f43263edf4763b53479e571bdc6d99abec0124afd2ee63fa54",
+    "customers.csv": "19abbecbaec6ded7d77b180e0a4c57dc6ad434949f47400d9c384d86aef1eaf2",
+    "fx_rates.csv": "613a0eb16b3859c5c0dab5c623b6df41474985e449d2541459973b6984f365bd",
+    "ledger_postings.csv": "ead871333880b3fecd528cc52f20c658e59bd31c211fa58f01b152567dfe3104"
+  },
+  "output_sha256": {
+    "finance-chart-reference.sql": "f5227b9cf72ae2a4b97c838147355f71ad1e936dd1a314997fa7ecda362e84f2",
+    "finance-chart-row-guide.csv": "aa8e5755ce70b156444f7c8c7d7ba8355d47cf92f410dcbf4c21cc9dae4d34da",
+    "finance-fixed-fx-rules.md": "10b38c833902c40f7acd75aa9685e7d5d7454308dffef105e9d7e19d705159e1",
+    "finance-payment-definition.md": "bc0934f6bac47ea6e3776bf82277b25044fce518c73ded61d3cdb05d63e7d490",
+    "finance-reference.sql": "504db997935ee23ea3ed79e5a4f0e5297838c6d33b0bfa00ceff76c4f08d3609",
+    "finance-settled-outflow-chart.png": "5c7e6dd91eb2e2088f4e91b06f4c475ee02c26bbe79d95eee5bfe7a0cb0b7c48",
+    "finance-settlement-memo.md": "8a6350d9a2aa6b838cff961a4b68d54c00350ebdf9b0750c9b323748a0bc8b12",
+    "synthetic-finance-supporting-evidence.pdf": "88a6f9acb4fdc6edc7470baaee62f6979830b0990e04398adcc9c9239552f5de"
+  }
+}

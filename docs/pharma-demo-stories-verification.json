@@ -1,0 +1,123 @@
+{
+  "checked_on": "2026-10-14",
+  "scope": "Isolated temporary workspaces only. No live approvals or publication.",
+  "live_llm_extraction_tested": false,
+  "row_evidence": "Nine presenter-guide values visually checked against original PDF pages 4 and 5; fixture used to verify SQL and publication.",
+  "pdf_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+  "story1": {
+    "validation_passed": true,
+    "metrics": 6,
+    "joins": 12,
+    "saved_metric_results": {
+      "novel_approval_count": [
+        [
+          46
+        ]
+      ],
+      "evidence_patient_count": [
+        [
+          105
+        ]
+      ],
+      "no_prior_adc_orr_percent": [
+        [
+          "75.00000000"
+        ]
+      ],
+      "prior_adc_orr_percent": [
+        [
+          "44.00000000"
+        ]
+      ],
+      "no_prior_adc_durable_response_percent": [
+        [
+          "58.00000000"
+        ]
+      ],
+      "us_new_medicine_sales_share_percent": [
+        [
+          "74.10000000"
+        ]
+      ]
+    },
+    "page14_targets": [
+      "field:industry_observations.indicator",
+      "metric:us_new_medicine_sales_share_percent"
+    ]
+  },
+  "story2": {
+    "validation_passed": true,
+    "metrics": 10,
+    "joins": 1,
+    "saved_metric_results": {
+      "reviewed_observation_count": [
+        [
+          9
+        ]
+      ],
+      "us_new_medicine_sales_share_percent": [
+        [
+          74.1
+        ]
+      ],
+      "europe_top5_new_medicine_sales_share_percent": [
+        [
+          15.6
+        ]
+      ],
+      "japan_new_medicine_sales_share_percent": [
+        [
+          3.6
+        ]
+      ],
+      "pharmerging_new_medicine_sales_share_percent": [
+        [
+          2.9
+        ]
+      ],
+      "rest_world_new_medicine_sales_share_percent": [
+        [
+          3.8
+        ]
+      ],
+      "europe_rd_2024_eur_million": [
+        [
+          56344.0
+        ]
+      ],
+      "us_rd_2024_usd_million": [
+        [
+          75895.0
+        ]
+      ],
+      "japan_rd_2024_jpy_100million": [
+        [
+          16607.0
+        ]
+      ],
+      "china_rd_2024_cny_million": [
+        [
+          114557.0
+        ]
+      ]
+    }
+  },
+  "regression": {
+    "passed": 83,
+    "suites": [
+      "test_builder_retrieval_metadata",
+      "test_document_facts",
+      "test_demo_context",
+      "test_demo_playground",
+      "test_pharma_intelligence",
+      "test_retrieval_index"
+    ]
+  },
+  "live_cleanup_verified": {
+    "base_models": 5,
+    "manufacturing_version": "v1.0",
+    "document_library_empty": true,
+    "removed_model": "EFPIA New Medicine Sales by Region",
+    "backup": "/tmp/helios-efpia-reset-20261014-090454"
+  }
+}

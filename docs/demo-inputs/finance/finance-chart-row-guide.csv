@@ -1,0 +1,4 @@
+source_page,metric,sender_jurisdiction,period_start,period_end,value,unit
+3,settled_sender_outflow,GB,2026-09-01,2026-09-30,44454.90,SGD
+3,settled_sender_outflow,HK,2026-09-01,2026-09-30,350641.68,SGD
+3,settled_sender_outflow,SG,2026-09-01,2026-09-30,291476.38,SGD

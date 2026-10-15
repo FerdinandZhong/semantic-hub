@@ -1,0 +1,3 @@
+cohort_id,trial_id,prior_her2_adc,patient_count,source_id,source_locator
+beamion_no_prior_adc,NCT04886804,No,71,FDA_HERNEXEOS_SNAPSHOT,Table 2 column header
+beamion_prior_adc,NCT04886804,Yes,34,FDA_HERNEXEOS_SNAPSHOT,Table 2 column header

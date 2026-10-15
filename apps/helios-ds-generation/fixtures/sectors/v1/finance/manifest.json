@@ -1,0 +1,40 @@
+{
+  "schema": "uob.synthetic.finance.v1",
+  "generator_version": 1,
+  "seed": 8100,
+  "synthetic": true,
+  "background_transactions": 5000,
+  "injected_transactions": 11,
+  "external_records_used": false,
+  "fx_rates": "Fixed illustrative values; not market rates",
+  "limitations": [
+    "Not calibrated to UOB or a real banking population.",
+    "Scenario labels are not validated AML predictions."
+  ],
+  "sector": "finance",
+  "state": "IN_REVIEW",
+  "row_counts": {
+    "customers": 200,
+    "accounts": 200,
+    "fx_rates": 3,
+    "transactions": 5011,
+    "ledger_postings": 9700,
+    "payments": 4850
+  },
+  "documents": 0,
+  "serving_root": "serving",
+  "evaluation_root": "evaluation",
+  "evaluation_policy": "Never crawl evaluation or include it in query prompts.",
+  "checksums": {
+    "evaluation/reference.json": "0cbd3d33c63e01c11b91485c0bd30b15cc85948b2b53e930d22d257bdc3c0d38",
+    "serving/accounts.csv": "5836942e823cc8f43263edf4763b53479e571bdc6d99abec0124afd2ee63fa54",
+    "serving/customers.csv": "19abbecbaec6ded7d77b180e0a4c57dc6ad434949f47400d9c384d86aef1eaf2",
+    "serving/documents.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "serving/draft.ossie.json": "9efc9648f4bb02c87bf59ef1764e2b38f1fcf239691378ec87dafd6f57dfff0b",
+    "serving/fx_rates.csv": "613a0eb16b3859c5c0dab5c623b6df41474985e449d2541459973b6984f365bd",
+    "serving/ledger_postings.csv": "ead871333880b3fecd528cc52f20c658e59bd31c211fa58f01b152567dfe3104",
+    "serving/metadata.json": "9303179ce86fb409c8f20adf1b7c8262b2dfa80d2eb82dc8b71ae894be281a6d",
+    "serving/payments.csv": "2954d4ad3a589181afd3d7891aa6bfec46e0c51eb8c4979aadc22c07854f1b0b",
+    "serving/transactions.csv": "570b5988dce4bd5bf290dd88a877fa2822b72fa2f59d4efcd81030743051aac4"
+  }
+}

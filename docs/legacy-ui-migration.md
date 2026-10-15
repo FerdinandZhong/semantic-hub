@@ -2,7 +2,7 @@
 
 ## Purpose and boundary
 
-The FastAPI Application in `apps/console` currently serves two interfaces:
+The FastAPI Application in `apps/helios/console` currently serves two interfaces:
 
 1. the authorized Helios API under `/api/v1`; and
 2. the original Jinja2 Console UI at `/`, `/glossary`, `/term`, and `/runs`.
@@ -247,7 +247,7 @@ Direct browser-to-Atlas calls are not an acceptable shortcut.
 
 ## Final retirement gate
 
-Do not remove `apps/console/templates`, `apps/console/static`, or legacy routes
+Do not remove `apps/helios/console/templates`, `apps/helios/console/static`, or legacy routes
 until all of the following are true:
 
 - no React route or action links to `/glossary`, `/term`, or `/runs`;

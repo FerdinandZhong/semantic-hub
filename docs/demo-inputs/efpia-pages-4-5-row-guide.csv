@@ -1,0 +1,10 @@
+entity,metric,value,unit,period,population,source_page,denominator,metric_name
+USA,New medicine sales share,74.1,%,Launches 2020–2024; sales 2025,New medicines launched during 2020–2024; main markets shown in the chart,4,,us_new_medicine_sales_share_percent
+Europe Top 5,New medicine sales share,15.6,%,Launches 2020–2024; sales 2025,New medicines launched during 2020–2024; main markets shown in the chart,4,,europe_top5_new_medicine_sales_share_percent
+Japan,New medicine sales share,3.6,%,Launches 2020–2024; sales 2025,New medicines launched during 2020–2024; main markets shown in the chart,4,,japan_new_medicine_sales_share_percent
+Pharmerging,New medicine sales share,2.9,%,Launches 2020–2024; sales 2025,New medicines launched during 2020–2024; main markets shown in the chart,4,,pharmerging_new_medicine_sales_share_percent
+Rest of the World,New medicine sales share,3.8,%,Launches 2020–2024; sales 2025,New medicines launched during 2020–2024; main markets shown in the chart,4,,rest_world_new_medicine_sales_share_percent
+Europe,Pharmaceutical R&D expenditure,56344,EUR million,2024,Pharmaceutical R&D expenditure in the reported region,5,,europe_rd_2024_eur_million
+USA,Pharmaceutical R&D expenditure,75895,USD million,2024,Pharmaceutical R&D expenditure in the reported region,5,,us_rd_2024_usd_million
+Japan,Pharmaceutical R&D expenditure,16607,JPY million x 100,2024,Pharmaceutical R&D expenditure in the reported region,5,,japan_rd_2024_jpy_100million
+China,Pharmaceutical R&D expenditure,114557,CNY million,2024,Pharmaceutical R&D expenditure in the reported region,5,,china_rd_2024_cny_million

@@ -128,7 +128,7 @@ core code does not raise FastAPI exceptions.
 ## FastAPI integration
 
 The console mounts an authorized API under `/api/v1`. Dependencies in
-`apps.console.api` translate the trusted Workbench user header into a Principal,
+`apps.helios.console.api` translate the trusted Workbench user header into a Principal,
 load organizations and models from the application resource store, construct
 organization-aware Resource references, and call the shared Policy before route
 business logic runs. Domain denials are translated to HTTP 403 only at this

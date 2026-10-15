@@ -1,0 +1,4 @@
+feeder_id,substation_id,voltage_kv
+SYN-F0,SYN-SS0,22
+SYN-F1,SYN-SS1,22
+SYN-F2,SYN-SS2,22

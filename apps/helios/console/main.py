@@ -31,6 +31,7 @@ from .review import review_router
 from .crawler import crawler_router
 from .data_sources import data_sources_router
 from .ontology import ontology_router, start_cache_restore
+from .demo import configure_demo, demo_router
 
 HERE = Path(__file__).parent
 LOGGER = logging.getLogger(__name__)
@@ -202,8 +203,11 @@ app.include_router(ontology_router)
 app.include_router(crawler_router)
 app.include_router(data_sources_router)
 app.include_router(assistant_router)
+app.include_router(demo_router)
+configure_demo(app)
 # Rebuild the on-disk ontology cache from helios_index (CR-0c), off the request path.
-start_cache_restore()
+if not os.environ.get("HELIOS_DEMO_DATASET"):
+    start_cache_restore()
 
 
 def atlas() -> AtlasClient:
@@ -235,6 +239,8 @@ def _check(fn):
 
 @app.get("/", response_class=HTMLResponse)
 def health(request: Request):
+    if getattr(app.state, "demo_runtime", None) is not None:
+        return RedirectResponse("/demo")
     checks = []
     a = atlas_config()
     checks.append(("Atlas", a.base_url if a else "not configured", *(_check(lambda: AtlasClient(a).ping()) if a else ("skipped", "set ATLAS_BASE, ATLAS_USER, ATLAS_PASS"))))

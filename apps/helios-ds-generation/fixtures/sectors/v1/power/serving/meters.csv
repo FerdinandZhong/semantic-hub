@@ -1,0 +1,13 @@
+meter_id,feeder_id,customer_class
+SYN-M000,SYN-F0,Residential
+SYN-M001,SYN-F1,Commercial
+SYN-M002,SYN-F2,Industrial
+SYN-M003,SYN-F0,Residential
+SYN-M004,SYN-F1,Commercial
+SYN-M005,SYN-F2,Industrial
+SYN-M006,SYN-F0,Residential
+SYN-M007,SYN-F1,Commercial
+SYN-M008,SYN-F2,Industrial
+SYN-M009,SYN-F0,Residential
+SYN-M010,SYN-F1,Commercial
+SYN-M011,SYN-F2,Industrial

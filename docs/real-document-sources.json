@@ -1,0 +1,146 @@
+{
+  "checked_at_utc": "2026-10-13T11:30:05.129645+00:00",
+  "scope": "Discovery and local parser preflight only. No library ingestion, model attachment, approval, or publication.",
+  "download_root": "/tmp/helios-real-documents-20261013",
+  "documents": [
+    {
+      "sector": "pharma",
+      "title": "FDA: New Drug Therapy Approvals 2025",
+      "source_url": "https://www.fda.gov/media/190705/download?attachment=",
+      "local_path": "/tmp/helios-real-documents-20261013/fda-new-drug-approvals-2025.pdf",
+      "retrieved_date": "2026-10-13",
+      "sha256": "28818ae67b755166d1e16886b2968d47941b0f27e88ae7548a4a52facac6a9dc",
+      "bytes": 4453693,
+      "size_mib": 4.25,
+      "visually_inspected_pdf_pages_1_based": [
+        34
+      ],
+      "pages": 36,
+      "text_characters": 67139,
+      "visual_type": "Mixed text and visual PDF; not verified as a scanned document",
+      "parser_check": {
+        "status": "blocked",
+        "reason": "Encrypted PDFs are unsupported. Upload a decrypted PDF or UTF-8 text."
+      }
+    },
+    {
+      "sector": "pharma",
+      "title": "EFPIA: The Pharmaceutical Industry in Figures 2026",
+      "source_url": "https://www.efpia.eu/media/owqczcqz/the-pharmaceutical-industry-in-figures-2026.pdf",
+      "local_path": "/tmp/helios-real-documents-20261013/efpia-industry-figures-2026.pdf",
+      "retrieved_date": "2026-10-13",
+      "sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+      "bytes": 4395601,
+      "size_mib": 4.19,
+      "visually_inspected_pdf_pages_1_based": [
+        4
+      ],
+      "pages": 28,
+      "text_characters": 37656,
+      "visual_type": "Mixed text and visual PDF; not verified as a scanned document",
+      "parser_check": {
+        "status": "text_extraction_passed",
+        "chunks": 30,
+        "visual_semantics_verified": false
+      }
+    },
+    {
+      "sector": "pharma",
+      "title": "FDA HERNEXEOS Drug Trials Snapshot, Figure 1",
+      "source_url": "https://www.fda.gov/files/Picture1_90.png",
+      "local_path": "/tmp/helios-real-documents-20261013/fda-hernexeos-trial-demographics-sex.png",
+      "retrieved_date": "2026-10-13",
+      "sha256": "34a048841a1cbe333550a1e0ac9fa69bb9ba3245a98b4772a7dbd5bddfd6f282",
+      "bytes": 27543,
+      "size_mib": 0.03,
+      "visually_inspected_pdf_pages_1_based": [],
+      "image_dimensions": [
+        900,
+        450
+      ],
+      "visual_type": "Original raster chart PNG",
+      "parent_url": "https://www.fda.gov/drugs/drug-trials-snapshots/drug-trials-snapshots-hernexeos",
+      "parser_check": {
+        "status": "blocked",
+        "reason": "Unsupported document type. Upload TXT, MD, PDF, or DOCX."
+      }
+    },
+    {
+      "sector": "finance",
+      "title": "BIS CPMI Brief 10: Moving on up, December 2025",
+      "source_url": "https://www.bis.org/publications/cpmi-brief-10-moving-results-2024-cross-border-payments-monitoring-survey.pdf",
+      "local_path": "/tmp/helios-real-documents-20261013/bis-cross-border-payments-2024-survey.pdf",
+      "retrieved_date": "2026-10-13",
+      "sha256": "2e069aa1a80d19004ebc442bb9435079af172a6c36be77b43881be894aecc189",
+      "bytes": 1528810,
+      "size_mib": 1.46,
+      "visually_inspected_pdf_pages_1_based": [
+        5
+      ],
+      "pages": 26,
+      "text_characters": 63007,
+      "visual_type": "Mixed text and visual PDF; not verified as a scanned document",
+      "parser_check": {
+        "status": "blocked",
+        "reason": "PDF contains scanned pages without text. Run OCR or upload UTF-8 text."
+      }
+    },
+    {
+      "sector": "manufacturing",
+      "title": "US DOE: Operations and Maintenance Best Practices, Release 3.0, August 2010",
+      "source_url": "https://www.energy.gov/sites/default/files/2020/04/f74/omguide_complete_w-eo-disclaimer.pdf",
+      "local_path": "/tmp/helios-real-documents-20261013/doe-operations-maintenance-guide-2010.pdf",
+      "retrieved_date": "2026-10-13",
+      "sha256": "9cf0adbc462c73b7ec20f97b21643ba709c2c7c4571ff6630a2d628d78e3147c",
+      "bytes": 8562032,
+      "size_mib": 8.17,
+      "visually_inspected_pdf_pages_1_based": [
+        64
+      ],
+      "pages": 321,
+      "text_characters": 804030,
+      "visual_type": "Mixed text and visual PDF; not verified as a scanned document",
+      "parser_check": {
+        "status": "blocked",
+        "reason": "Document exceeds the 5 MiB upload limit. Upload a smaller document."
+      }
+    },
+    {
+      "sector": "power",
+      "title": "SP Group Sustainability Report FY2025/2026",
+      "source_url": "https://www.spgroup.com.sg/dam/spgroup/pdf/about-us/our-sustainability-commitment/sp-group-sustainability-report-fy2025-26",
+      "local_path": "/tmp/helios-real-documents-20261013/spgroup-sustainability-2025-26.pdf",
+      "retrieved_date": "2026-10-13",
+      "sha256": "d88f80a922d58248693ab00bb790056931b96582d6e75d9f5b6a86d64acb4464",
+      "bytes": 6129703,
+      "size_mib": 5.85,
+      "visually_inspected_pdf_pages_1_based": [
+        54
+      ],
+      "pages": 79,
+      "text_characters": 243913,
+      "visual_type": "Mixed text and visual PDF; not verified as a scanned document",
+      "parser_check": {
+        "status": "blocked",
+        "reason": "Document exceeds the 5 MiB upload limit. Upload a smaller document."
+      }
+    }
+  ],
+  "additional_candidates": [
+    {
+      "title": "EMA Human medicines in 2025",
+      "url": "https://www.ema.europa.eu/en/documents/report/human-medicines-2025_en.pdf",
+      "status": "Search-index verified; download returned HTTP 429; not visually inspected"
+    },
+    {
+      "title": "MAS Annual Report 2024/25 infographic",
+      "url": "https://www.mas.gov.sg/-/media/mas-media-library/publications/annual-report/2025/mas-ar-2024_2025-infographic.pdf",
+      "status": "Official link found; local download was a service-unavailable PDF, excluded from corpus"
+    },
+    {
+      "title": "EFPIA Industry in Figures 2025",
+      "url": "https://www.efpia.eu/media/uj0popel/the-pharmaceutical-industry-in-figures-2025.pdf",
+      "status": "HTTP 404; replaced by downloaded 2026 edition"
+    }
+  ]
+}

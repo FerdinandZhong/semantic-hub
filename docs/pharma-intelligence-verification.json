@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-13",
+  "status": "passed",
+  "backend_regression": {
+    "passed": 123,
+    "failed": 0,
+    "command": "PYTHONPATH=shared:apps/helios-ds-generation/src python -m pytest apps/helios/tests/test_demo_runtime.py apps/helios/tests/test_demo_hub.py apps/helios/tests/test_demo_connections.py apps/helios/tests/test_pharma_intelligence.py apps/helios/tests/test_builder_proposals.py apps/helios/tests/test_materials.py apps/helios/tests/test_materials_api.py apps/helios/tests/test_builder_artifacts.py apps/helios/tests/test_material_citations.py apps/helios/tests/test_material_matching.py apps/helios-ds-generation/tests/test_sector_demo.py -q"
+  },
+  "live_trial_brief": {
+    "status": "passed",
+    "model": "gpt-4o",
+    "input": "apps/helios-ds-generation/fixtures/sectors/v1/pharma_intelligence/serving/documents/trial_denominators.md",
+    "document_sha256": "ae5d99f5e19a86303f26a030d499e067c805ae82361acc4e551406586786e1cc",
+    "chunks": 1,
+    "claims": 6,
+    "pharma_candidate_links": 2,
+    "applied_test_targets": [
+      "field:trial_results.denominator_count",
+      "table:trial_cohorts"
+    ],
+    "lineage_links": 2,
+    "user_state_modified": false,
+    "proposal": {
+      "metrics": 6,
+      "document_coverage": {
+        "selected_citations": [
+          "attachment:document-92415adbc76af53fd956d876864e9e12",
+          "document:approval_scope",
+          "document:trial_denominators",
+          "document:demographic_scope",
+          "document:industry_chart_scope"
+        ],
+        "selected_count": 5,
+        "total_count": 5,
+        "source_count": 4,
+        "attachment_count": 1,
+        "document_limit": 5,
+        "characters_per_document": 1500
+      },
+      "warnings": [],
+      "applied": false,
+      "metric_origins": {
+        "metric-944c3baaba5c5c4cbe3b": "llm_generated",
+        "metric-9fb9418dff96b5b3c82f": "llm_generated",
+        "metric-4d765f493acf6991d957": "llm_generated",
+        "metric-b19572764f4e35f99829": "llm_generated",
+        "metric-9f5a253bd78e2030391b": "llm_generated",
+        "metric-b153ea49cf08e188db66": "llm_generated"
+      }
+    }
+  },
+  "live_public_pdf": {
+    "status": "passed",
+    "model": "gpt-4o",
+    "input": "/tmp/helios-real-documents-20261013/efpia-industry-figures-2026.pdf",
+    "document_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+    "chunks": 30,
+    "claims": 53,
+    "pharma_candidate_links": 45,
+    "applied_test_targets": [
+      "table:industry_observations",
+      "field:industry_observations.indicator",
+      "metric:us_new_medicine_sales_share_percent",
+      "table:industry_observations"
+    ],
+    "lineage_links": 4,
+    "user_state_modified": false
+  },
+  "unified_workflow_browser": {
+    "widths": [
+      1440,
+      390
+    ],
+    "status": "passed",
+    "artifacts": "/tmp/helios-materials-unified-browser"
+  },
+  "boundaries": [
+    "No user model release approved or published.",
+    "Exact citations prove source presence, not interpretation accuracy.",
+    "Public dataset facts are curated; no automated OCR or chart extraction claim.",
+    "Scoped passage answers remain open."
+  ],
+  "live_hub_browser": {
+    "results": [
+      {
+        "width": 1440,
+        "status": "passed",
+        "manufacturing_unchanged": true,
+        "page_errors": []
+      },
+      {
+        "width": 390,
+        "status": "passed",
+        "manufacturing_unchanged": true,
+        "page_errors": []
+      }
+    ],
+    "artifacts": "/tmp/helios-pharma-hub-browser"
+  }
+}

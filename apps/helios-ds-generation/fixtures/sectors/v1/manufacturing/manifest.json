@@ -1,0 +1,51 @@
+{
+  "synthetic": true,
+  "seed": 8100,
+  "source": {
+    "name": "UCI AI4I 2020 Predictive Maintenance",
+    "url": "https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset",
+    "download": "https://archive.ics.uci.edu/static/public/601/ai4i+2020+predictive+maintenance+dataset.zip",
+    "license": "CC BY 4.0",
+    "doi": "10.24432/C5HS5C"
+  },
+  "external_records_used": false,
+  "source_records_read": 0,
+  "generation_mode": "source-informed synthetic; no source records downloaded",
+  "limitations": [
+    "Fictional demo data; not SP Group, a real plant, or a real manufacturer.",
+    "No production prediction, regulatory approval, or calibration is established."
+  ],
+  "sector": "manufacturing",
+  "state": "IN_REVIEW",
+  "generator_version": 1,
+  "row_counts": {
+    "assets": 12,
+    "sensor_readings": 240,
+    "work_orders": 12
+  },
+  "documents": 12,
+  "serving_root": "serving",
+  "evaluation_root": "evaluation",
+  "evaluation_policy": "Never crawl evaluation or include it in query prompts.",
+  "checksums": {
+    "evaluation/reference.json": "9e29b2a3e1dcecf073179823cfadc5f338eab50b1afe6dd10091e69f28779789",
+    "serving/assets.csv": "ed96170ce82818d2855625c98001765c905bd3f7586001a230b788efae94f7a6",
+    "serving/documents/SYN-WO000.md": "31f792dfb5356a138fa3120bf442c2dca751a6db93fc9a5b21c048ed93a9c1af",
+    "serving/documents/SYN-WO001.md": "9185856950e8b2dd7813bd373ffec813c54a63f58266c332576bacfa39b58de2",
+    "serving/documents/SYN-WO002.md": "36f33a2caa337a125691a3b2f979f08137d27fcbaad10a0b3672c1134eec0faa",
+    "serving/documents/SYN-WO003.md": "476816827204695634c699d73f53022f5085f38ea2a8f5afbf012cd722b932ca",
+    "serving/documents/SYN-WO004.md": "5d98b978f2f07565e361cf17b440757c0349524dde03d4a90fd2e189a02b4680",
+    "serving/documents/SYN-WO005.md": "fe9fc73d8e153ce31d96365e19dc53a6ab3db35bfd6a7b1f5f056bb0d635749e",
+    "serving/documents/SYN-WO006.md": "80c6b2e79f2b274a29c43ecce85ac36d380d6ac023ceaca396b8e4f9cd541d82",
+    "serving/documents/SYN-WO007.md": "4df3213726a3e9d603d1f9922a2698155c0b002f0a6707a606e419e336d958d0",
+    "serving/documents/SYN-WO008.md": "1f6e17f04a970afb43472876cf8adffa63442d2a815dc89f33495ff93ab0d659",
+    "serving/documents/SYN-WO009.md": "52a6d1ed5f5681e4b7a64d98107982258c8ee39cb90ce16accd0758ac3d4dde4",
+    "serving/documents/SYN-WO010.md": "97363633265be2676c7eba06bb41cad97eea43354b455ef75be6524d37cf1c36",
+    "serving/documents/SYN-WO011.md": "1538d1116e2c9a0d0e157a438b27c400aabac50050796888c57285b63e6fbcfc",
+    "serving/documents.json": "73aacba1c3ccd31a68a8a8e8b415afbe17275c1a5293157ee5d4aa63377e78c0",
+    "serving/draft.ossie.json": "4249d49ee2b7edb30916723da729a8fdd63394cfcffa95264f7f8c0f89a897ad",
+    "serving/metadata.json": "95722425a068814dbbecbe75d183713fc830a845cfb3dd40d76eda3b7315ab9e",
+    "serving/sensor_readings.csv": "0621324317ad7890ce6bcea9c0f74711319b6b247abcec4f497f3f44844a1978",
+    "serving/work_orders.csv": "d022a83023b9b08054e81b0c982bd84329cc3488b55a8bfc12f7f144a915c5ab"
+  }
+}

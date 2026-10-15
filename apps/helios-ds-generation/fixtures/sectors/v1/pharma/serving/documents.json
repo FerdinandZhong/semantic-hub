@@ -1,0 +1,242 @@
+[
+  {
+    "document_id": "SYN-B000",
+    "path": "documents/SYN-B000.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B000",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-D000",
+    "path": "documents/SYN-D000.md",
+    "entity_table": "deviations",
+    "entity_id": "SYN-D000",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B001",
+    "path": "documents/SYN-B001.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B001",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B002",
+    "path": "documents/SYN-B002.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B002",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B003",
+    "path": "documents/SYN-B003.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B003",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B004",
+    "path": "documents/SYN-B004.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B004",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-D004",
+    "path": "documents/SYN-D004.md",
+    "entity_table": "deviations",
+    "entity_id": "SYN-D004",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B005",
+    "path": "documents/SYN-B005.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B005",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B006",
+    "path": "documents/SYN-B006.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B006",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B007",
+    "path": "documents/SYN-B007.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B007",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B008",
+    "path": "documents/SYN-B008.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B008",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-D008",
+    "path": "documents/SYN-D008.md",
+    "entity_table": "deviations",
+    "entity_id": "SYN-D008",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B009",
+    "path": "documents/SYN-B009.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B009",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B010",
+    "path": "documents/SYN-B010.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B010",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B011",
+    "path": "documents/SYN-B011.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B011",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B012",
+    "path": "documents/SYN-B012.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B012",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-D012",
+    "path": "documents/SYN-D012.md",
+    "entity_table": "deviations",
+    "entity_id": "SYN-D012",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B013",
+    "path": "documents/SYN-B013.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B013",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B014",
+    "path": "documents/SYN-B014.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B014",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B015",
+    "path": "documents/SYN-B015.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B015",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B016",
+    "path": "documents/SYN-B016.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B016",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-D016",
+    "path": "documents/SYN-D016.md",
+    "entity_table": "deviations",
+    "entity_id": "SYN-D016",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B017",
+    "path": "documents/SYN-B017.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B017",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B018",
+    "path": "documents/SYN-B018.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B018",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B019",
+    "path": "documents/SYN-B019.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B019",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B020",
+    "path": "documents/SYN-B020.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B020",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-D020",
+    "path": "documents/SYN-D020.md",
+    "entity_table": "deviations",
+    "entity_id": "SYN-D020",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B021",
+    "path": "documents/SYN-B021.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B021",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B022",
+    "path": "documents/SYN-B022.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B022",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  },
+  {
+    "document_id": "SYN-B023",
+    "path": "documents/SYN-B023.md",
+    "entity_table": "batches",
+    "entity_id": "SYN-B023",
+    "synthetic": true,
+    "review_status": "IN_REVIEW"
+  }
+]

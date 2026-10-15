@@ -2,3 +2,7 @@
 Dockerfile text eol=lf
 
 
+
+# Preserve source document bytes and CSV fixture checksums.
+*.pdf binary
+*.csv -text whitespace=cr-at-eol

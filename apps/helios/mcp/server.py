@@ -3,15 +3,12 @@ helios MCP server (MCP Python SDK 2.x, Streamable HTTP).
 
 Serves the semantic layer to agents:
   list_models        what models are available and where they came from
-  describe_model     datasets, dimensions, measures, metrics and relationships of one model
-  search_semantics   resolve a natural-language question to datasets, fields, metrics and glossary terms
-  describe           definition and context of one dataset, field, metric or glossary term
+  resolve_context    bounded published semantic context and query bundle
   compile_query      metrics + dimensions + filters -> SQL for a target engine
   run_query          compile and execute against the warehouse
   explain_lineage    Atlas lineage for a column
 
-Model source: published Apache Ossie JSON if available, otherwise the latest
-run's proposal converted to the same canonical in-memory semantic model.
+Model source: published Apache Ossie JSON only.
 
 Environment:
   HELIOS_MCP_TOKEN          required bearer token clients must send
@@ -21,13 +18,14 @@ Environment:
 from __future__ import annotations
 
 import json
+import hashlib
 import logging
 import os
 import re
 import time
 import uuid
 from contextvars import ContextVar
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from functools import wraps
 from typing import Any
 
@@ -63,6 +61,7 @@ from helios_core.identity import Principal, PrincipalKind
 from helios_core.metadata import SQLiteMetadataRepository, TraceSpan
 from helios_core.ossie import SemanticModel, build as build_ossie
 from helios_core.tracing import sanitized, utcnow
+from helios_core.retrieval.service import RetrievalError, RetrievalService, Scope
 
 LOGGER = logging.getLogger(__name__)
 ROOT = runstore.ROOT
@@ -105,7 +104,7 @@ ENGINE_DIALECT = {"impala": "hive", "hive": "hive", "spark": "spark"}   # sqlglo
 
 # ---------------------------------------------------------------------------- model store
 class ModelStore:
-    """Load published or proposed artifacts into one semantic model shape."""
+    """Load published artifacts into one semantic model shape."""
 
     def __init__(self):
         self._cache: dict[str, tuple[float, SemanticModel]] = {}
@@ -119,16 +118,6 @@ class ModelStore:
             }
             for model_id in artifact_store.published_model_ids()
         ]
-        if not out:
-            for r in runstore.list_runs():
-                if r["stages"].get("propose"):
-                    proposal_path = os.path.join(runstore.RUNS_DIR, r["id"], "propose.json")
-                    with open(proposal_path) as handle:
-                        proposal = json.load(handle)
-                    model_id = proposal.get("model_id") or f"run-{r['id']}"
-                    out.append({"name": model_id, "path": proposal_path,
-                                "status": "proposed (unreviewed)"})
-                    break
         return out
 
     def load(
@@ -136,7 +125,7 @@ class ModelStore:
     ) -> tuple[dict, SemanticModel]:
         srcs = self.sources()
         if not srcs:
-            raise ValueError("no model available: publish a model or run the propose job")
+            raise ValueError("no published model available: publish a model")
         if name:
             src = next((s for s in srcs if s["name"] == name), None)
             if src is None:
@@ -187,6 +176,85 @@ class ModelStore:
 
 
 store = ModelStore()
+retrieval_service = RetrievalService()
+_release_manifests: dict[tuple, tuple] = {}
+
+
+_index_preparation = {"warm": 0, "failed": 0}
+
+
+def _published_manifest(model_id: str, src: dict, semantic_model: SemanticModel):
+    if src.get("status") not in {"published", "published revision"}:
+        raise RetrievalError("a published semantic release is required")
+    cache_key = (id(retrieval_service), model_id, src.get("revision_id"), id(semantic_model))
+    cached = _release_manifests.get(cache_key)
+    if cached and cached[0] is semantic_model:
+        manifest = cached[1]
+    else:
+        release_version = src.get("revision_id") or hashlib.sha256(
+            json.dumps(semantic_model.doc, sort_keys=True, default=str).encode()
+        ).hexdigest()
+        manifest = retrieval_service.register(
+            model_id, release_version, semantic_model.doc,
+            publication={"status": "published", "source": "helios-artifact-store", "reference": src["path"]},
+        )
+        if len(_release_manifests) >= 256:
+            _release_manifests.clear()
+        _release_manifests[cache_key] = (semantic_model, manifest)
+    return manifest
+
+
+def prepare_published_indexes() -> dict:
+    """Build current published indexes at startup; pinned history remains lazy."""
+    counts = {"warm": 0, "failed": 0}
+    token = _caller_context.set(None)
+    try:
+        for source in store.sources():
+            try:
+                src, semantic_model = store.load(source["name"])
+                _published_manifest(source["name"], src, semantic_model)
+                counts["warm"] += 1
+            except Exception as exc:
+                counts["failed"] += 1
+                LOGGER.warning("published retrieval index unavailable model=%s error_type=%s", source["name"], type(exc).__name__)
+    finally:
+        _caller_context.reset(token)
+    _index_preparation.update(counts)
+    return counts
+
+
+def _retrieval_scope(caller: MCPCaller, authorized_model: Any):
+    """Bind retrieval to trusted caller, current grants, and published release."""
+    src, semantic_model = store.load(authorized_model.id)
+    manifest = _published_manifest(authorized_model.id, src, semantic_model)
+    grants = metadata_repository.grants_for_principal(caller.principal.id)
+    policy_revision = hashlib.sha256(json.dumps(
+        sorted((asdict(grant) for grant in grants), key=lambda grant: json.dumps(grant, sort_keys=True, default=str)),
+        sort_keys=True, default=str,
+    ).encode()).hexdigest()
+    scope = Scope(
+        principal_id=caller.principal.id,
+        policy_revision=policy_revision,
+        releases={authorized_model.id: manifest["release_id"]},
+        allowed_fields={authorized_model.id: None},
+        context=json.dumps({"organization_id": authorized_model.organization_id,
+                            "session_id": caller.session_id,
+                            "semantic_revision_id": caller.semantic_revision_id,
+                            "purpose": "warehouse-query"}, sort_keys=True),
+    )
+    return scope
+
+
+def _bounded_model(caller, authorized_model, bundle_id, metrics, dimensions, filters, limit):
+    typed = _semantic_request(metrics, dimensions, filters, limit)
+    scope = _retrieval_scope(caller, authorized_model)
+    return retrieval_service.validate_request(
+        bundle_id, scope,
+        {"metrics": metrics, "dimensions": dimensions or [],
+         "filters": [asdict(item) for item in typed.filters], "limit": typed.limit},
+        model=authorized_model.id,
+    )
+
 
 
 # ---------------------------------------------------------------------------- search
@@ -284,7 +352,7 @@ def _semantic_error_message(exc: BaseException) -> str:
         else str(exc)
     )
     return (
-        f"{detail}. Use an exact metric name from search_semantics and use "
+        f"{detail}. Use an exact metric name from resolve_context and use "
         "database.table.column identifiers for dimensions and filters."
     )
 
@@ -305,7 +373,7 @@ def _impala_filter_type_error(exc: BaseException) -> str | None:
     return (
         "Impala rejected a generated filter because its value type did not "
         "match the semantic field type. Search for the field again, preserve "
-        "the datatype returned by search_semantics, and use JSON numbers "
+        "the datatype returned by resolve_context, and use JSON numbers "
         "without quotes for numeric fields."
     )
 
@@ -621,11 +689,11 @@ server = MCPServer(
     version=__version__,
     instructions=(
         "helios exposes a governed semantic layer over a Cloudera data "
-        "warehouse. Always call search_semantics before compile_query or "
-        "run_query. Copy metric names exactly from search results; never "
+        "warehouse. Always call resolve_context before compile_query or "
+        "run_query. Supply the returned bundle_id. Copy exact metric names; never "
         "invent or convert them to physical column names. Dimensions and "
         "filter columns must use the exact database.table.column identifier "
-        "returned by search_semantics or describe. Use describe for "
+        "returned by resolve_context. Use the bounded bundle for "
         "definitions. If a semantic query is invalid, search again and "
         "correct the identifiers; do not describe it as an Impala failure."
     ),
@@ -633,7 +701,7 @@ server = MCPServer(
 )
 
 
-@server.tool(description="List the semantic models this server can answer from, and whether they are published or an unreviewed proposal.")
+@server.tool(description="List the published semantic models this caller can access.")
 @_audited_tool("list_models")
 def list_models() -> list[dict] | dict:
     caller = _caller_context.get()
@@ -647,7 +715,6 @@ def list_models() -> list[dict] | dict:
     return visible
 
 
-@server.tool(description="Datasets, fields, metrics and relationships of a model. Omit model to use the default.")
 @_audited_tool("describe_model")
 def describe_model(model: str | None = None) -> dict:
     _, authorized_model, denied = _authorized_tool(
@@ -669,7 +736,43 @@ def describe_model(model: str | None = None) -> dict:
     }
 
 
-@server.tool(description="Resolve a natural-language question to the datasets, fields, metrics and glossary terms it involves.")
+@server.tool(description="Discover authorized published models for a question before resolving bounded query context.")
+@_audited_tool("discover_models")
+def discover_models(question: str, limit: int = 5) -> dict:
+    caller = _caller_context.get()
+    if caller is None:
+        return _error("authentication_required", "authenticated MCP caller context is required")
+    scopes = []
+    try:
+        for source in store.sources():
+            authenticated, model, denied = _authorized_tool(authz.Action.SEMANTIC_READ, source["name"])
+            if denied is None:
+                scopes.append(_retrieval_scope(authenticated, model))
+        if not scopes:
+            return {"models": []}
+        first = scopes[0]
+        scope = Scope(first.principal_id, first.policy_revision,
+            {name: release for item in scopes for name, release in item.releases.items()},
+            {name: fields for item in scopes for name, fields in item.allowed_fields.items()},
+            first.context)
+        return {"models": retrieval_service.discover(question, scope, limit=limit)}
+    except (RetrievalError, ValueError, OSError) as exc:
+        return _error("retrieval_context_invalid", str(exc))
+
+
+@server.tool(description="Resolve a question against a published semantic release. Returns bounded evidence and a bundle_id required for compile_query and run_query.")
+@_audited_tool("resolve_context")
+def resolve_context(question: str, model: str | None = None) -> dict:
+    caller, authorized_model, denied = _authorized_tool(authz.Action.SEMANTIC_READ, model)
+    if denied:
+        return denied
+    try:
+        scope = _retrieval_scope(caller, authorized_model)
+        return retrieval_service.resolve_context(question, scope, model=authorized_model.id)
+    except (RetrievalError, ValueError, OSError) as exc:
+        return _error("retrieval_context_invalid", str(exc))
+
+
 @_audited_tool("search_semantics")
 def search_semantics(question: str, limit: int = 10, model: str | None = None) -> dict:
     _, authorized_model, denied = _authorized_tool(
@@ -681,7 +784,6 @@ def search_semantics(question: str, limit: int = 10, model: str | None = None) -
     return search(semantic_model, question, min(max(limit, 1), 100))
 
 
-@server.tool(description="Definition and context for one thing by name: a dataset, a column (database.table.column), a metric or a glossary term.")
 @_audited_tool("describe")
 def describe(name: str, model: str | None = None) -> dict:
     _, authorized_model, denied = _authorized_tool(
@@ -748,21 +850,26 @@ def describe(name: str, model: str | None = None) -> dict:
     )
 
 
-@server.tool(description="Compile a semantic request into SQL. Call search_semantics first and copy metric names exactly from its results. "
-                         "Dimensions and filter columns must be exact database.table.column identifiers returned by search_semantics or describe; "
+@server.tool(description="Compile a semantic request into SQL. Call resolve_context first and supply its bundle_id and copy metric names exactly from its results. "
+                         "Dimensions and filter columns must be exact database.table.column identifiers returned by resolve_context; "
                          "never invent or shorten identifiers. Preserve each returned field datatype in filter JSON: use JSON numbers without quotes "
                          "for numeric fields, booleans for Boolean fields, and ISO strings for Date/Timestamp fields. "
                          "filters: [{column, op, value}] with op in = != < <= > >= IN LIKE BETWEEN; "
                          "engine: impala | hive | spark.")
 @_audited_tool("compile_query")
 def compile_query(metrics: list[str], dimensions: list[str] | None = None, filters: list[dict] | None = None,
-                  limit: int = 100, engine: str = "impala", model: str | None = None) -> dict:
-    _, authorized_model, denied = _authorized_tool(
+                  limit: int = 100, engine: str = "impala", model: str | None = None, bundle_id: str | None = None) -> dict:
+    caller, authorized_model, denied = _authorized_tool(
         authz.Action.QUERY_COMPILE, model
     )
     if denied:
         return denied
-    _, semantic_model = store.load(authorized_model.id)
+    if not bundle_id:
+        return _error("retrieval_bundle_required", "call resolve_context and supply its bundle_id")
+    try:
+        semantic_model = _bounded_model(caller, authorized_model, bundle_id, metrics, dimensions, filters, limit)
+    except (RetrievalError, CompileError, KeyError, TypeError, ValueError) as exc:
+        return _error("retrieval_bundle_invalid", str(exc))
     try:
         compiled, _ = _compile_semantic(
             semantic_model,
@@ -785,13 +892,13 @@ def compile_query(metrics: list[str], dimensions: list[str] | None = None, filte
         )
 
 
-@server.tool(description="Compile a semantic request and run it on the warehouse. Call search_semantics first, copy metric names exactly, and use "
+@server.tool(description="Compile a semantic request and run it on the warehouse. Call resolve_context first and supply its bundle_id, copy metric names exactly, and use "
                          "full database.table.column identifiers for dimensions and filters. Semantic validation happens before Impala execution. "
-                         "Filter JSON values must preserve the datatype returned by search_semantics; numeric values must not be quoted. "
+                         "Filter JSON values must preserve the datatype returned by resolve_context; numeric values must not be quoted. "
                          "Same arguments as compile_query. Returns columns and rows.")
 @_audited_tool("run_query")
 def run_query(metrics: list[str], dimensions: list[str] | None = None, filters: list[dict] | None = None,
-              limit: int = 100, model: str | None = None) -> dict:
+              limit: int = 100, model: str | None = None, bundle_id: str | None = None) -> dict:
     from helios_core.engines import (
         ImpalaAuthenticationError,
         ImpalaEngine,
@@ -802,7 +909,12 @@ def run_query(metrics: list[str], dimensions: list[str] | None = None, filters: 
     )
     if denied:
         return denied
-    _, semantic_model = store.load(authorized_model.id)
+    if not bundle_id:
+        return _error("retrieval_bundle_required", "call resolve_context and supply its bundle_id")
+    try:
+        semantic_model = _bounded_model(caller, authorized_model, bundle_id, metrics, dimensions, filters, limit)
+    except (RetrievalError, CompileError, KeyError, TypeError, ValueError) as exc:
+        return _error("retrieval_bundle_invalid", str(exc))
     cfg = impala_config()
     if cfg is None:
         return _error(
@@ -1013,7 +1125,8 @@ async def healthz(_: Request) -> JSONResponse:
                 "version": __version__,
                 "model_count": len(srcs),
                 "components": {
-                    "metadata_repository": {"status": "healthy"}
+                    "metadata_repository": {"status": "healthy"},
+                    "retrieval_indexes": dict(_index_preparation)
                 },
             }
         )
@@ -1152,6 +1265,8 @@ _auth_failure_limiter = audit.RepeatLimiter(interval=60.0)
 
 async def app(scope, receive, send):
     """Bearer-token gate around the MCP app; /healthz stays open."""
+    if scope["type"] == "lifespan":
+        prepare_published_indexes()
     context_token = None
     audit_token = None
     if scope["type"] == "http" and scope.get("path") not in {

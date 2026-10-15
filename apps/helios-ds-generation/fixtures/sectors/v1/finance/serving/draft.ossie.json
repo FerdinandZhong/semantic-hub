@@ -1,0 +1,503 @@
+{
+  "version": "0.2.0.dev0",
+  "name": "synthetic_finance",
+  "datasets": [
+    {
+      "name": "customers",
+      "source": "customers",
+      "fields": [
+        {
+          "name": "customer_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "customer_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "display_name",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "display_name"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "jurisdiction",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "jurisdiction"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "accounts",
+      "source": "accounts",
+      "fields": [
+        {
+          "name": "account_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "account_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "customer_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "customer_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "currency",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "currency"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "fx_rates",
+      "source": "fx_rates",
+      "fields": [
+        {
+          "name": "currency",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "currency"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "sgd_rate",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "sgd_rate"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "transactions",
+      "source": "transactions",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "transaction_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "sender_account_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "sender_account_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "receiver_account_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "receiver_account_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "timestamp",
+          "datatype": "DateTimeTz",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "timestamp"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "currency",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "currency"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "amount",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "amount"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "amount_sgd",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "amount_sgd"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "status",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "status"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "channel",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "channel"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "ledger_postings",
+      "source": "ledger_postings",
+      "fields": [
+        {
+          "name": "posting_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "posting_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "transaction_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "transaction_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "account_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "account_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "amount_sgd",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "amount_sgd"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "payments",
+      "source": "payments",
+      "fields": [
+        {
+          "name": "transaction_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "transaction_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "customer_id",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "customer_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "amount_sgd",
+          "datatype": "Decimal",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "amount_sgd"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "jurisdiction",
+          "datatype": "String",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "jurisdiction"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "booking_date",
+          "datatype": "Date",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "booking_date"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": true
+          }
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "name": "accounts_customer_id_customers",
+      "from": "accounts",
+      "to": "customers",
+      "from_columns": [
+        "customer_id"
+      ],
+      "to_columns": [
+        "customer_id"
+      ]
+    },
+    {
+      "name": "transactions_sender_account_id_accounts",
+      "from": "transactions",
+      "to": "accounts",
+      "from_columns": [
+        "sender_account_id"
+      ],
+      "to_columns": [
+        "account_id"
+      ]
+    },
+    {
+      "name": "transactions_receiver_account_id_accounts",
+      "from": "transactions",
+      "to": "accounts",
+      "from_columns": [
+        "receiver_account_id"
+      ],
+      "to_columns": [
+        "account_id"
+      ]
+    },
+    {
+      "name": "ledger_postings_transaction_id_transactions",
+      "from": "ledger_postings",
+      "to": "transactions",
+      "from_columns": [
+        "transaction_id"
+      ],
+      "to_columns": [
+        "transaction_id"
+      ]
+    },
+    {
+      "name": "payments_customer_id_customers",
+      "from": "payments",
+      "to": "customers",
+      "from_columns": [
+        "customer_id"
+      ],
+      "to_columns": [
+        "customer_id"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "name": "total_amount_sgd",
+      "description": "Settled sender outflow, SGD; fixed synthetic FX.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "SUM(payments.amount_sgd)"
+          }
+        ]
+      }
+    }
+  ]
+}

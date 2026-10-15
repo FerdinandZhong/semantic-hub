@@ -1,0 +1,5 @@
+{
+  "metric": "novel_approval_count",
+  "reference_sql": "SELECT COUNT(*) AS novel_approval_count FROM approval_events",
+  "expected": "46"
+}

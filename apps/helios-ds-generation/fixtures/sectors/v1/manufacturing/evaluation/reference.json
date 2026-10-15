@@ -1,0 +1,7 @@
+{
+  "metric": "planned_downtime_minutes",
+  "question": "What is planned downtime minutes?",
+  "reference_sql": "SELECT SUM(downtime_minutes) AS value FROM work_orders",
+  "expected": "312",
+  "truth": {}
+}

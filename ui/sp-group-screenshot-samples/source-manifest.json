@@ -1,0 +1,22 @@
+{
+  "source_directory": "Handson_labs/uob_screenshot_samples",
+  "original_page_sha256": {
+    "index.html": "cae44c4f7fd974acbac8b62568e617a6c590f0a5c1a79aa522025400a6a93cf2",
+    "context.html": "3813de377f2d49ef55c306199871b4091068335156577ddd9ce25e7459cb9381",
+    "nifi.html": "7b41fef4cd838516d58952c81acfec65b8124dc25775f6704a202ea7254d3471",
+    "observability.html": "6f20c3089609cc7a7862f82917c44338d257a2f0ce3644c6b01d7e2be6ccdca5",
+    "data.html": "fc7efe4322e6e3a3e20fd92a6b22174c624fbf887fb78d73943025ba3132356e"
+  },
+  "logo_source": "https://isomer-user-content.by.gov.sg/302/316d5d40-0b43-4a81-ab58-c4edd8b076f2/sp_group.png",
+  "logo_reference_page": "https://www.poweringlives.gov.sg/about/industry-partners/sp-group/",
+  "scope": "SP Group power-sector prototype. Meter ingestion, energy definitions and fixture-derived query results.",
+  "sector": "power",
+  "power_fixture_sha256": "75a970a57b2e3113d5156715bf1efcc4c041a2e372521eb25c8b18874888d857",
+  "generated_page_sha256": {
+    "context.html": "f53b1c645701b76ea437f353abd2c8e1e2b15cf333af3705c9fef5d8a40783fc",
+    "data.html": "659d99185f8ac90e3552276926ac64f76ebdc16b24cf0548f4448b47d6016546",
+    "index.html": "bd43b9a911a28d1f118d73b4c7f2a5116296979861a6f67da11379982222297f",
+    "nifi.html": "c2e6637eda2204e4ecf93365d43954065231ec160fb1375608cee82638a3487e",
+    "observability.html": "55f34823647b32dc2a8d46c94ac1dddbb88b5c6a2f87ef7cad58f82010653389"
+  }
+}

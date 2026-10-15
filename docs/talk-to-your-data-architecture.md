@@ -147,7 +147,7 @@ The API Application:
    Repeated identical non-retryable tool failures stop early with the safe
    tool explanation instead of becoming a generic MCP availability error.
 
-The prompt and tool descriptions require `search_semantics` before query
+The service requires `resolve_context` and its `bundle_id` before query
 compilation, exact metric names from its results, and full
 `database.table.column` identifiers for dimensions and filters. An invalid
 semantic request receives one informed correction opportunity. If it remains
@@ -198,23 +198,23 @@ endpoint and returns status, version, and model count without model names.
 
 Current tools are:
 
-- `list_models()` — grant-filtered model names and publication states.
-- `describe_model(model)` — authorized datasets, fields, metrics, and
-  relationships.
-- `search_semantics(question, limit, model)` — semantic matches for a natural
-  language question.
-- `describe(name, model)` — one dataset, field, metric, or glossary term.
-- `compile_query(metrics, dimensions, filters, limit, engine, model)` —
-  compiler-generated SQL; requires `query.compile`.
-- `run_query(metrics, dimensions, filters, limit, model)` — delegated Impala
-  execution; requires `query.execute` and physical data authorization.
-- `explain_lineage(column, depth, model)` — authorized Atlas lineage; requires
-  `datasource.read`.
+- `list_models()` — grant-filtered published model inventory.
+- `discover_models(question, limit)` — discover authorized published models.
+- `resolve_context(question, model)` — bounded definitions, dependencies, and a `bundle_id`.
+- `compile_query(metrics, dimensions, filters, limit, engine, model, bundle_id)` — compile only the validated bundle.
+- `run_query(metrics, dimensions, filters, limit, model, bundle_id)` — compile and execute with separate data authorization.
 
-Semantic tools read published Apache Ossie artifacts through
-`helios_core.ossie.SemanticModel`; unpublished proposal fallback artifacts are
-converted to the same in-memory representation. Query compilation uses the
-shared `helios_core.compiler.Compiler`, not a separate MCP-only SQL path.
+The conversation client exposes only these five tools.
+Compilation and execution require a current bundle bound to caller, policy, session, and published release.
+Missing or invalid bundles return `retrieval_bundle_required` or `retrieval_bundle_invalid`.
+`describe_model`, `describe`, and `search_semantics` remain Python helpers, not registered agent tools.
+The server separately exposes Atlas lineage and document/entity tools.
+Document tools are excluded from this conversation workflow until source/model filtering is verified.
+
+Published Ossie artifacts are authoritative; the model store rejects unpublished proposal fallback.
+Compilation uses the shared compiler with the bounded model returned by retrieval validation.
+See [indexed retrieval and budgets](semantic-retrieval.md) for the current contract and limitations.
+
 Fields resolve by `dataset.field`, physical `database.table.field`, or an
 unambiguous physical name, label, or synonym. Filters accept either `column` or
 `field` with `op` and `value`.

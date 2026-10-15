@@ -1,0 +1,1385 @@
+{
+  "version": "0.2.0.dev0",
+  "name": "pharma_intelligence",
+  "description": "Curated public facts from FDA CDER 2025 approvals, HERNEXEOS original-approval evidence, and an EFPIA 2026 industry chart. Source caveats remain visible; no patient records or pipeline forecasts are invented.",
+  "datasets": [
+    {
+      "name": "source_documents",
+      "source": "source_documents",
+      "description": "Public evidence provenance, including original URLs, checksums, and capture dates.",
+      "fields": [
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Stable source reference identifier; not a model review decision.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "title",
+          "datatype": "String",
+          "description": "Publisher document title.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "title"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "publisher",
+          "datatype": "String",
+          "description": "Organisation publishing the evidence.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "publisher"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "publication_period",
+          "datatype": "String",
+          "description": "Report edition or original approval scope; distinct from observation period.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "publication_period"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_url",
+          "datatype": "String",
+          "description": "Original public source URL.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_url"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "sha256",
+          "datatype": "String",
+          "description": "SHA256 of the exact downloaded source bytes.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "sha256"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "retrieved_date",
+          "datatype": "Date",
+          "description": "Date of source capture, not the date of the reported event.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "retrieved_date"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "drugs",
+      "source": "drugs",
+      "description": "46 distinct products in FDA CDER novel drug approvals for calendar year 2025.",
+      "fields": [
+        {
+          "name": "drug_id",
+          "datatype": "String",
+          "description": "Local stable identifier derived from the FDA trade name.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "drug_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "brand_name",
+          "datatype": "String",
+          "description": "FDA-listed drug trade name; combination products remain one listed drug.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "brand_name"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "active_ingredient",
+          "datatype": "String",
+          "description": "Active ingredient text as published; combinations are not split into approval events.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "active_ingredient"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Source for the product fact.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "approval_events",
+      "source": "approval_events",
+      "description": "46 original US FDA CDER approval events; not all FDA actions or global approvals.",
+      "fields": [
+        {
+          "name": "approval_id",
+          "datatype": "String",
+          "description": "One row in the FDA CDER 2025 novel-drug list.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "approval_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "drug_id",
+          "datatype": "String",
+          "description": "Drug covered by this original approval event.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "drug_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "approval_date",
+          "datatype": "Date",
+          "description": "Original FDA approval date in the selected 2025 list.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "approval_date"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": true
+          }
+        },
+        {
+          "name": "regulator",
+          "datatype": "String",
+          "description": "Regulator and centre; these records cover FDA CDER only.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "regulator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "jurisdiction",
+          "datatype": "String",
+          "description": "Approval jurisdiction; not a worldwide approval claim.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "jurisdiction"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "approved_use",
+          "datatype": "String",
+          "description": "Published use at original approval; not a current prescribing recommendation.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "approved_use"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Source for this approval event.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_locator",
+          "datatype": "String",
+          "description": "Source table and row locator.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_locator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_quality_note",
+          "datatype": "String",
+          "description": "Unresolved publisher text issue; an empty value is not independent clinical verification.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_quality_note"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "trials",
+      "source": "trials",
+      "description": "One published original-approval trial evidence subset, not a complete trial registry.",
+      "fields": [
+        {
+          "name": "trial_id",
+          "datatype": "String",
+          "description": "Public trial registry identifier.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "trial_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "drug_id",
+          "datatype": "String",
+          "description": "Drug evaluated in the selected approval evidence.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "drug_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "trial_name",
+          "datatype": "String",
+          "description": "Trial name in the FDA snapshot.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "trial_name"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "sponsor",
+          "datatype": "String",
+          "description": "Company identified in the FDA snapshot.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "sponsor"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "design",
+          "datatype": "String",
+          "description": "Detailed source design; see source_quality_note for conflicting summary text.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "design"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "population_description",
+          "datatype": "String",
+          "description": "Bounded original-approval efficacy population, not all trial enrollment.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "population_description"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "evidence_patients",
+          "datatype": "Integer",
+          "description": "105 patients in this FDA efficacy evidence subset, not patient-level records.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "evidence_patients"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Source for the trial evidence.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_locator",
+          "datatype": "String",
+          "description": "Source section used for curation.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_locator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_quality_note",
+          "datatype": "String",
+          "description": "Unresolved design wording or scope issue requiring source review.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_quality_note"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "trial_cohorts",
+      "source": "trial_cohorts",
+      "description": "Two disjoint prior-treatment cohorts in the selected 105-person efficacy population.",
+      "fields": [
+        {
+          "name": "cohort_id",
+          "datatype": "String",
+          "description": "Stable key for one disjoint prior-treatment cohort.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "cohort_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "trial_id",
+          "datatype": "String",
+          "description": "Trial containing this approval evidence cohort.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "trial_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "prior_her2_adc",
+          "datatype": "String",
+          "description": "Yes or No for prior HER2-targeted antibody-drug conjugate treatment.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "prior_her2_adc"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "patient_count",
+          "datatype": "Integer",
+          "description": "Cohort denominator for ORR; not the responder denominator used for DOR.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "patient_count"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Source for the cohort denominator.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_locator",
+          "datatype": "String",
+          "description": "Table header establishing the denominator.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_locator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "trial_results",
+      "source": "trial_results",
+      "description": "Four published endpoint percentages, with explicit cohort and endpoint denominators.",
+      "fields": [
+        {
+          "name": "result_id",
+          "datatype": "String",
+          "description": "One trial cohort and endpoint result.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "result_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "cohort_id",
+          "datatype": "String",
+          "description": "Cohort to which the endpoint applies.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "cohort_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "endpoint",
+          "datatype": "String",
+          "description": "ORR or DOR_GE_6_MONTHS; these endpoints have different denominators.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "endpoint"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "value",
+          "datatype": "Decimal",
+          "description": "Published percentage; never sum or take an unweighted average across endpoints or cohorts.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "value"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "unit",
+          "datatype": "String",
+          "description": "Percent, represented on a 0 to 100 scale.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "unit"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "denominator_count",
+          "datatype": "Integer",
+          "description": "ORR uses all cohort patients; DOR uses responders (53 or 15).",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "denominator_count"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "ci_lower",
+          "datatype": "Decimal",
+          "description": "Published lower 95% confidence bound for ORR; null when not reported.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "ci_lower"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "ci_upper",
+          "datatype": "Decimal",
+          "description": "Published upper 95% confidence bound for ORR; null when not reported.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "ci_upper"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Source for the reported endpoint value.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_locator",
+          "datatype": "String",
+          "description": "Table and footnote establishing endpoint scope.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_locator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "trial_demographics",
+      "source": "trial_demographics",
+      "description": "Eleven aggregate demographic categories across four overlapping dimensions; no individual patient records.",
+      "fields": [
+        {
+          "name": "demographic_id",
+          "datatype": "String",
+          "description": "One demographic dimension and subgroup in the overall efficacy population.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "demographic_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "trial_id",
+          "datatype": "String",
+          "description": "Trial whose overall efficacy population is described.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "trial_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "dimension",
+          "datatype": "String",
+          "description": "Sex, Race, Ethnicity, or Age; each dimension describes the same 105 people.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "dimension"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "subgroup",
+          "datatype": "String",
+          "description": "Source subgroup label, including Missing where reported.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "subgroup"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "patient_count",
+          "datatype": "Integer",
+          "description": "Subgroup count; do not sum across demographic dimensions.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "patient_count"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "reported_percent",
+          "datatype": "Decimal",
+          "description": "Source rounded percentage; retained without recalculation.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "reported_percent"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "denominator_count",
+          "datatype": "Integer",
+          "description": "Overall efficacy population denominator of 105.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "denominator_count"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "Source for the demographic fact.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_locator",
+          "datatype": "String",
+          "description": "Source table establishing the subgroup counts.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_locator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_quality_note",
+          "datatype": "String",
+          "description": "Source table versus figure discrepancy retained for review.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_quality_note"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "industry_observations",
+      "source": "industry_observations",
+      "description": "Five regional chart shares for sales of new medicines launched during 2020-2024.",
+      "fields": [
+        {
+          "name": "observation_id",
+          "datatype": "String",
+          "description": "One indicator, geography, and observation period.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "observation_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "indicator",
+          "datatype": "String",
+          "description": "new_medicine_sales_share, not total pharmaceutical market share.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "indicator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "geography",
+          "datatype": "String",
+          "description": "Source chart region; Europe Top 5 is France, Germany, Italy, Spain, and the UK.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "geography"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "period_start",
+          "datatype": "Integer",
+          "description": "First year of the chart observation period, not report publication year.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "period_start"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "period_end",
+          "datatype": "Integer",
+          "description": "Last year of the chart observation period.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "period_end"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "value",
+          "datatype": "Decimal",
+          "description": "Chart share on a 0 to 100 percent scale; only comparable within the same scope and period.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "value"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "unit",
+          "datatype": "String",
+          "description": "Percent of the chart-defined sales distribution.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "unit"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "market_scope",
+          "datatype": "String",
+          "description": "New-medicine launch cohort scope; not the overall drug market.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "market_scope"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_id",
+          "datatype": "String",
+          "description": "EFPIA report containing the chart; underlying chart attribution is IQVIA MIDAS.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_id"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_locator",
+          "datatype": "String",
+          "description": "Original PDF page and chart locator.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_locator"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        },
+        {
+          "name": "source_quality_note",
+          "datatype": "String",
+          "description": "Source indicator and period scope; nearby market-growth figures describe a different indicator.",
+          "expression": {
+            "dialects": [
+              {
+                "dialect": "ANSI_SQL",
+                "expression": "source_quality_note"
+              }
+            ]
+          },
+          "dimension": {
+            "is_time": false
+          }
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "name": "approval_events_drug_id_drugs",
+      "from": "approval_events",
+      "to": "drugs",
+      "from_columns": [
+        "drug_id"
+      ],
+      "to_columns": [
+        "drug_id"
+      ]
+    },
+    {
+      "name": "trials_drug_id_drugs",
+      "from": "trials",
+      "to": "drugs",
+      "from_columns": [
+        "drug_id"
+      ],
+      "to_columns": [
+        "drug_id"
+      ]
+    },
+    {
+      "name": "trial_cohorts_trial_id_trials",
+      "from": "trial_cohorts",
+      "to": "trials",
+      "from_columns": [
+        "trial_id"
+      ],
+      "to_columns": [
+        "trial_id"
+      ]
+    },
+    {
+      "name": "trial_results_cohort_id_trial_cohorts",
+      "from": "trial_results",
+      "to": "trial_cohorts",
+      "from_columns": [
+        "cohort_id"
+      ],
+      "to_columns": [
+        "cohort_id"
+      ]
+    },
+    {
+      "name": "trial_demographics_trial_id_trials",
+      "from": "trial_demographics",
+      "to": "trials",
+      "from_columns": [
+        "trial_id"
+      ],
+      "to_columns": [
+        "trial_id"
+      ]
+    },
+    {
+      "name": "drugs_source_id_source_documents",
+      "from": "drugs",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    },
+    {
+      "name": "approval_events_source_id_source_documents",
+      "from": "approval_events",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    },
+    {
+      "name": "trials_source_id_source_documents",
+      "from": "trials",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    },
+    {
+      "name": "trial_cohorts_source_id_source_documents",
+      "from": "trial_cohorts",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    },
+    {
+      "name": "trial_results_source_id_source_documents",
+      "from": "trial_results",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    },
+    {
+      "name": "trial_demographics_source_id_source_documents",
+      "from": "trial_demographics",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    },
+    {
+      "name": "industry_observations_source_id_source_documents",
+      "from": "industry_observations",
+      "to": "source_documents",
+      "from_columns": [
+        "source_id"
+      ],
+      "to_columns": [
+        "source_id"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "name": "novel_approval_count",
+      "description": "Number of FDA CDER novel-drug original approvals in the captured 2025 list. Count events once.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "COUNT(approval_events.approval_id)"
+          }
+        ]
+      },
+      "custom_extensions": [
+        {
+          "vendor_name": "HELIOS",
+          "data": "{\"business_context\": {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Number of FDA CDER novel-drug original approvals in the captured 2025 list. Count events once.\", \"dimensions\": [], \"evidence_refs\": [\"document:approval_scope\"], \"example_questions\": [\"How many novel drugs did FDA CDER approve in 2025?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"grain\": \"One original FDA CDER approval event\", \"inclusion_rules\": [\"One original FDA CDER approval event\"], \"name\": \"novel_approval_count\", \"ontology_concepts\": [\"RegulatoryApproval\"], \"owner\": \"Local semantic reviewer\", \"synonyms\": [], \"time_rule\": \"Approval dates within calendar year 2025\", \"unit\": \"approvals\"}}"
+        }
+      ]
+    },
+    {
+      "name": "evidence_patient_count",
+      "description": "Patients across the two disjoint Beamion LUNG-1 original-approval cohorts. Excludes other trial populations.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "SUM(trial_cohorts.patient_count)"
+          }
+        ]
+      },
+      "custom_extensions": [
+        {
+          "vendor_name": "HELIOS",
+          "data": "{\"business_context\": {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Patients across the two disjoint Beamion LUNG-1 original-approval cohorts. Excludes other trial populations.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"How many patients are in the original HERNEXEOS approval efficacy population?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"grain\": \"Two disjoint efficacy cohorts: 71 without prior HER2 ADC and 34 with prior HER2 ADC\", \"inclusion_rules\": [\"Two disjoint efficacy cohorts: 71 without prior HER2 ADC and 34 with prior HER2 ADC\"], \"name\": \"evidence_patient_count\", \"ontology_concepts\": [\"TrialPopulation\"], \"owner\": \"Local semantic reviewer\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08; not current enrollment\", \"unit\": \"patients\"}}"
+        }
+      ]
+    },
+    {
+      "name": "no_prior_adc_orr_percent",
+      "description": "Published objective response rate for the 71-person cohort without prior HER2 ADC; 95% CI 63-83.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "MAX(CASE WHEN trial_results.result_id = 'beamion_no_prior_adc_orr' THEN trial_results.value END)"
+          }
+        ]
+      },
+      "custom_extensions": [
+        {
+          "vendor_name": "HELIOS",
+          "data": "{\"business_context\": {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Published objective response rate for the 71-person cohort without prior HER2 ADC; 95% CI 63-83.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"What was the response rate without previous HER2-targeted ADC?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"grain\": \"One ORR result for the no-prior-ADC cohort; do not pool endpoint percentages\", \"inclusion_rules\": [\"One ORR result for the no-prior-ADC cohort; do not pool endpoint percentages\"], \"name\": \"no_prior_adc_orr_percent\", \"ontology_concepts\": [\"ObjectiveResponseRate\"], \"owner\": \"Local semantic reviewer\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08\", \"unit\": \"%\"}}"
+        }
+      ]
+    },
+    {
+      "name": "prior_adc_orr_percent",
+      "description": "Published objective response rate for the 34-person prior-HER2-ADC cohort; 95% CI 29-61.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "MAX(CASE WHEN trial_results.result_id = 'beamion_prior_adc_orr' THEN trial_results.value END)"
+          }
+        ]
+      },
+      "custom_extensions": [
+        {
+          "vendor_name": "HELIOS",
+          "data": "{\"business_context\": {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Published objective response rate for the 34-person prior-HER2-ADC cohort; 95% CI 29-61.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"What was the response rate with previous HER2-targeted ADC?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"grain\": \"One ORR result for the prior-ADC cohort\", \"inclusion_rules\": [\"One ORR result for the prior-ADC cohort\"], \"name\": \"prior_adc_orr_percent\", \"ontology_concepts\": [\"ObjectiveResponseRate\"], \"owner\": \"Local semantic reviewer\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08\", \"unit\": \"%\"}}"
+        }
+      ]
+    },
+    {
+      "name": "no_prior_adc_durable_response_percent",
+      "description": "Published percentage of 53 responders with observed response duration at least six months; denominator is not 71 or 105.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "MAX(CASE WHEN trial_results.result_id = 'beamion_no_prior_adc_dor_ge_6_months' THEN trial_results.value END)"
+          }
+        ]
+      },
+      "custom_extensions": [
+        {
+          "vendor_name": "HELIOS",
+          "data": "{\"business_context\": {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Published percentage of 53 responders with observed response duration at least six months; denominator is not 71 or 105.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"What share of responders without prior HER2 ADC had a response lasting at least six months?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"grain\": \"One observed DOR result among 53 responders in the no-prior-ADC cohort\", \"inclusion_rules\": [\"One observed DOR result among 53 responders in the no-prior-ADC cohort\"], \"name\": \"no_prior_adc_durable_response_percent\", \"ontology_concepts\": [\"DurationOfResponse\"], \"owner\": \"Local semantic reviewer\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08\", \"unit\": \"%\"}}"
+        }
+      ]
+    },
+    {
+      "name": "us_new_medicine_sales_share_percent",
+      "description": "USA share in the EFPIA page 4 chart for sales of new medicines launched during 2020-2024. Latest sales are in 2025 at ex-factory prices. Not total market share.",
+      "expression": {
+        "dialects": [
+          {
+            "dialect": "ANSI_SQL",
+            "expression": "MAX(CASE WHEN industry_observations.geography = 'USA' THEN industry_observations.value END)"
+          }
+        ]
+      },
+      "custom_extensions": [
+        {
+          "vendor_name": "HELIOS",
+          "data": "{\"business_context\": {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"USA share in the EFPIA page 4 chart for sales of new medicines launched during 2020-2024. Latest sales are in 2025 at ex-factory prices. Not total market share.\", \"dimensions\": [], \"evidence_refs\": [\"document:industry_chart_scope\"], \"example_questions\": [\"What USA share does the 2020-2024 new-medicine sales chart report?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"grain\": \"One USA chart observation for new-medicine sales, using the chart period\", \"inclusion_rules\": [\"One USA chart observation for new-medicine sales, using the chart period\"], \"name\": \"us_new_medicine_sales_share_percent\", \"ontology_concepts\": [\"NewMedicineSalesShare\"], \"owner\": \"Local semantic reviewer\", \"synonyms\": [], \"time_rule\": \"Medicine launch period 2020-2024; latest sales in 2025; report edition 2026\", \"unit\": \"%\"}}"
+        }
+      ]
+    }
+  ],
+  "custom_extensions": [
+    {
+      "vendor_name": "HELIOS",
+      "data": "{\"builder_seed\": {\"dataset_meanings\": {\"approval_events\": \"46 original US FDA CDER approval events; not all FDA actions or global approvals.\", \"drugs\": \"46 distinct products in FDA CDER novel drug approvals for calendar year 2025.\", \"industry_observations\": \"Five regional chart shares for sales of new medicines launched during 2020-2024.\", \"source_documents\": \"Public evidence provenance, including original URLs, checksums, and capture dates.\", \"trial_cohorts\": \"Two disjoint prior-treatment cohorts in the selected 105-person efficacy population.\", \"trial_demographics\": \"Eleven aggregate demographic categories across four overlapping dimensions; no individual patient records.\", \"trial_results\": \"Four published endpoint percentages, with explicit cohort and endpoint denominators.\", \"trials\": \"One published original-approval trial evidence subset, not a complete trial registry.\"}, \"description\": \"Curated public facts from FDA CDER 2025 approvals, HERNEXEOS original-approval evidence, and an EFPIA 2026 industry chart. Source caveats remain visible; no patient records or pipeline forecasts are invented.\", \"field_meanings\": {\"approval_events.approval_date\": \"Original FDA approval date in the selected 2025 list.\", \"approval_events.approval_id\": \"One row in the FDA CDER 2025 novel-drug list.\", \"approval_events.approved_use\": \"Published use at original approval; not a current prescribing recommendation.\", \"approval_events.drug_id\": \"Drug covered by this original approval event.\", \"approval_events.jurisdiction\": \"Approval jurisdiction; not a worldwide approval claim.\", \"approval_events.regulator\": \"Regulator and centre; these records cover FDA CDER only.\", \"approval_events.source_id\": \"Source for this approval event.\", \"approval_events.source_locator\": \"Source table and row locator.\", \"approval_events.source_quality_note\": \"Unresolved publisher text issue; an empty value is not independent clinical verification.\", \"drugs.active_ingredient\": \"Active ingredient text as published; combinations are not split into approval events.\", \"drugs.brand_name\": \"FDA-listed drug trade name; combination products remain one listed drug.\", \"drugs.drug_id\": \"Local stable identifier derived from the FDA trade name.\", \"drugs.source_id\": \"Source for the product fact.\", \"industry_observations.geography\": \"Source chart region; Europe Top 5 is France, Germany, Italy, Spain, and the UK.\", \"industry_observations.indicator\": \"new_medicine_sales_share, not total pharmaceutical market share.\", \"industry_observations.market_scope\": \"New-medicine launch cohort scope; not the overall drug market.\", \"industry_observations.observation_id\": \"One indicator, geography, and observation period.\", \"industry_observations.period_end\": \"Last year of the chart observation period.\", \"industry_observations.period_start\": \"First year of the chart observation period, not report publication year.\", \"industry_observations.source_id\": \"EFPIA report containing the chart; underlying chart attribution is IQVIA MIDAS.\", \"industry_observations.source_locator\": \"Original PDF page and chart locator.\", \"industry_observations.source_quality_note\": \"Source indicator and period scope; nearby market-growth figures describe a different indicator.\", \"industry_observations.unit\": \"Percent of the chart-defined sales distribution.\", \"industry_observations.value\": \"Chart share on a 0 to 100 percent scale; only comparable within the same scope and period.\", \"source_documents.publication_period\": \"Report edition or original approval scope; distinct from observation period.\", \"source_documents.publisher\": \"Organisation publishing the evidence.\", \"source_documents.retrieved_date\": \"Date of source capture, not the date of the reported event.\", \"source_documents.sha256\": \"SHA256 of the exact downloaded source bytes.\", \"source_documents.source_id\": \"Stable source reference identifier; not a model review decision.\", \"source_documents.source_url\": \"Original public source URL.\", \"source_documents.title\": \"Publisher document title.\", \"trial_cohorts.cohort_id\": \"Stable key for one disjoint prior-treatment cohort.\", \"trial_cohorts.patient_count\": \"Cohort denominator for ORR; not the responder denominator used for DOR.\", \"trial_cohorts.prior_her2_adc\": \"Yes or No for prior HER2-targeted antibody-drug conjugate treatment.\", \"trial_cohorts.source_id\": \"Source for the cohort denominator.\", \"trial_cohorts.source_locator\": \"Table header establishing the denominator.\", \"trial_cohorts.trial_id\": \"Trial containing this approval evidence cohort.\", \"trial_demographics.demographic_id\": \"One demographic dimension and subgroup in the overall efficacy population.\", \"trial_demographics.denominator_count\": \"Overall efficacy population denominator of 105.\", \"trial_demographics.dimension\": \"Sex, Race, Ethnicity, or Age; each dimension describes the same 105 people.\", \"trial_demographics.patient_count\": \"Subgroup count; do not sum across demographic dimensions.\", \"trial_demographics.reported_percent\": \"Source rounded percentage; retained without recalculation.\", \"trial_demographics.source_id\": \"Source for the demographic fact.\", \"trial_demographics.source_locator\": \"Source table establishing the subgroup counts.\", \"trial_demographics.source_quality_note\": \"Source table versus figure discrepancy retained for review.\", \"trial_demographics.subgroup\": \"Source subgroup label, including Missing where reported.\", \"trial_demographics.trial_id\": \"Trial whose overall efficacy population is described.\", \"trial_results.ci_lower\": \"Published lower 95% confidence bound for ORR; null when not reported.\", \"trial_results.ci_upper\": \"Published upper 95% confidence bound for ORR; null when not reported.\", \"trial_results.cohort_id\": \"Cohort to which the endpoint applies.\", \"trial_results.denominator_count\": \"ORR uses all cohort patients; DOR uses responders (53 or 15).\", \"trial_results.endpoint\": \"ORR or DOR_GE_6_MONTHS; these endpoints have different denominators.\", \"trial_results.result_id\": \"One trial cohort and endpoint result.\", \"trial_results.source_id\": \"Source for the reported endpoint value.\", \"trial_results.source_locator\": \"Table and footnote establishing endpoint scope.\", \"trial_results.unit\": \"Percent, represented on a 0 to 100 scale.\", \"trial_results.value\": \"Published percentage; never sum or take an unweighted average across endpoints or cohorts.\", \"trials.design\": \"Detailed source design; see source_quality_note for conflicting summary text.\", \"trials.drug_id\": \"Drug evaluated in the selected approval evidence.\", \"trials.evidence_patients\": \"105 patients in this FDA efficacy evidence subset, not patient-level records.\", \"trials.population_description\": \"Bounded original-approval efficacy population, not all trial enrollment.\", \"trials.source_id\": \"Source for the trial evidence.\", \"trials.source_locator\": \"Source section used for curation.\", \"trials.source_quality_note\": \"Unresolved design wording or scope issue requiring source review.\", \"trials.sponsor\": \"Company identified in the FDA snapshot.\", \"trials.trial_id\": \"Public trial registry identifier.\", \"trials.trial_name\": \"Trial name in the FDA snapshot.\"}, \"field_roles\": {\"approval_events.approval_date\": \"time\", \"approval_events.approval_id\": \"identifier\", \"approval_events.approved_use\": \"attribute\", \"approval_events.drug_id\": \"foreign_key\", \"approval_events.jurisdiction\": \"attribute\", \"approval_events.regulator\": \"attribute\", \"approval_events.source_id\": \"foreign_key\", \"approval_events.source_locator\": \"attribute\", \"approval_events.source_quality_note\": \"attribute\", \"drugs.active_ingredient\": \"attribute\", \"drugs.brand_name\": \"attribute\", \"drugs.drug_id\": \"identifier\", \"drugs.source_id\": \"foreign_key\", \"industry_observations.geography\": \"attribute\", \"industry_observations.indicator\": \"attribute\", \"industry_observations.market_scope\": \"attribute\", \"industry_observations.observation_id\": \"identifier\", \"industry_observations.period_end\": \"time\", \"industry_observations.period_start\": \"time\", \"industry_observations.source_id\": \"foreign_key\", \"industry_observations.source_locator\": \"attribute\", \"industry_observations.source_quality_note\": \"attribute\", \"industry_observations.unit\": \"attribute\", \"industry_observations.value\": \"measure\", \"source_documents.publication_period\": \"attribute\", \"source_documents.publisher\": \"attribute\", \"source_documents.retrieved_date\": \"time\", \"source_documents.sha256\": \"attribute\", \"source_documents.source_id\": \"identifier\", \"source_documents.source_url\": \"attribute\", \"source_documents.title\": \"attribute\", \"trial_cohorts.cohort_id\": \"identifier\", \"trial_cohorts.patient_count\": \"measure\", \"trial_cohorts.prior_her2_adc\": \"attribute\", \"trial_cohorts.source_id\": \"foreign_key\", \"trial_cohorts.source_locator\": \"attribute\", \"trial_cohorts.trial_id\": \"foreign_key\", \"trial_demographics.demographic_id\": \"identifier\", \"trial_demographics.denominator_count\": \"measure\", \"trial_demographics.dimension\": \"attribute\", \"trial_demographics.patient_count\": \"measure\", \"trial_demographics.reported_percent\": \"measure\", \"trial_demographics.source_id\": \"foreign_key\", \"trial_demographics.source_locator\": \"attribute\", \"trial_demographics.source_quality_note\": \"attribute\", \"trial_demographics.subgroup\": \"attribute\", \"trial_demographics.trial_id\": \"foreign_key\", \"trial_results.ci_lower\": \"measure\", \"trial_results.ci_upper\": \"measure\", \"trial_results.cohort_id\": \"foreign_key\", \"trial_results.denominator_count\": \"measure\", \"trial_results.endpoint\": \"attribute\", \"trial_results.result_id\": \"identifier\", \"trial_results.source_id\": \"foreign_key\", \"trial_results.source_locator\": \"attribute\", \"trial_results.unit\": \"attribute\", \"trial_results.value\": \"measure\", \"trials.design\": \"attribute\", \"trials.drug_id\": \"foreign_key\", \"trials.evidence_patients\": \"measure\", \"trials.population_description\": \"attribute\", \"trials.source_id\": \"foreign_key\", \"trials.source_locator\": \"attribute\", \"trials.source_quality_note\": \"attribute\", \"trials.sponsor\": \"attribute\", \"trials.trial_id\": \"identifier\", \"trials.trial_name\": \"attribute\"}, \"glossary_terms\": [{\"definition\": \"An original FDA CDER approval event in the bounded 2025 list; not an NDC listing.\", \"term\": \"RegulatoryApproval\"}, {\"definition\": \"The 105-person original-approval efficacy subset, not every participant in the trial.\", \"term\": \"TrialPopulation\"}, {\"definition\": \"Published response percentage in one cohort; denominator is 71 or 34 patients.\", \"term\": \"ObjectiveResponseRate\"}, {\"definition\": \"Observed response duration among responders; denominators are 53 and 15.\", \"term\": \"DurationOfResponse\"}, {\"definition\": \"Regional share for the chart-defined 2020-2024 launch cohort, not total drug-market share.\", \"term\": \"NewMedicineSalesShare\"}], \"joins\": [{\"cardinality\": \"many_to_one\", \"from_field\": \"approval_events.drug_id\", \"meaning\": \"Each approval_events row references one drugs row by drug_id.\", \"name\": \"approval_events_drug_id_drugs\", \"to_field\": \"drugs.drug_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trials.drug_id\", \"meaning\": \"Each trials row references one drugs row by drug_id.\", \"name\": \"trials_drug_id_drugs\", \"to_field\": \"drugs.drug_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trial_cohorts.trial_id\", \"meaning\": \"Each trial_cohorts row references one trials row by trial_id.\", \"name\": \"trial_cohorts_trial_id_trials\", \"to_field\": \"trials.trial_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trial_results.cohort_id\", \"meaning\": \"Each trial_results row references one trial_cohorts row by cohort_id.\", \"name\": \"trial_results_cohort_id_trial_cohorts\", \"to_field\": \"trial_cohorts.cohort_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trial_demographics.trial_id\", \"meaning\": \"Each trial_demographics row references one trials row by trial_id.\", \"name\": \"trial_demographics_trial_id_trials\", \"to_field\": \"trials.trial_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"drugs.source_id\", \"meaning\": \"Each drugs row references one source_documents row by source_id.\", \"name\": \"drugs_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"approval_events.source_id\", \"meaning\": \"Each approval_events row references one source_documents row by source_id.\", \"name\": \"approval_events_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trials.source_id\", \"meaning\": \"Each trials row references one source_documents row by source_id.\", \"name\": \"trials_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trial_cohorts.source_id\", \"meaning\": \"Each trial_cohorts row references one source_documents row by source_id.\", \"name\": \"trial_cohorts_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trial_results.source_id\", \"meaning\": \"Each trial_results row references one source_documents row by source_id.\", \"name\": \"trial_results_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"trial_demographics.source_id\", \"meaning\": \"Each trial_demographics row references one source_documents row by source_id.\", \"name\": \"trial_demographics_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}, {\"cardinality\": \"many_to_one\", \"from_field\": \"industry_observations.source_id\", \"meaning\": \"Each industry_observations row references one source_documents row by source_id.\", \"name\": \"industry_observations_source_id_source_documents\", \"to_field\": \"source_documents.source_id\"}], \"metrics\": [{\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Number of FDA CDER novel-drug original approvals in the captured 2025 list. Count events once.\", \"dimensions\": [], \"evidence_refs\": [\"document:approval_scope\"], \"example_questions\": [\"How many novel drugs did FDA CDER approve in 2025?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"expression\": \"COUNT(approval_events.approval_id)\", \"grain\": \"One original FDA CDER approval event\", \"inclusion_rules\": [\"One original FDA CDER approval event\"], \"name\": \"novel_approval_count\", \"ontology_concepts\": [\"RegulatoryApproval\"], \"owner\": \"Local semantic reviewer\", \"reference_sql\": \"\", \"synonyms\": [], \"time_rule\": \"Approval dates within calendar year 2025\", \"unit\": \"approvals\"}, {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Patients across the two disjoint Beamion LUNG-1 original-approval cohorts. Excludes other trial populations.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"How many patients are in the original HERNEXEOS approval efficacy population?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"expression\": \"SUM(trial_cohorts.patient_count)\", \"grain\": \"Two disjoint efficacy cohorts: 71 without prior HER2 ADC and 34 with prior HER2 ADC\", \"inclusion_rules\": [\"Two disjoint efficacy cohorts: 71 without prior HER2 ADC and 34 with prior HER2 ADC\"], \"name\": \"evidence_patient_count\", \"ontology_concepts\": [\"TrialPopulation\"], \"owner\": \"Local semantic reviewer\", \"reference_sql\": \"\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08; not current enrollment\", \"unit\": \"patients\"}, {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Published objective response rate for the 71-person cohort without prior HER2 ADC; 95% CI 63-83.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"What was the response rate without previous HER2-targeted ADC?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"expression\": \"MAX(CASE WHEN trial_results.result_id = 'beamion_no_prior_adc_orr' THEN trial_results.value END)\", \"grain\": \"One ORR result for the no-prior-ADC cohort; do not pool endpoint percentages\", \"inclusion_rules\": [\"One ORR result for the no-prior-ADC cohort; do not pool endpoint percentages\"], \"name\": \"no_prior_adc_orr_percent\", \"ontology_concepts\": [\"ObjectiveResponseRate\"], \"owner\": \"Local semantic reviewer\", \"reference_sql\": \"\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08\", \"unit\": \"%\"}, {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Published objective response rate for the 34-person prior-HER2-ADC cohort; 95% CI 29-61.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"What was the response rate with previous HER2-targeted ADC?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"expression\": \"MAX(CASE WHEN trial_results.result_id = 'beamion_prior_adc_orr' THEN trial_results.value END)\", \"grain\": \"One ORR result for the prior-ADC cohort\", \"inclusion_rules\": [\"One ORR result for the prior-ADC cohort\"], \"name\": \"prior_adc_orr_percent\", \"ontology_concepts\": [\"ObjectiveResponseRate\"], \"owner\": \"Local semantic reviewer\", \"reference_sql\": \"\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08\", \"unit\": \"%\"}, {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"Published percentage of 53 responders with observed response duration at least six months; denominator is not 71 or 105.\", \"dimensions\": [], \"evidence_refs\": [\"document:trial_denominators\"], \"example_questions\": [\"What share of responders without prior HER2 ADC had a response lasting at least six months?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"expression\": \"MAX(CASE WHEN trial_results.result_id = 'beamion_no_prior_adc_dor_ge_6_months' THEN trial_results.value END)\", \"grain\": \"One observed DOR result among 53 responders in the no-prior-ADC cohort\", \"inclusion_rules\": [\"One observed DOR result among 53 responders in the no-prior-ADC cohort\"], \"name\": \"no_prior_adc_durable_response_percent\", \"ontology_concepts\": [\"DurationOfResponse\"], \"owner\": \"Local semantic reviewer\", \"reference_sql\": \"\", \"synonyms\": [], \"time_rule\": \"Original approval evidence snapshot, 2025-08-08\", \"unit\": \"%\"}, {\"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"description\": \"USA share in the EFPIA page 4 chart for sales of new medicines launched during 2020-2024. Latest sales are in 2025 at ex-factory prices. Not total market share.\", \"dimensions\": [], \"evidence_refs\": [\"document:industry_chart_scope\"], \"example_questions\": [\"What USA share does the 2020-2024 new-medicine sales chart report?\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"expression\": \"MAX(CASE WHEN industry_observations.geography = 'USA' THEN industry_observations.value END)\", \"grain\": \"One USA chart observation for new-medicine sales, using the chart period\", \"inclusion_rules\": [\"One USA chart observation for new-medicine sales, using the chart period\"], \"name\": \"us_new_medicine_sales_share_percent\", \"ontology_concepts\": [\"NewMedicineSalesShare\"], \"owner\": \"Local semantic reviewer\", \"reference_sql\": \"\", \"synonyms\": [], \"time_rule\": \"Medicine launch period 2020-2024; latest sales in 2025; report edition 2026\", \"unit\": \"%\"}], \"title\": \"Pharmaceutical Industry Intelligence & New Drug Analysis\"}}"
+    }
+  ]
+}

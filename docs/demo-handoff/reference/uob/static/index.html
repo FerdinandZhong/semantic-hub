@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UOB · AI Query Workspace</title><link rel="stylesheet" href="static/styles.css?v=20261009-banking"><script defer src="static/app.js?v=20261010-finance"></script><script defer src="static/evidence.js?v=20261009-banking"></script><script defer src="static/settings.js"></script><script defer src="static/workflow.js?v=20261010-finance"></script><script defer src="static/lakehouse.js?v=20261006"></script><script defer src="static/ui.js"></script><script defer src="static/observability-context.js?v=20261009-banking"></script></head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+ <a class="brand" href="./" aria-label="UOB AI workspace home"><svg class="uob-mark" viewBox="0 0 31 36" fill="none" aria-hidden="true"><path d="M5 3v30M11 3v30M18 3v30M24 3v30M1 16h28M1 22h28" stroke="currentColor" stroke-width="2.8"/></svg><span class="brand-word">UOB</span></a>
+ <div class="workspace"><span class="workspace-dot"></span><div><strong>AI workspace</strong><small>Data & operations</small></div></div>
+ <div class="nav-label">WORKSPACE</div>
+ <nav aria-label="Workspace navigation">
+ <div class="nav-group-label">Prepare</div>
+ <button class="nav-item" data-workflow="sources"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></svg></span>Sources</button>
+ <button class="nav-item" data-workflow="builder"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h7l3 5-3 5H3l3-5-3-5ZM14 3h7v7h-7zM15 16h6v5h-6zM13 12h5v4"/></svg></span>Build semantic context</button>
+ <div class="nav-group-label">Explore</div>
+ <button class="nav-item active" data-tab="nifi" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h9v9M15 18H6V9"/></svg></span>NiFi<span class="nav-count">01</span></button>
+ <button class="nav-item" data-tab="observability"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/><circle cx="12" cy="12" r="10"/></svg></span>Observability<span class="nav-count">02</span></button>
+ <button class="nav-item" data-tab="data"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18M3 15h18"/></svg></span>Data understanding<span class="nav-count">03</span></button>
+ </nav>
+ <div class="sidebar-note"><span class="tiny-label">SEMANTIC CONTEXT</span><strong>Reviewed. Versioned. Traceable.</strong><p>Business definitions connect questions to approved data.</p></div>
+ <div class="profile"><span class="status-dot"></span><div><strong>Cloudera AI</strong><small>UOB solution demonstrator</small></div></div>
+</aside>
+<main>
+ <header class="global-header"><div class="workspace-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><label class="sr-only" for="workspace-search">Find a workspace page</label><input id="workspace-search" placeholder="Find a workspace page…" autocomplete="off" aria-controls="workspace-search-results" aria-expanded="false"><kbd>⌘ K</kbd><div id="workspace-search-results" class="search-results" hidden></div></div><div class="top-actions"><span class="badge amber">Demo workspace</span><button id="models-open" class="quiet">Models</button><button id="access" class="quiet">Access settings</button><div class="header-profile"><div class="avatar small">U</div><div><strong>UOB workspace</strong><small>Shared access</small></div></div></div></header>
+ <div class="breadcrumb">AI workspace <span>/</span> <strong id="crumb">NiFi</strong><span class="breadcrumb-context">Data & operations intelligence</span></div>
+ <div class="page"><div id="query-view">
+ <section class="heading"><div><div class="eyebrow">CONNECTED INTELLIGENCE</div><h1 id="title">Understand your data flows.</h1><p id="subtitle">Ask about flow health, processor states and recent bulletins.</p></div><div class="heading-controls"><button id="connection-open" class="quiet">Configure connections</button><div class="mode-switch" aria-label="Data mode"><button id="live-mode" class="selected" aria-pressed="true">Live targets</button><button id="sample-mode" aria-pressed="false">Sample preview</button></div></div></section>
+ <div id="mode-banner" class="notice" hidden>Sample preview uses synthetic fixtures. No target is queried.</div>
+ <section class="stats" aria-label="Workspace context">
+ <div class="stat"><span>QUERY TARGET</span><strong id="target-name">NiFi REST API</strong><small id="target-sub">Process groups & processors</small></div>
+ <div class="stat"><span>PLANNING</span><strong id="planner-name">Checking configuration</strong><small id="planner-sub">Constrained, read-only tools</small></div>
+ <div class="stat"><span>SEMANTIC CONTEXT</span><strong id="semantic-name">Helios / Ossie</strong><small id="semantic-sub">Approved, versioned definitions</small></div>
+ <div class="stat"><span>CONNECTIONS</span><strong id="connection-summary">Not checked</strong><button id="check-connections" class="text-button">Check live connections ↗</button></div>
+ </section>
+ <section id="helios-panel" class="panel helios-panel" hidden>
+ <div class="panel-head"><div><span class="section-index">H</span><h2>How Helios is used</h2></div><button id="semantic-inspect" class="text-button">Inspect approved model ↗</button></div>
+ <div class="helios-content"><div class="helios-flow"><span>Build semantic context<br><small>Draft, review and validate inside this app</small></span><b>→</b><span>AlloyDB or pinned file<br><small>Load an approved version and checksum</small></span><b>→</b><span>Helios compiles SQL<br><small>Validated semantic request → Trino → Iceberg</small></span></div>
+ <p class="helper">The live LLM uses the loaded definitions to plan data queries. NiFi and observability use their own read-only tools. The sample model is synthetic.</p>
+ <details><summary>Preview semantic compilation without querying data</summary><label for="semantic-request" class="helper">Enter a Helios semantic request using names from your approved model.</label><textarea id="semantic-request" rows="3">{"metrics": [], "dimensions": [], "limit": 25}</textarea><button id="semantic-compile" class="quiet">Compile SQL preview</button></details>
+ <div id="semantic-result" aria-live="polite"></div></div></section>
+ <section id="observability-context-panel" class="panel helios-panel" hidden></section>
+ <div class="workbench">
+  <section class="query-panel panel">
+   <div class="panel-head"><div><span class="section-index">01</span><h2>Ask your workspace</h2></div><span id="mode-label" class="badge blue">Live query</span></div>
+   <div class="query-body">
+    <label class="tiny-label" for="question">YOUR QUESTION</label>
+    <textarea id="question" rows="4" placeholder="Which processors are currently stopped or invalid?"></textarea>
+    <div class="query-options"><label>Time window<select id="minutes"><option value="15">Last 15 minutes</option><option value="60" selected>Last hour</option><option value="360">Last 6 hours</option><option value="1440">Last 24 hours</option></select></label><label id="source-control" hidden>Source<select id="source"><option value="auto">Automatic</option><option value="kibana">Kibana · NiFi logs</option><option value="prometheus">Prometheus · metrics</option><option value="opensearch">OpenSearch · separate logs</option></select></label><button id="run" class="primary">Ask workspace <span>↗</span></button></div>
+    <div id="observability-controls" hidden>
+     <div class="query-options"><label>Response<select id="obs-path"><option value="auto">Automatic</option><option value="events">Log entries</option><option value="summary">Statistical summary</option><option value="exact">Exact log entry</option></select></label><label>Time selection<select id="obs-time-mode"><option value="relative">Relative window</option><option value="range">Absolute range</option><option value="exact">Exact timestamp</option></select></label><label id="obs-timezone-wrap" hidden>Timezone<input id="obs-timezone" value="UTC" placeholder="Asia/Singapore" list="timezones"></label></div>
+     <datalist id="timezones"><option value="UTC"><option value="Asia/Singapore"><option value="Asia/Seoul"><option value="America/New_York"></datalist>
+     <div id="obs-range-fields" class="settings-grid" hidden><label>Start timestamp<input id="obs-range-start" placeholder="2026-10-06T09:00:00"></label><label>End timestamp (exclusive)<input id="obs-range-end" placeholder="2026-10-06T10:00:00"></label></div>
+     <div id="obs-exact-fields" class="settings-grid" hidden><label>Exact timestamp<input id="obs-exact-time" placeholder="2026-10-06T09:42:18.417"></label><p class="helper">Include seconds. Fractional digits set the lookup precision. A timestamp can match multiple entries.</p></div>
+    </div>
+    <p id="scope-note" class="helper">Queries inspect the configured process group. No flow changes are executed.</p>
+    <div class="suggestions"><span class="tiny-label">TRY A QUESTION</span><div id="examples"></div></div>
+   </div>
+   <div class="result-heading"><h2>Answer & evidence</h2><span id="result-meta">Ready when you are</span></div>
+   <div id="result" aria-live="polite"><div class="empty"><div class="empty-icon">⌕</div><h3>Start with a question.</h3><p>Inspect the answer, source evidence and query plan in one place.</p></div></div>
+  </section>
+  <aside class="evidence panel"><div class="panel-head"><div><span class="section-index">02</span><h2>Execution context</h2></div></div><div class="context-body"><div class="tiny-label">QUERY ROUTE</div><div id="route" class="route"></div><div class="divider"></div><div class="tiny-label">EXECUTION TRACE</div><div id="trace" class="trace"><p class="muted">The selected tool and source will appear after a query.</p></div><div class="divider"></div><div class="tiny-label">SOURCE PLATFORMS</div><div id="links" class="links"></div><div id="connections" class="connections"></div><div class="context-note"><strong>Evidence first</strong><p>Live failures remain visible. Sample data is never substituted for a failed connection.</p></div></div></aside>
+ </div>
+ </div>
+ <section id="preparation-view" hidden></section>
+ <footer>Cloudera AI · AlloyDB · Helios semantic context <span>Query-only demo / no operational actions</span></footer>
+ </div>
+</main>
+</div>
+<dialog id="access-dialog"><form method="dialog"><h2>Workspace access</h2><p>Enter the application access token if configured by the operator. It is kept in this browser tab only.</p><label>Access token<input type="password" id="app-token" autocomplete="off"></label><div class="dialog-actions"><button value="cancel" class="quiet">Cancel</button><button id="save-token" value="save" class="primary">Connect</button></div></form></dialog>
+<dialog id="connection-dialog" class="settings-dialog">
+ <div class="settings-head"><div><span class="eyebrow">SOURCE CONNECTIONS</span><h2 id="connection-title">Configure connections</h2></div><button type="button" class="quiet" id="connection-close">Close</button></div>
+ <p class="helper">Settings are stored on this application server and apply to the shared workspace. Secret values are never returned to the browser. Empty secret fields keep the saved value.</p>
+ <form id="connection-form"><div id="connection-fields" class="settings-grid"></div><div class="dialog-actions"><button type="button" class="quiet" id="connection-test">Test saved connections</button><button class="primary" type="submit">Save connections</button></div></form>
+ <div id="connection-feedback" role="status"></div>
+</dialog>
+<dialog id="model-dialog" class="settings-dialog">
+ <div class="settings-head"><div><span class="eyebrow">MODEL CONFIGURATION</span><h2>LLM endpoints</h2></div><button type="button" class="quiet" id="models-close">Close</button></div>
+ <p class="helper">Add an OpenAI-compatible endpoint, test its query planning, then activate it. The active model plans questions across all three tabs. Source connections and Helios semantic models are configured separately.</p>
+ <div id="model-list" class="model-list"></div>
+ <form id="model-form"><h3 id="model-form-title">Add a model</h3><input type="hidden" id="model-id"><div class="settings-grid">
+ <label>Display name<input id="model-name" required placeholder="Cloudera AI planner"></label>
+ <label>Model ID<input id="model-name-api" required placeholder="Model identifier expected by the endpoint"></label>
+ <label class="full">API base URL<input id="model-base" type="url" required placeholder="https://inference.example/v1"></label>
+ <label class="full">API key<input id="model-key" type="password" autocomplete="new-password" placeholder="Optional; leave blank to retain an existing key"><span class="clear-secret"><input type="checkbox" id="model-key-clear"> Clear saved key</span></label>
+ </div><div class="dialog-actions"><button id="model-reset" class="quiet" type="button">New model</button><button class="primary" type="submit">Save model</button></div></form>
+ <div id="model-feedback" role="status"></div>
+</dialog>
+</body></html>

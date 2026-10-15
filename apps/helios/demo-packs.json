@@ -1,0 +1,121 @@
+{
+  "schema": "helios.demo-registry.v1",
+  "packs": [
+    {
+      "id": "finance",
+      "title": "Finance sample",
+      "timezone": "Asia/Singapore",
+      "adapter": "local_duckdb",
+      "retrieval": "disabled",
+      "manifest_sha256": "50fea01a0e6fbeb320adc2601ef6bdd064a8fc141f56b56ed78f62c1f10b1a6a",
+      "model_sha256": "9efc9648f4bb02c87bf59ef1764e2b38f1fcf239691378ec87dafd6f57dfff0b",
+      "examples": [
+        {
+          "id": "aggregate",
+          "question": "What is the total settled sender outflow in SGD?",
+          "metric": "total_amount_sgd",
+          "unit": "SGD"
+        }
+      ]
+    },
+    {
+      "id": "manufacturing",
+      "title": "Manufacturing sample",
+      "timezone": "Asia/Singapore",
+      "adapter": "local_duckdb",
+      "retrieval": "disabled",
+      "manifest_sha256": "1156b03cd46ad8739a061b9be1773033340907df6bf67745b786152a91c4de63",
+      "model_sha256": "4249d49ee2b7edb30916723da729a8fdd63394cfcffa95264f7f8c0f89a897ad",
+      "examples": [
+        {
+          "id": "aggregate",
+          "question": "What is the total planned maintenance downtime?",
+          "metric": "planned_downtime_minutes",
+          "unit": "minutes"
+        }
+      ]
+    },
+    {
+      "id": "pharma",
+      "title": "Pharma sample",
+      "timezone": "Asia/Singapore",
+      "adapter": "local_duckdb",
+      "retrieval": "disabled",
+      "manifest_sha256": "843c611f93b67d19bae234e0dc1ee994f969e7a23a2d2f4c0a6fc125407ef1b6",
+      "model_sha256": "55e9842239f7f5e18763771dc5b21811f48e82c76ff00d6c8e646a5510b2af33",
+      "examples": [
+        {
+          "id": "aggregate",
+          "question": "What is the mean draft assay percentage?",
+          "metric": "average_assay_percent",
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "title": "SP Group power prototype",
+      "timezone": "Asia/Singapore",
+      "adapter": "local_duckdb",
+      "retrieval": "disabled",
+      "manifest_sha256": "75a970a57b2e3113d5156715bf1efcc4c041a2e372521eb25c8b18874888d857",
+      "model_sha256": "3eda5a3cc356aa2e38f4ede1e4cbe68f375a23d53eac6171fb076841e11e5497",
+      "examples": [
+        {
+          "id": "aggregate",
+          "question": "What is the measured electricity consumption?",
+          "metric": "measured_import_kwh",
+          "unit": "kWh"
+        }
+      ]
+    },
+    {
+      "id": "pharma_intelligence",
+      "title": "Pharmaceutical Industry Intelligence & New Drug Analysis",
+      "timezone": "UTC",
+      "adapter": "local_duckdb",
+      "retrieval": "disabled",
+      "data_origin": "public_source",
+      "manifest_sha256": "50a7845858574a2916a9f8e2124ac5184b9cbe655cab3ed36691771c64622757",
+      "model_sha256": "190df2936325a0317264c45fc696233219ba89ef829d729efb17e39eb5f0852b",
+      "examples": [
+        {
+          "id": "aggregate",
+          "question": "How many novel drugs did FDA CDER approve in 2025?",
+          "metric": "novel_approval_count",
+          "unit": "approvals"
+        },
+        {
+          "id": "evidence_patient_count",
+          "question": "How many patients are in the original HERNEXEOS approval efficacy population?",
+          "metric": "evidence_patient_count",
+          "unit": "patients"
+        },
+        {
+          "id": "no_prior_adc_orr_percent",
+          "question": "What was the response rate without previous HER2-targeted ADC?",
+          "metric": "no_prior_adc_orr_percent",
+          "unit": "%"
+        },
+        {
+          "id": "prior_adc_orr_percent",
+          "question": "What was the response rate with previous HER2-targeted ADC?",
+          "metric": "prior_adc_orr_percent",
+          "unit": "%"
+        },
+        {
+          "id": "no_prior_adc_durable_response_percent",
+          "question": "What share of responders without prior HER2 ADC had a response lasting at least six months?",
+          "metric": "no_prior_adc_durable_response_percent",
+          "unit": "%"
+        },
+        {
+          "id": "us_new_medicine_sales_share_percent",
+          "question": "What USA share does the 2020-2024 new-medicine sales chart report?",
+          "metric": "us_new_medicine_sales_share_percent",
+          "unit": "%"
+        }
+      ]
+    }
+  ]
+}

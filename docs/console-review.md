@@ -1,5 +1,9 @@
 # Reviewing and publishing a proposal
 
+**Scope:** this guide describes the discovery-run review workflow, not the local `/demo` Studio.
+For local batch review, reference SQL, and version approval, use [context-builder.md](context-builder.md).
+For current model artifact paths, use [model-artifacts.md](model-artifacts.md); the flat path below is legacy.
+
 Open it from **Runs → a run → Review and publish**, or from the proposal page.
 
 Every element of the proposal — each dataset, column, relationship, metric and proposed glossary term — carries one of

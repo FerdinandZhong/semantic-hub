@@ -1,0 +1,7 @@
+{
+  "metric": "measured_import_kwh",
+  "question": "What is measured import kwh?",
+  "reference_sql": "SELECT SUM(import_kwh) AS value FROM meter_readings WHERE quality_status = 'VALID' AND is_estimated = 'false'",
+  "expected": "8547.2820",
+  "truth": {}
+}

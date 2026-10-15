@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Hub API — Swagger UI</title>
+  <link rel="stylesheet" href="/docs/assets/swagger-ui.css">
+  <style>
+    [hidden]{display:none!important}
+    body{margin:0;background:#f6f8fc;font:16px system-ui,sans-serif;color:#25324a}
+    .access{max-width:1100px;margin:24px auto;padding:24px;background:white;border:1px solid #dce3ee;border-radius:12px}
+    h1{margin-top:0}form{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+    label{display:grid;gap:8px;flex:1;min-width:240px}input,button{font:inherit;padding:12px;border:1px solid #bac7dd;border-radius:6px}
+    button{background:#3159dd;color:white;cursor:pointer}#status{min-height:24px}#swagger-ui{background:white}
+  </style>
+</head>
+<body>
+  <section class="access">
+    <h1>Semantic Hub API</h1>
+    <p>Explore published models, retrieve semantic context, and test bounded sample queries.</p>
+    <form id="access-form">
+      <label for="api-token">Consumer API token<input id="api-token" type="password" required autocomplete="off" spellcheck="false"></label>
+      <button id="load-docs" type="submit">Open API documentation</button>
+    </form>
+    <p>The token stays in this page's memory. Reload the page to clear access. Use the consumer token, not a model-provider key.</p>
+    <p id="status" role="status" aria-live="polite"></p>
+  </section>
+  <div id="swagger-ui"></div>
+  <script src="/docs/assets/swagger-ui-bundle.js"></script>
+  <script>
+    const localNoAuth=__LOCAL_NO_AUTH__;
+    async function loadDocs(event){
+      event?.preventDefault();
+      const button=document.getElementById('load-docs'),status=document.getElementById('status');
+      const input=document.getElementById('api-token'),token=input.value.trim();
+      input.value='';button.disabled=true;status.textContent='Checking access…';
+      document.getElementById('swagger-ui').replaceChildren();
+      try{
+        const response=await fetch('/api/semantic-hub/v1/openapi.json',{headers:localNoAuth?{}:{Authorization:'Bearer '+token},cache:'no-store'});
+        if(!response.ok)throw new Error(response.status===401?'The consumer token was not accepted.':'API documentation is unavailable. Check the API configuration.');
+        const spec=await response.json();
+        const ui=SwaggerUIBundle({spec,dom_id:'#swagger-ui',deepLinking:true,persistAuthorization:false,
+          validatorUrl:null,defaultModelsExpandDepth:-1,docExpansion:'list',
+          onComplete:()=>{if(!localNoAuth)ui.preauthorizeApiKey('ConsumerBearer',token)}});
+        status.textContent='Connected. Expand an endpoint and select Try it out.';
+      }catch(error){status.textContent=error.message;}
+      finally{button.disabled=false;}
+    }
+    document.getElementById('access-form').addEventListener('submit',loadDocs);
+    if(localNoAuth){
+      document.getElementById('access-form').hidden=true;
+      document.querySelector('#access-form + p').textContent='Local demo access. No consumer token is required.';
+      loadDocs();
+    }
+  </script>
+</body>
+</html>

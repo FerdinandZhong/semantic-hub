@@ -1,5 +1,8 @@
 # Reading a discovery run
 
+**Scope:** the discovery/warehouse workflow described here is separate from the four-pack local Studio.
+For current local navigation and approval, use [context-builder.md](context-builder.md).
+
 The **Runs** section of the helios console shows what helios found when it examined your warehouse. Each run is one pass of the discovery jobs over a set of databases. Nothing on these pages changes your data or your glossary; they are read-only views of what the jobs recorded.
 
 There are three pages: the list of runs, a single run, and a single table within a run.

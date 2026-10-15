@@ -86,6 +86,16 @@ def principal(subject="owner"):
     )
 
 
+def _query_bundle():
+    """Retrieve an explicit valid bundle under the current trusted test caller."""
+    caller = mcp_server._caller_context.get()
+    _, model = mcp_server.store.load(caller.model_id)
+    question = " ".join([*model.metrics, *(field.label for dataset in model.datasets.values() for field in dataset.fields.values())])
+    resolved = mcp_server.resolve_context(question, model=caller.model_id)
+    assert resolved.get("status") == "ready", resolved
+    return resolved["bundle_id"]
+
+
 def fresh_mcp_app(monkeypatch):
     application = mcp_server.server.streamable_http_app(
         transport_security=mcp_server._security,
@@ -534,7 +544,8 @@ def test_conversation_repository_persists_owned_model_history(
         "There are 12 customers in the result.",
     )
 
-    assert repository.schema_version() == 7
+    from helios_core.metadata.migrations import MIGRATIONS
+    assert repository.schema_version() == MIGRATIONS[-1][0]
     assert created.version == 1
     assert [message.role for message in created.messages] == [
         "user",
@@ -640,7 +651,7 @@ def test_mcp_tools_lock_model_and_propagate_principal(
         mcp_server.store,
         "load",
         lambda model=None: (
-            {"name": model, "status": "published"},
+            {"name": model, "status": "published", "path": "/test/published.json"},
             canonical_model(),
         ),
     )
@@ -654,6 +665,7 @@ def test_mcp_tools_lock_model_and_propagate_principal(
             ["Customer count"],
             ["crm.customers.region"],
             model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         mcp_server._caller_context.reset(token)
@@ -667,10 +679,11 @@ def test_mcp_tools_lock_model_and_propagate_principal(
         offset=0,
         limit=20,
     )
-    assert total == 3
+    assert total == 4
     assert {item.action for item in events} == {
         "describe_model",
         "compile_query",
+        "resolve_context",
     }
     assert {item.outcome for item in events} == {"success", "denied"}
 
@@ -708,10 +721,12 @@ def test_mcp_tools_load_published_ossie_artifact(
             ["customer_count"],
             ["warehouse.customers.customer_id"],
             model="customer360",
+            bundle_id=_query_bundle(),
         )
         invalid = mcp_server.compile_query(
             ["missing_metric"],
             model="customer360",
+            bundle_id=_query_bundle(),
         )
         invalid_filter = mcp_server.compile_query(
             ["customer_count"],
@@ -721,6 +736,7 @@ def test_mcp_tools_load_published_ossie_artifact(
                 "value": 12,
             }],
             model="customer360",
+            bundle_id=_query_bundle(),
         )
         missing = mcp_server.describe(
             "not-a-semantic-object",
@@ -739,7 +755,7 @@ def test_mcp_tools_load_published_ossie_artifact(
     assert field["column"] == "customer_id"
     assert compiled["dataset"] == "warehouse.customers"
     assert "GROUP BY" in compiled["sql"]
-    assert invalid["error"] == "invalid_semantic_query"
+    assert invalid["error"] == "retrieval_bundle_invalid"
     assert invalid["retryable"] is False
     assert invalid_filter["error"] == "invalid_filter_value_type"
     assert "expects STRING" in invalid_filter["message"]
@@ -754,7 +770,8 @@ def test_mcp_tools_load_published_ossie_artifact(
 
 
 def test_mcp_compiles_repository_tpcds_ossie():
-    _, model = mcp_server.ModelStore().load("tpcds")
+    from pathlib import Path
+    model = SemanticModel(json.loads((Path(__file__).resolve().parents[3] / "models/published/tpcds.ossie.json").read_text()))
 
     searched = mcp_server.search(model, "store sales revenue", 5)
     compiled, assets = mcp_server._compile_semantic(
@@ -792,12 +809,9 @@ def test_mcp_model_store_converts_proposal_fallback(
         lambda: [{"id": "run-1", "stages": {"propose": True}}],
     )
 
-    source, model = mcp_server.ModelStore().load("customer360")
-
+    with pytest.raises(ValueError, match="no published model"):
+        mcp_server.ModelStore().load("customer360")
     assert artifacts.published_model_ids() == []
-    assert source["status"] == "proposed (unreviewed)"
-    assert model.datasets["customers"].source == "crm.customers"
-    assert model.metric("Customer count").dataset == "customers"
 
 
 def test_mcp_run_query_uses_delegated_identity(
@@ -811,7 +825,7 @@ def test_mcp_run_query_uses_delegated_identity(
         mcp_server.store,
         "load",
         lambda model=None: (
-            {"name": model, "status": "published"},
+            {"name": model, "status": "published", "path": "/test/published.json"},
             canonical_model(),
         ),
     )
@@ -848,23 +862,23 @@ def test_mcp_run_query_uses_delegated_identity(
             ["total_store_sales"],
             ["item.item_category"],
             model="customer360",
+            bundle_id=_query_bundle(),
         )
         invalid_field = mcp_server.run_query(
             ["Customer count"],
             ["item.item_category"],
             model="customer360",
+            bundle_id=_query_bundle(),
         )
         result = mcp_server.run_query(
-            ["Customer count"], limit=5000, model="customer360"
+            ["Customer count"], limit=5000, model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         mcp_server._caller_context.reset(context_token)
 
-    assert invalid["error"] == "invalid_semantic_query"
-    assert "unknown metric" in invalid["message"]
-    assert "search_semantics" in invalid["message"]
-    assert invalid_field["error"] == "invalid_semantic_query"
-    assert "unknown field item.item_category" in invalid_field["message"]
+    assert invalid["error"] == "retrieval_bundle_invalid"
+    assert invalid_field["error"] == "retrieval_bundle_invalid"
     assert result["rows"] == [[12]]
     assert captured["delegated_user"] == "owner"
     assert captured["limit"] == 1000
@@ -885,7 +899,8 @@ def test_mcp_run_query_uses_delegated_identity(
     )
     try:
         mismatch = mcp_server.run_query(
-            ["Customer count"], model="customer360"
+            ["Customer count"], model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         mcp_server._caller_context.reset(context_token)
@@ -901,7 +916,8 @@ def test_mcp_run_query_uses_delegated_identity(
     )
     try:
         denied = mcp_server.run_query(
-            ["Customer count"], model="customer360"
+            ["Customer count"], model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         mcp_server._caller_context.reset(context_token)
@@ -919,7 +935,8 @@ def test_mcp_run_query_uses_delegated_identity(
     )
     try:
         rejected = mcp_server.run_query(
-            ["Customer count"], model="customer360"
+            ["Customer count"], model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         mcp_server._caller_context.reset(context_token)
@@ -936,7 +953,8 @@ def test_mcp_run_query_uses_delegated_identity(
     )
     try:
         rejected = mcp_server.run_query(
-            ["Customer count"], model="customer360"
+            ["Customer count"], model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         mcp_server._caller_context.reset(context_token)
@@ -967,7 +985,8 @@ def test_mcp_run_query_uses_delegated_identity(
     )
     try:
         unavailable = mcp_server.run_query(
-            ["Customer count"], model="customer360"
+            ["Customer count"], model="customer360",
+            bundle_id=_query_bundle(),
         )
     finally:
         audit.reset_context(audit_token)
@@ -1122,7 +1141,7 @@ class FakeLLM:
                 (
                     ToolCall(
                         "call-1",
-                        "search_semantics",
+                        "resolve_context",
                         {"question": "customers by region", "model": "finance"},
                     ),
                 ),
@@ -1138,6 +1157,7 @@ class FakeLLM:
                         {
                             "metrics": ["Customer count"],
                             "dimensions": ["crm.customers.region"],
+                            "bundle_id": json.loads(_messages[-1]["content"])["bundle_id"],
                         },
                     ),
                 ),
@@ -1154,8 +1174,8 @@ class FakeSession:
         del meta
         self.calls.append((name, arguments))
         result = (
-            {"matches": [{"kind": "metric", "name": "Customer count"}]}
-            if name == "search_semantics"
+            {"status": "ready", "bundle_id": "test-bundle", "matches": [{"kind": "metric", "name": "Customer count"}]}
+            if name == "resolve_context"
             else {
                 "sql": "SELECT COUNT(customer_id) FROM crm.customers",
                 "columns": ["customer_count"],
@@ -1185,8 +1205,8 @@ class RepeatingFailureLLM:
             (
                 ToolCall(
                     f"call-{self.turns}",
-                    "describe",
-                    {"name": "missing"},
+                    "resolve_context",
+                    {"question": "missing"},
                 ),
             ),
             "tool_use",
@@ -1221,7 +1241,7 @@ async def test_conversation_loop_uses_discovered_mcp_tools_and_locks_model():
     session = FakeSession()
     tools = [
         {
-            "name": "search_semantics",
+            "name": "resolve_context",
             "description": "Search",
             "inputSchema": {
                 "properties": {"question": {}, "model": {}}
@@ -1321,7 +1341,7 @@ async def test_trace_records_tool_round_limit_termination(persistent_auth_stack)
         await service._tool_loop(
             FakeSession(),
             [{
-                "name": "search_semantics",
+                "name": "resolve_context",
                 "description": "Search",
                 "inputSchema": {
                     "properties": {"question": {}, "model": {}},
@@ -1352,10 +1372,10 @@ async def test_conversation_stops_repeated_non_retryable_tool_failure():
     )
     tools = [
         {
-            "name": "describe",
+            "name": "resolve_context",
             "description": "Describe",
             "inputSchema": {
-                "properties": {"name": {}, "model": {}}
+                "properties": {"question": {}, "model": {}}
             },
         }
     ]
@@ -1447,7 +1467,7 @@ async def test_conversation_does_not_mask_semantic_error_as_impala_failure():
     assert result["failure"]["code"] == "invalid_semantic_query"
     assert result["answer"].startswith("Semantic model issue:")
     assert "temporary issue with the Impala" not in result["answer"]
-    assert "call search_semantics" in llm.system
+    assert "call resolve_context" in llm.system
     tool_result = json.loads(llm.messages[-1]["content"])
     assert "recovery" in tool_result
     assert "database.table.column" in tool_result["recovery"]
@@ -1477,8 +1497,8 @@ async def test_conversation_loop_bounds_persisted_history():
     )
 
     assert result["answer"] == "History-aware answer"
-    assert len(llm.messages) == 21
-    assert llm.messages[0]["content"] == "message-10"
+    assert len(llm.messages) == 31
+    assert llm.messages[0]["content"] == "message-0"
     assert llm.messages[-1]["content"] == "current question"
 
 
@@ -1494,7 +1514,7 @@ async def test_conversation_turn_uses_real_mcp_transport(
         mcp_server.store,
         "load",
         lambda model=None: (
-            {"name": model, "status": "published"},
+            {"name": model, "status": "published", "path": "/test/published.json"},
             canonical_model(),
         ),
     )
@@ -1779,6 +1799,7 @@ def test_conversation_endpoint_reports_missing_server_configuration(
         "INFERENCE_BASE_URL",
     ):
         monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr(conversation_module, "llm_from_env", lambda: FakeLLM())
     previous = dict(app.state._state)
     app.state._state.pop("resource_store", None)
     app.state._state.pop("authorization_policy", None)

@@ -110,7 +110,7 @@ suppressed-event count, preventing a failing probe from flooding logs.
 
 Events are retained for 30 days by default. Set
 `HELIOS_AUDIT_RETENTION_DAYS` to an integer from 1 through 3650. Expired records
-are purged when API, MCP, and job processes initialize. The Activity Logs UI and
+are purged by the API at startup; MCP and Jobs do not own retention cleanup. The Activity Logs UI and
 `/api/v1/audit/*` APIs show users only their own events. A Principal with
 `organization.manage` can explicitly select organization-wide activity, but
 cannot inspect another organization.

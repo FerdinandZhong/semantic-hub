@@ -1,0 +1,249 @@
+[
+  {
+    "step": 1,
+    "screenshot": "01-query-awaiting-review.png",
+    "title": "Start with the business question",
+    "location": "Data query",
+    "actions": [
+      "Open http://localhost:8084/demo to follow along in your own workspace.",
+      "Ask: What is the measured electricity consumption?",
+      "Check the context status before running a query."
+    ],
+    "expected": "The starter snapshot awaits review. Run example stays disabled until a reviewed context becomes active.",
+    "explanation": "You are defining a reusable metric for an energy analyst. Include valid, non-estimated readings only; report kWh."
+  },
+  {
+    "step": 2,
+    "screenshot": "02-inspect-source.png",
+    "title": "Inspect the actual source fields",
+    "location": "Semantic Studio \u2192 Source data",
+    "actions": [
+      "Open Semantic Studio, then select Source data.",
+      "Select meter_readings and inspect its columns and sample rows.",
+      "Find import_kwh, quality_status, is_estimated, and meter_id. Inspect meters to understand the source relationship."
+    ],
+    "expected": "Typed fields and up to ten sample rows appear. The source relationship links readings to meters.",
+    "explanation": "The selected power pack has four tables. This walkthrough uses synthetic source data and the available reporting period."
+  },
+  {
+    "step": 3,
+    "screenshot": "03-attach-business-note.png",
+    "title": "Give the builder business evidence",
+    "location": "Context artifacts \u2192 Attach documentation to draft",
+    "actions": [
+      "Expand Attach documentation to draft and choose power-business-notes.md from this guide's folder.",
+      "Enter table meters, column meter_id, and entity value SYN-M000.",
+      "Select Attach to draft. Save any unsaved edits first."
+    ],
+    "expected": "The saved revision increases. The document receives a content hash and a verified source-entity link.",
+    "explanation": "The note explains valid, non-estimated kWh. The link identifies an example meter; it does not filter the metric to that meter."
+  },
+  {
+    "step": 4,
+    "screenshot": "04-review-llm-candidate.png",
+    "title": "Generate a candidate, then inspect it",
+    "location": "Semantic Studio \u2192 Source data",
+    "actions": [
+      "Select Generate with LLM and wait for the candidate.",
+      "Expand Provenance, Source evidence, Assumptions, and Warnings.",
+      "Check the measured_import_kwh formula and its evidence before selecting Apply to draft."
+    ],
+    "expected": "Provenance records OpenAI and gpt-4o. Generation alone leaves the draft unchanged; Apply to draft creates the next revision.",
+    "explanation": "GPT output can vary. Create evidence draft is the deterministic alternative. Extra suggested metrics require their own business review."
+  },
+  {
+    "step": 5,
+    "screenshot": "05-edit-on-canvas.png",
+    "title": "Inspect the semantic model visually",
+    "location": "Semantic Studio \u2192 Studio",
+    "actions": [
+      "Inspect the table chain: substations, feeders, meters, and meter_readings.",
+      "Select measured_import_kwh in the object tree or canvas.",
+      "Keep this walkthrough focused on that metric. Remove any unrelated generated suggestions from this draft."
+    ],
+    "expected": "The inspector shows the selected metric. The canvas distinguishes source relationships from SQL-derived dependencies.",
+    "explanation": "Moving nodes changes the saved layout, not the semantic definition. Connections and metric edits change the draft."
+  },
+  {
+    "step": 6,
+    "screenshot": "06-enrich-metric.png",
+    "title": "Record business meaning and ownership",
+    "location": "Metric inspector \u2192 Business meaning and evidence",
+    "actions": [
+      "Expand Business meaning and evidence. Set Owner to Energy Analytics.",
+      "Add Measured electricity consumption and Verified imported energy as separate synonym lines.",
+      "Record valid readings as the inclusion rule and estimated readings as the exclusion rule. Save draft."
+    ],
+    "expected": "Business metadata becomes part of the saved context. The metric retains kWh units and its conditional SUM expression.",
+    "explanation": "Descriptions explain rules. SQL must enforce them. This example uses CASE conditions; it needs no additional structured filters."
+  },
+  {
+    "step": 7,
+    "screenshot": "07-validation-needs-reference.png",
+    "title": "Understand the validation gate",
+    "location": "Validation & review",
+    "actions": [
+      "Select Validation & review, then Validate SQL.",
+      "Inspect the message when independent reference SQL is missing.",
+      "Return to Studio to supply the missing evidence."
+    ],
+    "expected": "Validation requests reviewer-authored reference SQL. Complete-version approval remains blocked.",
+    "explanation": "This screenshot intentionally demonstrates the gate. Once you understand it, add the reference before your first validation."
+  },
+  {
+    "step": 8,
+    "screenshot": "08-independent-reference.png",
+    "title": "Write an independent calculation",
+    "location": "Studio \u2192 Metric inspector",
+    "actions": [
+      "Find Independent reference SQL for measured_import_kwh.",
+      "Paste the reference query below, after checking its conditions against the business definition.",
+      "Select Save draft."
+    ],
+    "expected": "The reference uses WHERE conditions. The semantic expression uses CASE conditions; both represent the same chosen business rules.",
+    "explanation": "Keep the output alias measured_import_kwh. The reference must come from your business understanding, not an LLM-generated expected answer."
+  },
+  {
+    "step": 9,
+    "screenshot": "09-validation-passed.png",
+    "title": "Compare SQL results and relationship checks",
+    "location": "Validation & review",
+    "actions": [
+      "Select Validate SQL again.",
+      "Compare compiled SQL, reference SQL, and both result sets.",
+      "Check the relationship results for duplicate keys, null target keys, and unmatched rows."
+    ],
+    "expected": "All checks pass for saved revision 4 in this capture. Both calculations return 8,547.282 kWh.",
+    "explanation": "Revision numbers can differ in your session. Agreement proves this sample reconciliation; the reviewer still confirms business meaning."
+  },
+  {
+    "step": 10,
+    "screenshot": "10-inspect-changes.png",
+    "title": "Review exactly what changed",
+    "location": "Validation & review \u2192 Definition review",
+    "actions": [
+      "Keep Starter definitions as the comparison baseline.",
+      "Find measured_import_kwh and expand Before / after.",
+      "Inspect highlighted metadata and SQL changes. Clear the filter before reviewing the remaining objects."
+    ],
+    "expected": "The comparison highlights changed fields. This walkthrough has 24 review objects, including document evidence and ontology mappings.",
+    "explanation": "Inspect metrics, relationships, metadata, documents, and mappings. A technical pass does not approve these business decisions."
+  },
+  {
+    "step": 11,
+    "screenshot": "11-batch-review.png",
+    "title": "Approve an inspected group of objects",
+    "location": "Validation & review \u2192 Batch decision",
+    "actions": [
+      "Inspect the remaining objects, then clear Find objects to include them all.",
+      "Select all matching, then Approve selected.",
+      "Check eligible and blocked counts. Enter your reviewer name and note, confirm the checkbox, then confirm the decision."
+    ],
+    "expected": "All selected eligible items receive decisions for the exact saved revision. Blocked items stay unresolved.",
+    "explanation": "Use Request changes when an item is unclear. These screenshots use an automation reviewer only in the separate synthetic walkthrough workspace."
+  },
+  {
+    "step": 12,
+    "screenshot": "12-approve-version.png",
+    "title": "Create an immutable reviewed version",
+    "location": "Semantic Hub",
+    "actions": [
+      "Open Semantic Hub after every required item is approved.",
+      "Enter walkthrough-v1 as the version name, or another unused name.",
+      "Enter your reviewer name and review note, confirm the checkbox, then select Approve whole version."
+    ],
+    "expected": "The version freezes its definition, semantic model, validation evidence, review decisions, and context artifacts.",
+    "explanation": "The button stays disabled if validation is missing, outdated, or unsuccessful, or if required item decisions remain unresolved."
+  },
+  {
+    "step": 13,
+    "screenshot": "13-reviewed-unpublished.png",
+    "title": "Inspect the version before publication",
+    "location": "Semantic Hub \u2192 Version history",
+    "actions": [
+      "Find walkthrough-v1 in Version history.",
+      "Select Inspect to examine its immutable context and validation evidence.",
+      "Use Download context JSON if you need the complete reviewed package."
+    ],
+    "expected": "The version is Reviewed \u00b7 unpublished. Use for queries is still disabled.",
+    "explanation": "Approving a version does not publish it. The current query context remains unchanged."
+  },
+  {
+    "step": 14,
+    "screenshot": "14-published-and-active.png",
+    "title": "Publish, then activate deliberately",
+    "location": "Semantic Hub \u2192 Version history",
+    "actions": [
+      "Select Publish for walkthrough-v1 and confirm local publication.",
+      "Check that the version now shows Published.",
+      "Select Use for queries. Check that the button changes to Active for queries."
+    ],
+    "expected": "The active context becomes walkthrough-v1. A newly opened query page receives this version and its context hash.",
+    "explanation": "Publication makes the version available locally. Activation chooses which published version the local query page uses."
+  },
+  {
+    "step": 15,
+    "screenshot": "15-version-artifacts.png",
+    "title": "Inspect the complete version package",
+    "location": "Context artifacts",
+    "actions": [
+      "Choose walkthrough-v1 in Inspect version.",
+      "Select Inspect artifacts and expand semantic layer, metadata, ontology, documents, and quality.",
+      "Check that the uploaded note, its entity link, and metric metadata belong to this version."
+    ],
+    "expected": "The panel returns the frozen artifacts from the reviewed version. Draft inspection instead loads the latest saved draft.",
+    "explanation": "Ontology mappings remain structural proposals with separate review evidence. Documents remain supporting assertions, not automatically authoritative facts."
+  },
+  {
+    "step": 16,
+    "screenshot": "16-compare-version.png",
+    "title": "Compare a release with its baseline",
+    "location": "Semantic Hub \u2192 Version history",
+    "actions": [
+      "Choose walkthrough-v1 under Compare version.",
+      "Choose Starter definitions under Baseline and select Compare versions.",
+      "Expand the metric or another changed object to inspect its before/after fields."
+    ],
+    "expected": "The version comparison identifies changes without modifying either version.",
+    "explanation": "Use the same controls to compare two reviewed versions when a later release exists."
+  },
+  {
+    "step": 17,
+    "screenshot": "17-query-result.png",
+    "title": "Run the approved metric",
+    "location": "Data query",
+    "actions": [
+      "Open Data query after activating the version.",
+      "Confirm the active context is walkthrough-v1.",
+      "Choose What is the measured electricity consumption? and select Run example."
+    ],
+    "expected": "The result is 8,547.282 kWh for this synthetic source snapshot.",
+    "explanation": "The query page currently runs predefined reviewed metrics. GPT-4o generated the authoring proposal; it does not plan this query."
+  },
+  {
+    "step": 18,
+    "screenshot": "18-query-evidence.png",
+    "title": "Trace the answer to its definition",
+    "location": "Data query \u2192 Execution evidence",
+    "actions": [
+      "Expand Execution evidence below the result.",
+      "Inspect the compiled SQL and its VALID/non-estimated conditions.",
+      "Check the context version, source snapshot, SQL hash, and result hash."
+    ],
+    "expected": "The displayed answer is tied to the active semantic context and the selected source snapshot.",
+    "explanation": "The business story is complete: a supported definition became a reviewed version and then a traceable result."
+  },
+  {
+    "step": 19,
+    "screenshot": "19-next-draft-active-version.png",
+    "title": "Start the next revision safely",
+    "location": "Semantic Hub \u2192 Create draft",
+    "actions": [
+      "Return to Semantic Hub and select Create draft on walkthrough-v1.",
+      "Make the next business change in Studio and save it.",
+      "Validate, review, approve a new version, publish, and activate when ready."
+    ],
+    "expected": "Restoring creates a new draft revision and clears its validation. Queries continue using walkthrough-v1 until another published version is activated.",
+    "explanation": "The capture stops immediately after creating the new draft. It does not create or activate a second release."
+  }
+]

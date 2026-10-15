@@ -1,0 +1,409 @@
+{
+  "model": "gpt-4o",
+  "state": "/var/folders/_2/7drxzkkn7q79cclmkxs0kj3m0000gn/T/helios-document-qa-khyvdy2q",
+  "document_id": "material-0334b9730afc42c992445de76f7d59cb",
+  "checks": [
+    {
+      "question": "What was North America’s share of the total prescription pharmaceutical market in 2025?",
+      "kind": "document",
+      "status": "passed",
+      "seconds": 10.4,
+      "answer": {
+        "status": "answered",
+        "message": "",
+        "claims": [
+          {
+            "text": "In 2025, North America's share of the total prescription pharmaceutical market was 54.7%.",
+            "citations": [
+              {
+                "id": "passage-5a3a46525e43d5069cbc02b7",
+                "title": "efpia-industry-figures-2026",
+                "location": "page 14",
+                "citation": "material-0334b9730afc42c992445de76f7d59cb@1#chunk_e2ced750d02c19dc95a99d02",
+                "document_id": "material-0334b9730afc42c992445de76f7d59cb",
+                "document_revision": 1,
+                "original_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+                "attachment_sha256": "71e42f2e5056f80e6b31d9fb78378cbcce50ea815645991c1b16e6b8880ea90e",
+                "attachment_id": "document-fd122f52e276895eb54e720e2722adbc",
+                "preview_url": "/demo/api/materials/material-0334b9730afc42c992445de76f7d59cb/preview?revision=1&page=14",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:industry_observations.indicator",
+                    "reviewer": "Isolated automated test",
+                    "note": "Page 14 describes North America total prescription market. It is distinct from new-medicine cohort sales."
+                  }
+                ],
+                "quote": "EFPIA Key Data | 2026 14 PHARMACEUTICAL SALES PRICE STRUCTURE The world pharmaceutical (prescription) market was worth an estimated € 1,475,815 million ($ 1,667,671 million) at ex-manufacturer prices in 2025. The North American market (USA & Canada) remained the world’s largest market with a 54.7% share, well ahead of Europe, China and Japan. Distribution margins, which are generally fixed by governments, and VAT rates differ significantly from country to country in Europe."
+              }
+            ]
+          }
+        ],
+        "kind": "document",
+        "plan_id": "uP1wdpL2r7s0doFf1P1f82YWGoxa45CO",
+        "question": "What was North America’s share of the total prescription pharmaceutical market in 2025?",
+        "context_version": "v1",
+        "context_sha256": "99fa547201778b431bf8a59cb1bb49a32f60d7287ccb249ca021c2585df900ac",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "artifact_sha256": "6bc962c18ca0282e3d1cd5d83b0ba53d1264481fc7e1188d858a513cf1d93b45",
+        "result_sha256": "31fbeac1b20b317ee25a16d1c9fb9fc50263322f8fd56a23d71845aeff62c000",
+        "retrieval": {
+          "method": "keyword",
+          "candidate_count": 1,
+          "selected_count": 1,
+          "search_query": "North America share total prescription pharmaceutical market 2025",
+          "scope": "selected published release only"
+        },
+        "planner": {
+          "method": "document_evidence",
+          "provider": "openai",
+          "model": "gpt-4o"
+        },
+        "notice": "Source-reported evidence, not a SQL calculation. Link approval is not certification of every document assertion."
+      }
+    },
+    {
+      "question": "北美在2025年整个处方药市场中占多少？",
+      "kind": "document",
+      "status": "passed",
+      "seconds": 3.39,
+      "answer": {
+        "status": "answered",
+        "message": "",
+        "claims": [
+          {
+            "text": "In 2025, North America accounted for 54.7% of the global prescription drug market.",
+            "citations": [
+              {
+                "id": "passage-5a3a46525e43d5069cbc02b7",
+                "title": "efpia-industry-figures-2026",
+                "location": "page 14",
+                "citation": "material-0334b9730afc42c992445de76f7d59cb@1#chunk_e2ced750d02c19dc95a99d02",
+                "document_id": "material-0334b9730afc42c992445de76f7d59cb",
+                "document_revision": 1,
+                "original_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+                "attachment_sha256": "71e42f2e5056f80e6b31d9fb78378cbcce50ea815645991c1b16e6b8880ea90e",
+                "attachment_id": "document-fd122f52e276895eb54e720e2722adbc",
+                "preview_url": "/demo/api/materials/material-0334b9730afc42c992445de76f7d59cb/preview?revision=1&page=14",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:industry_observations.indicator",
+                    "reviewer": "Isolated automated test",
+                    "note": "Page 14 describes North America total prescription market. It is distinct from new-medicine cohort sales."
+                  }
+                ],
+                "quote": "EFPIA Key Data | 2026 14 PHARMACEUTICAL SALES PRICE STRUCTURE The world pharmaceutical (prescription) market was worth an estimated € 1,475,815 million ($ 1,667,671 million) at ex-manufacturer prices in 2025. The North American market (USA & Canada) remained the world’s largest market with a 54.7% share, well ahead of Europe, China and Japan. Distribution margins, which are generally fixed by governments, and VAT rates differ significantly from country to country in Europe."
+              }
+            ]
+          }
+        ],
+        "kind": "document",
+        "plan_id": "ScELPCNZadS_AkAgoQf8JxVGwsQFZHNv",
+        "question": "北美在2025年整个处方药市场中占多少？",
+        "context_version": "v1",
+        "context_sha256": "99fa547201778b431bf8a59cb1bb49a32f60d7287ccb249ca021c2585df900ac",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "artifact_sha256": "6bc962c18ca0282e3d1cd5d83b0ba53d1264481fc7e1188d858a513cf1d93b45",
+        "result_sha256": "203fb136e884a03256c9a17f1875c78728258a2bf22a1f42fde1a9ad81618c45",
+        "retrieval": {
+          "method": "keyword",
+          "candidate_count": 1,
+          "selected_count": 1,
+          "search_query": "North America 2025 prescription market share",
+          "scope": "selected published release only"
+        },
+        "planner": {
+          "method": "document_evidence",
+          "provider": "openai",
+          "model": "gpt-4o"
+        },
+        "notice": "Source-reported evidence, not a SQL calculation. Link approval is not certification of every document assertion."
+      }
+    },
+    {
+      "question": "What is the US share of sales for new medicines launched during 2020–2024?",
+      "kind": "metric",
+      "status": "passed",
+      "seconds": 2.68,
+      "answer": {
+        "columns": [
+          "us_new_medicine_sales_share_percent"
+        ],
+        "rows": [
+          [
+            "74.10000000"
+          ]
+        ],
+        "kind": "metric",
+        "plan_id": "NQxUMwgUa9jA7xxMbXYZR3h6hI0fLxiV",
+        "question": "What is the US share of sales for new medicines launched during 2020–2024?",
+        "unit": "%",
+        "context_version": "v1",
+        "context_sha256": "99fa547201778b431bf8a59cb1bb49a32f60d7287ccb249ca021c2585df900ac",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "sql": "SELECT\n  MAX(\n    CASE\n      WHEN industry_observations.geography = 'USA'\n      THEN industry_observations.value\n    END\n  ) AS us_new_medicine_sales_share_percent\nFROM industry_observations AS industry_observations\nLIMIT 101",
+        "sql_sha256": "af4df520a8b9402bf91eaa2f809a73a62765a67e1aa20258ec7740547bffe622",
+        "result_sha256": "cff63c0c0ec72fdc06dc5e80bed0b492fd2866d48253fb0cb8627f78d66302ec",
+        "truncated": false,
+        "display_limit": 100,
+        "planner": {
+          "method": "llm_typed_request",
+          "provider": "openai",
+          "model": "gpt-4o"
+        }
+      }
+    },
+    {
+      "question": "How many FDA CDER novel drugs were approved in 2025?",
+      "kind": "metric",
+      "status": "passed",
+      "seconds": 2.83,
+      "answer": {
+        "columns": [
+          "novel_approval_count"
+        ],
+        "rows": [
+          [
+            46
+          ]
+        ],
+        "kind": "metric",
+        "plan_id": "Q-mmjZHxn_XPWZJDyfrCEE5oFcgNYkUi",
+        "question": "How many FDA CDER novel drugs were approved in 2025?",
+        "unit": "approvals",
+        "context_version": "v1",
+        "context_sha256": "99fa547201778b431bf8a59cb1bb49a32f60d7287ccb249ca021c2585df900ac",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "sql": "SELECT\n  COUNT(approval_events.approval_id) AS novel_approval_count\nFROM approval_events AS approval_events\nLIMIT 101",
+        "sql_sha256": "eee10be0e9d476fc9aeed3a918d42398aeced453eab3ba9c920e06a12bf6a1d4",
+        "result_sha256": "93a7c213bcdd4babb065041e0a1a551b2c1e13a73797fcb074f613cc63c14290",
+        "truncated": false,
+        "display_limit": 100,
+        "planner": {
+          "method": "llm_typed_request",
+          "provider": "openai",
+          "model": "gpt-4o"
+        }
+      }
+    },
+    {
+      "question": "What is the US share of sales for new medicines launched during 2020–2024, and how does it differ from North America’s share of the total prescription market in 2025?",
+      "kind": "hybrid",
+      "status": "passed",
+      "seconds": 5.59,
+      "answer": {
+        "columns": [
+          "geography",
+          "market_scope",
+          "us_new_medicine_sales_share_percent"
+        ],
+        "rows": [
+          [
+            "USA",
+            "Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market",
+            "74.10000000"
+          ]
+        ],
+        "kind": "hybrid",
+        "plan_id": "xLLrBEphCqAvWcNjXCJJrKvRklh0DkP4",
+        "question": "What is the US share of sales for new medicines launched during 2020–2024, and how does it differ from North America’s share of the total prescription market in 2025?",
+        "unit": "%",
+        "context_version": "v1",
+        "context_sha256": "99fa547201778b431bf8a59cb1bb49a32f60d7287ccb249ca021c2585df900ac",
+        "snapshot_sha256": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+        "sql": "SELECT\n  industry_observations.geography AS geography,\n  industry_observations.market_scope AS market_scope,\n  MAX(\n    CASE\n      WHEN industry_observations.geography = 'USA'\n      THEN industry_observations.value\n    END\n  ) AS us_new_medicine_sales_share_percent\nFROM industry_observations AS industry_observations\nWHERE\n  industry_observations.geography = 'USA'\nGROUP BY\n  industry_observations.geography,\n  industry_observations.market_scope\nLIMIT 101",
+        "sql_sha256": "d29338887caf482a11451a7c70e393480c388dbb889d1d5b7126c5d9f59dfb37",
+        "result_sha256": "726d7afd4da5f661ff454d32e1edf5ce18c7f70a29d977a32682a7fc85d167b9",
+        "truncated": false,
+        "display_limit": 100,
+        "planner": {
+          "method": "sql_and_document_answer",
+          "provider": "openai",
+          "model": "gpt-4o"
+        },
+        "status": "answered",
+        "message": "",
+        "claims": [
+          {
+            "text": "The US share of sales for new medicines launched during 2020–2024 is 74.1%.",
+            "citations": [
+              {
+                "id": "sql-result",
+                "title": "Executed SQL: us_new_medicine_sales_share_percent",
+                "location": "Query result",
+                "citation": "d29338887caf482a11451a7c70e393480c388dbb889d1d5b7126c5d9f59dfb37",
+                "document_revision": null,
+                "original_sha256": "a2288a7b83efa769bc5f616995879f7150929a6738da7acdd100a18e2336ee25",
+                "attachment_sha256": "99fa547201778b431bf8a59cb1bb49a32f60d7287ccb249ca021c2585df900ac",
+                "preview_url": null,
+                "links": [],
+                "extraction": "source_text",
+                "source_kind": "sql",
+                "sql": "SELECT\n  industry_observations.geography AS geography,\n  industry_observations.market_scope AS market_scope,\n  MAX(\n    CASE\n      WHEN industry_observations.geography = 'USA'\n      THEN industry_observations.value\n    END\n  ) AS us_new_medicine_sales_share_percent\nFROM industry_observations AS industry_observations\nWHERE\n  industry_observations.geography = 'USA'\nGROUP BY\n  industry_observations.geography,\n  industry_observations.market_scope\nLIMIT 101",
+                "quote": "{\"metric\": {\"id\": \"metric-b153ea49cf08e188db66\", \"name\": \"us_new_medicine_sales_share_percent\", \"description\": \"USA share in the EFPIA page 4 chart for sales of new medicines launched during 2020-2024. Latest sales are in 2025 at ex-factory prices. Not total market share.\", \"expression\": \"MAX(CASE WHEN industry_observations.geography = 'USA' THEN industry_observations.value END)\", \"unit\": \"%\", \"grain\": \"One USA chart observation for new-medicine sales, using the chart period\", \"time_rule\": \"Medicine launch period 2020-2024; latest sales in 2025; report edition 2026\", \"dimensions\": [], \"reference_sql\": \"SELECT value AS us_new_medicine_sales_share_percent FROM industry_observations WHERE geography = 'USA'\", \"synonyms\": [], \"example_questions\": [\"What USA share does the 2020-2024 new-medicine sales chart report?\"], \"owner\": \"Local semantic reviewer\", \"inclusion_rules\": [\"One USA chart observation for new-medicine sales, using the chart period\"], \"exclusion_rules\": [\"Do not extend beyond the stated source population, period, or jurisdiction.\"], \"ontology_concepts\": [\"NewMedicineSalesShare\"], \"evidence_refs\": [\"document:industry_chart_scope\"], \"assumptions\": [\"Curated source facts; semantic approval is pending.\"], \"confidence\": null, \"rationale\": \"\", \"filters\": []}, \"columns\": [\"geography\", \"market_scope\", \"us_new_medicine_sales_share_percent\"], \"rows\": [[\"USA\", \"Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market\", \"74.10000000\"]], \"truncated\": false}"
+              }
+            ]
+          },
+          {
+            "text": "North America's share of the total prescription market in 2025 is 54.7%.",
+            "citations": [
+              {
+                "id": "passage-5a3a46525e43d5069cbc02b7",
+                "title": "efpia-industry-figures-2026",
+                "location": "page 14",
+                "citation": "material-0334b9730afc42c992445de76f7d59cb@1#chunk_e2ced750d02c19dc95a99d02",
+                "document_id": "material-0334b9730afc42c992445de76f7d59cb",
+                "document_revision": 1,
+                "original_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+                "attachment_sha256": "71e42f2e5056f80e6b31d9fb78378cbcce50ea815645991c1b16e6b8880ea90e",
+                "attachment_id": "document-fd122f52e276895eb54e720e2722adbc",
+                "preview_url": "/demo/api/materials/material-0334b9730afc42c992445de76f7d59cb/preview?revision=1&page=14",
+                "extraction": "source_text",
+                "links": [
+                  {
+                    "target": "field:industry_observations.indicator",
+                    "reviewer": "Isolated automated test",
+                    "note": "Page 14 describes North America total prescription market. It is distinct from new-medicine cohort sales."
+                  }
+                ],
+                "quote": "EFPIA Key Data | 2026 14 PHARMACEUTICAL SALES PRICE STRUCTURE The world pharmaceutical (prescription) market was worth an estimated € 1,475,815 million ($ 1,667,671 million) at ex-manufacturer prices in 2025. The North American market (USA & Canada) remained the world’s largest market with a 54.7% share, well ahead of Europe, China and Japan. Distribution margins, which are generally fixed by governments, and VAT rates differ significantly from country to country in Europe."
+              }
+            ]
+          }
+        ],
+        "artifact_sha256": "6bc962c18ca0282e3d1cd5d83b0ba53d1264481fc7e1188d858a513cf1d93b45",
+        "notice": "AI answer uses executed SQL and published document passages. Each claim retains its source.",
+        "retrieval": {
+          "release_sha256": "e4d91b5dee1fb07ba38c2d84eab38143f6b7bcfcfb16f9b095856297c3c3ec18",
+          "method": "permission-filtered SQLite FTS5",
+          "matches": [
+            {
+              "kind": "metric",
+              "name": "us_new_medicine_sales_share_percent",
+              "score": 1.0
+            },
+            {
+              "kind": "field",
+              "name": "industry_observations.market_scope",
+              "score": 6
+            }
+          ],
+          "dataset_count": 1,
+          "field_count": 3,
+          "context_chars": 2731,
+          "context_tokens": 2731,
+          "token_count_method": "conservative UTF-8 byte upper bound",
+          "limits": {
+            "datasets": 5,
+            "fields": 100,
+            "context_chars": 24000,
+            "context_tokens": 6000
+          },
+          "policy_revision": "local-sample-v1",
+          "bundle_sha256": "08aca85ae7c3ee175e8836a7651ea63823e6479ae5257b271463986d99b08b79",
+          "cache_hit": false,
+          "expires_in_seconds": 300
+        }
+      }
+    },
+    {
+      "question": "北美在2020到2024年整个处方药市场中占多少",
+      "status": "passed",
+      "expected": "clarification, no substituted 2025 answer",
+      "response": {
+        "status": "needs_clarification",
+        "message": "AI could not establish matching data or document scope. Please clarify the requested period and population. Original question: 北美在2020到2024年整个处方药市场中占多少",
+        "choices": [
+          {
+            "name": "novel_approval_count",
+            "description": "Number of FDA CDER novel-drug original approvals in the captured 2025 list. Count events once."
+          },
+          {
+            "name": "evidence_patient_count",
+            "description": "Patients across the two disjoint Beamion LUNG-1 original-approval cohorts. Excludes other trial populations."
+          },
+          {
+            "name": "no_prior_adc_orr_percent",
+            "description": "Published objective response rate for the 71-person cohort without prior HER2 ADC; 95% CI 63-83."
+          },
+          {
+            "name": "prior_adc_orr_percent",
+            "description": "Published objective response rate for the 34-person prior-HER2-ADC cohort; 95% CI 29-61."
+          },
+          {
+            "name": "no_prior_adc_durable_response_percent",
+            "description": "Published percentage of 53 responders with observed response duration at least six months; denominator is not 71 or 105."
+          },
+          {
+            "name": "us_new_medicine_sales_share_percent",
+            "description": "USA share in the EFPIA page 4 chart for sales of new medicines launched during 2020-2024. Latest sales are in 2025 at ex-factory prices. Not total market share."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What was North America’s share of the prescription market during 2020–2024?",
+      "status": "passed",
+      "expected": "clarification, no substituted 2025 answer",
+      "response": {
+        "status": "needs_clarification",
+        "message": "The question requests 2020–2024. The selected evidence does not cover that period (years present: 2024, 2025, 2026). Add evidence or explicitly change the question.",
+        "choices": [
+          {
+            "name": "novel_approval_count",
+            "description": "Number of FDA CDER novel-drug original approvals in the captured 2025 list. Count events once."
+          },
+          {
+            "name": "evidence_patient_count",
+            "description": "Patients across the two disjoint Beamion LUNG-1 original-approval cohorts. Excludes other trial populations."
+          },
+          {
+            "name": "no_prior_adc_orr_percent",
+            "description": "Published objective response rate for the 71-person cohort without prior HER2 ADC; 95% CI 63-83."
+          },
+          {
+            "name": "prior_adc_orr_percent",
+            "description": "Published objective response rate for the 34-person prior-HER2-ADC cohort; 95% CI 29-61."
+          },
+          {
+            "name": "no_prior_adc_durable_response_percent",
+            "description": "Published percentage of 53 responders with observed response duration at least six months; denominator is not 71 or 105."
+          },
+          {
+            "name": "us_new_medicine_sales_share_percent",
+            "description": "USA share in the EFPIA page 4 chart for sales of new medicines launched during 2020-2024. Latest sales are in 2025 at ex-factory prices. Not total market share."
+          }
+        ]
+      }
+    }
+  ],
+  "date": "2026-10-14",
+  "browser": {
+    "widths": [
+      1440,
+      390
+    ],
+    "checks": [
+      "document citation display",
+      "combined SQL and document answer",
+      "saved metric switch",
+      "no horizontal overflow"
+    ]
+  },
+  "automated_tests": {
+    "passed": 29,
+    "command": "python -m pytest apps/helios/tests/test_document_answers.py apps/helios/tests/test_demo_playground.py -q"
+  },
+  "live_browser": {
+    "version": "v1.0",
+    "source": "pharma_intelligence",
+    "period_question": "clarification without 54.7 answer",
+    "combined_question": "74.1 SQL + 54.7 cited page 14",
+    "authoring_state": "unchanged",
+    "screenshots": [
+      "/tmp/helios-ai-tools-live/period-clarification.png",
+      "/tmp/helios-ai-tools-live/combined-answer.png"
+    ]
+  }
+}

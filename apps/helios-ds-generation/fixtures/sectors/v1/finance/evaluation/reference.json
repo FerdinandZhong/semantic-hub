@@ -1,0 +1,89 @@
+{
+  "metric": "total_amount_sgd",
+  "question": "What is total amount sgd?",
+  "reference_sql": "SELECT SUM(amount_sgd) AS value FROM payments",
+  "expected": "686572.96",
+  "truth": {
+    "scenario_labels": [
+      {
+        "transaction_id": "SYN-T00005000",
+        "scenario": "cycle"
+      },
+      {
+        "transaction_id": "SYN-T00005001",
+        "scenario": "cycle"
+      },
+      {
+        "transaction_id": "SYN-T00005002",
+        "scenario": "cycle"
+      },
+      {
+        "transaction_id": "SYN-T00005003",
+        "scenario": "fan_out"
+      },
+      {
+        "transaction_id": "SYN-T00005004",
+        "scenario": "fan_out"
+      },
+      {
+        "transaction_id": "SYN-T00005005",
+        "scenario": "fan_out"
+      },
+      {
+        "transaction_id": "SYN-T00005006",
+        "scenario": "fan_out"
+      },
+      {
+        "transaction_id": "SYN-T00005007",
+        "scenario": "fan_in"
+      },
+      {
+        "transaction_id": "SYN-T00005008",
+        "scenario": "fan_in"
+      },
+      {
+        "transaction_id": "SYN-T00005009",
+        "scenario": "fan_in"
+      },
+      {
+        "transaction_id": "SYN-T00005010",
+        "scenario": "fan_in"
+      }
+    ],
+    "invalid_transactions": [
+      {
+        "transaction_id": "SYN-T00000000",
+        "sender_account_id": "SYN-A00112",
+        "receiver_account_id": "SYN-A00171",
+        "timestamp": "2026-09-04T06:14:12+00:00",
+        "currency": "USD",
+        "amount": "382.23",
+        "amount_sgd": "496.90",
+        "status": "SETTLED",
+        "channel": "BATCH"
+      },
+      {
+        "transaction_id": "SYN-T00000000",
+        "sender_account_id": "SYN-A00112",
+        "receiver_account_id": "SYN-A00171",
+        "timestamp": "2026-09-04T06:14:12+00:00",
+        "currency": "USD",
+        "amount": "382.23",
+        "amount_sgd": "496.90",
+        "status": "SETTLED",
+        "channel": "BATCH"
+      },
+      {
+        "transaction_id": "SYN-BAD-ORPHAN",
+        "sender_account_id": "SYN-MISSING",
+        "receiver_account_id": "SYN-A00171",
+        "timestamp": "2026-09-04T06:14:12+00:00",
+        "currency": "",
+        "amount": "-1.00",
+        "amount_sgd": "496.90",
+        "status": "SETTLED",
+        "channel": "BATCH"
+      }
+    ]
+  }
+}

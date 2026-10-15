@@ -1,0 +1,23 @@
+{
+  "materials": [
+    {
+      "document_id": "material-4cf2ce63588d47979cacb8b49b74d158",
+      "filename": "synthetic-finance-supporting-evidence.pdf",
+      "revision": 1,
+      "status": "extracted",
+      "sha256": "88a6f9acb4fdc6edc7470baaee62f6979830b0990e04398adcc9c9239552f5de"
+    },
+    {
+      "document_id": "material-e258a9292f0c47eba7418a1b650cac8b",
+      "filename": "finance-settled-outflow-chart.png",
+      "revision": 1,
+      "status": "visual_pending",
+      "sha256": "5c7e6dd91eb2e2088f4e91b06f4c475ee02c26bbe79d95eee5bfe7a0cb0b7c48"
+    }
+  ],
+  "finance_workspace_unchanged": true,
+  "approved_or_published": false,
+  "status": "removed_from_live_library",
+  "replacement": "../finance-real/hsbc-smartform-completion-guide.pdf",
+  "removal_record": "../finance-real/local-staging.json"
+}

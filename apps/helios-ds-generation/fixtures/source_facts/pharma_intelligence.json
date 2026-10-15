@@ -1,0 +1,1115 @@
+{
+  "schema": "helios.pharma-intelligence-facts.v1",
+  "curation_date": "2026-10-13",
+  "synthetic": false,
+  "curation_method": "Deterministic FDA HTML table extraction plus explicit curation of trial facts and visually checked EFPIA page 4 chart. No AI/OCR extraction is claimed.",
+  "tables": {
+    "source_documents": [
+      {
+        "source_id": "FDA_APPROVALS_2025",
+        "title": "Novel Drug Approvals for 2025",
+        "publisher": "FDA CDER",
+        "publication_period": "2025",
+        "source_url": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025",
+        "sha256": "cf8d6fd54a9eb78439b9d579b7ccb04b96449f381dee03124b98538ab693dace",
+        "retrieved_date": "2026-10-13"
+      },
+      {
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "title": "Drug Trials Snapshots: HERNEXEOS",
+        "publisher": "FDA",
+        "publication_period": "Original approval: 2025-08-08",
+        "source_url": "https://www.fda.gov/drugs/drug-trials-snapshots/drug-trials-snapshots-hernexeos",
+        "sha256": "ba9461f2c5e800a3672dcf925cf5341bb8b869115b3b4897e8a463c3aa174457",
+        "retrieved_date": "2026-10-13"
+      },
+      {
+        "source_id": "EFPIA_FIGURES_2026",
+        "title": "The Pharmaceutical Industry in Figures 2026",
+        "publisher": "EFPIA",
+        "publication_period": "2026 report; selected chart covers 2020-2024",
+        "source_url": "https://www.efpia.eu/media/owqczcqz/the-pharmaceutical-industry-in-figures-2026.pdf",
+        "sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+        "retrieved_date": "2026-10-13"
+      },
+      {
+        "source_id": "FDA_HERNEXEOS_FIGURE_1",
+        "title": "HERNEXEOS efficacy population by sex, Figure 1",
+        "publisher": "FDA",
+        "publication_period": "Original approval: 2025-08-08",
+        "source_url": "https://www.fda.gov/files/Picture1_90.png",
+        "sha256": "34a048841a1cbe333550a1e0ac9fa69bb9ba3245a98b4772a7dbd5bddfd6f282",
+        "retrieved_date": "2026-10-13"
+      }
+    ],
+    "drugs": [
+      {
+        "drug_id": "drug_nereus",
+        "brand_name": "Nereus",
+        "active_ingredient": "tradipitant",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_yartemlea",
+        "brand_name": "Yartemlea",
+        "active_ingredient": "narsoplimab-wuug",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_myqorzo",
+        "brand_name": "Myqorzo",
+        "active_ingredient": "aficamten",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_exdensur",
+        "brand_name": "Exdensur",
+        "active_ingredient": "depemokimab-ulaa",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_cardamyst",
+        "brand_name": "Cardamyst",
+        "active_ingredient": "etripamil",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_nuzolvence",
+        "brand_name": "Nuzolvence",
+        "active_ingredient": "zoliflodacin",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_lerochol",
+        "brand_name": "Lerochol",
+        "active_ingredient": "lerodalcibep-liga",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_voyxact",
+        "brand_name": "Voyxact",
+        "active_ingredient": "sibeprenlimab-szsi",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_hyrnuo",
+        "brand_name": "Hyrnuo",
+        "active_ingredient": "sevabertinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_redemplo",
+        "brand_name": "Redemplo",
+        "active_ingredient": "plozasiran",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_komzifti",
+        "brand_name": "Komzifti",
+        "active_ingredient": "ziftomenib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_kygevvi",
+        "brand_name": "Kygevvi",
+        "active_ingredient": "doxecitine and doxribtimine",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_lynkuet",
+        "brand_name": "Lynkuet",
+        "active_ingredient": "elinzanetant",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_jascayd",
+        "brand_name": "Jascayd",
+        "active_ingredient": "nerandomilast",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_rhapsido",
+        "brand_name": "Rhapsido",
+        "active_ingredient": "remibrutinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_palsonify",
+        "brand_name": "Palsonify",
+        "active_ingredient": "paltusotine",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_inluriyo",
+        "brand_name": "Inluriyo",
+        "active_ingredient": "imlunestrant",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_forzinity",
+        "brand_name": "Forzinity",
+        "active_ingredient": "elamipretide",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_keytruda_qlex",
+        "brand_name": "Keytruda Qlex",
+        "active_ingredient": "pembrolizumab and berahyaluronidase alfa-pmph",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_wayrilz",
+        "brand_name": "Wayrilz",
+        "active_ingredient": "rilzabrutinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_dawnzera",
+        "brand_name": "Dawnzera",
+        "active_ingredient": "donidalorsen",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_brinsupri",
+        "brand_name": "Brinsupri",
+        "active_ingredient": "brensocatib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_hernexeos",
+        "brand_name": "Hernexeos",
+        "active_ingredient": "zongertinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_modeyso",
+        "brand_name": "Modeyso",
+        "active_ingredient": "dordaviprone",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_vizz",
+        "brand_name": "Vizz",
+        "active_ingredient": "aceclidine",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_sephience",
+        "brand_name": "Sephience",
+        "active_ingredient": "sepiapterin",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_anzupgo",
+        "brand_name": "Anzupgo",
+        "active_ingredient": "delgocitinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_ekterly",
+        "brand_name": "Ekterly",
+        "active_ingredient": "sebetralstat",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_zegfrovy",
+        "brand_name": "Zegfrovy",
+        "active_ingredient": "sunvozertinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_lynozyfic",
+        "brand_name": "Lynozyfic",
+        "active_ingredient": "linvoseltamab-gcpt",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_andembry",
+        "brand_name": "Andembry",
+        "active_ingredient": "garadacimab-gxii",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_ibtrozi",
+        "brand_name": "Ibtrozi",
+        "active_ingredient": "taletrectinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_enflonsia",
+        "brand_name": "Enflonsia",
+        "active_ingredient": "clesrovimab-cfor",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_tryptyr",
+        "brand_name": "Tryptyr",
+        "active_ingredient": "acoltremon",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_emrelis",
+        "brand_name": "Emrelis",
+        "active_ingredient": "telisotuzumab vedotin-tllv",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_avmapki_fakzynja_co_pack",
+        "brand_name": "Avmapki Fakzynja Co-Pack",
+        "active_ingredient": "avutometinib and defactinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_imaavy",
+        "brand_name": "Imaavy",
+        "active_ingredient": "nipocalimab-aahu",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_penpulimab_kcqx",
+        "brand_name": "penpulimab-kcqx",
+        "active_ingredient": "penpulimab-kcqx",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_vanrafia",
+        "brand_name": "Vanrafia",
+        "active_ingredient": "atrasentan",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_qfitlia",
+        "brand_name": "Qfitlia",
+        "active_ingredient": "fitusiran",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_blujepa",
+        "brand_name": "Blujepa",
+        "active_ingredient": "gepotidacin",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_romvimza",
+        "brand_name": "Romvimza",
+        "active_ingredient": "vimseltinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_gomekli",
+        "brand_name": "Gomekli",
+        "active_ingredient": "mirdametinib",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_journavx",
+        "brand_name": "Journavx",
+        "active_ingredient": "suzetrigine",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_grafapex",
+        "brand_name": "Grafapex",
+        "active_ingredient": "treosulfan",
+        "source_id": "FDA_APPROVALS_2025"
+      },
+      {
+        "drug_id": "drug_datroway",
+        "brand_name": "Datroway",
+        "active_ingredient": "datopotamab deruxtecan-dlnk",
+        "source_id": "FDA_APPROVALS_2025"
+      }
+    ],
+    "approval_events": [
+      {
+        "approval_id": "fda_2025_46",
+        "drug_id": "drug_nereus",
+        "approval_date": "2025-12-30",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat vomiting associated with motion",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 46",
+        "source_quality_note": "Source indication ends at motion; retain original text and consult prescribing information."
+      },
+      {
+        "approval_id": "fda_2025_45",
+        "drug_id": "drug_yartemlea",
+        "approval_date": "2025-12-23",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat hematopoietic stem cell transplant-associated thrombotic microangiopathy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 45",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_44",
+        "drug_id": "drug_myqorzo",
+        "approval_date": "2025-12-19",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat symptomatic obstructive hypertrophic cardiomyopathy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 44",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_43",
+        "drug_id": "drug_exdensur",
+        "approval_date": "2025-12-16",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat severe asthma characterized by an eosinophilic phenotype as an Komziftiadd-on maintenance therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 43",
+        "source_quality_note": "Source indication contains the apparent text artifact Komziftiadd-on; retain original text pending source review."
+      },
+      {
+        "approval_id": "fda_2025_42",
+        "drug_id": "drug_cardamyst",
+        "approval_date": "2025-12-12",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat episodes of paroxysmal supraventricular tachycardia",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 42",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_41",
+        "drug_id": "drug_nuzolvence",
+        "approval_date": "2025-12-12",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat uncomplicated urogenital gonorrhea due to Neisseria gonorrhoeae",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 41",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_40",
+        "drug_id": "drug_lerochol",
+        "approval_date": "2025-12-12",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To reduce low-density lipoprotein cholesterol in adults with hypercholesterolemia, including heterozygous familial hypercholesterolemia, as an adjunct to diet and exercise",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 40",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_39",
+        "drug_id": "drug_voyxact",
+        "approval_date": "2025-11-25",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To reduce proteinuria in primary immunoglobulin A nephropathy in adults at risk for disease progression",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 39",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_38",
+        "drug_id": "drug_hyrnuo",
+        "approval_date": "2025-11-19",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat locally advanced or metastatic non-squamous non-small cell lung cancer with tumors that have activating HER2 tyrosine kinase domain activating mutations in patients who received a systemic therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 38",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_37",
+        "drug_id": "drug_redemplo",
+        "approval_date": "2025-11-18",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To reduce triglycerides in adults with familial chylomicronemia syndrome",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 37",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_36",
+        "drug_id": "drug_komzifti",
+        "approval_date": "2025-11-13",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat adults with relapsed or refractory acute myeloid leukemia with a susceptible nucleophosmin 1 mutation who have no satisfactory alternative treatment options",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 36",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_35",
+        "drug_id": "drug_kygevvi",
+        "approval_date": "2025-11-03",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat thymidine kinase 2 deficiency in patients who start to show symptoms when they are 12 years old or younger",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 35",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_34",
+        "drug_id": "drug_lynkuet",
+        "approval_date": "2025-10-24",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat moderate-to-severe vasomotor symptoms due to menopause",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 34",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_33",
+        "drug_id": "drug_jascayd",
+        "approval_date": "2025-10-07",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat idiopathic pulmonary fibrosis",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 33",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_32",
+        "drug_id": "drug_rhapsido",
+        "approval_date": "2025-09-30",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat chronic spontaneous urticaria in adults who remain symptomatic despite H1 antihistamine treatment",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 32",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_31",
+        "drug_id": "drug_palsonify",
+        "approval_date": "2025-09-25",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat acromegaly in adults who had an inadequate response to surgery and/or for whom surgery is not an option",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 31",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_30",
+        "drug_id": "drug_inluriyo",
+        "approval_date": "2025-09-25",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat estrogen receptor-positive, human epidermal growth factor receptor 2-negative, estrogen receptor-1-mutated advanced or metastatic breast cancer with disease progression following at least one line of endocrine therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 30",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_29",
+        "drug_id": "drug_forzinity",
+        "approval_date": "2025-09-19",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To improve muscle strength in patients with Barth syndrome weighing at least 30 kg",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 29",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_28",
+        "drug_id": "drug_keytruda_qlex",
+        "approval_date": "2025-09-19",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat adult and pediatric (12 years and older) solid tumor indications approved for the intravenous formulation of pembrolizumab",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 28",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_27",
+        "drug_id": "drug_wayrilz",
+        "approval_date": "2025-08-29",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat persistent or chronic immune thrombocytopenia that has not sufficiently responded to immunoglobulins, anti-D therapy, or corticosteroids",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 27",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_26",
+        "drug_id": "drug_dawnzera",
+        "approval_date": "2025-08-21",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To prevent attacks of hereditary angioedema",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 26",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_25",
+        "drug_id": "drug_brinsupri",
+        "approval_date": "2025-08-12",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat non-cystic fibrosis bronchiectasis",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 25",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_24",
+        "drug_id": "drug_hernexeos",
+        "approval_date": "2025-08-08",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat adults with unresectable or metastatic non-squamous non-small cell lung cancer whose tumors have HER2 tyrosine kinase domain activating mutations, as detected by an FDA-approved test, and who have received prior systemic therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 24",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_23",
+        "drug_id": "drug_modeyso",
+        "approval_date": "2025-08-06",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat diffuse midline glioma harboring an H3 K27M mutation with progressive disease following prior therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 23",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_22",
+        "drug_id": "drug_vizz",
+        "approval_date": "2025-07-31",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat presbyopia",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 22",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_21",
+        "drug_id": "drug_sephience",
+        "approval_date": "2025-07-28",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat hyperphenylalaninemia in patients with sepiapterin-responsive phenylketonuria, in conjunction with a phenylalanine-restricted diet",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 21",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_20",
+        "drug_id": "drug_anzupgo",
+        "approval_date": "2025-07-23",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat moderate-to-severe chronic hand eczema when topical corticosteroids are not advisable or produce an inadequate response",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 20",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_19",
+        "drug_id": "drug_ekterly",
+        "approval_date": "2025-07-03",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat acute attacks of hereditary angioedema",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 19",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_18",
+        "drug_id": "drug_zegfrovy",
+        "approval_date": "2025-07-02",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat locally advanced or metastatic non-small cell lung cancer with epidermal growth factor receptor exon 20 insertion mutations, as detected by an FDA-approved test, with disease progression on or after platinum-based chemotherapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 18",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_17",
+        "drug_id": "drug_lynozyfic",
+        "approval_date": "2025-07-02",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat relapsed or refractory multiple myeloma after at least four prior lines of therapy, including a proteasome inhibitor, an immunomodulatory agent, and an anti CD38 monoclonal antibody",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 17",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_16",
+        "drug_id": "drug_andembry",
+        "approval_date": "2025-06-16",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To prevent attacks of hereditary angioedema",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 16",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_15",
+        "drug_id": "drug_ibtrozi",
+        "approval_date": "2025-06-11",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat locally advanced or metastatic ROS1-positive non-small cell lung cancer",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 15",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_14",
+        "drug_id": "drug_enflonsia",
+        "approval_date": "2025-06-09",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To prevent respiratory syncytial virus (RSV) lower respiratory tract disease in neonates and infants who are born during or entering their first RSV season",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 14",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_13",
+        "drug_id": "drug_tryptyr",
+        "approval_date": "2025-05-28",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat the signs and symptoms of dry eye disease",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 13",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_12",
+        "drug_id": "drug_emrelis",
+        "approval_date": "2025-05-14",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat locally advanced or metastatic, non-squamous non-small cell lung cancer (NSCLC) with high c-Met protein overexpression after prior systemic therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 12",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_11",
+        "drug_id": "drug_avmapki_fakzynja_co_pack",
+        "approval_date": "2025-05-08",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat KRAS-mutated recurrent low-grade serous ovarian cancer (LGSOC) after prior systemic therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 11",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_10",
+        "drug_id": "drug_imaavy",
+        "approval_date": "2025-04-29",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat generalized myasthenia gravis",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 10",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_9",
+        "drug_id": "drug_penpulimab_kcqx",
+        "approval_date": "2025-04-23",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "In combination with either cisplatin or carboplatin and gemcitabine, to treat adults with recurrent or metastatic non-keratinizing nasopharyngeal carcinoma (NPC), or as a single agent while on or after platinum-based chemotherapy and at least one other prior line of therapy",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 9",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_8",
+        "drug_id": "drug_vanrafia",
+        "approval_date": "2025-04-02",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To reduce proteinuria in adults with primary immunoglobulin A nephropathy at risk of rapid disease progression",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 8",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_7",
+        "drug_id": "drug_qfitlia",
+        "approval_date": "2025-03-28",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To prevent or reduce the frequency of bleeding episodes in hemophilia A or B",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 7",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_6",
+        "drug_id": "drug_blujepa",
+        "approval_date": "2025-03-25",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat uncomplicated urinary tract infections",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 6",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_5",
+        "drug_id": "drug_romvimza",
+        "approval_date": "2025-02-14",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat symptomatic tenosynovial giant cell tumor for which surgical resection will potentially cause worsening functional limitation or severe morbidity",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 5",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_4",
+        "drug_id": "drug_gomekli",
+        "approval_date": "2025-02-11",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat neurofibromatosis type 1 who have symptomatic plexiform neurofibromas not amenable to complete resection",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 4",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_3",
+        "drug_id": "drug_journavx",
+        "approval_date": "2025-01-30",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat moderate to severe acute pain",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 3",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_2",
+        "drug_id": "drug_grafapex",
+        "approval_date": "2025-01-21",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "For use in combination with fludarabine as a preparative regimen for allogeneic hematopoietic stem cell transplantation for acute myeloid leukemia and myelodysplastic syndrome",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 2",
+        "source_quality_note": ""
+      },
+      {
+        "approval_id": "fda_2025_1",
+        "drug_id": "drug_datroway",
+        "approval_date": "2025-01-17",
+        "regulator": "FDA CDER",
+        "jurisdiction": "United States",
+        "approved_use": "To treat unresectable or metastatic, HR-positive, HER2-negative breast cancer who have received prior endocrine-based therapy and chemotherapy for unresectable or metastatic disease",
+        "source_id": "FDA_APPROVALS_2025",
+        "source_locator": "2025 approvals table, row 1",
+        "source_quality_note": ""
+      }
+    ],
+    "trials": [
+      {
+        "trial_id": "NCT04886804",
+        "drug_id": "drug_hernexeos",
+        "trial_name": "Beamion LUNG-1",
+        "sponsor": "Boehringer Ingelheim Pharmaceuticals, Inc",
+        "design": "Single-arm, open-label, multi-centre, multi-cohort",
+        "population_description": "Original FDA approval efficacy population: previously treated HER2-mutant advanced non-squamous NSCLC",
+        "evidence_patients": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Detailed trial design and Table 1",
+        "source_quality_note": "Summary mentions randomization, while detailed design says single-arm; preserve this discrepancy for reviewer verification. This is an approval evidence subset, not total trial enrollment."
+      }
+    ],
+    "trial_cohorts": [
+      {
+        "cohort_id": "beamion_no_prior_adc",
+        "trial_id": "NCT04886804",
+        "prior_her2_adc": "No",
+        "patient_count": 71,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 2 column header"
+      },
+      {
+        "cohort_id": "beamion_prior_adc",
+        "trial_id": "NCT04886804",
+        "prior_her2_adc": "Yes",
+        "patient_count": 34,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 2 column header"
+      }
+    ],
+    "trial_results": [
+      {
+        "result_id": "beamion_no_prior_adc_orr",
+        "cohort_id": "beamion_no_prior_adc",
+        "endpoint": "ORR",
+        "value": 75,
+        "unit": "percent",
+        "denominator_count": 71,
+        "ci_lower": 63,
+        "ci_upper": 83,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 2; ORR cohort denominator or DOR responder denominator; observed response duration"
+      },
+      {
+        "result_id": "beamion_no_prior_adc_dor_ge_6_months",
+        "cohort_id": "beamion_no_prior_adc",
+        "endpoint": "DOR_GE_6_MONTHS",
+        "value": 58,
+        "unit": "percent",
+        "denominator_count": 53,
+        "ci_lower": null,
+        "ci_upper": null,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 2; ORR cohort denominator or DOR responder denominator; observed response duration"
+      },
+      {
+        "result_id": "beamion_prior_adc_orr",
+        "cohort_id": "beamion_prior_adc",
+        "endpoint": "ORR",
+        "value": 44,
+        "unit": "percent",
+        "denominator_count": 34,
+        "ci_lower": 29,
+        "ci_upper": 61,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 2; ORR cohort denominator or DOR responder denominator; observed response duration"
+      },
+      {
+        "result_id": "beamion_prior_adc_dor_ge_6_months",
+        "cohort_id": "beamion_prior_adc",
+        "endpoint": "DOR_GE_6_MONTHS",
+        "value": 27,
+        "unit": "percent",
+        "denominator_count": 15,
+        "ci_lower": null,
+        "ci_upper": null,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 2; ORR cohort denominator or DOR responder denominator; observed response duration"
+      }
+    ],
+    "trial_demographics": [
+      {
+        "demographic_id": "demographic_1",
+        "trial_id": "NCT04886804",
+        "dimension": "Sex",
+        "subgroup": "Female",
+        "patient_count": 72,
+        "reported_percent": "69",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_2",
+        "trial_id": "NCT04886804",
+        "dimension": "Sex",
+        "subgroup": "Male",
+        "patient_count": 33,
+        "reported_percent": "31",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_3",
+        "trial_id": "NCT04886804",
+        "dimension": "Race",
+        "subgroup": "Asian",
+        "patient_count": 51,
+        "reported_percent": "49",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_4",
+        "trial_id": "NCT04886804",
+        "dimension": "Race",
+        "subgroup": "White",
+        "patient_count": 42,
+        "reported_percent": "40",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_5",
+        "trial_id": "NCT04886804",
+        "dimension": "Race",
+        "subgroup": "Missing",
+        "patient_count": 12,
+        "reported_percent": "11",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_6",
+        "trial_id": "NCT04886804",
+        "dimension": "Ethnicity",
+        "subgroup": "Hispanic or Latino",
+        "patient_count": 2,
+        "reported_percent": "1.9",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_7",
+        "trial_id": "NCT04886804",
+        "dimension": "Ethnicity",
+        "subgroup": "Not Hispanic or Latino",
+        "patient_count": 93,
+        "reported_percent": "89",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_8",
+        "trial_id": "NCT04886804",
+        "dimension": "Ethnicity",
+        "subgroup": "Missing",
+        "patient_count": 10,
+        "reported_percent": "10",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": "Table 1 gives missing ethnicity as 10%; Figure 4 text gives 9%. Table value preserved."
+      },
+      {
+        "demographic_id": "demographic_9",
+        "trial_id": "NCT04886804",
+        "dimension": "Age, years",
+        "subgroup": "18 to <65",
+        "patient_count": 63,
+        "reported_percent": "60",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_10",
+        "trial_id": "NCT04886804",
+        "dimension": "Age, years",
+        "subgroup": "65 to <75",
+        "patient_count": 31,
+        "reported_percent": "30",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      },
+      {
+        "demographic_id": "demographic_11",
+        "trial_id": "NCT04886804",
+        "dimension": "Age, years",
+        "subgroup": "≥75",
+        "patient_count": 11,
+        "reported_percent": "10",
+        "denominator_count": 105,
+        "source_id": "FDA_HERNEXEOS_SNAPSHOT",
+        "source_locator": "Table 1, overall efficacy population",
+        "source_quality_note": ""
+      }
+    ],
+    "industry_observations": [
+      {
+        "observation_id": "new_medicine_sales_1",
+        "indicator": "new_medicine_sales_share",
+        "geography": "USA",
+        "period_start": 2020,
+        "period_end": 2024,
+        "value": "74.1",
+        "unit": "percent",
+        "market_scope": "Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market",
+        "source_id": "EFPIA_FIGURES_2026",
+        "source_locator": "PDF page 4, geographical sales distribution chart",
+        "source_quality_note": "The chart and related new-medicine-sales prose both use 2020-2024. Nearby 2020-2025 market-growth figures describe a different indicator; do not combine them."
+      },
+      {
+        "observation_id": "new_medicine_sales_2",
+        "indicator": "new_medicine_sales_share",
+        "geography": "Europe (Top 5)",
+        "period_start": 2020,
+        "period_end": 2024,
+        "value": "15.6",
+        "unit": "percent",
+        "market_scope": "Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market",
+        "source_id": "EFPIA_FIGURES_2026",
+        "source_locator": "PDF page 4, geographical sales distribution chart",
+        "source_quality_note": "The chart and related new-medicine-sales prose both use 2020-2024. Nearby 2020-2025 market-growth figures describe a different indicator; do not combine them."
+      },
+      {
+        "observation_id": "new_medicine_sales_3",
+        "indicator": "new_medicine_sales_share",
+        "geography": "Japan",
+        "period_start": 2020,
+        "period_end": 2024,
+        "value": "3.6",
+        "unit": "percent",
+        "market_scope": "Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market",
+        "source_id": "EFPIA_FIGURES_2026",
+        "source_locator": "PDF page 4, geographical sales distribution chart",
+        "source_quality_note": "The chart and related new-medicine-sales prose both use 2020-2024. Nearby 2020-2025 market-growth figures describe a different indicator; do not combine them."
+      },
+      {
+        "observation_id": "new_medicine_sales_4",
+        "indicator": "new_medicine_sales_share",
+        "geography": "Pharmerging",
+        "period_start": 2020,
+        "period_end": 2024,
+        "value": 2.9,
+        "unit": "percent",
+        "market_scope": "Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market",
+        "source_id": "EFPIA_FIGURES_2026",
+        "source_locator": "PDF page 4, geographical sales distribution chart",
+        "source_quality_note": "The chart and related new-medicine-sales prose both use 2020-2024. Nearby 2020-2025 market-growth figures describe a different indicator; do not combine them."
+      },
+      {
+        "observation_id": "new_medicine_sales_5",
+        "indicator": "new_medicine_sales_share",
+        "geography": "Rest of the World",
+        "period_start": 2020,
+        "period_end": 2024,
+        "value": 3.8,
+        "unit": "percent",
+        "market_scope": "Sales of new medicines launched during 2020-2024; chart scope, not total pharmaceutical market",
+        "source_id": "EFPIA_FIGURES_2026",
+        "source_locator": "PDF page 4, geographical sales distribution chart",
+        "source_quality_note": "The chart and related new-medicine-sales prose both use 2020-2024. Nearby 2020-2025 market-growth figures describe a different indicator; do not combine them."
+      }
+    ]
+  }
+}

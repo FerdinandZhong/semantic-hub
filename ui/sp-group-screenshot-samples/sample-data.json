@@ -1,0 +1,82 @@
+{
+  "synthetic": true,
+  "observability": {
+    "date": "2026-10-06",
+    "timezone": "Asia/Singapore",
+    "window": [
+      "09:00",
+      "10:00"
+    ],
+    "events": 18000,
+    "errors": [
+      3,
+      4,
+      5,
+      4,
+      6,
+      8,
+      18,
+      26,
+      12,
+      7,
+      5,
+      2
+    ],
+    "error_types": {
+      "Timeout": 58,
+      "Validation": 24,
+      "Authentication": 12,
+      "Other": 6
+    },
+    "cpu": [
+      33,
+      34,
+      36,
+      38,
+      40,
+      46,
+      64,
+      72,
+      49,
+      42,
+      38,
+      36
+    ]
+  },
+  "power": {
+    "dates": [
+      "2026-09-24",
+      "2026-09-25",
+      "2026-09-26",
+      "2026-09-27",
+      "2026-09-28",
+      "2026-09-29",
+      "2026-09-30"
+    ],
+    "import_kwh": [
+      "1112.6020",
+      "1147.0390",
+      "1184.1950",
+      "1218.2190",
+      "1255.0490",
+      "1293.7905",
+      "1336.3875"
+    ],
+    "valid_readings": [
+      566,
+      566,
+      565,
+      566,
+      566,
+      565,
+      566
+    ],
+    "latest_regions": {
+      "North": "413.7405",
+      "Central": "439.9980",
+      "East": "482.6490"
+    },
+    "fixture_sha256": "75a970a57b2e3113d5156715bf1efcc4c041a2e372521eb25c8b18874888d857",
+    "scope": "VALID, non-estimated half-hour readings; Asia/Singapore"
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "checked_on": "2026-10-13",
+  "milestone": "M3A.2: reviewed visual facts and Lance embeddings",
+  "status": "passed locally",
+  "backend_regression": {
+    "passed": 207,
+    "failed": 0,
+    "duration_seconds": 27.3,
+    "suites": [
+      "visual_documents",
+      "document_facts",
+      "visual_materials_api",
+      "lance_vectors",
+      "document_parser",
+      "materials",
+      "materials_api",
+      "material_citations",
+      "material_matching",
+      "demo_runtime",
+      "demo_hub",
+      "demo_connections",
+      "pharma_intelligence",
+      "demo_embeddings",
+      "demo_llm_settings",
+      "builder_artifacts",
+      "builder_proposals"
+    ]
+  },
+  "live_openai": {
+    "model": "gpt-4o",
+    "embedding_model": "text-embedding-3-small",
+    "vector_storage": "Lance",
+    "user_state_modified": false,
+    "semantic_versions_published": 0,
+    "results": [
+      {
+        "input": "fda-hernexeos-trial-demographics-sex.png",
+        "pages": [
+          1
+        ],
+        "document_sha256": "34a048841a1cbe333550a1e0ac9fa69bb9ba3245a98b4772a7dbd5bddfd6f282",
+        "observations": 4,
+        "created_source": "doc_fb6638decd8e6f7b4a2c5e5307da0791",
+        "reviewed_test_rows": 4,
+        "validated_metrics": 5,
+        "embedding_dimensions": 1536,
+        "repeat_embedding_calls": 0,
+        "status": "passed"
+      },
+      {
+        "input": "efpia-industry-figures-2026.pdf",
+        "pages": [
+          4
+        ],
+        "document_sha256": "2c8840f74dacdf62a92b91e9c194503ecec9dc9583dedd6a8193223218bca6da",
+        "observations": 17,
+        "created_source": "doc_1000e645baa5968b6caeebf275007c13",
+        "reviewed_test_rows": 17,
+        "validated_metrics": 18,
+        "embedding_dimensions": 1536,
+        "repeat_embedding_calls": 0,
+        "status": "passed"
+      },
+      {
+        "input": "fda-hernexeos-scanned-chart.pdf",
+        "pages": [
+          1
+        ],
+        "document_sha256": "bf3a00ed6343a6ffc0650dada45aeb68ed636c3fafb0c83d51fde123140486bd",
+        "observations": 4,
+        "created_source": "doc_7a848928dbb6ba19917f79eda7e78d10",
+        "reviewed_test_rows": 4,
+        "validated_metrics": 5,
+        "embedding_dimensions": 1536,
+        "repeat_embedding_calls": 0,
+        "status": "passed"
+      }
+    ],
+    "schema": "strict JSON schema",
+    "total_generated_metrics_validated": 28,
+    "images_checked": [
+      "FDA counts 33 and 72; printed percentages 31 and 69; absent denominator remains null",
+      "EFPIA chart USA 74.1, Europe 15.6, Japan 3.6, Pharmerging 2.9, Rest of World 3.8"
+    ],
+    "limits": "Selected-page integration checks, not general visual extraction accuracy or semantic correctness certification."
+  },
+  "browser": {
+    "real_materials_api": [
+      {
+        "width": 1440,
+        "status": "passed",
+        "document": "material-23fd9594a0034c6d9c78bf1288399fb6"
+      },
+      {
+        "width": 390,
+        "status": "passed",
+        "document": "material-c8036a25422a4316abee9ab0bc5f723d"
+      }
+    ],
+    "visual_ui": {
+      "widths": [
+        1440,
+        390
+      ],
+      "passed": true,
+      "coverage": [
+        "editable proposals",
+        "explicit acknowledgment",
+        "XSS escaping",
+        "historical read-only",
+        "frozen extraction",
+        "pending review recovery",
+        "no horizontal overflow"
+      ]
+    },
+    "screenshots": [
+      "/tmp/helios-materials-browser-visual-regression/",
+      "/tmp/helios-materials-visual-browser/",
+      "/tmp/helios-visual-strict-verified/browser/"
+    ],
+    "actual_visual_api": {
+      "results": [
+        {
+          "document": "material-03e6ae0c8c5543948bda73788e05f2aa",
+          "filename": "efpia-industry-figures-2026.pdf",
+          "preview_width": 840,
+          "rows": 17,
+          "source": "doc_1000e645baa5968b6caeebf275007c13",
+          "canvas_nodes": 21
+        },
+        {
+          "document": "material-8179ea714c8944ce9a74b554a37acd5f",
+          "filename": "fda-hernexeos-trial-demographics-sex.png",
+          "preview_width": 900,
+          "rows": 4,
+          "source": "doc_fb6638decd8e6f7b4a2c5e5307da0791",
+          "canvas_nodes": 8
+        }
+      ],
+      "page_errors": []
+    }
+  },
+  "local_refresh": {
+    "url": "http://localhost:8084/demo",
+    "pharma_draft": {
+      "old_snapshot": "ac60d3d9c934bfbc2de2f90a5a1fa3566097c7734af18984d44d0e9fb62324f6",
+      "new_snapshot": "469f9746ee444e24c37106a65c861fbcb505961bd74d3ea318315be7c0a616ca",
+      "draft_definition_preserved": true,
+      "draft_revision": 1,
+      "validation_reset": true,
+      "old_state_retained": true
+    },
+    "manufacturing_draft_and_release_preserved": true,
+    "published_user_versions_created_by_test": 0
+  },
+  "source_correction": {
+    "source": "EFPIA Industry Figures 2026, physical page 4",
+    "pharmerging_percent": 2.9,
+    "rest_of_world_percent": 3.8,
+    "launch_period": "2020\u20132024",
+    "latest_sales_year": 2025,
+    "original_four_pack_fingerprints_unchanged": true
+  },
+  "open_work": [
+    "Enterprise identity and document authorization",
+    "Cross-source identity resolution and query joins",
+    "Scoped combined SQL/document answers (M3B)",
+    "UOB and Guardrails consumer deployment acceptance",
+    "Production-scale retrieval and extraction evaluation"
+  ]
+}
