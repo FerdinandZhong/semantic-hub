@@ -1,12 +1,21 @@
 # Semantic foundation: progress and consumer handoff
 
+**AMP packaging — 17 October 2026:** Added the Cloudera AMP manifest, catalog metadata, isolated-runtime setup, and a combined Application launcher.
+Studio, Swagger, and the consumer API share one Hub instance and persistent project state.
+CAI Application ingress provides authentication; no local consumer token is created.
+MCP accepts `CDSW_APIV2_KEY` when no standalone consumer token is configured.
+Setup preserves credentials and reviewed state and does not automatically publish models.
+A clean Python 3.11 installation passed fixture/import checks, six AMP tests, twelve consumer API tests, and fifteen MCP tests.
+Local HTTP smoke checks confirmed UI, Swagger, capabilities, and empty published inventory through the combined launcher.
+See the [deployment guide](amp-deployment.md). Live CAI installation, ingress authentication, and restart acceptance remain unverified.
+
 **GitHub packaging and local API access — 15 October 2026:** The MCP adapter now has a GitHub `uvx` configuration matching the AML project pattern.
 Local API, Swagger, and MCP checks support explicit loopback-only access without a consumer token.
 Code is published at https://github.com/FerdinandZhong/semantic-hub.
 The GitHub-installed adapter passed all twelve tool calls, returned 74.1 for the supported cohort, and returned `no_data` for 1999–2020.
 See [GitHub installation verification](semantic-hub-github-mcp-verification.json). The importable MCP configuration pins that tested commit.
 The local consumer token was removed at the user's request. Model-provider credentials remain separate.
-CAI `cdsw_v2_key` authentication and AMP packaging are planned, not implemented.
+At that milestone, CAI authentication and AMP packaging were planned; see the 17 October increment above.
 The saved GPT-5.4 connection returned HTTP 200 after URL normalization and generation-parameter fixes.
 The local-access increment passed 12 consumer API tests and 13 MCP tests. Swagger browser execution returned HTTP 200 without authentication.
 Full legacy-suite collection remains blocked in the demo environment by an MCP package-name collision and missing Impala dependencies.

@@ -73,3 +73,5 @@ The legacy MCP document index remains separate and disabled in the local demo.
 - [Short finance and manufacturing stories](finance-manufacturing-simple-demo.md): questions, expected starter values, and validation SQL.
 
 CAI token authentication and AMP packaging remain planned.
+
+- [Semantic Hub AMP deployment](amp-deployment.md): setup, persistent storage, CAI authentication, and MCP configuration.

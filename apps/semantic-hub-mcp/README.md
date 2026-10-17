@@ -152,3 +152,11 @@ This starts `uvx` through the real MCP client. It does not inject the local pack
 
 The [GitHub installation report](../../docs/semantic-hub-github-mcp-verification.json) records the tested commit and twelve successful tool calls.
 This verifies local stdio and HTTP execution, not deployment to CAI.
+
+## CAI AMP deployment
+
+Use the authenticated Application origin as `SEMANTIC_HUB_URL`.
+The adapter uses `CDSW_APIV2_KEY` when `SEMANTIC_HUB_API_TOKEN` is unset.
+CAI validates that credential at its ingress; the Hub creates no separate token.
+See the [AMP deployment guide](../../docs/amp-deployment.md).
+The existing pinned configuration predates AMP support; pin the AMP implementation commit after publication.

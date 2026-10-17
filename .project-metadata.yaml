@@ -1,0 +1,52 @@
+name: Semantic Hub
+description: >-
+  Build, review, version, and publish semantic models from structured data and
+  document evidence. Includes Studio, a model validation Playground, and a
+  published-context API for external agents through MCP.
+author: Cloudera Engineering
+date: '2026-10-17'
+specification_version: '1.0'
+prototype_version: '1.0'
+runtimes:
+  - editor: JupyterLab
+    kernel: Python 3.11
+    edition: Standard
+environment_variables:
+  SEMANTIC_HUB_STATE_DIR:
+    default: /home/cdsw/state/semantic-hub
+    description: Persistent project directory for models, versions, uploads, SQLite, Lance, and encrypted model credentials. Retain this directory across restarts.
+    required: true
+  HELIOS_DEMO_DATASET:
+    default: finance
+    description: Initial source (finance, manufacturing, pharma, power, or pharma_intelligence). All built-in sources remain available in the Hub.
+    required: true
+  INFERENCE_BASE_URL:
+    default: https://api.openai.com/v1
+    description: Optional OpenAI-compatible model endpoint. Configure credentials and model profiles in Model configuration after launch.
+    required: false
+  INFERENCE_MODEL:
+    default: gpt-4o
+    description: Optional inherited model identifier. No API key is required to install or open the Hub.
+    required: false
+tasks:
+  - type: create_job
+    name: semantic-hub-setup
+    entity_label: semantic-hub-setup
+    script: cai_integration/setup_environment.py
+    kernel: python3
+    cpu: 2
+    memory: 8
+    timeout: 30
+  - type: run_job
+    entity_label: semantic-hub-setup
+    wait_for: true
+  - type: start_application
+    name: Semantic Hub
+    entity_label: semantic-hub-app
+    subdomain: semantic-hub
+    script: cai_integration/start_application.py
+    kernel: python3
+    cpu: 2
+    memory: 8
+    gpu: 0
+    bypass_authentication: false

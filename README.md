@@ -15,6 +15,13 @@ Each layer is *proposed* by helios from evidence in the warehouse, then *reviewe
 
 Everything runs self-hosted: the models, the runtime, the applications.
 
+## Deploy as a Cloudera AI AMP
+
+Import this repository using [`.project-metadata.yaml`](.project-metadata.yaml).
+The setup job builds an isolated runtime, then starts one authenticated CAI Application for the Hub UI, Swagger, and consumer API.
+See the [AMP deployment guide](docs/amp-deployment.md) for persistence, model configuration, MCP credentials, and acceptance checks.
+AMP packaging is implemented; a live CAI launch remains to be verified.
+
 ## Current semantic foundation progress
 
 See the [current implementation status](docs/SEMANTIC_FOUNDATION_STATUS.md) for delivered features and remaining work.
@@ -31,7 +38,7 @@ The [MCP adapter](apps/semantic-hub-mcp/README.md) installs directly from this G
 The [Agent Studio workflow](docs/semantic-hub-agent-studio-workflow.md) provides the demo setup and agent prompts.
 
 The local consumer API exposes published models through explicit loopback-only no-auth mode.
-Enterprise authorization and live CAI deployment remain separate integration work.
+The AMP uses CAI Application ingress authentication. Per-model authorization and live CAI acceptance remain separate integration work.
 The broader architecture below includes planned capabilities; it does not establish a live Atlas or Ranger integration in this demo.
 
 ---

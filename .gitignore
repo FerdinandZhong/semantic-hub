@@ -20,3 +20,4 @@ apps/helios/ui/src/content/docs/
 *.egg-info/
 .pytest_cache/
 .venv/
+.venv-semantic-hub/

@@ -115,3 +115,19 @@ def test_local_api_without_token_omits_authorization():
     result = run(HubClient("http://127.0.0.1:8096", "", httpx.MockTransport(handler)).request("GET", "/capabilities"))
     assert result["service"] == "Semantic Hub"
     assert "authorization" not in seen[0].headers
+
+
+@pytest.mark.parametrize('explicit,expected', [('', 'cai-test-key'), ('standalone-key', 'standalone-key')])
+def test_cai_ingress_credential_fallback(monkeypatch, explicit, expected):
+    import semantic_hub_mcp.server as module
+    captured = []
+    original = module.HubClient
+    def capture(url, token):
+        captured.append((url, token))
+        return original(url, token)
+    monkeypatch.setattr(module, 'HubClient', capture)
+    monkeypatch.setenv('SEMANTIC_HUB_URL', 'https://hub.example')
+    monkeypatch.setenv('CDSW_APIV2_KEY', 'cai-test-key')
+    monkeypatch.setenv('SEMANTIC_HUB_API_TOKEN', explicit)
+    create_server()
+    assert captured == [('https://hub.example', expected)]

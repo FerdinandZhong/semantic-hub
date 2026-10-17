@@ -71,7 +71,8 @@ class HubClient:
 
 
 def create_server(client: HubClient | None = None) -> MCPServer:
-    hub = client or HubClient(os.getenv("SEMANTIC_HUB_URL", ""), os.getenv("SEMANTIC_HUB_API_TOKEN", ""))
+    hub = client or HubClient(os.getenv("SEMANTIC_HUB_URL", ""),
+                             os.getenv("SEMANTIC_HUB_API_TOKEN") or os.getenv("CDSW_APIV2_KEY", ""))
     server = MCPServer("Semantic Hub", instructions="Read hub_status first. Use published versions and preserve model_id, version, context_sha256, and bundle_id from server responses. Inspect temporal coverage before compilation. The agent must separately check population, geography, units, and aggregation. Compilation returns DuckDB SQL for local validation. External agents may use published definitions with their own engine tools. query_sample_data only executes bounded local sample data when the hub enables it. No write or publication tools exist.")
     read_only = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=True)
 

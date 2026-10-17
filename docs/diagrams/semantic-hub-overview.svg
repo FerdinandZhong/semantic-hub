@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<title>Semantic Hub high-level architecture</title>
+<desc>Three horizontal semantic models connect to external data and documents. AI drafts definitions. Humans validate before versioned publication and consumption.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#000000"/></marker></defs>
+<rect width="1600" height="900" fill="#ffffff"/>
+<text x="60" y="42.0" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#000000">Semantic Hub | From sources to governed semantic models</text>
+<rect x="615" y="88" width="370" height="76" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="800.0" y="110.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#000000">AI MODELS</text>
+<text x="800.0" y="139.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Interpret sources · Draft definitions</text>
+<rect x="140" y="205" width="1320" height="280" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="800.0" y="237.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#000000">SEMANTIC HUB</text>
+<text x="800.0" y="277.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="400" fill="#000000">Definitions · Metrics · Relationships · Ontology · Metadata · Evidence lineage</text>
+<rect x="170" y="317" width="400" height="138" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="370.0" y="349.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#000000">Finance model</text>
+<text x="370.0" y="393.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#000000">Payment roles and relationships</text>
+<text x="370.0" y="426.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#000000">Metric: settled outflow in SGD</text>
+<rect x="170" y="555" width="400" height="115" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="370.0" y="580.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#000000">FINANCE SOURCES</text>
+<text x="370.0" y="617.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Payments · Accounts · Transactions</text>
+<text x="370.0" y="648.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Document: HSBC payment guide</text>
+<polyline points="370,555 370,455" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="383" y="507.5" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#000000">Interpret data</text>
+<text x="383" y="533.5" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#000000">Link reviewed evidence</text>
+<rect x="600" y="317" width="400" height="138" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="800.0" y="349.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#000000">Manufacturing model</text>
+<text x="800.0" y="393.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#000000">Assets, readings, and work orders</text>
+<text x="800.0" y="426.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#000000">Metric: recorded downtime</text>
+<rect x="600" y="555" width="400" height="115" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="800.0" y="580.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#000000">MANUFACTURING SOURCES</text>
+<text x="800.0" y="617.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Assets · Sensor readings</text>
+<text x="800.0" y="648.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Work orders</text>
+<polyline points="800,555 800,455" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="813" y="507.5" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#000000">Interpret data</text>
+<rect x="1030" y="317" width="400" height="138" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="1230.0" y="349.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#000000">Pharma intelligence model</text>
+<text x="1230.0" y="393.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#000000">Drugs, trials, and approvals</text>
+<text x="1230.0" y="426.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#000000">Metrics: approvals and sales share</text>
+<rect x="1030" y="555" width="400" height="115" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="1230.0" y="580.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#000000">PHARMA SOURCES</text>
+<text x="1230.0" y="617.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Curated FDA and industry records</text>
+<text x="1230.0" y="648.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Documents: FDA / EFPIA PDFs</text>
+<polyline points="1230,555 1230,455" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1243" y="507.5" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#000000">Interpret data</text>
+<text x="1243" y="533.5" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="400" fill="#000000">Link reviewed evidence</text>
+<polyline points="800,164 800,205" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="170" y="755" width="400" height="120" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="370.0" y="780.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#000000">HUMAN REVIEW</text>
+<text x="370.0" y="821.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Annotate and correct definitions</text>
+<text x="370.0" y="853.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Validate SQL and document evidence</text>
+<rect x="600" y="755" width="400" height="120" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="800.0" y="780.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#000000">VERSION &amp; PUBLISH</text>
+<text x="800.0" y="821.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Freeze reviewed models and evidence</text>
+<text x="800.0" y="853.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Version history and comparison</text>
+<rect x="1030" y="755" width="400" height="120" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="1230.0" y="780.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#000000">APPLICATIONS &amp; AGENTS</text>
+<text x="1230.0" y="821.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">Playground: verify sample answers</text>
+<text x="1230.0" y="853.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#000000">API / MCP: external agent context</text>
+<text x="170" y="724.0" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#000000">Hub review and release workflow</text>
+<polyline points="140,345 90,345 90,815 170,815" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="570,815 600,815" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1000,815 1030,815" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

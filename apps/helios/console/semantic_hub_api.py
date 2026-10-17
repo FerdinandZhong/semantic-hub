@@ -29,6 +29,9 @@ bearer=HTTPBearer(auto_error=False,scheme_name='ConsumerBearer')
 
 
 def authorize(request:Request,credentials:HTTPAuthorizationCredentials|None=Depends(bearer)):
+    # AMP traffic has already passed the authenticated CAI Application ingress.
+    # Do not compare a caller's CAI key with the launching job's injected key.
+    if getattr(request.app.state,'platform_auth',False):return 'cai-ingress'
     if request.app.state.local_no_auth:return 'local-demo'
     expected=os.environ.get('SEMANTIC_HUB_API_TOKEN','')
     if not expected:raise HTTPException(503,{'code':'api_not_configured','message':'Configure a consumer API token.'})
@@ -82,7 +85,7 @@ def capabilities(request:Request):
     return {'service':'Semantic Hub','api_version':'v1','role':'Published semantic context for external agents',
         'search':{'keyword':True,'embedding':s.settings.client('embedding') is not None,'embedding_storage':'Lance'},
         'version_pinning':True,'bundle_ttl_seconds':300,'execution':{'engine':'local_duckdb','max_rows':100,'arbitrary_sql':False},
-        'authorization':('Local demo without authentication; all published models.' if request.app.state.local_no_auth else 'Shared read-only demo token; all published models in this workspace. No per-user grants.'),
+        'authorization':('CAI Application ingress; project access, all published models; no per-model grants.' if getattr(request.app.state,'platform_auth',False) else 'Local demo without authentication; all published models.' if request.app.state.local_no_auth else 'Shared read-only demo token; all published models in this workspace. No per-user grants.'),
         'capabilities':['inventory','versions','definitions','metadata','ontology','lineage','published_documents','search','resolve','coverage','compile','sample_query'],
         'limitations':['No model editing or publication','No live enterprise query engine','Calling agent owns natural-language interpretation']}
 
@@ -152,7 +155,9 @@ def query(payload:TypedQuery,request:Request,principal=Depends(authorize)):
     return service(request).query(payload,principal,execute=True)
 
 
-def create_application(hub=None,settings=None,*,local_no_auth=False):
+def create_application(hub=None,settings=None,*,local_no_auth=False,platform_auth=False):
+    if platform_auth and (local_no_auth or not all(os.environ.get(k) for k in ('CDSW_APP_PORT','CDSW_PROJECT_ID','CDSW_DOMAIN'))):
+        raise ValueError('Platform authentication requires an authenticated CAI Application environment.')
     owns_hub=hub is None
     if owns_hub:
         state=Path(os.environ.get('HELIOS_DEMO_STATE',ROOT/'state/demo'))
@@ -167,18 +172,22 @@ def create_application(hub=None,settings=None,*,local_no_auth=False):
         if owns_hub:hub.close()
     app=FastAPI(title='Semantic Hub consumer API',version='1.0',docs_url=None,redoc_url=None,openapi_url=None,lifespan=lifespan)
     app.state.local_no_auth=local_no_auth
+    app.state.platform_auth=platform_auth
     app.state.semantic_hub_consumer=ConsumerService(hub,settings)
     app.include_router(router)
     app.mount('/docs/assets',StaticFiles(directory=Path(__file__).parent/'static/swagger'),name='swagger-assets')
     @app.get('/docs',include_in_schema=False,response_class=HTMLResponse)
     def docs():
-        return (Path(__file__).parent/'templates/semantic-hub-api-docs.html').read_text().replace('__LOCAL_NO_AUTH__','true' if local_no_auth else 'false')
+        content=(Path(__file__).parent/'templates/semantic-hub-api-docs.html').read_text().replace('__LOCAL_NO_AUTH__','true' if local_no_auth or platform_auth else 'false')
+        if platform_auth:
+            content=content.replace('Local demo access. No consumer token is required.','CAI Application access. Your Workbench session authenticates this page.')
+        return content
     @app.get(PREFIX+'/docs',include_in_schema=False)
     def docs_alias():return RedirectResponse('/docs')
     @app.get(PREFIX+'/openapi.json',dependencies=[Depends(authorize)],include_in_schema=False)
     def schema():
         spec=app.openapi()
-        if local_no_auth:
+        if local_no_auth or platform_auth:
             import copy
             spec=copy.deepcopy(spec)
             spec.get('components',{}).pop('securitySchemes',None)

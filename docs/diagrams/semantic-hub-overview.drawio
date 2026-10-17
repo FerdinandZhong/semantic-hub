@@ -1,0 +1,183 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="semantic-hub-overview" name="Semantic Hub overview">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Semantic Hub | From sources to governed semantic models" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=30;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="20" width="1480" height="44" />
+        </mxCell>
+        <mxCell id="ai" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="615" y="88" width="370" height="76" />
+        </mxCell>
+        <mxCell id="ai-title" value="AI MODELS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=22;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="635" y="96" width="330" height="28" />
+        </mxCell>
+        <mxCell id="ai-description" value="Interpret sources · Draft definitions" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="625" y="127" width="350" height="24" />
+        </mxCell>
+        <mxCell id="hub" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="140" y="205" width="1320" height="280" />
+        </mxCell>
+        <mxCell id="hub-title" value="SEMANTIC HUB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=28;fontColor=#000000;fontStyle=1;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="25" y="14" width="1270" height="36" />
+        </mxCell>
+        <mxCell id="shared" value="Definitions · Metrics · Relationships · Ontology · Metadata · Evidence lineage" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=20;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="25" y="58" width="1270" height="28" />
+        </mxCell>
+        <mxCell id="finance" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="30" y="112" width="400" height="138" />
+        </mxCell>
+        <mxCell id="finance-title" value="Finance model" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=24;fontColor=#000000;fontStyle=1;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="40" y="128" width="380" height="32" />
+        </mxCell>
+        <mxCell id="finance-line1" value="Payment roles and relationships" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=19;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="40" y="176" width="380" height="25" />
+        </mxCell>
+        <mxCell id="finance-line2" value="Metric: settled outflow in SGD" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=19;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="40" y="209" width="380" height="25" />
+        </mxCell>
+        <mxCell id="finance-source" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="170" y="555" width="400" height="115" />
+        </mxCell>
+        <mxCell id="finance-source-title" value="FINANCE SOURCES" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=20;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="567" width="380" height="27" />
+        </mxCell>
+        <mxCell id="finance-source1" value="Payments · Accounts · Transactions" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="605" width="380" height="24" />
+        </mxCell>
+        <mxCell id="finance-source2" value="Document: HSBC payment guide" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="636" width="380" height="24" />
+        </mxCell>
+        <mxCell id="finance-interpret" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="finance-source" target="finance">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="finance-interpret-label" value="Interpret data" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=16;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="383" y="496" width="180" height="23" />
+        </mxCell>
+        <mxCell id="finance-evidence-label" value="Link reviewed evidence" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=15;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="383" y="522" width="180" height="23" />
+        </mxCell>
+        <mxCell id="manufacturing" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="460" y="112" width="400" height="138" />
+        </mxCell>
+        <mxCell id="manufacturing-title" value="Manufacturing model" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=24;fontColor=#000000;fontStyle=1;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="470" y="128" width="380" height="32" />
+        </mxCell>
+        <mxCell id="manufacturing-line1" value="Assets, readings, and work orders" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=19;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="470" y="176" width="380" height="25" />
+        </mxCell>
+        <mxCell id="manufacturing-line2" value="Metric: recorded downtime" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=19;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="470" y="209" width="380" height="25" />
+        </mxCell>
+        <mxCell id="manufacturing-source" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="600" y="555" width="400" height="115" />
+        </mxCell>
+        <mxCell id="manufacturing-source-title" value="MANUFACTURING SOURCES" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=20;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="567" width="380" height="27" />
+        </mxCell>
+        <mxCell id="manufacturing-source1" value="Assets · Sensor readings" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="605" width="380" height="24" />
+        </mxCell>
+        <mxCell id="manufacturing-source2" value="Work orders" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="636" width="380" height="24" />
+        </mxCell>
+        <mxCell id="manufacturing-interpret" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="manufacturing-source" target="manufacturing">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="manufacturing-interpret-label" value="Interpret data" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=16;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="813" y="496" width="180" height="23" />
+        </mxCell>
+        <mxCell id="pharma" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="890" y="112" width="400" height="138" />
+        </mxCell>
+        <mxCell id="pharma-title" value="Pharma intelligence model" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=24;fontColor=#000000;fontStyle=1;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="900" y="128" width="380" height="32" />
+        </mxCell>
+        <mxCell id="pharma-line1" value="Drugs, trials, and approvals" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=19;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="900" y="176" width="380" height="25" />
+        </mxCell>
+        <mxCell id="pharma-line2" value="Metrics: approvals and sales share" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=19;fontColor=#000000;fontStyle=0;" vertex="1" parent="hub">
+          <mxGeometry as="geometry" x="900" y="209" width="380" height="25" />
+        </mxCell>
+        <mxCell id="pharma-source" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1030" y="555" width="400" height="115" />
+        </mxCell>
+        <mxCell id="pharma-source-title" value="PHARMA SOURCES" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=20;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="567" width="380" height="27" />
+        </mxCell>
+        <mxCell id="pharma-source1" value="Curated FDA and industry records" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="605" width="380" height="24" />
+        </mxCell>
+        <mxCell id="pharma-source2" value="Documents: FDA / EFPIA PDFs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="636" width="380" height="24" />
+        </mxCell>
+        <mxCell id="pharma-interpret" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="pharma-source" target="pharma">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="pharma-interpret-label" value="Interpret data" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=16;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1243" y="496" width="180" height="23" />
+        </mxCell>
+        <mxCell id="pharma-evidence-label" value="Link reviewed evidence" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=15;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1243" y="522" width="180" height="23" />
+        </mxCell>
+        <mxCell id="ai-draft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ai" target="hub">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="review" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="170" y="755" width="400" height="120" />
+        </mxCell>
+        <mxCell id="review-title" value="HUMAN REVIEW" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=22;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="765" width="380" height="30" />
+        </mxCell>
+        <mxCell id="review-line1" value="Annotate and correct definitions" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="809" width="380" height="24" />
+        </mxCell>
+        <mxCell id="review-line2" value="Validate SQL and document evidence" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="841" width="380" height="24" />
+        </mxCell>
+        <mxCell id="publish" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="600" y="755" width="400" height="120" />
+        </mxCell>
+        <mxCell id="publish-title" value="VERSION &amp;amp; PUBLISH" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=22;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="765" width="380" height="30" />
+        </mxCell>
+        <mxCell id="publish-line1" value="Freeze reviewed models and evidence" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="809" width="380" height="24" />
+        </mxCell>
+        <mxCell id="publish-line2" value="Version history and comparison" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="610" y="841" width="380" height="24" />
+        </mxCell>
+        <mxCell id="consume" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;shadow=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1030" y="755" width="400" height="120" />
+        </mxCell>
+        <mxCell id="consume-title" value="APPLICATIONS &amp;amp; AGENTS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=22;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="765" width="380" height="30" />
+        </mxCell>
+        <mxCell id="consume-line1" value="Playground: verify sample answers" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="809" width="380" height="24" />
+        </mxCell>
+        <mxCell id="consume-line2" value="API / MCP: external agent context" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=18;fontColor=#000000;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="841" width="380" height="24" />
+        </mxCell>
+        <mxCell id="workflow-label" value="Hub review and release workflow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=20;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="170" y="710" width="600" height="28" />
+        </mxCell>
+        <mxCell id="draft-review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hub" target="review">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="90" y="345" />
+              <mxPoint x="90" y="815" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="review-publish" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="review" target="publish">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="publish-consume" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=2;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="publish" target="consume">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,250 @@
+annotated-doc==0.0.5
+    # via fastapi
+annotated-types==0.8.0
+    # via pydantic
+anyio==4.15.1
+    # via
+    #   httpx
+    #   httpx2
+    #   mcp
+    #   sse-starlette
+    #   starlette
+attrs==26.1.0
+    # via
+    #   jsonschema
+    #   referencing
+backports-zstd==1.8.0
+    # via pystow
+certifi==2026.7.22
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
+cffi==2.1.1
+    # via cryptography
+charset-normalizer==3.5.2
+    # via requests
+click==8.5.0
+    # via
+    #   json-flattener
+    #   linkml-runtime
+    #   prefixcommons
+    #   uvicorn
+cryptography==50.0.2
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   pyjwt
+curies==0.15.3
+    # via
+    #   linkml-runtime
+    #   prefixmaps
+deepseek-harness-runtime-bin==0.1.5rc1
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   deepseek-harness-sdk
+deepseek-harness-sdk==0.1.5rc1
+    # via -r apps/helios/demo-requirements.txt
+deprecated==1.3.1
+    # via linkml-runtime
+deprecation==2.1.0
+    # via lancedb
+duckdb==1.4.3
+    # via -r apps/helios/demo-requirements.txt
+fastapi==0.143.3
+    # via -r apps/helios/demo-requirements.txt
+h11==0.16.0
+    # via
+    #   httpcore
+    #   httpcore2
+    #   uvicorn
+hbreader==0.9.1
+    # via
+    #   jsonasobj2
+    #   linkml-runtime
+httpcore==1.0.9
+    # via httpx
+httpcore2==2.13.1
+    # via httpx2
+httpx==0.28.1
+    # via -r apps/helios/demo-requirements.txt
+httpx2==2.13.1
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   mcp
+idna==3.20
+    # via
+    #   anyio
+    #   httpx
+    #   httpx2
+    #   requests
+iniconfig==2.3.1
+    # via pytest
+jinja2==3.1.6
+    # via -r apps/helios/demo-requirements.txt
+json-flattener==0.1.9
+    # via linkml-runtime
+jsonasobj2==1.0.4
+    # via linkml-runtime
+jsonschema==4.26.0
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   linkml-runtime
+    #   mcp
+jsonschema-specifications==2025.9.1
+    # via jsonschema
+lance-namespace==0.13.0
+    # via lancedb
+lance-namespace-urllib3-client==0.13.0
+    # via lance-namespace
+lancedb==0.30.2
+    # via -r apps/helios/demo-requirements.txt
+linkml-runtime==1.12.1
+    # via -r apps/helios/demo-requirements.txt
+lxml==6.1.3
+    # via python-docx
+markupsafe==3.0.4
+    # via jinja2
+mcp==2.3.0
+    # via -r apps/helios/demo-requirements.txt
+mcp-types==2.3.0
+    # via mcp
+numpy==2.4.6
+    # via lancedb
+opentelemetry-api==1.45.1
+    # via
+    #   fastapi
+    #   mcp
+overrides==7.7.0
+    # via lancedb
+packaging==26.3
+    # via
+    #   deprecation
+    #   lancedb
+    #   pytest
+pillow==12.3.0
+    # via -r apps/helios/demo-requirements.txt
+pluggy==1.7.0
+    # via pytest
+prefixcommons==0.1.12
+    # via linkml-runtime
+prefixmaps==0.2.6
+    # via linkml-runtime
+pyarrow==26.0.0
+    # via lancedb
+pycparser==3.11
+    # via cffi
+pydantic==2.14.1
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   curies
+    #   deepseek-harness-sdk
+    #   fastapi
+    #   lance-namespace-urllib3-client
+    #   lancedb
+    #   linkml-runtime
+    #   mcp
+    #   mcp-types
+pydantic-core==2.50.1
+    # via pydantic
+pygments==2.21.0
+    # via pytest
+pyjwt==2.15.1
+    # via mcp
+pyoxigraph==0.5.11
+    # via linkml-runtime
+pyparsing==3.3.3
+    # via rdflib
+pypdf==6.21.1
+    # via -r apps/helios/demo-requirements.txt
+pypdfium2==5.14.0
+    # via -r apps/helios/demo-requirements.txt
+pystow==0.10.3
+    # via curies
+pytest==9.1.1
+    # via pytest-logging
+pytest-logging==2015.11.4
+    # via prefixcommons
+python-dateutil==2.9.0.post0
+    # via lance-namespace-urllib3-client
+python-docx==1.2.0
+    # via -r apps/helios/demo-requirements.txt
+python-multipart==0.0.32
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   mcp
+pyyaml==6.0.3
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   json-flattener
+    #   linkml-runtime
+    #   prefixcommons
+    #   prefixmaps
+rdflib==7.6.0
+    # via linkml-runtime
+referencing==0.37.0
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+requests==2.34.2
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   linkml-runtime
+    #   prefixcommons
+rpds-py==2026.9.1
+    # via
+    #   jsonschema
+    #   referencing
+six==1.17.0
+    # via python-dateutil
+sqlalchemy==2.1.5
+    # via -r apps/helios/demo-requirements.txt
+sqlglot==29.0.1
+    # via -r apps/helios/demo-requirements.txt
+sse-starlette==3.5.0
+    # via mcp
+starlette==1.8.0
+    # via
+    #   fastapi
+    #   mcp
+    #   sse-starlette
+tqdm==4.70.1
+    # via
+    #   lancedb
+    #   pystow
+truststore==0.10.5
+    # via
+    #   httpcore2
+    #   httpx2
+typing-extensions==4.16.0
+    # via
+    #   anyio
+    #   curies
+    #   fastapi
+    #   httpx2
+    #   lance-namespace-urllib3-client
+    #   mcp
+    #   mcp-types
+    #   opentelemetry-api
+    #   pydantic
+    #   pydantic-core
+    #   pystow
+    #   python-docx
+    #   referencing
+    #   sqlalchemy
+    #   starlette
+    #   typing-inspection
+typing-inspection==0.4.4
+    # via
+    #   fastapi
+    #   mcp
+    #   pydantic
+urllib3==2.8.0
+    # via
+    #   lance-namespace-urllib3-client
+    #   requests
+uvicorn==0.54.0
+    # via
+    #   -r apps/helios/demo-requirements.txt
+    #   mcp
+wrapt==2.5.1
+    # via deprecated
