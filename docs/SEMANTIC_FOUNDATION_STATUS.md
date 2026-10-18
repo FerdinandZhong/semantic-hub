@@ -1,5 +1,12 @@
 # Semantic foundation: progress and consumer handoff
 
+**AMP setup isolation repair — 18 October 2026:** CAI setup reported conflicts with platform MLflow, CML, and OpenTelemetry distributions.
+A local regression reproduced the same failure using an inherited notebook package path.
+Setup and startup now clear inherited Python paths and install overrides and run Python in isolated mode.
+Setup checks distribution origins, disables system-site-packages, and preserves contaminated runtimes before rebuilding.
+Eight AMP tests pass, including path contamination and state-preserving runtime repair.
+See [setup recovery](amp-deployment.md#recovery-cai-packages-reported-by-pip-check). Live CAI rerun remains required.
+
 **AMP MCP configuration — 18 October 2026:** The default Agent Studio configuration now targets an authenticated CAI Application origin and pins published AMP commit `bb6a518`.
 The MCP subprocess inherits `CDSW_APIV2_KEY` from its secret environment; no credential is stored in the JSON template.
 A separate local configuration retains loopback access. English and Chinese workflow guides describe both paths.

@@ -84,3 +84,46 @@ with TestClient(app) as client:
     proc = subprocess.run([sys.executable, '-c', code], cwd=ROOT, env=env,
                           capture_output=True, text=True, timeout=60)
     assert proc.returncode == 0, proc.stderr
+
+
+def test_cai_pythonpath_leak_is_reproduced_and_excluded(tmp_path, monkeypatch):
+    from cai_integration.environment import isolated_environment, prepare_environment
+    injected = tmp_path / 'cai-site'
+    dist = injected / 'mlflow_skinny-2.19.0.dist-info'
+    dist.mkdir(parents=True)
+    (dist / 'METADATA').write_text('Metadata-Version: 2.1\nName: mlflow-skinny\nVersion: 2.19.0\nRequires-Dist: packaging<0\n')
+    monkeypatch.setenv('PYTHONPATH', str(injected))
+    monkeypatch.setenv('PIP_TARGET', str(injected))
+    monkeypatch.setenv('PIP_PREFIX', str(tmp_path / 'wrong-prefix'))
+    monkeypatch.setenv('CDSW_APIV2_KEY', 'keep-runtime-secret')
+    monkeypatch.setenv('PIP_INDEX_URL', 'https://packages.example/simple')
+    target = tmp_path / 'venv'
+    env = prepare_environment(target)
+    py = str(target / 'bin/python')
+    leaked = subprocess.run([py, '-m', 'pip', 'check'], capture_output=True, text=True)
+    assert leaked.returncode != 0 and 'mlflow-skinny' in leaked.stdout
+    clean = subprocess.run([py, '-I', '-m', 'pip', 'check'], env=env, capture_output=True, text=True)
+    assert clean.returncode == 0, clean.stdout + clean.stderr
+    assert not {'PYTHONPATH', 'PYTHONHOME', 'PIP_TARGET', 'PIP_PREFIX'} & env.keys()
+    assert env['CDSW_APIV2_KEY'] == 'keep-runtime-secret'
+    assert env['PIP_INDEX_URL'] == 'https://packages.example/simple'
+
+
+def test_setup_repairs_contaminated_runtime_and_preserves_state(tmp_path):
+    from cai_integration.environment import prepare_environment
+    target = tmp_path / 'venv'
+    prepare_environment(target)
+    py = str(target / 'bin/python')
+    site = Path(subprocess.check_output([py, '-I', '-c',
+        'import sysconfig;print(sysconfig.get_path("purelib"))'], text=True).strip())
+    dist = site / 'cml-1.0.0.dist-info'
+    dist.mkdir()
+    (dist / 'METADATA').write_text('Metadata-Version: 2.1\nName: cml\nVersion: 1.0.0\n')
+    state = tmp_path / 'state'
+    state.mkdir()
+    (state / 'reviewed-model.json').write_text('preserve')
+    env = prepare_environment(target)
+    assert (state / 'reviewed-model.json').read_text() == 'preserve'
+    assert list(tmp_path.glob('venv.before-isolation-*'))
+    assert not dist.exists()
+    assert subprocess.run([py, '-I', '-m', 'pip', 'check'], env=env).returncode == 0

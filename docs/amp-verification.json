@@ -6,10 +6,39 @@
   "clean_dependency_install": "passed; 79 packages including test dependencies",
   "dependency_consistency": "passed",
   "fixture_checksum_and_runtime_imports": "passed; finance, manufacturing, pharma, power, pharma_intelligence",
-  "amp_contract_tests": {"passed": 6},
-  "consumer_api_tests": {"passed": 12},
-  "mcp_tests": {"passed": 15, "includes": ["CAI credential fallback", "standalone credential precedence", "real stdio-to-HTTP integration"]},
-  "combined_http_smoke": {"port": 8099, "healthz": 200, "capabilities": 200, "published_models": 0},
+  "amp_contract_tests": {
+    "passed": 6
+  },
+  "consumer_api_tests": {
+    "passed": 12
+  },
+  "mcp_tests": {
+    "passed": 15,
+    "includes": [
+      "CAI credential fallback",
+      "standalone credential precedence",
+      "real stdio-to-HTTP integration"
+    ]
+  },
+  "combined_http_smoke": {
+    "port": 8099,
+    "healthz": 200,
+    "capabilities": 200,
+    "published_models": 0
+  },
   "authentication": "CAI ingress delegated; bypass_authentication false; no new local bearer token",
-  "pending_live_checks": ["Workbench AMP import", "Linux runtime installation", "CAI ingress browser and API-key authorization", "Application restart and persistent state", "Agent Studio hosted workflow"]
+  "pending_live_checks": [
+    "Workbench AMP import",
+    "Linux runtime installation",
+    "CAI ingress browser and API-key authorization",
+    "Application restart and persistent state",
+    "Agent Studio hosted workflow"
+  ],
+  "isolation_repair_2026_10_18": {
+    "amp_tests_passed": 8,
+    "reproduced": "Inherited PYTHONPATH exposes incompatible MLflow distribution to ordinary pip check",
+    "full_setup_job_local": "passed with injected CAI package path; isolated pip install and pip check, five fixture checks",
+    "runtime_repair": "contaminated environment preserved before rebuild; state preservation tested",
+    "live_cai_rerun": "pending"
+  }
 }

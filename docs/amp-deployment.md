@@ -25,7 +25,10 @@ The application requires two CPUs, 8 GB memory, and no GPU.
 Use a Standard Python 3.11 runtime. Setup also accepts Python 3.12.
 The setup job installs the pinned `cai_integration/requirements.lock` into `.venv-semantic-hub` on the shared project filesystem.
 The lock derives from `apps/helios/demo-requirements.txt`.
-It disables inherited `PIP_USER` during installation, as required by Workbench virtual environments.
+It clears inherited Python import paths and pip target/prefix settings.
+Setup and startup invoke Python with `-I` to exclude notebook paths and user packages.
+Setup disables system-site-packages and checks the origin of installed distributions.
+It preserves CAI credentials, proxy/CA settings, and explicit package-index environment variables.
 A successful setup job precedes application startup.
 No setup step requires a model-provider key.
 No setup step approves, publishes, or activates a semantic version.
@@ -152,3 +155,24 @@ Local mode does not prove ingress authentication.
 
 Local checks cover manifest ordering, persistent settings, startup guards, shared runtime, and combined UI/API/Swagger routes.
 Live CAI launch, ingress authorization, and restart persistence remain unverified until these checks run in Workbench.
+
+## Recovery: CAI packages reported by pip check
+
+A setup failure can mention `cml`, `mlflow-skinny`, or `mlflow-cml-plugin` dependencies.
+These packages belong to the CAI runtime, rather than the Semantic Hub application dependency set.
+An inherited `PYTHONPATH` can expose them even when a virtual environment disables user-site packages.
+The 18 October isolation fix reproduces and prevents this failure locally.
+
+1. Stop the failed setup job.
+2. Update the project checkout to the latest Semantic Hub commit.
+3. Rerun `semantic-hub-setup` with `cai_integration/setup_environment.py`.
+4. Confirm the log reports `Virtual environment isolation passed; CAI runtime packages excluded.`
+5. Confirm `pip check` and all five source-pack checks pass.
+6. Start or restart the Semantic Hub Application.
+
+Setup rewrites the virtual environment configuration to exclude system packages.
+It preserves a contaminated application environment as `.venv-semantic-hub.before-isolation-<timestamp>` before rebuilding.
+It retains the Hub state directory, uploads, reviewed versions, and credential encryption key.
+It does not uninstall or downgrade Workbench's platform packages.
+Use `PIP_INDEX_URL` or `PIP_EXTRA_INDEX_URL` when your deployment requires a custom package index.
+The isolated installer ignores inherited pip configuration files and install target overrides.

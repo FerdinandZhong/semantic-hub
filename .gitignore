@@ -21,3 +21,4 @@ apps/helios/ui/src/content/docs/
 .pytest_cache/
 .venv/
 .venv-semantic-hub/
+.venv-semantic-hub.before-isolation-*/
