@@ -40,5 +40,12 @@
     "full_setup_job_local": "passed with injected CAI package path; isolated pip install and pip check, five fixture checks",
     "runtime_repair": "contaminated environment preserved before rebuild; state preservation tested",
     "live_cai_rerun": "pending"
+  },
+  "launcher_repair_2026_10_18": {
+    "amp_tests_passed": 11,
+    "kernel_supervision": "parent process retained; child exit and signal cleanup verified",
+    "bootstrap_arguments": "project-root argument consumed before argparse",
+    "local_http_smoke": "healthz, Hub UI, Swagger, consumer capabilities HTTP 200; graceful supervisor/server shutdown",
+    "live_cai_restart": "pending"
   }
 }

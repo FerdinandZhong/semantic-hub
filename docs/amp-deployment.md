@@ -64,6 +64,8 @@ Use the Application URL returned by Workbench. Its subdomain can contain a gener
 CAI authenticates browser sessions and remote API requests at its Application ingress.
 The manifest sets `bypass_authentication: false`.
 The application binds `0.0.0.0` on the injected `CDSW_APP_PORT`.
+The launcher keeps the Workbench Jupyter kernel alive and supervises the isolated server as a child process.
+It forwards shutdown to the server process group and reports server exit errors in the Application log.
 It does not create a separate Semantic Hub bearer token.
 It does not compare a caller's CAI key with the job owner's `CDSW_APIV2_KEY`.
 The backend trusts the authenticated ingress. Do not expose its container port through another unauthenticated route.
@@ -176,3 +178,20 @@ It retains the Hub state directory, uploads, reviewed versions, and credential e
 It does not uninstall or downgrade Workbench's platform packages.
 Use `PIP_INDEX_URL` or `PIP_EXTRA_INDEX_URL` when your deployment requires a custom package index.
 The isolated installer ignores inherited pip configuration files and install target overrides.
+
+## Recovery: Jupyter kernel stops when the Application starts
+
+The previous launcher replaced the Workbench kernel process using `os.execve`.
+Workbench then observed a lost or restarting kernel and stopped the workload.
+The 18 October launcher fix retains the kernel and runs the server as a supervised child process.
+It also removes the bootstrap project argument before the server parses its command line.
+
+1. Update the project checkout from `main`.
+2. Confirm the Application script is `cai_integration/start_application.py`.
+3. Restart the Application.
+4. Check for `Semantic Hub server started as child process` in the log.
+5. Confirm the Uvicorn startup message and open the Application URL.
+
+No dependency reinstall is required if the repaired setup job already passed.
+This fix passed local supervision, child-failure, and shutdown tests.
+A live CAI Application restart remains the deployment acceptance check.

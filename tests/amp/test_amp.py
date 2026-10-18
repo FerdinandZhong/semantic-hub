@@ -127,3 +127,49 @@ def test_setup_repairs_contaminated_runtime_and_preserves_state(tmp_path):
     assert list(tmp_path.glob('venv.before-isolation-*'))
     assert not dist.exists()
     assert subprocess.run([py, '-I', '-m', 'pip', 'check'], env=env).returncode == 0
+
+
+def test_isolated_bootstrap_consumes_project_argument():
+    from cai_integration.start_application import startup_command
+    from cai_integration.environment import isolated_environment
+    command = startup_command(sys.executable, ROOT) + ['--help']
+    result = subprocess.run(command, env=isolated_environment(Path(sys.prefix)),
+                            cwd=ROOT, capture_output=True, text=True, timeout=30)
+    assert result.returncode == 0, result.stderr
+    assert '--local' in result.stdout
+    assert 'unrecognized arguments' not in result.stderr
+
+
+def test_supervisor_preserves_kernel_process_and_reports_server_failure(tmp_path):
+    from cai_integration.start_application import supervise
+    original_pid = os.getpid()
+    supervise([sys.executable, '-c', 'print("child completed")'], env=dict(os.environ), cwd=tmp_path)
+    assert os.getpid() == original_pid
+    with pytest.raises(RuntimeError, match='exited with status 7'):
+        supervise([sys.executable, '-c', 'raise SystemExit(7)'], env=dict(os.environ), cwd=tmp_path)
+
+
+def test_stopping_kernel_supervisor_terminates_server(tmp_path):
+    import signal
+    import time
+    ready = tmp_path / 'ready'
+    stopped = tmp_path / 'stopped'
+    child_code = ('import signal,time,pathlib;'
+                  f'signal.signal(signal.SIGTERM,lambda *a:(pathlib.Path({str(stopped)!r}).write_text("stopped"),exit(0)));'
+                  f'pathlib.Path({str(ready)!r}).write_text("ready");time.sleep(60)')
+    supervisor_code = ('from cai_integration.start_application import supervise;import os,sys;'
+                       f'supervise([sys.executable,"-c",{child_code!r}],env=dict(os.environ),cwd={str(tmp_path)!r})')
+    parent = subprocess.Popen([sys.executable, '-c', supervisor_code], cwd=ROOT)
+    try:
+        deadline = time.monotonic() + 10
+        while not ready.exists() and time.monotonic() < deadline:
+            assert parent.poll() is None
+            time.sleep(.05)
+        assert ready.exists()
+        parent.send_signal(signal.SIGTERM)
+        parent.wait(timeout=10)
+        assert stopped.read_text() == 'stopped'
+    finally:
+        if parent.poll() is None:
+            parent.terminate()
+            parent.wait(timeout=10)

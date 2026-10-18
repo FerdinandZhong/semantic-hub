@@ -1,5 +1,11 @@
 # Semantic foundation: progress and consumer handoff
 
+**AMP Application launcher repair — 18 October 2026:** Replaced kernel-process execution with a blocking child-process supervisor.
+The launcher retains the CAI Jupyter kernel, propagates server failures, and cleans up the server process group on shutdown.
+The isolated bootstrap now consumes its project-root argument before server argument parsing.
+Eleven AMP tests pass, including command-line handling, parent-process survival, and signal cleanup.
+Live CAI restart remains required.
+
 **AMP setup isolation repair — 18 October 2026:** CAI setup reported conflicts with platform MLflow, CML, and OpenTelemetry distributions.
 A local regression reproduced the same failure using an inherited notebook package path.
 Setup and startup now clear inherited Python paths and install overrides and run Python in isolated mode.
