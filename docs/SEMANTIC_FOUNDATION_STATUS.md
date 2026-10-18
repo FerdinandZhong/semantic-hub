@@ -1,5 +1,10 @@
 # Semantic foundation: progress and consumer handoff
 
+**AMP MCP configuration — 18 October 2026:** The default Agent Studio configuration now targets an authenticated CAI Application origin and pins published AMP commit `bb6a518`.
+The MCP subprocess inherits `CDSW_APIV2_KEY` from its secret environment; no credential is stored in the JSON template.
+A separate local configuration retains loopback access. English and Chinese workflow guides describe both paths.
+Live CAI ingress acceptance remains pending.
+
 **AMP packaging — 17 October 2026:** Added the Cloudera AMP manifest, catalog metadata, isolated-runtime setup, and a combined Application launcher.
 Studio, Swagger, and the consumer API share one Hub instance and persistent project state.
 CAI Application ingress provides authentication; no local consumer token is created.

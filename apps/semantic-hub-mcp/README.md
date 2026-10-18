@@ -11,7 +11,13 @@ The execution host needs Python 3.11+, Git, uv, and network access to GitHub and
 The host installs only the MCP adapter and its dependencies.
 It connects to a separately running Semantic Hub consumer API.
 
-Import [agent-studio.mcp.json](agent-studio.mcp.json), then set the consumer API URL. The local demo requires no consumer token.
+Import [agent-studio.mcp.json](agent-studio.mcp.json) for the CAI AMP deployment.
+Replace the URL placeholder with the Application URL shown in Workbench.
+Configure `CDSW_APIV2_KEY` as a secret environment variable for the MCP subprocess.
+When Agent Studio already injects that variable, retain its value.
+The JSON intentionally omits the credential so it can inherit the runtime secret.
+Do not use `${CDSW_APIV2_KEY}` as a literal JSON value; generic MCP clients do not guarantee shell expansion.
+Unset `SEMANTIC_HUB_API_TOKEN` for this AMP configuration because that variable takes precedence.
 
 ```json
 {
@@ -20,11 +26,11 @@ Import [agent-studio.mcp.json](agent-studio.mcp.json), then set the consumer API
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/FerdinandZhong/semantic-hub.git@5c0a376966ac838e27961b99e6fd839781a6f29b#subdirectory=apps/semantic-hub-mcp",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@bb6a51848614b8100580d165066c97526f0c8a61#subdirectory=apps/semantic-hub-mcp",
         "semantic-hub-mcp"
       ],
       "env": {
-        "SEMANTIC_HUB_URL": "http://127.0.0.1:8096"
+        "SEMANTIC_HUB_URL": "https://<semantic-hub-application-host>"
       }
     }
   }
@@ -32,11 +38,13 @@ Import [agent-studio.mcp.json](agent-studio.mcp.json), then set the consumer API
 ```
 
 Set the URL to the consumer API origin, without `/api/semantic-hub/v1` or `/docs`.
-The default API port is 8086; this workspace uses 8096.
+The AMP serves the UI, Swagger, and consumer API from the same Application origin.
+For local rehearsal, use [agent-studio.local.mcp.json](agent-studio.local.mcp.json); its API port is 8096.
 Use a reachable HTTPS URL for CAI. Its localhost is not your laptop.
 The adapter uses stdio and does not host an HTTP MCP endpoint.
 
-The supplied configuration pins the verified commit. Update it only after testing a newer commit.
+The supplied configurations pin AMP implementation commit `bb6a518`, which includes CAI credential forwarding.
+Local package tests passed; live CAI ingress acceptance remains unverified.
 A moving branch can use cached code. Run `uvx --refresh --from '<Git URL>' semantic-hub-mcp` to refresh it.
 Do not place tokens in the Git URL, command arguments, or agent prompts.
 
@@ -53,9 +61,11 @@ The adapter writes protocol messages to stdout and diagnostics to stderr.
 ## Tools and HTTP contract
 
 All paths below start with `/api/semantic-hub/v1`.
-The local demo sends no Authorization header.
-If a hosted deployment requires a bearer, set optional `SEMANTIC_HUB_API_TOKEN`.
-CAI `cdsw_v2_key` validation is planned for AMP packaging and is not implemented.
+The local demo sends no Authorization header when neither credential variable is set.
+For the AMP, the adapter forwards `CDSW_APIV2_KEY` as a bearer credential to CAI ingress.
+CAI validates Application access; the Hub does not create a separate local token.
+For an existing standalone bearer deployment, use `SEMANTIC_HUB_API_TOKEN` instead.
+That explicit variable takes precedence over `CDSW_APIV2_KEY`.
 
 | MCP tool | HTTP request |
 | --- | --- |
@@ -159,4 +169,5 @@ Use the authenticated Application origin as `SEMANTIC_HUB_URL`.
 The adapter uses `CDSW_APIV2_KEY` when `SEMANTIC_HUB_API_TOKEN` is unset.
 CAI validates that credential at its ingress; the Hub creates no separate token.
 See the [AMP deployment guide](../../docs/amp-deployment.md).
-The existing pinned configuration predates AMP support; pin the AMP implementation commit after publication.
+The default configuration now pins the published AMP implementation.
+Call `hub_status` first, then verify discovery of all twelve tools through the deployed Application URL.

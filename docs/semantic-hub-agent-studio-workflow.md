@@ -43,7 +43,14 @@ Use an approved reachable deployment or network route.
 Browser SSO does not automatically authenticate MCP requests.
 Confirm that both ingress and the application accept the machine credential.
 
-For local rehearsal, start the backend with the same state directory used by the authoring application:
+For the AMP, use the existing authenticated Application URL for both UI and consumer API.
+Do not start a second API process against the AMP workspace.
+Set the MCP subprocess secret `CDSW_APIV2_KEY` to an authorized CAI API v2 key.
+CAI ingress authenticates remote requests. Browser sessions do not supply MCP credentials.
+Unset `SEMANTIC_HUB_API_TOKEN` when using this CAI credential.
+See the [AMP deployment guide](amp-deployment.md).
+
+For separate local rehearsal, start the backend with the same state directory used by the authoring application:
 
 ```sh
 python start_semantic_hub_api.py \
@@ -63,8 +70,9 @@ An isolated API process can use `--model-token-file ~/tokens/openai` to load the
 This credential enables configured embedding access; the consumer API does not run natural-language query planning.
 Without an accepted provider credential, explicit embedding search remains unavailable.
 
-CAI `cdsw_v2_key` authentication is planned for AMP packaging; the current application does not validate CAI keys.
-Configure deployment authorization before using enterprise data.
+The AMP delegates CAI API v2 key validation to its authenticated Application ingress.
+The Hub does not compare the caller key with the launching job owner’s key.
+Live CAI ingress acceptance remains unverified.
 Do not paste a token into agent prompts or workflow exports.
 
 ## 2. Register MCP and verify discovery
@@ -74,7 +82,8 @@ It uses `uvx --from` to install `apps/semantic-hub-mcp` from `FerdinandZhong/sem
 The [package README](../apps/semantic-hub-mcp/README.md) contains the full configuration and requirements.
 The supplied configuration pins the verified GitHub commit for a repeatable demo.
 Set `SEMANTIC_HUB_URL` to the reachable consumer API origin.
-Omit `SEMANTIC_HUB_API_TOKEN` for the local demo.
+Use `CDSW_APIV2_KEY` for the AMP.
+For local rehearsal, import [the local configuration](../apps/semantic-hub-mcp/agent-studio.local.mcp.json) and omit both credential variables.
 The package supports stdio transport; it does not host an HTTP MCP endpoint.
 
 Register two instances, or use per-agent tool selection on one instance.

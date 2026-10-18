@@ -1,6 +1,7 @@
 > 本地模式更新（2026-10-15）：使用 `--local-no-auth --host 127.0.0.1 --port 8096` 启动消费者 API。
 > 本地令牌已删除，MCP 仅需设置 `SEMANTIC_HUB_URL`。Swagger 自动加载。
-> CAI `cdsw_v2_key` 验证将在 AMP 部署阶段实现，目前未实现。
+> AMP 配置更新（2026-10-18）：默认 MCP 配置改用 CAI Application URL，并从环境继承 `CDSW_APIV2_KEY`。
+> CAI 入口负责验证密钥。线上 CAI 入口验收仍待执行。
 
 # Semantic Hub 外部智能体演示工作流
 
@@ -29,6 +30,16 @@ Semantic Hub 提供已发布语义、文档证据、受控查询编译和可选�
 
 ## 1. 准备后端和网络
 
+AMP 部署使用 Workbench 显示的 Application URL。UI、Swagger 和消费者 API 共用该地址。
+不要为 AMP 状态目录另开一个 API 进程。
+在 MCP 子进程的密钥环境变量中配置 `CDSW_APIV2_KEY`，或保留 Agent Studio 注入的现有值。
+清除旧的 `SEMANTIC_HUB_API_TOKEN`，因为该变量的优先级更高。
+CAI 入口验证 API v2 密钥；Hub 不生成独立令牌。
+浏览器登录态不会自动提供 MCP 凭据。线上 CAI 入口仍需验收。
+详见 [AMP 部署指南](amp-deployment.md)。
+
+以下步骤用于独立本地演示。
+
 1. 选择已发布的制药行业模型。
 2. 检查指标定义和样本数据。
 3. 如需文档对比演示，发布经过审阅的第 14 页证据。
@@ -42,7 +53,7 @@ python start_semantic_hub_api.py \
 ```
 
 编辑界面继续使用本地 8084 端口。
-本地无认证模式仅绑定环回地址。CAI 部署入口与身份验证将在 AMP 阶段配置。
+本地无认证模式仅绑定环回地址。AMP 已配置 CAI Application 入口认证。
 远程 CAI 的 `localhost` 不指向开发者电脑。
 浏览器登录态不会自动传递给 MCP。
 
@@ -83,7 +94,9 @@ MCP 自动添加 API 前缀。
 导入 [GitHub MCP 配置](../apps/semantic-hub-mcp/agent-studio.mcp.json)。
 启动命令为 `uvx`；参数通过 `--from` 指定 GitHub 仓库中的 MCP 包。
 配置文件已固定经过验证的 GitHub 提交 SHA。
-本地配置只需 API 地址。
+AMP 配置已固定包含 CAI 凭据转发的提交 `bb6a518`。
+替换 Application URL 占位符。密钥通过运行环境注入，无需写入 JSON。
+本地演示请导入 [本地 MCP 配置](../apps/semantic-hub-mcp/agent-studio.local.mcp.json)，并清除两个凭据变量。
 该包使用 stdio，不提供 HTTP MCP 服务地址。
 部分只读操作使用 HTTP POST。
 参数应遵循实际发现的工具 schema。
