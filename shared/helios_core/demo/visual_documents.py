@@ -16,7 +16,8 @@ from .registry import DemoError
 from helios_core.llm import LLMError, LLMTimeoutError
 from helios_core.llm.openai_compat import openai_compatibility
 
-MAX_PAGES = 32
+# Matches the text parser page limit; each request still sends at most MAX_SELECTED_PAGES images.
+MAX_PAGES = 512
 MAX_SELECTED_PAGES = 6
 MAX_PIXELS = 20_000_000
 MAX_EDGE = 2048
@@ -82,7 +83,7 @@ def inspect_visual(filename: str, data: bytes) -> dict:
             raise DemoError('Encrypted PDFs are unsupported. Upload a decrypted PDF.')
         count = len(reader.pages)
         if not 1 <= count <= MAX_PAGES:
-            raise DemoError('Visual PDFs must contain between 1 and 32 pages.')
+            raise DemoError(f'Visual PDFs must contain between 1 and {MAX_PAGES} pages.')
         return {'page_count': count, 'media_type': 'application/pdf', 'visual_capable': True}
     except DemoError:
         raise

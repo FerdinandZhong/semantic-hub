@@ -94,7 +94,7 @@ This increment does not claim ANN indexing or production-scale latency.
 ## Extraction and review limits
 
 - Files are limited to 5 MiB. Images are limited to 20 million pixels.
-- Visual PDF extraction supports up to 32 pages, with one to six explicitly selected pages per request.
+- Visual PDF extraction supports up to 512 pages, with one to six explicitly selected pages per request.
 - Larger text PDFs retain the existing text-only path where parsing succeeds.
 - Encrypted PDFs remain unsupported.
 - Page previews are bounded to 2,048 pixels on their longest edge.

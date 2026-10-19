@@ -79,7 +79,7 @@ Lance is storage, not the model that understands the document.
 - [Model compatibility](../shared/helios_core/llm/openai_compat.py) selects model-family generation controls and protocol behavior.
 
 Current uploads support TXT, Markdown, PDF, DOCX, PNG, and JPEG within the documented limits.
-Visual PDFs contain at most 32 pages. A visual request selects one to six pages.
+Visual PDFs contain at most 512 pages. A visual request selects one to six pages.
 The upload size limit is 5 MiB.
 Extraction can repeat with different pages. Revisions preserve prior review and model provenance.
 See [supporting materials](supporting-materials.md) and [visual facts](visual-document-facts.md) for exact behavior.

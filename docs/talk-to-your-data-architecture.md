@@ -308,7 +308,7 @@ HELIOS_MCP_URL=https://<helios-mcp-application>/mcp
 HELIOS_MCP_TOKEN=<random server credential>
 HELIOS_MCP_DELEGATION_SECRET=<random value of at least 32 bytes>
 HELIOS_MCP_TIMEOUT_SECONDS=180
-HELIOS_LLM_TIMEOUT_SECONDS=30
+HELIOS_LLM_TIMEOUT_SECONDS=120
 MISTRAL_API_KEY=<secret>
 ```
 
@@ -320,7 +320,7 @@ active, but long-running production queries should eventually move to an
 asynchronous execution and polling contract.
 
 `HELIOS_LLM_TIMEOUT_SECONDS` bounds each model-provider response. It defaults
-to 30 seconds and must be a positive number. When exceeded, the API ends the
+to 120 seconds and must be a positive number. When exceeded, the API ends the
 active request with HTTP 503 and the Talk UI displays a provider-timeout
 message.
 

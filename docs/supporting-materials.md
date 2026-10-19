@@ -72,7 +72,7 @@ An exact quotation proves the text exists; a reviewer must still verify the inte
 ## Visual extraction and reviewed fact sources
 
 The [visual-document workflow](visual-document-facts.md) adds GPT-4o extraction from images and selected PDF page images.
-Select one to six physical pages from a PDF containing at most 32 pages.
+Select one to six physical pages from a PDF containing at most 512 pages.
 Image-only and scanned pages use the same bounded visual workflow.
 Upload transcribes them automatically with the draft model: images use page 1, and PDFs use their first six image-only pages.
 Text pages in a mixed PDF keep their extracted text; transcripts are added as labeled `vision` sections.
@@ -138,7 +138,7 @@ The UI displays earlier applications so reviewers can identify models requiring 
 
 Uploads are limited to 5 MiB, extracted text to 256 KiB, and sections to 128 with 2,000 characters each.
 Visual extraction supports PNG/JPEG and scanned PDFs through selected page images.
-PDFs contain at most 32 pages; each visual request selects one to six pages.
+PDFs contain at most 512 pages; each visual request selects one to six pages.
 Images are limited to 20 million pixels and rendered page previews to a 2,048-pixel maximum edge.
 Encrypted PDFs, unsupported files, unsafe DOCX compression, and nested Word tables are rejected with an explanation.
 The library covers imported local models. Remote connection profiles still require source import adapters.

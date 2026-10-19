@@ -58,9 +58,9 @@ class ToolTurn:
 
 class LLMClient:
     def __init__(self, provider: str, model: str, api_key: str | None, base_url: str | None = None,
-                 max_tokens: int = 4000, temperature: float = 0.0, timeout: float | None = None):
+                 max_tokens: int = 128000, temperature: float = 0.0, timeout: float | None = None):
         if timeout is None:
-            raw_timeout = os.environ.get("HELIOS_LLM_TIMEOUT_SECONDS", "30")
+            raw_timeout = os.environ.get("HELIOS_LLM_TIMEOUT_SECONDS", "120")
             try:
                 timeout = float(raw_timeout)
             except ValueError as exc:
@@ -75,6 +75,10 @@ class LLMClient:
         self.max_tokens, self.temperature, self.timeout = max_tokens, temperature, timeout
         self.calls = 0
         self.input_chars = 0
+
+    def _provider_max_tokens(self) -> int:
+        # ponytail: non-OpenAI providers keep the former 4000 budget; their output limits vary by model.
+        return min(self.max_tokens, 4000)
 
     def _http_timeout(self) -> httpx.Timeout:
         return httpx.Timeout(
@@ -139,7 +143,7 @@ class LLMClient:
         r = httpx.post("https://api.anthropic.com/v1/messages", timeout=self._http_timeout(),
                        headers={"x-api-key": self.api_key or "", "anthropic-version": "2023-06-01",
                                 "content-type": "application/json"},
-                       json={"model": self.model, "max_tokens": self.max_tokens, "temperature": self.temperature,
+                       json={"model": self.model, "max_tokens": self._provider_max_tokens(), "temperature": self.temperature,
                              "system": system, "messages": [{"role": "user", "content": user}]})
         r.raise_for_status()
         body = r.json()
@@ -334,7 +338,7 @@ class LLMClient:
             },
             json={
                 "model": self.model,
-                "max_tokens": self.max_tokens,
+                "max_tokens": self._provider_max_tokens(),
                 "temperature": self.temperature,
                 "system": system,
                 "messages": anthropic_messages,
@@ -514,7 +518,7 @@ class LLMClient:
             "system": [{"text": system}],
             "messages": bedrock_messages,
             "inferenceConfig": {
-                "maxTokens": self.max_tokens,
+                "maxTokens": self._provider_max_tokens(),
                 "temperature": self.temperature,
             },
         }

@@ -33,7 +33,7 @@ The sidebar **Model configuration** page provides independent draft, playground/
 Draft and playground profiles can inherit the launch configuration; embeddings default to disabled.
 
 The [supporting-material library](supporting-materials.md) imports TXT/MD, PDF, DOCX, PNG, and JPEG documents across local source models.
-The [visual workflow](visual-document-facts.md) extracts one to six selected physical pages from PDFs containing at most 32 pages.
+The [visual workflow](visual-document-facts.md) extracts one to six selected physical pages from PDFs containing at most 512 pages.
 GPT-4o proposes rows from images and scanned pages; human review creates a new typed fact source and semantic draft.
 OpenAI text embeddings use local Lance-format storage.
 See the [visual verification record](visual-document-verification.json) for acceptance progress.

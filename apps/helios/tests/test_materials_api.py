@@ -152,3 +152,23 @@ def test_material_input_and_unknown_selection_errors_are_safe(client):
     response = http.post(path(item, 'review'), json={'revision': 1, 'link_ids': ['missing'], 'decision': 'approved', 'reviewer': 'Test', 'note': 'Checked'})
     assert response.status_code == 409
     assert 'unknown link' in response.json()['detail']
+
+
+@pytest.mark.parametrize('error,expected', [
+    ('timeout', 'provider timed out'),
+    ('budget', 'exhausted its output budget'),
+    ('provider', 'The model request failed.'),
+])
+def test_analysis_model_failures_are_explained_without_provider_text(client, monkeypatch, error, expected):
+    from helios_core.llm.client import LLMError, LLMTimeoutError
+    http, _, llm = client
+    item = upload(http)
+    secret = 'PRIVATE-KEY-123 document text'
+    def fail(system, user):
+        raise {'timeout': LLMTimeoutError('openai provider timed out (response limit: 30 seconds)'),
+               'budget': LLMError('The model exhausted its output budget before completing the response.'),
+               'provider': LLMError(secret)}[error]
+    monkeypatch.setattr(llm, 'complete', fail)
+    response = http.post(path(item, 'analyze'), json={'revision': 1})
+    assert response.status_code == 502
+    assert expected in response.json()['detail'] and secret not in response.text

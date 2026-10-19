@@ -99,3 +99,22 @@ def test_agent_adapter_uses_model_compatible_protocol(model, api):
     _, adapter = profile(LLMClient('openai', model, 'key', 'https://api.openai.com/v1'))
     assert adapter['api'] == api
     assert bool(adapter['models'][0].get('reasoningEfforts')) == (api == 'openai-responses')
+
+
+def test_default_budget_is_capped_per_model_family():
+    from helios_core.llm.client import LLMClient
+    from helios_core.llm.openai_compat import openai_compatibility
+    assert LLMClient('openai', 'gpt-4o', 'k').max_tokens == 128000
+    assert openai_compatibility('gpt-4o').chat_options(128000, 0)['max_tokens'] == 16384
+    assert openai_compatibility('gpt-4.1-mini').chat_options(128000, 0)['max_tokens'] == 32768
+    assert openai_compatibility('gpt-5.4').chat_options(128000, 0)['max_completion_tokens'] == 128000
+    assert openai_compatibility('gpt-6.1-sol').response_options(128000)['max_output_tokens'] == 128000
+    assert openai_compatibility('local-llama').chat_options(128000, 0)['max_tokens'] == 4000
+    # Explicit smaller budgets (Playground, connection test) are unchanged.
+    assert openai_compatibility('gpt-4o').chat_options(600, 0)['max_tokens'] == 600
+
+
+def test_default_timeout_is_120_seconds(monkeypatch):
+    from helios_core.llm.client import LLMClient
+    monkeypatch.delenv('HELIOS_LLM_TIMEOUT_SECONDS', raising=False)
+    assert LLMClient('openai', 'gpt-4o', 'k').timeout == 120

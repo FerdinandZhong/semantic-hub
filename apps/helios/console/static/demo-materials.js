@@ -122,7 +122,7 @@ function renderVisual(){
  $("analysis-availability").hidden=!frozen;
  $("analysis-availability").textContent="This document revision contains reviewed evidence. Analyze pages again to start a new revision, or upload revised content for a text-only document. You can still find and review links using the existing text.";
  $("finish-visual-model").hidden=!detail.fact_review_pending;
- $("visual-stage").hidden=!source?.visual_capable;
+ $("visual-stage").hidden=!source?.visual_capable;$("visual-unavailable").hidden=Boolean(source?.visual_capable);$("visual-unavailable").textContent=`Page analysis is unavailable for this document. ${source?.reason || "It supports PDF, PNG, and JPEG uploads."} You can still summarize its text below.`;
  $("text-analysis-stage").hidden=!(detail.chunks || []).length;
  for(const id of ["text-links-stage","text-review-stage","text-apply-stage"])$(id).hidden=!(detail.chunks || []).length&&!(detail.links || []).length;
  if(!source?.visual_capable)return;

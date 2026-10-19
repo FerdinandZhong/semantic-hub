@@ -86,7 +86,7 @@ The canvas shows supporting-evidence edges to linked objects.
 These edges represent reviewed support, not SQL joins or observed causal relationships.
 AI drafting can use attached evidence with the structured schema.
 The [visual workflow](visual-document-facts.md) separately creates typed fact sources from explicitly reviewed observation rows.
-Select one to six physical pages from PDFs containing at most 32 pages.
+Select one to six physical pages from PDFs containing at most 512 pages.
 GPT-4o proposes observations from images and scanned pages; reviewers correct and approve the retained rows.
 The new source starts with a semantic draft and still requires Studio validation and publication.
 OpenAI text embeddings use local Lance storage for model-link matching.

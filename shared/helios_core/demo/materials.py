@@ -153,6 +153,13 @@ class MaterialLibrary:
 
     def detail(self, document_id, revision=None):
         item = self._read(document_id, revision)
+        source = item.get('visual_source')
+        if source and not source.get('visual_capable') and '32 pages' in source.get('reason', ''):
+            # ponytail: re-inspects rows stored under the former 32-page visual limit on each read; drop once old rows are gone.
+            try:
+                item['visual_source'] = inspect_visual(item['filename'], self.original(document_id, item['revision'])[1])
+            except DemoError as error:
+                item['visual_source'] = {'visual_capable': False, 'reason': str(error)}
         with self.connect() as db:
             revisions = [row[0] for row in db.execute('SELECT revision FROM materials WHERE id=? ORDER BY revision DESC', (document_id,))]
             usage = [{'revision': row[0], 'source': row[1], 'attachment_id': row[2], 'draft_revision': row[3], 'created_at': row[4]} for row in db.execute('SELECT revision,source,attachment_id,draft_revision,created_at FROM material_usage WHERE id=? ORDER BY created_at DESC', (document_id,))]
@@ -180,7 +187,7 @@ class MaterialLibrary:
                 visual_source = inspect_visual(payload.filename, data)
             except DemoError as error:
                 # Preserve existing text-only support for larger PDFs.
-                if '32 pages' not in str(error):
+                if 'Visual PDFs must contain' not in str(error):
                     raise
                 visual_source = {'visual_capable': False, 'reason': str(error)}
             # Visual PDFs keep their text pages; image-only pages are queued for VLM transcription.

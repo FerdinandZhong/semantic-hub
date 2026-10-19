@@ -175,3 +175,26 @@ def test_failed_auto_transcription_keeps_the_upload(client):
     item = png_upload(http)
     assert item['status'] == 'visual_pending' and item['chunks'] == []
     assert item['ocr_notice'].startswith('Automatic transcription did not run')
+
+
+def test_long_text_pdf_keeps_page_analysis(client):
+    from apps.helios.tests.test_document_parser import pdf_bytes
+    http, _, _ = client
+    response = http.post('/demo/api/materials/upload', json={
+        'filename': 'notice.pdf', 'content_base64': base64.b64encode(pdf_bytes(*[f'Page {n}' for n in range(1, 45)])).decode()})
+    assert response.status_code == 200, response.text
+    item = response.json()
+    assert item['visual_source'] == {'page_count': 44, 'media_type': 'application/pdf', 'visual_capable': True}
+    assert item['chunk_count'] == 44 and 'ocr_notice' not in item
+
+
+def test_rows_stored_under_former_page_limit_regain_page_analysis(client):
+    from apps.helios.tests.test_document_parser import pdf_bytes
+    http, app, _ = client
+    item = http.post('/demo/api/materials/upload', json={
+        'filename': 'notice.pdf', 'content_base64': base64.b64encode(pdf_bytes('Page 1', 'Page 2')).decode()}).json()
+    library = app.state.demo_materials
+    stored = library._read(item['document_id'], 1)
+    stored['visual_source'] = {'visual_capable': False, 'reason': 'Visual PDFs must contain between 1 and 32 pages.'}
+    library._save(stored)
+    assert http.get(path(item)).json()['visual_source']['visual_capable'] is True

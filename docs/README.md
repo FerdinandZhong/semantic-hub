@@ -39,7 +39,7 @@ Copy the [Story 1 SQL](demo-inputs/story-1-pharma-reference.sql), [Story 2 SQL](
 The earlier [page 4-only input sheet](efpia-page4-demo-inputs.md) remains an optional smaller example.
 The [visual-document workflow](visual-document-facts.md) covers PNG/JPEG, scanned PDFs, reviewed typed fact sources, and local Lance vectors.
 Its [verification record](visual-document-verification.json) tracks acceptance.
-GPT-4o processes one to six selected physical pages from PDFs containing at most 32 pages.
+GPT-4o processes one to six selected physical pages from PDFs containing at most 512 pages.
 Explicit row review creates a source and semantic draft; publication remains a separate Studio action.
 
 ## Choose the correct system

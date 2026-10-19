@@ -30,7 +30,7 @@ from helios_core.demo.context import (
 from helios_core.demo.proposals import ApplyProposal, GenerateProposal, ProposalWorkspace
 from helios_core.demo.builder_artifacts import BuilderArtifacts
 from helios_core.llm import llm_from_env
-from helios_core.llm.client import LLMError
+from helios_core.llm.client import LLMError, LLMTimeoutError
 import httpx
 from helios_core.demo.registry import DemoError, PackRegistry
 from helios_core.demo.runtime import DemoRuntime, ExampleRequest
@@ -119,6 +119,34 @@ class TestLLM(BaseModel):
     purpose: Literal['draft', 'query', 'embedding']
 
 
+def llm_failure_message(exc: LLMError) -> str:
+    """Readable provider failure. Never echo provider text: it can contain prompts, endpoints, or keys."""
+    if isinstance(exc, LLMTimeoutError):
+        return f'{exc}. Retry, or raise HELIOS_LLM_TIMEOUT_SECONDS for long documents.'
+    if str(exc) in OWN_LLM_MESSAGES:
+        return f'{exc} Increase the max tokens of this model profile in Model configuration, then retry.'
+    if str(exc).startswith('Visual '):
+        # visual_documents raises fixed messages only (HTTP status, size, schema), chained from None.
+        return f'{exc}. Check that the draft model accepts image input and structured JSON output.'
+    cause=exc.__cause__
+    if not isinstance(cause,httpx.HTTPStatusError):
+        return 'The model request failed. Check the saved endpoint, model, and authentication.'
+    status=cause.response.status_code
+    messages={401:'The model provider rejected the saved API key.',403:'The model provider denied access to this model.',
+              404:'The model or API endpoint was not found.',429:'The model provider reported a rate or quota limit.'}
+    message=messages.get(status,f'The model provider rejected the request (HTTP {status}).')
+    if status==400:
+        try:parameter=cause.response.json().get('error',{}).get('param')
+        except (ValueError,AttributeError):parameter=None
+        if parameter in ('max_tokens','max_completion_tokens','temperature','model','reasoning_effort'):
+            message+=f' Check compatibility of the {parameter} parameter.'
+    return message
+
+
+# Fixed client messages without provider content (helios_core.llm.client).
+OWN_LLM_MESSAGES={'The model exhausted its output budget before completing the response.'}
+
+
 @demo_router.post('/api/llm/test')
 def llm_test(payload: TestLLM, request: Request):
     try:
@@ -138,19 +166,7 @@ def llm_test(payload: TestLLM, request: Request):
     except DemoError as exc:
         raise HTTPException(409, str(exc)) from None
     except LLMError as exc:
-        cause=exc.__cause__
-        message='The model request failed. Check the saved endpoint, model, and authentication.'
-        if isinstance(cause,httpx.HTTPStatusError):
-            status=cause.response.status_code
-            messages={401:'The model provider rejected the saved API key.',403:'The model provider denied access to this model.',
-                      404:'The model or API endpoint was not found.',429:'The model provider reported a rate or quota limit.'}
-            message=messages.get(status,f'The model provider rejected the request (HTTP {status}).')
-            if status==400:
-                try:parameter=cause.response.json().get('error',{}).get('param')
-                except (ValueError,AttributeError):parameter=None
-                if parameter in ('max_tokens','max_completion_tokens','temperature','model','reasoning_effort'):
-                    message+=f' Check compatibility of the {parameter} parameter.'
-        raise HTTPException(502,message) from None
+        raise HTTPException(502,llm_failure_message(exc)) from None
     except Exception:
         raise HTTPException(502, 'The LLM request failed. Check the saved endpoint, model, and credential reference.') from None
 
@@ -171,8 +187,13 @@ def material_action(request, action):
         return action(materials_for(request))
     except DemoError as exc:
         raise HTTPException(409, str(exc)) from None
-    except Exception:
-        # Provider exceptions can contain document text, endpoints, or credentials.
+    except LLMError as exc:
+        status=getattr(getattr(exc.__cause__,'response',None),'status_code',None)
+        LOGGER.warning('Supporting material model request failed: %s (HTTP %s)', type(exc).__name__, status)
+        raise HTTPException(502, llm_failure_message(exc)) from None
+    except Exception as exc:
+        # Provider exceptions can contain document text, endpoints, or credentials; log only the type.
+        LOGGER.error('Supporting material processing failed: %s', type(exc).__name__)
         raise HTTPException(502, 'Supporting material processing failed. Check model configuration and try again.') from None
 
 
