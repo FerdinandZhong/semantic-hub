@@ -173,7 +173,7 @@ class MaterialLibrary:
         suffix = Path(payload.filename).suffix.lower()
         visual_source = None
         if suffix in {'.png', '.jpg', '.jpeg'}:
-            visual_source = inspect_visual(payload.filename, data)
+            visual_source = inspect_visual(payload.filename, data) | {'ocr_pages': [1]}
             chunks = []
         elif suffix == '.pdf':
             try:
@@ -183,13 +183,17 @@ class MaterialLibrary:
                 if '32 pages' not in str(error):
                     raise
                 visual_source = {'visual_capable': False, 'reason': str(error)}
+            # Visual PDFs keep their text pages; image-only pages are queued for VLM transcription.
+            image_pages = [] if visual_source.get('visual_capable') else None
             try:
-                chunks = parse_document(payload.filename, data)
+                chunks = parse_document(payload.filename, data, image_pages)
             except DemoError as error:
-                if visual_source.get('visual_capable') and ('scanned pages' in str(error) or 'no extractable text' in str(error)):
+                if image_pages is not None and 'no extractable text' in str(error):
                     chunks = []
                 else:
                     raise
+            if image_pages:
+                visual_source['ocr_pages'] = image_pages
         else:
             chunks = parse_document(payload.filename, data)
         with self.lock, self.connect() as db:

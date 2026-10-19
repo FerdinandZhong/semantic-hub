@@ -47,18 +47,7 @@ summary:hover{color:#1748b7}
 .library-item small{margin-top:6px;font-size:11px}
 .material-link{padding:16px;background:#fff}
 .material-link .badge{font-size:10px;padding:3px 8px}
-#material-upload{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;grid-template-areas:"file destination action" "help help help";gap:12px 16px;align-items:end;margin-top:18px}
-#material-upload .upload-file-field{grid-area:file}
-#material-upload .upload-destination-field{grid-area:destination}
-#material-upload label{margin:0;line-height:1.5}
-#material-file,#upload-document,#upload-submit{height:44px;min-height:44px}
-#material-file,#upload-document{margin-top:6px}
-#material-file{font-size:12px;padding:7px 10px;line-height:28px}
-#material-file::file-selector-button{height:28px;margin-right:10px;padding:0 10px;border:1px solid #d7dfec;border-radius:4px;background:#f3f6fb;color:#34578d;font:inherit;cursor:pointer}
-#upload-submit{grid-area:action;align-self:end;white-space:nowrap;padding:0 16px;display:inline-flex;align-items:center;justify-content:center}
-#upload-help{grid-area:help;margin:0;font-size:12px}
 @media(max-width:1200px){.shell>aside{width:210px}.shell>main{padding:20px 22px 36px}}
-@media(max-width:1050px){#material-upload{grid-template-columns:1fr 1fr;grid-template-areas:"file destination" "help help" "action action"}#upload-submit{justify-self:end}}
 @media(max-width:700px){
  .shell>aside{position:static;width:100%;height:auto;overflow:visible;padding:16px;border-right:0;border-bottom:1px solid var(--line)}
  .shell>aside .brand{padding:0 0 12px;border:0}.shell>aside .brand img{width:140px;margin:0 0 8px}
@@ -70,5 +59,42 @@ summary:hover{color:#1748b7}
  .shell>main>header{font-size:10px;gap:8px}.badge{font-size:10px}
  .material-workspace{gap:16px}
 }
-@media(max-width:600px){#material-upload{grid-template-columns:minmax(0,1fr);grid-template-areas:"file" "destination" "help" "action"}#upload-submit{width:100%;justify-self:stretch}}
 @media(prefers-reduced-motion:reduce){.shell>aside nav a,.source-card{transition:none}}
+
+/* ---- Shared controls (19 Oct 2026): one button system and compact fields across every page. ----
+   Element-level selectors only, so component rules (tabs, library items, canvas toolbars) keep precedence. */
+:root{--accent-hover:#1f4fc4;--accent-press:#1a44aa;--control-h:38px;--control-radius:7px;--focus-ring:0 0 0 3px #2d62df33}
+button,.button-link{min-height:var(--control-h);border-radius:var(--control-radius);transition:background-color .12s,border-color .12s,color .12s,box-shadow .12s}
+/* Real action buttons only (zero specificity): tree items, tabs and chips keep their own look. */
+:where(button:not([class]):not([role]),button.primary,button.secondary,.button-link){display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 15px;font-size:12.5px;font-weight:550;line-height:1.3;text-decoration:none;box-shadow:0 1px 2px #152c6514}
+:where(button,.button-link):hover{background-color:var(--accent-hover);filter:none}
+:where(button,.button-link):active{background-color:var(--accent-press);box-shadow:none}
+button:focus-visible,.button-link:focus-visible,summary:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.secondary,.button-link.secondary{background:white;border:1px solid #d7dfec;color:#2c4a7c;box-shadow:0 1px 2px #152c650a}
+.secondary:hover,.button-link.secondary:hover{background:#f4f7fd;border-color:#a9bfeb;color:var(--accent)}
+.secondary:active{background:#e9effb}
+button:disabled{opacity:1;cursor:not-allowed;background:#c3d1f2;color:#f5f8ff;box-shadow:none}
+.secondary:disabled{background:#fafbfd;border-color:#e6eaf2;color:#a3adbd}
+/* Fields match the button height so rows align. */
+:where(select,input:not([type=checkbox],[type=radio],[type=file],[type=range])){min-height:var(--control-h);border-color:#d7dfec;border-radius:var(--control-radius);transition:border-color .12s,box-shadow .12s}
+:where(textarea){border-color:#d7dfec;border-radius:var(--control-radius)}
+:where(select,input:not([type=checkbox],[type=radio]),textarea):hover{border-color:#b9c8e4}
+select:focus-visible,input:focus-visible,textarea:focus-visible{outline:none;border-color:var(--accent);box-shadow:var(--focus-ring)}
+.actions{gap:8px;align-items:center}
+/* Canvas toolbars: compact neutral buttons with a blue pressed state. */
+.canvas-toolbar button{min-height:30px;padding:0 8px;border:1px solid #d7dfec;background:white;color:#3d4f6e;font-size:12px;font-weight:400;box-shadow:none}
+.canvas-toolbar button:hover{background:#f4f7fd;border-color:#a9bfeb;color:var(--accent)}
+.canvas-toolbar button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:white}
+/* Less repeated helper copy: the page heading already explains each page. */
+.shell>aside .sidebar-note{display:none}
+@media(max-width:700px){:root{--control-h:40px}}
+/* Hub cards: content-sized actions instead of three stretched blocks. */
+.source-card .actions{justify-content:flex-start;padding-top:16px}
+.source-card .actions>*{flex:0 0 auto;min-width:0}
+@media(max-width:700px){.source-card .actions>*{flex:1 1 auto}}
+.studio-tree button,.studio-inspector [role=tab],.steps button{box-shadow:none}
+/* Shared field height (element/type level; component and id rules still win). */
+select,input:not([type]),input[type=text],input[type=search],input[type=number],input[type=password],input[type=url],input[type=email]{min-height:var(--control-h)}
+.canvas-toolbar input,.canvas-toolbar select{min-height:30px}
+input:not([type]),input[type=text],input[type=search],input[type=number],input[type=password],input[type=url],input[type=email]{padding-top:7px;padding-bottom:7px}
+.canvas-toolbar input{padding-top:4px;padding-bottom:4px}

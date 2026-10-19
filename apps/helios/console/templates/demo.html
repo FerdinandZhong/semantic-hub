@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Semantic Hub · Model playground</title>
   <link rel="stylesheet" href="/static/demo.css">
-  <link rel="stylesheet" href="/static/demo-canvas.css"><link rel="stylesheet" href="/static/demo-playground.css">
-  <script src="/static/demo-canvas.js" defer></script><script src="/static/demo.js" defer></script><script src="/static/demo-playground.js" defer></script>
-<link rel="stylesheet" href="/static/demo-shell.css?v=20261014"></head>
+  <link rel="stylesheet" href="/static/demo-canvas.css"><link rel="stylesheet" href="/static/demo-playground.css?v=20261019b">
+  <script src="/static/demo-canvas.js" defer></script><script src="/static/demo.js" defer></script><script src="/static/demo-playground.js?v=20261019b" defer></script>
+<link rel="stylesheet" href="/static/demo-shell.css?v=20261019b"><link rel="icon" href="/static/favicon.svg" type="image/svg+xml"><link rel="icon" href="/static/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/static/apple-touch-icon.png"></head>
 <body>
 <div class="shell">
   <aside>
@@ -29,40 +29,46 @@
       <h1>Model playground</h1>
       <p>Validate a published model with sample queries.</p>
     </section>
-    <section class="panel" id="playground" aria-labelledby="playground-heading">
+    <section class="panel playground-chat" id="playground" aria-labelledby="playground-heading">
       <div class="playground-header"><div><h2 id="playground-heading">Published model</h2><p id="playground-binding" class="muted">Loading published versions…</p></div>
-        <div class="playground-version"><label>Version<select id="playground-version" disabled></select></label><a id="playground-view" class="button-link secondary" hidden>View model</a></div></div>
+        <div class="playground-version"><label>Version<select id="playground-version" disabled></select></label><a id="playground-view" class="button-link secondary" hidden>View model</a><button id="playground-new-chat" class="secondary" type="button">New chat</button></div></div>
       <p id="playground-empty" hidden>Publish a reviewed version to test its semantic definitions here. <a href="/demo/context#hub" data-source-link>Open versions &amp; releases →</a></p>
       <div id="playground-ready" hidden>
-        <form id="playground-form"><label for="playground-question">Ask this model<textarea id="playground-question" rows="2" maxlength="2000" required placeholder="For example: What is the total downtime?"></textarea></label><label class="playground-mode">Answer from<select id="playground-mode"><option value="auto">AI · query data + documents</option><option value="metric">Metric query</option><option value="document">Document evidence</option></select></label><button id="playground-ask" type="submit">Interpret question</button></form>
-        <p class="help" id="playground-llm-status"></p>
-        <p class="help">Advanced agents can use the versioned Hub APIs and MCP for natural-language queries.</p>
-        <details class="playground-examples"><summary>Saved metrics · run their reviewed definitions</summary><div id="playground-examples"></div></details>
-      </div>
-      <p id="playground-status" role="status" aria-live="polite"></p><p id="playground-error" role="alert" hidden></p>
-      <div id="playground-clarification" hidden><h3 id="playground-outcome-heading">Clarify the question</h3><p id="playground-clarification-text"></p><div id="playground-choices"></div></div>
-    </section>
-    <section class="panel" id="playground-agent-panel" hidden aria-labelledby="playground-agent-title">
+        <div id="playground-thread" class="chat-thread" aria-label="Conversation">
+          <div id="playground-transcript"></div>
+          <div id="playground-turn" class="chat-turn" hidden>
+            <p id="playground-turn-question" class="chat-user"></p>
+            <article class="chat-assistant"><span class="chat-label">AI · Semantic Hub</span>
+              <p id="playground-status" role="status" aria-live="polite"></p>
+              <div id="playground-clarification" hidden><h3 id="playground-outcome-heading">Clarify the question</h3><p id="playground-clarification-text"></p><div id="playground-choices"></div></div>
+              <section class="chat-block" id="playground-agent-panel" hidden aria-labelledby="playground-agent-title">
       <div class="panel-heading"><h2 id="playground-agent-title">Agent checks</h2><span class="badge subtle" id="playground-agent-engine"></span></div>
       <p id="playground-agent-summary" class="help"></p>
       <ol id="playground-agent-steps"></ol>
       <details id="playground-scope-details" hidden><summary>Requested period and checked source coverage</summary><pre id="playground-scope-evidence"></pre></details>
-    </section>
-    <section class="panel" id="playground-interpretation" hidden>
+    </section><section class="chat-block" id="playground-interpretation" hidden>
       <div class="panel-heading"><h2>AI query plan</h2><span class="badge subtle">Inspect before running</span></div>
       <p id="playground-meaning"></p><dl id="playground-definition"></dl>
       <p id="playground-rules" class="playground-callout"></p>
       <details id="playground-sql-panel"><summary>Query SQL</summary><pre id="playground-sql"></pre></details>
       <div id="playground-plan-passages" hidden></div><div class="playground-run"><button id="playground-run" type="button">Run this interpretation</button><p class="help" id="playground-run-help">Runs against the selected local sample. Your published model stays unchanged.</p></div>
-    </section>
-    <section class="panel" id="playground-answer" hidden><div class="panel-heading"><h2>Answer</h2><span id="playground-answer-kind" class="badge subtle">Metric query</span></div><p id="playground-answer-text" class="playground-answer-text"></p><p id="playground-answer-context" class="playground-callout" hidden></p><p id="playground-limit" class="help"></p><div id="playground-results" class="result-table"></div>
+    </section><section class="chat-block" id="playground-answer" hidden><div class="panel-heading"><h2>Answer</h2><span id="playground-answer-kind" class="badge subtle">Metric query</span></div><p id="playground-answer-text" class="playground-answer-text"></p><p id="playground-answer-context" class="playground-callout" hidden></p><p id="playground-limit" class="help"></p><div id="playground-results" class="result-table"></div>
       <div id="playground-cited-claims" hidden></div><details><summary>Version and answer evidence</summary><pre id="playground-executed-sql"></pre><dl id="playground-evidence"></dl></details>
-    </section>
-    <section class="panel" id="playground-graph-panel" hidden><h2>How this model answers</h2>
+    </section><section class="chat-block" id="playground-graph-panel" hidden><h2>How this model answers</h2>
       <p class="help">This graph shows the definitions and dependencies used by this interpretation. It does not show individual source records.</p>
       <div id="playground-canvas"></div><details><summary>Selected graph object</summary><pre id="playground-object">Select an object to inspect it.</pre></details>
       <details><summary>Supporting documents · background context</summary><p class="help">These saved documents relate to the model or selected tables. Their content was not used to produce this SQL answer.</p><div id="playground-documents"></div></details>
       <details><summary>Semantic retrieval evidence</summary><pre id="playground-retrieval"></pre></details>
+    </section>
+            </article>
+          </div>
+          <div id="playground-suggestions" class="chat-suggestions"><p class="chat-label">Saved metrics · run their reviewed definitions</p><div id="playground-examples"></div></div>
+        </div>
+        <p id="playground-error" role="alert" hidden></p>
+        <form id="playground-form" class="chat-composer"><label for="playground-question" class="visually-hidden">Message</label><textarea id="playground-question" rows="2" maxlength="2000" required placeholder="Ask this model, for example: What is the total downtime?"></textarea>
+          <div class="chat-composer-actions"><label class="playground-mode"><span class="visually-hidden">Answer from</span><select id="playground-mode" aria-label="Answer from"><option value="auto">AI · query data + documents</option><option value="metric">Metric query</option><option value="document">Document evidence</option></select></label><p class="help" id="playground-llm-status"></p><button id="playground-ask" type="submit">Send</button></div>
+          <p class="help chat-hint">Enter sends · Shift+Enter adds a line. Advanced agents can use the versioned Hub APIs and MCP.</p></form>
+      </div>
     </section>
     <details id="legacy-query"><summary>Original sample examples and active-version checks</summary>
     <div class="workspace-bar"><div><strong id="query-status">Loading query context…</strong><p id="query-context" class="muted"></p></div><div class="actions"><a class="button-link secondary" href="/demo/context#hub" data-source-link>Manage versions</a></div></div>

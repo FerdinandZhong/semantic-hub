@@ -47,11 +47,18 @@ def test_docx_paragraph_and_table_rows():
 
 
 def pdf_bytes(*texts, encrypted=False):
+    """Build a PDF; a None text produces an image-only (scanned) page."""
     pypdf = pytest.importorskip('pypdf')
     from pypdf.generic import NameObject, DecodedStreamObject, DictionaryObject
     writer = pypdf.PdfWriter()
     for text in texts:
         page = writer.add_blank_page(width=300, height=300)
+        if text is None:
+            image = DecodedStreamObject()
+            image.set_data(b'\xff')
+            image.update({NameObject('/Type'): NameObject('/XObject'), NameObject('/Subtype'): NameObject('/Image')})
+            page[NameObject('/Resources')] = DictionaryObject({NameObject('/XObject'): DictionaryObject({NameObject('/Im1'): writer._add_object(image)})})
+            continue
         font = DictionaryObject({NameObject('/Type'): NameObject('/Font'), NameObject('/Subtype'): NameObject('/Type1'), NameObject('/BaseFont'): NameObject('/Helvetica')})
         page[NameObject('/Resources')] = DictionaryObject({NameObject('/Font'): DictionaryObject({NameObject('/F1'): writer._add_object(font)})})
         stream = DecodedStreamObject()
@@ -70,6 +77,17 @@ def test_pdf_page_citations_and_encryption():
     assert [c['location'] for c in chunks] == ['page 1', 'page 2']
     with pytest.raises(DemoError, match='Encrypted'):
         parse_document('secret.pdf', pdf_bytes('Secret', encrypted=True))
+
+
+def test_scanned_pdf_pages_are_collected_only_when_requested():
+    mixed = pdf_bytes('Text page', None)
+    with pytest.raises(DemoError, match='scanned pages'):
+        parse_document('mixed.pdf', mixed)
+    pages = []
+    chunks = parse_document('mixed.pdf', mixed, pages)
+    assert [c['location'] for c in chunks] == ['page 1'] and pages == [2]
+    pages = []
+    assert parse_document('scan.pdf', pdf_bytes(None, None), pages) == [] and pages == [1, 2]
 
 
 @pytest.mark.parametrize('name,data,message', [

@@ -7,7 +7,7 @@
   const post=(url,data)=>request(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   const binding=()=>({pack_id:config.pack_id,snapshot_sha256:config.snapshot_sha256,session_id:config.session_id});
   function controls(){
-    $('playground-ask').disabled=busy||!selected;$('playground-mode').disabled=busy||!selected;
+    $('playground-ask').disabled=busy||!selected;$('playground-new-chat').disabled=busy;$('playground-mode').disabled=busy||!selected;
     $('playground-run').disabled=busy||!plan;
     for(const button of document.querySelectorAll('#playground-examples button,#playground-choices button'))button.disabled=busy;
   }
@@ -16,6 +16,16 @@
     for(const id of ['playground-interpretation','playground-answer','playground-graph-panel','playground-clarification','playground-error','playground-agent-panel'])$(id).hidden=true;
     $('playground-status').textContent='';controls();
   }
+  // Chat transcript: each new question archives the previous turn as read-only history.
+  function archiveTurn(){
+    const turn=$('playground-turn');if(turn.hidden)return;
+    const copy=turn.cloneNode(true);
+    for(const el of [copy,...copy.querySelectorAll('[id]')])if(el.id.startsWith('playground-'))el.removeAttribute('id');
+    // Saved turns never restore runnable plans; ask again for a fresh interpretation.
+    for(const control of copy.querySelectorAll('button,select,input,textarea'))control.disabled=true;
+    copy.classList.add('chat-archived');$('playground-transcript').append(copy);
+  }
+  function clearChat(){$('playground-transcript').replaceChildren();$('playground-turn').hidden=true;$('playground-suggestions').hidden=false;}
   function metricButton(metric){
     const button=node('button',metric.name.replaceAll('_',' '));button.type='button';button.className='secondary';
     button.title=metric.description;button.onclick=()=>{
@@ -23,7 +33,7 @@
     };return button;
   }
   function selectVersion(){
-    reset();selected=versions.find(v=>v.version===$('playground-version').value)||null;
+    reset();clearChat();selected=versions.find(v=>v.version===$('playground-version').value)||null;
     $('playground-ready').hidden=!selected;$('playground-empty').hidden=Boolean(selected);
     $('playground-view').hidden=!selected;
     if(!selected){$('playground-binding').textContent='No published version selected.';controls();return;}
@@ -51,7 +61,10 @@
   }
   async function interpret(metric=null){
     if(!selected||busy)return;
-    reset();const ticket=generation;const release=selected,originalQuestion=$('playground-question').value.trim();busy=true;controls();
+    const originalQuestion=$('playground-question').value.trim();
+    archiveTurn();reset();const ticket=generation;const release=selected;busy=true;controls();
+    $('playground-turn-question').textContent=originalQuestion||metric;$('playground-turn').hidden=false;$('playground-suggestions').hidden=true;
+    $('playground-question').value='';$('playground-thread').scrollTop=$('playground-thread').scrollHeight;
     $('playground-status').textContent=metric?'Preparing the saved metric…':'AI is inspecting definitions, data coverage, and published evidence…';
     try{
       const data=await post('/demo/api/playground/interpret',{...binding(),version:release.version,context_sha256:release.context_sha256,question:originalQuestion,metric,mode:metric?'metric':$('playground-mode').value});
@@ -145,8 +158,11 @@
   }
   $('playground-form').onsubmit=event=>{event.preventDefault();interpret();};
   $('playground-version').onchange=selectVersion;
-  $('playground-question').oninput=()=>reset();
-  $('playground-mode').onchange=()=>reset();
+  // Editing the next message invalidates the displayed plan without hiding the answer.
+  $('playground-question').oninput=()=>{plan=null;controls();};
+  $('playground-mode').onchange=()=>{plan=null;controls();};
+  $('playground-question').onkeydown=event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();if(!busy&&$('playground-question').value.trim())$('playground-form').requestSubmit();}};
+  $('playground-new-chat').onclick=()=>{if(busy)return;reset();clearChat();$('playground-question').focus();};
   $('playground-run').onclick=run;
   document.addEventListener('demo:ready',async()=>{
     try{

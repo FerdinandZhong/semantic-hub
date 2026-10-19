@@ -23,7 +23,7 @@ function render(){
     const sources=matching.filter(s=>s.kind===type);if(!sources.length)continue;
     const group=node("section",undefined,"source-group"),heading=node("div",undefined,"group-heading"),grid=node("div",undefined,"source-grid");heading.append(node("h2",label),node("span",`${sources.length} sources`));
     for(const source of sources){const card=node("article",undefined,"source-card"),top=node("div",undefined,"card-top"),model=node("div",undefined,"card-model"),actions=node("div",undefined,"actions");top.append(node("span",type==="local"?"▤":"◫","source-icon"),badge(source));card.append(top,node("h3",source.name),node("p",source.description || kinds[source.kind]));
-      if(source.model){model.append(node("strong",source.model.title),node("p",`${source.model.metric_count} metrics · ${source.model.table_count} tables`,"card-stats"));if(source.model.active_version)model.append(node("p",`Queries use ${source.model.active_version}`,"card-stats"));else model.append(node("p","Inspect and review definitions before publishing.","card-stats"));}
+      if(source.model){model.append(node("strong",source.model.title),node("p",`${source.model.metric_count} metrics · ${source.model.table_count} tables`,"card-stats"));if(source.model.active_version)model.append(node("p",`Queries use ${source.model.active_version}`,"card-stats"));}
       else model.append(node("strong","Source import required"),node("p","This profile stores connection settings. No semantic model has been imported.","card-stats"));
       actions.append(button("Details",()=>openSource(source.id)));sourceActions(source,actions);card.append(model,actions);grid.append(card);
     }group.append(heading,grid);box.append(group);

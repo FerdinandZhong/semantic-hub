@@ -1,4 +1,4 @@
-.playground-header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.playground-header h2{margin:0}.playground-header p{margin-bottom:0;font-size:13px;max-width:650px}.playground-version{display:flex;align-items:end;gap:10px}.playground-version label{margin:0;min-width:140px}.playground-version select{display:block;min-height:44px;width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink)}.playground-version a{min-height:44px;box-sizing:border-box}
+.playground-header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.playground-header h2{margin:0}.playground-header p{margin-bottom:0;font-size:13px;max-width:650px}.playground-version{display:flex;align-items:end;gap:10px}.playground-version label{margin:0;min-width:140px}.playground-version select{display:block;min-height:var(--control-h,38px);width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink)}.playground-version a{min-height:var(--control-h,38px);box-sizing:border-box}
 #playground-form{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:24px}#playground-form label{margin:0}#playground-form button{align-self:flex-end}#playground-question{min-height:85px}#playground-examples,#playground-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}#playground-examples button,#playground-choices button{white-space:normal;text-align:left;font-size:13px}#playground-error{color:#a33b36}#playground-status:empty{display:none}.playground-callout{padding:12px 16px;border-left:3px solid var(--accent);background:var(--soft);font-size:13px;overflow-wrap:anywhere}.playground-run{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:20px}.playground-run p{margin:0}.playground-answer-text{font-size:30px;font-weight:700;margin:16px 0}
 #playground-definition dd,#playground-evidence dd{overflow-wrap:anywhere}#playground-interpretation pre,#playground-answer pre,#playground-graph-panel pre{max-height:320px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}#playground-canvas .canvas-node{cursor:pointer}#playground-graph-panel .canvas-stage{min-height:260px}#legacy-query>summary{font-weight:600;color:var(--muted)}#legacy-query .heading{margin:12px 0}.playground-examples{margin-top:16px}#playground-documents{font-size:13px;overflow-wrap:anywhere}
 @media(max-width:700px){.playground-version{width:100%}.playground-version label{flex:1}.playground-run button,#playground-form button{width:100%}#playground-canvas{height:780px}.playground-header{align-items:stretch}}
@@ -7,3 +7,40 @@
 #playground-form .playground-mode{width:100%;align-self:flex-start;max-width:420px;margin:0}#playground-mode{margin-top:6px}#playground-cited-claims{display:grid;gap:14px;margin-top:18px}.playground-document-claim{border:1px solid var(--line);border-radius:8px;padding:16px}.playground-document-claim>p{font-size:16px;white-space:pre-wrap}.playground-document-claim blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--accent);background:var(--soft);white-space:pre-wrap}.playground-document-claim pre{font-size:11px}#playground-plan-passages p{white-space:pre-wrap;max-height:280px;overflow:auto}
 
 #playground-agent-steps{padding-left:22px;display:grid;gap:12px;font-size:14px}#playground-agent-steps p{margin:4px 0;color:var(--muted);overflow-wrap:anywhere}#playground-agent-steps span{color:var(--muted)}#playground-scope-evidence{white-space:pre-wrap;overflow:auto;max-height:280px;font-size:12px}#playground-clarification{border-left:3px solid var(--accent);padding:4px 16px;background:var(--soft)}
+
+/* Chat layout following the UOB workspace: scrollable thread, blue user bubbles, white AI cards, bottom composer. */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.panel.playground-chat{padding:0;overflow:hidden}
+.playground-chat>.playground-header{padding:18px 22px;border-bottom:1px solid var(--line)}
+.playground-chat>#playground-empty{padding:18px 22px}
+.chat-thread{height:clamp(280px,56dvh,640px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:18px 22px;background:#fcfdff}
+.chat-turn{margin-bottom:18px}
+.chat-user{margin:0 0 10px 15%;padding:12px 16px;border:1px solid #d9e5fd;border-radius:10px 10px 2px 10px;background:var(--soft);white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
+.chat-assistant{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:white;overflow-wrap:anywhere}
+.chat-label{display:inline-flex;align-items:center;gap:6px;margin:0 0 8px;font-size:10px;font-weight:650;letter-spacing:.5px;color:var(--muted);text-transform:uppercase}
+.chat-assistant>.chat-label::before{content:"AI";padding:2px 6px;border-radius:4px;background:var(--accent);color:white;letter-spacing:.3px}
+.chat-block{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.chat-block:first-of-type{margin-top:6px}
+.chat-block h2{font-size:14px}
+.chat-archived{opacity:.92}
+.chat-archived .chat-assistant{background:#fdfdfe}
+#playground-status{margin:0;font-size:12px;color:var(--muted)}
+#playground-status:not(:empty)::before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--accent);vertical-align:middle;animation:chat-pulse 1.2s ease-in-out infinite}
+@keyframes chat-pulse{50%{opacity:.25}}
+.chat-suggestions .chat-label{display:block}
+#playground-examples{margin-top:0}
+#playground-examples button{min-height:32px;padding:6px 10px;border-radius:999px;font-size:12px}
+#playground-error{margin:0;padding:10px 22px;background:#fff1f1}
+.chat-composer{position:sticky;bottom:0;margin:0!important;padding:12px 22px 14px;border-top:1px solid var(--line);background:white}
+#playground-form.chat-composer{gap:0}
+.chat-composer #playground-question{min-height:60px;max-height:112px;margin:0;resize:none;border-radius:10px;box-shadow:0 1px 3px #152c650a}
+.chat-composer-actions{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.chat-composer-actions .playground-mode{max-width:260px;margin:0}
+.chat-composer-actions select{min-height:34px;padding:5px 10px;font-size:12px}
+.chat-composer-actions>.help{flex:1;margin:0;font-size:11px;min-width:180px}
+#playground-form .chat-composer-actions button{align-self:center;min-height:36px;padding:7px 18px;margin-left:auto}
+.chat-hint{margin:6px 0 0;font-size:11px}
+@media(max-width:700px){.chat-thread,.playground-chat>.playground-header,.chat-composer{padding-left:16px;padding-right:16px}.chat-user{margin-left:0}.chat-composer-actions .playground-mode{max-width:none;flex:1 1 100%}#playground-form .chat-composer-actions button{width:100%}}
+@media(prefers-reduced-motion:reduce){#playground-status:not(:empty)::before{animation:none}}
+/* An empty chat collapses so the composer follows the suggestions directly. */
+.chat-thread:has(#playground-turn[hidden]):has(#playground-transcript:empty){height:auto}

@@ -31,10 +31,11 @@ def extracted(client, monkeypatch):
     monkeypatch.setattr(materials, 'extract_visual', lambda *args: _validate({
         'summary': 'Revenue chart', 'transcripts': [{'page': 1, 'text': 'Revenue 12 USD'}],
         'observations': [copy.deepcopy(ROW)]}, [1]))
+    # Image uploads are transcribed automatically with the draft model.
     item = png_upload(http)
-    response = http.post(path(item, 'visual'), json={'revision': 1, 'pages': [1]})
-    assert response.status_code == 200, response.text
-    return http, app, llm, response.json()
+    assert item['revision'] == 1 and item['status'] == 'visual_review_required'
+    assert item['ocr_notice'].startswith('AI transcribed page(s) 1.')
+    return http, app, llm, item
 
 
 def facts(item, **changes):
@@ -148,3 +149,29 @@ def test_facts_invalid_observation_fields(extracted, changes, status):
     row = ROW | {'id': 'observation_1'} | changes
     response = http.post(path(item, 'facts'), json=facts(item, rows=[row]))
     assert response.status_code == status, response.text
+
+
+def test_mixed_pdf_keeps_text_and_auto_transcribes_scanned_pages(client, monkeypatch):
+    from apps.helios.tests.test_document_parser import pdf_bytes
+    http, _, _ = client
+    calls = []
+    def transcribe(filename, data, pages, llm):
+        calls.append(pages)
+        return _validate({'summary': 'Scan', 'transcripts': [{'page': 2, 'text': 'Scanned maintenance log'}],
+                          'observations': []}, pages)
+    monkeypatch.setattr(materials, 'extract_visual', transcribe)
+    response = http.post('/demo/api/materials/upload', json={
+        'filename': 'mixed.pdf', 'content_base64': base64.b64encode(pdf_bytes('Text page', None)).decode()})
+    assert response.status_code == 200, response.text
+    item = response.json()
+    assert calls == [[2]] and item['visual_source']['ocr_pages'] == [2]
+    assert [c.get('extraction_method') for c in item['chunks']] == [None, 'vision']
+    assert item['chunks'][1]['text'] == 'Scanned maintenance log'
+
+
+def test_failed_auto_transcription_keeps_the_upload(client):
+    http, _, _ = client
+    # The test model is not a vision provider, so transcription is refused but the image is stored.
+    item = png_upload(http)
+    assert item['status'] == 'visual_pending' and item['chunks'] == []
+    assert item['ocr_notice'].startswith('Automatic transcription did not run')

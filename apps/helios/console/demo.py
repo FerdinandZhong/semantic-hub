@@ -183,7 +183,22 @@ def materials_catalog(request: Request):
 
 @demo_router.post('/api/materials/upload')
 def material_upload(payload: MaterialUpload, request: Request):
-    return material_action(request, lambda library: library.upload(payload))
+    item = material_action(request, lambda library: library.upload(payload))
+    # ponytail: auto-OCR covers the first 6 image pages (the visual request limit); analyze later pages manually.
+    pages = (item.get('visual_source') or {}).get('ocr_pages', [])[:6]
+    if not pages:
+        return item
+    llm = purpose_llm(request, 'draft')
+    if llm is None:
+        return item | {'ocr_notice': 'Scanned pages need AI transcription. Configure a vision-capable draft model, then analyze pages.'}
+    try:
+        item = materials_for(request).visual(item['document_id'], MaterialVisual(revision=item['revision'], pages=pages), llm)
+    except DemoError as exc:
+        return item | {'ocr_notice': f'Automatic transcription did not run: {exc} Analyze pages manually.'}
+    except Exception:
+        # Provider exceptions can contain document text, endpoints, or credentials. The upload itself is kept.
+        return item | {'ocr_notice': 'Automatic transcription failed. Check the draft model configuration, then analyze pages manually.'}
+    return item | {'ocr_notice': f"AI transcribed page(s) {', '.join(map(str, pages))}. Verify each transcript against the original page."}
 
 
 @demo_router.get('/api/materials/{document_id}')
@@ -602,6 +617,9 @@ def configure_demo(application) -> None:
             "/static/demo.css",
             "/static/demo-shell.css",
             "/static/cloudera-wordmark.png",
+            "/static/favicon.svg",
+            "/static/favicon-32.png",
+            "/static/apple-touch-icon.png",
             "/static/demo.js",
             "/demo/context",
             "/demo/api/context",

@@ -71,7 +71,7 @@ def _docx_units(data: bytes):
         raise DemoError('Cannot read this DOCX document. Export it as DOCX or UTF-8 text again.') from None
 
 
-def _pdf_units(data: bytes):
+def _pdf_units(data: bytes, image_pages=None):
     try:
         from pypdf import PdfReader
     except ImportError:
@@ -95,6 +95,10 @@ def _pdf_units(data: bytes):
                 xobjects = resources.get('/XObject')
                 xobjects = xobjects.get_object() if xobjects else {}
                 if any(obj.get_object().get('/Subtype') == '/Image' for obj in xobjects.values()):
+                    if image_pages is not None:
+                        # Callers that can transcribe pages visually collect them instead.
+                        image_pages.append(number)
+                        continue
                     raise DemoError('PDF contains scanned pages without text. Run OCR or upload UTF-8 text.')
             yield text, f'page {number}'
     except DemoError:
@@ -103,8 +107,11 @@ def _pdf_units(data: bytes):
         raise DemoError('Cannot read this PDF. Export a text PDF or UTF-8 text again.') from None
 
 
-def parse_document(filename: str, data: bytes) -> list[dict[str, str]]:
-    """Parse TXT, Markdown, text PDF, or DOCX without fetching document links."""
+def parse_document(filename: str, data: bytes, image_pages: list[int] | None = None) -> list[dict[str, str]]:
+    """Parse TXT, Markdown, text PDF, or DOCX without fetching document links.
+
+    When ``image_pages`` is a list, image-only PDF pages are appended to it instead of raising.
+    """
     if not isinstance(filename, str) or not isinstance(data, bytes):
         raise DemoError('Provide a document filename and bytes.')
     if len(data) > MAX_INPUT_BYTES:
@@ -124,7 +131,7 @@ def parse_document(filename: str, data: bytes) -> list[dict[str, str]]:
             raise DemoError('Text contains binary data. Save the document as UTF-8 text.')
         units = [(value, '')]
     else:
-        units = _pdf_units(data) if suffix == '.pdf' else _docx_units(data)
+        units = _pdf_units(data, image_pages) if suffix == '.pdf' else _docx_units(data)
     chunks = []
     total = 0
     for value, location in units:
@@ -142,6 +149,6 @@ def parse_document(filename: str, data: bytes) -> list[dict[str, str]]:
                 raise DemoError('Document exceeds 128 text chunks. Upload a smaller document.')
             identity = hashlib.sha256((source + '\x00' + str(len(chunks)) + '\x00' + part).encode('utf-8')).hexdigest()[:24]
             chunks.append({'id': f'chunk_{identity}', 'text': part, 'location': source})
-    if not chunks:
+    if not chunks and not image_pages:
         raise DemoError('Document has no extractable text. Run OCR for scanned PDFs or upload UTF-8 text.')
     return chunks
