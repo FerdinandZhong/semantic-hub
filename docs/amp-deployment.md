@@ -63,7 +63,7 @@ Use the Application URL returned by Workbench. Its subdomain can contain a gener
 
 CAI authenticates browser sessions and remote API requests at its Application ingress.
 The manifest sets `bypass_authentication: false`.
-The application binds `0.0.0.0` on the injected `CDSW_APP_PORT`.
+The application binds `127.0.0.1` on the injected `CDSW_APP_PORT`.
 The launcher keeps the Workbench Jupyter kernel alive and supervises the isolated server as a child process.
 It forwards shutdown to the server process group and reports server exit errors in the Application log.
 It does not create a separate Semantic Hub bearer token.

@@ -39,7 +39,7 @@ def main():
     port = args.port if args.local else int(os.environ.get('CDSW_APP_PORT', '0'))
     if not port or not 1 <= port <= 65535:
         parser.error('CAI must inject CDSW_APP_PORT; local tests require --local --port PORT.')
-    uvicorn.run(create_app(local=args.local), host='127.0.0.1' if args.local else '0.0.0.0',
+    uvicorn.run(create_app(local=args.local), host='127.0.0.1',
                 port=port, workers=1, access_log=False)
 
 
