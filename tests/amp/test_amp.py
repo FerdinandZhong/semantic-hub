@@ -79,7 +79,14 @@ with TestClient(app) as client:
     assert 'ConsumerBearer' not in schema.get('components', {}).get('securitySchemes', {})
     if not LOCAL:
         assert 'CAI Application ingress' in caps.json()['authorization']
-        assert 'Workbench session authenticates' in client.get('/docs').text
+        shell = client.get('/docs').text
+        assert 'Workbench session authenticates' in shell
+        assert 'CDSW_APIV2_KEY' in shell and 'persistAuthorization:false' in shell
+        assert 'Consumer API token' not in shell and 'access-form' not in shell
+        assert schema['components']['securitySchemes']['CAIAPIv2Key']['scheme'] == 'bearer'
+        for operations in schema['paths'].values():
+            for operation in operations.values():
+                assert operation['security'] == [{'CAIAPIv2Key': []}]
 '''.replace('LOCAL', str(not platform))
     proc = subprocess.run([sys.executable, '-c', code], cwd=ROOT, env=env,
                           capture_output=True, text=True, timeout=60)

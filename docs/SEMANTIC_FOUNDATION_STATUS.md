@@ -1,5 +1,11 @@
 # Semantic foundation: progress and consumer handoff
 
+**CAI ingress and Swagger verification — 19 October 2026:** The deployed Application accepted a supplied CAI API v2 key for Swagger, OpenAPI, capabilities, and supporting materials (HTTP 200).
+Requests without a key redirected to CAI login (HTTP 302). The deployment reported CAI ingress authorization.
+Its material catalog did not contain the HSBC guide; the finance documentation now includes AMP upload instructions.
+The AMP Swagger template now removes legacy consumer-token markup and exposes standard CAI API v2 bearer authorization.
+Eleven AMP tests and twelve consumer API tests pass. The template update requires a checkout update and Application restart.
+
 **AMP Application launcher repair — 18 October 2026:** Replaced kernel-process execution with a blocking child-process supervisor.
 The launcher retains the CAI Jupyter kernel, propagates server failures, and cleans up the server process group on shutdown.
 The isolated bootstrap now consumes its project-root argument before server argument parsing.

@@ -62,6 +62,9 @@ Use the Application URL returned by Workbench. Its subdomain can contain a gener
 | `https://<application-host>/healthz` | Application readiness |
 
 CAI authenticates browser sessions and remote API requests at its Application ingress.
+Swagger loads through your Workbench session. Its standard **Authorize** dialog accepts a CAI API v2 key.
+Enter the key without `Bearer`; Swagger adds that prefix to requests.
+The AMP Swagger page contains no legacy consumer-token form.
 The manifest sets `bypass_authentication: false`.
 The application binds `127.0.0.1` on the injected `CDSW_APP_PORT`.
 The launcher keeps the Workbench Jupyter kernel alive and supervises the isolated server as a child process.

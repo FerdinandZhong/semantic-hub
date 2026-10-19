@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-19",
+  "deployment": "https://semantic-hub-s3os5f.ml-c99c87a0-2d3.qzhong-a.a465-9q4k.cloudera.site",
+  "credential": "CAI API v2 key; value omitted",
+  "deployed_results_before_template_update": {
+    "unauthenticated /docs": {
+      "status": 302,
+      "content_type": "text/html; charset=utf-8",
+      "redirect_path": "/login"
+    },
+    "unauthenticated /api/semantic-hub/v1/openapi.json": {
+      "status": 302,
+      "content_type": "text/html; charset=utf-8",
+      "redirect_path": "/login"
+    },
+    "unauthenticated /api/semantic-hub/v1/capabilities": {
+      "status": 302,
+      "content_type": "text/html; charset=utf-8",
+      "redirect_path": "/login"
+    },
+    "unauthenticated /demo/materials": {
+      "status": 302,
+      "content_type": "text/html; charset=utf-8",
+      "redirect_path": "/login"
+    },
+    "unauthenticated /demo/api/materials": {
+      "status": 302,
+      "content_type": "text/html; charset=utf-8",
+      "redirect_path": "/login"
+    },
+    "cai_api_key /docs": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "has_consumer_token_label": true,
+      "auto_loads": true,
+      "mentions_cai": true,
+      "native_cai_auth": false
+    },
+    "cai_api_key /api/semantic-hub/v1/openapi.json": {
+      "status": 200,
+      "content_type": "application/json",
+      "security_schemes": {}
+    },
+    "cai_api_key /api/semantic-hub/v1/capabilities": {
+      "status": 200,
+      "content_type": "application/json",
+      "authorization": "CAI Application ingress; project access, all published models; no per-model grants."
+    },
+    "cai_api_key /demo/materials": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "hsbc_visible": false
+    },
+    "cai_api_key /demo/api/materials": {
+      "status": 200,
+      "content_type": "application/json",
+      "hsbc_present": false,
+      "catalog_keys": [
+        "items",
+        "embedding_ready"
+      ]
+    }
+  },
+  "amp_tests_passed": 11,
+  "consumer_tests_passed": 12,
+  "template_update": "native CAI bearer authorization; no legacy consumer-token form; deployment restart pending",
+  "local_browser_template_check": {
+    "legacy_form": "absent",
+    "native_authorize": "CAIAPIv2Key HTTP bearer",
+    "request_header": "Bearer header verified with a dummy key; value omitted",
+    "try_it_out": "HTTP 200 against local TestClient interception",
+    "deployed_new_template": "pending checkout update and restart"
+  }
+}

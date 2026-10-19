@@ -178,10 +178,9 @@ def create_application(hub=None,settings=None,*,local_no_auth=False,platform_aut
     app.mount('/docs/assets',StaticFiles(directory=Path(__file__).parent/'static/swagger'),name='swagger-assets')
     @app.get('/docs',include_in_schema=False,response_class=HTMLResponse)
     def docs():
-        content=(Path(__file__).parent/'templates/semantic-hub-api-docs.html').read_text().replace('__LOCAL_NO_AUTH__','true' if local_no_auth or platform_auth else 'false')
         if platform_auth:
-            content=content.replace('Local demo access. No consumer token is required.','CAI Application access. Your Workbench session authenticates this page.')
-        return content
+            return (Path(__file__).parent/'templates/semantic-hub-cai-api-docs.html').read_text()
+        return (Path(__file__).parent/'templates/semantic-hub-api-docs.html').read_text().replace('__LOCAL_NO_AUTH__','true' if local_no_auth else 'false')
     @app.get(PREFIX+'/docs',include_in_schema=False)
     def docs_alias():return RedirectResponse('/docs')
     @app.get(PREFIX+'/openapi.json',dependencies=[Depends(authorize)],include_in_schema=False)
@@ -191,9 +190,15 @@ def create_application(hub=None,settings=None,*,local_no_auth=False,platform_aut
             import copy
             spec=copy.deepcopy(spec)
             spec.get('components',{}).pop('securitySchemes',None)
+            if platform_auth:
+                spec.setdefault('components',{})['securitySchemes']={'CAIAPIv2Key':{
+                    'type':'http','scheme':'bearer',
+                    'description':'CAI API v2 key (CDSW_APIV2_KEY). CAI Application ingress validates access. Enter the key without the Bearer prefix.'}}
             for operations in spec['paths'].values():
                 for operation in operations.values():
-                    if isinstance(operation,dict):operation.pop('security',None)
+                    if isinstance(operation,dict):
+                        if platform_auth:operation['security']=[{'CAIAPIv2Key':[]}]
+                        else:operation.pop('security',None)
         return spec
     async def domain_error(request,exc):
         return JSONResponse({'error':{'code':'semantic_contract_rejected','message':str(exc),'retryable':False}},status_code=409)

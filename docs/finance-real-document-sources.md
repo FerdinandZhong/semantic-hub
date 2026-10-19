@@ -99,3 +99,21 @@ Better role-aware matching or explicit target selection is a follow-up. Do not f
 
 The UOB HK transfer-form URL appeared in search but returned HTTP 404 on download, so it is not included.
 The UOB Singapore internal-transfer PDF exposed an Adobe dynamic-form placeholder, so it was not selected for this importer.
+
+## Use the HSBC file in the CAI AMP
+
+The repository includes `docs/demo-inputs/finance-real/hsbc-smartform-completion-guide.pdf`.
+[Download the included HSBC PDF](https://raw.githubusercontent.com/FerdinandZhong/semantic-hub/main/docs/demo-inputs/finance-real/hsbc-smartform-completion-guide.pdf).
+The local demo upload does not automatically populate a new AMP workspace.
+The deployed material catalog checked on 19 October did not contain the HSBC guide.
+
+1. Open **Supporting materials** and upload the HSBC PDF.
+2. Analyze physical page **7**, then review the beneficiary-account passage.
+3. Expand **Add evidence to an existing semantic model**.
+4. Find links for the finance model and search `receiver_account_id`.
+5. Select the page 7 link to `transactions.receiver_account_id`.
+6. Review and approve the link, then apply it to the finance draft.
+7. Save, validate, review, and publish the updated model in Studio.
+
+The guide supports the recipient-account role. It does not verify the synthetic transactions.
+Use physical PDF page 7; the printed page number differs.

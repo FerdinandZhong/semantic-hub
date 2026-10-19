@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Hub API — Swagger UI</title>
+  <link rel="stylesheet" href="/docs/assets/swagger-ui.css">
+  <style>
+    body{margin:0;background:#f6f8fc;font:16px system-ui,sans-serif;color:#25324a}
+    .access{max-width:1100px;margin:24px auto;padding:24px;background:white;border:1px solid #dce3ee;border-radius:12px}
+    h1{margin-top:0}#status{min-height:24px}#swagger-ui{background:white}
+  </style>
+</head>
+<body>
+  <section class="access">
+    <h1>Semantic Hub API</h1>
+    <p>Your CAI Workbench session authenticates this page.</p>
+    <p>Remote clients and MCP use a CAI API v2 key through <code>CDSW_APIV2_KEY</code>.
+      To test a key here, select <strong>Authorize</strong> and enter the key without the Bearer prefix.</p>
+    <p>CAI validates Application access. No separate Semantic Hub token is required.
+      The key remains in page memory and clears when you reload.</p>
+    <p id="status" role="status" aria-live="polite">Loading API documentation…</p>
+  </section>
+  <div id="swagger-ui"></div>
+  <script src="/docs/assets/swagger-ui-bundle.js"></script>
+  <script>
+    async function loadDocs(){
+      const status=document.getElementById('status');
+      try{
+        const response=await fetch('/api/semantic-hub/v1/openapi.json',{
+          credentials:'same-origin',cache:'no-store',redirect:'error'
+        });
+        if(!response.ok)throw new Error('CAI access was not accepted. Refresh your Workbench session.');
+        const spec=await response.json();
+        SwaggerUIBundle({spec,dom_id:'#swagger-ui',deepLinking:true,persistAuthorization:false,
+          validatorUrl:null,defaultModelsExpandDepth:-1,docExpansion:'list'});
+        status.textContent='Connected. Use your CAI session, or Authorize with a CAI API v2 key.';
+      }catch(error){status.textContent='Could not load the API schema. Check your CAI session and Application access.';}
+    }
+    loadDocs();
+  </script>
+</body>
+</html>
