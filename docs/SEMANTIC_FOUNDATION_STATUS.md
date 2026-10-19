@@ -1,5 +1,10 @@
 # Semantic foundation: progress and consumer handoff
 
+**Manufacturing real-document preparation — 19 October 2026:** Prepared a nine-page, 1.64 MiB excerpt of the DOE maintenance guide.
+It preserves original page content and records the full-source checksum, excerpt checksum, and page map.
+The [linking guide](manufacturing-real-document-sources.md) maps maintenance definitions to `work_orders` and condition-monitoring context to `sensor_readings`.
+The document was not uploaded, approved, or attached to the deployed model automatically.
+
 **CAI ingress and Swagger verification — 19 October 2026:** The deployed Application accepted a supplied CAI API v2 key for Swagger, OpenAPI, capabilities, and supporting materials (HTTP 200).
 Requests without a key redirected to CAI login (HTTP 302). The deployment reported CAI ingress authorization.
 Its material catalog did not contain the HSBC guide; the finance documentation now includes AMP upload instructions.

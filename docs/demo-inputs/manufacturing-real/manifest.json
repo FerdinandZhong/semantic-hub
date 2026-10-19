@@ -1,0 +1,79 @@
+{
+  "title": "DOE Operations & Maintenance Best Practices, Release 3.0 \u2014 evidence excerpt",
+  "publisher": "U.S. Department of Energy, Federal Energy Management Program",
+  "publication_date": "2010-08",
+  "source_url": "https://www.energy.gov/sites/default/files/2020/04/f74/omguide_complete_w-eo-disclaimer.pdf",
+  "retrieved": "2026-10-19",
+  "original_sha256": "9cf0adbc462c73b7ec20f97b21643ba709c2c7c4571ff6630a2d628d78e3147c",
+  "original_bytes": 8562032,
+  "original_page_count": 321,
+  "excerpt_file": "doe-maintenance-evidence-excerpt.pdf",
+  "excerpt_sha256": "911df26bb412088c0abbaad085a56b84d5eac9c2263852646ddd962b73057b5a",
+  "excerpt_bytes": 1721669,
+  "page_map": [
+    {
+      "excerpt_page": 1,
+      "original_pdf_page": 1
+    },
+    {
+      "excerpt_page": 2,
+      "original_pdf_page": 3
+    },
+    {
+      "excerpt_page": 3,
+      "original_pdf_page": 4
+    },
+    {
+      "excerpt_page": 4,
+      "original_pdf_page": 51
+    },
+    {
+      "excerpt_page": 5,
+      "original_pdf_page": 52
+    },
+    {
+      "excerpt_page": 6,
+      "original_pdf_page": 59
+    },
+    {
+      "excerpt_page": 7,
+      "original_pdf_page": 60
+    },
+    {
+      "excerpt_page": 8,
+      "original_pdf_page": 64
+    },
+    {
+      "excerpt_page": 9,
+      "original_pdf_page": 65
+    }
+  ],
+  "modifications": "Page selection and PDF metadata only; source text and graphics retained.",
+  "usage": "External conceptual supporting evidence for synthetic manufacturing model; no validation of individual assets, events, sensor values, or numeric thresholds.",
+  "candidate_links": [
+    {
+      "excerpt_page": 4,
+      "original_pdf_page": 51,
+      "target": "work_orders",
+      "purpose": "Preventive maintenance as scheduled activity"
+    },
+    {
+      "excerpt_page": 5,
+      "original_pdf_page": 52,
+      "target": "sensor_readings",
+      "purpose": "Condition measurements supporting predictive maintenance"
+    },
+    {
+      "excerpt_page": 6,
+      "original_pdf_page": 59,
+      "target": "assets",
+      "purpose": "Equipment and condition-monitoring applications"
+    },
+    {
+      "excerpt_page": 8,
+      "original_pdf_page": 64,
+      "target": "sensor_readings",
+      "purpose": "Visual thermal inspection examples; not equivalent to process_temperature_k or air_temperature_k"
+    }
+  ]
+}

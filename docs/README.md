@@ -75,3 +75,5 @@ The legacy MCP document index remains separate and disabled in the local demo.
 CAI token authentication and AMP packaging remain planned.
 
 - [Semantic Hub AMP deployment](amp-deployment.md): setup, persistent storage, CAI authentication, and MCP configuration.
+
+- [Manufacturing real-document evidence](manufacturing-real-document-sources.md): upload-ready DOE excerpt, page mapping, model-link instructions, and demo questions.
