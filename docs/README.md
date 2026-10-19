@@ -1,6 +1,9 @@
-# Helios documentation map
+# Semantic Hub documentation map
 
-Reviewed on 15 October 2026 against the local working tree.
+Reviewed on 19 October 2026 against the local working tree.
+
+Start with [current implementation progress and plan](implementation-progress-and-plan.md).
+Read [vision, OCR, and embeddings decisions](vision-ocr-and-embeddings-discussion.md) for the document-understanding discussion.
 
 ## Integrate an external agent
 
@@ -63,7 +66,7 @@ The [Model playground](model-playground.md) documents published-version question
 M2B and M3A work locally. Scoped published-passage queries and combined SQL/document answers are implemented for the local Playground.
 Production acceptance and downstream adoption remain open.
 The current workspace now has a dedicated published-model API and MCP adapter.
-Enterprise identity, live imports, and hosted CAI acceptance remain integration work.
+Enterprise per-model identity and live imports remain integration work. CAI ingress checks passed; full hosted acceptance remains open.
 The legacy MCP document index remains separate and disabled in the local demo.
 
 ### GitHub MCP handoff
@@ -72,7 +75,7 @@ The legacy MCP document index remains separate and disabled in the local demo.
 - [GitHub MCP verification](semantic-hub-github-mcp-verification.json): twelve tools tested against the local API without a consumer token.
 - [Short finance and manufacturing stories](finance-manufacturing-simple-demo.md): questions, expected starter values, and validation SQL.
 
-CAI token authentication and AMP packaging remain planned.
+AMP packaging and CAI ingress authentication are implemented. Full hosted Agent Studio acceptance remains open.
 
 - [Semantic Hub AMP deployment](amp-deployment.md): setup, persistent storage, CAI authentication, and MCP configuration.
 

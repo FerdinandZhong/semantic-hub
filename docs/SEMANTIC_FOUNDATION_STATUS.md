@@ -1,5 +1,15 @@
 # Semantic foundation: progress and consumer handoff
 
+Current snapshot: [implementation progress and plan](implementation-progress-and-plan.md), updated 19 October 2026.
+The entries below are chronological milestone records. Older pending statements can be superseded by later entries.
+
+**Vision, OCR, and embeddings decision record — 19 October 2026:** Documented the distinction between visual understanding and vector generation.
+GPT-4o can read images through the API. A separate OCR service is optional.
+The existing embedding client accepts text; no direct image/text embedding model was added.
+Recommended use: VLM extraction, human review, then optional text embeddings in Lance.
+See [discussion and decisions](vision-ocr-and-embeddings-discussion.md).
+This documentation task changed no model settings, uploads, reviews, or deployed state.
+
 **Older/newer model compatibility — 19 October 2026:** Added centralized model-family request rules.
 GPT-4o/custom model IDs retain legacy Chat Completions. GPT-5 retains completion-token controls.
 GPT-6 uses Responses for text and agent tools, with supported low reasoning and a minimum reasoning/output budget.

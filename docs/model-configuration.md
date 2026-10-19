@@ -95,3 +95,9 @@ The browser check uses isolated state and a local fake provider.
 It checks masked input, save, reload, blank-field retention, removal, and authenticated connection testing.
 It does not modify the user's profiles or validate a particular external provider model.
 See [browser verification](model-credentials-verification.json).
+
+## Vision, OCR, and embedding decisions
+
+See [the discussion record](vision-ocr-and-embeddings-discussion.md) for model roles and implemented boundaries.
+Visual understanding uses the draft model; optional retrieval uses a separate text-embedding profile.
+A separate OCR service is not required for the existing visual workflow.

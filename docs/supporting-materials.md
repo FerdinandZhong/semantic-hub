@@ -74,6 +74,9 @@ An exact quotation proves the text exists; a reviewer must still verify the inte
 The [visual-document workflow](visual-document-facts.md) adds GPT-4o extraction from images and selected PDF page images.
 Select one to six physical pages from a PDF containing at most 32 pages.
 Image-only and scanned pages use the same bounded visual workflow.
+Upload transcribes them automatically with the draft model: images use page 1, and PDFs use their first six image-only pages.
+Text pages in a mixed PDF keep their extracted text; transcripts are added as labeled `vision` sections.
+If the draft model is missing or rejects the request, the upload is kept and a notice asks for manual page analysis.
 Original page previews accompany proposed observations and retain their physical page numbers.
 Reviewers correct and select rows, confirm source-page review, and create a new typed fact source with a semantic draft.
 The source retains units, periods, populations, denominators, uncertainty, original checksum, extraction, and reviewer decisions.
@@ -177,3 +180,9 @@ Choose Auto or Document evidence to inspect passages and request a cited answer.
 The answer reads frozen published attachments. Later library revisions and draft edits do not replace those passages.
 No new reference SQL is needed for document answers. Existing metric validation remains required for publication.
 See [the Playground contract](model-playground.md) for supported attachment types and evidence-check limits.
+
+## Vision, OCR, and embedding decisions
+
+See [the discussion record](vision-ocr-and-embeddings-discussion.md) for model roles and implemented boundaries.
+Visual understanding uses the draft model; optional retrieval uses a separate text-embedding profile.
+A separate OCR service is not required for the existing visual workflow.
