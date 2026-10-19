@@ -27,6 +27,47 @@ Enter a replacement key to rotate it.
 Select **Remove saved API key**, then save, to remove the active stored credential.
 These actions apply only to the selected profile.
 
+## Older and newer OpenAI models
+
+Request routing follows the configured model ID. Existing profiles and default models remain unchanged.
+
+| Configured model | Text and tool protocol | Request behavior |
+| --- | --- | --- |
+| GPT-4o and unrecognized compatible model IDs | Chat Completions | Existing token and temperature fields |
+| GPT-5 / GPT-5.1+ including GPT-5.4 | Chat Completions | Completion-token budget; existing GPT-5.1+ `none` reasoning behavior retained |
+| GPT-6 family, including `gpt-6.1-sol` | Responses | Low reasoning; output-token budget; no sampling controls |
+
+GPT-6 text calls use a minimum 1,024-token budget because reasoning consumes the same budget as visible output.
+The Playground agent uses a bounded 2,000-token output budget per runtime request.
+A provider response marked incomplete fails explicitly rather than becoming a partial answer.
+Custom endpoints must implement the protocol selected for the model ID.
+Unknown model aliases retain legacy behavior; their vendor-specific compatibility is not inferred automatically.
+
+To use GPT-6.1 Sol:
+
+1. Open **Model configuration → Model playground**.
+2. Choose **Custom OpenAI-compatible endpoint**.
+3. Set **Model** to `gpt-6.1-sol`.
+4. Set **Base URL** to `https://api.openai.com/v1`.
+5. Enter or retain an OpenAI API key with access to that model.
+6. Save settings and select **Test saved connection**.
+7. Open Playground and select a published semantic version.
+8. Interpret a question and inspect its scope before execution.
+
+CAI `CDSW_APIV2_KEY` authenticates the Hub's ingress. It is separate from the OpenAI model-provider key.
+The implementation does not replace a saved model automatically.
+
+The official [GPT-6.1 Sol documentation](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
+requires Responses for tool calling and supports `low` reasoning.
+The runtime adapter declares that capability explicitly for custom provider routes.
+Text, tool calls, reasoning items, tool results, and usage accounting follow the selected protocol.
+Document visual extraction keeps its existing Chat Completions JSON-schema contract with model-compatible generation fields.
+
+Live validation covers GPT-4o, GPT-5.4, and GPT-6.1 Sol.
+All three passed connection testing, 74.1% supported-cohort execution, missing-period rejection, and unsupported-geography rejection.
+See [model compatibility results](model-compatibility-verification.json).
+These checks establish the tested paths, not general natural-language correctness or every vendor model's compatibility.
+
 ## Other authentication options
 
 Choose **Use environment variable** for an existing server environment reference, such as `INFERENCE_TOKEN`.

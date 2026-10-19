@@ -9,6 +9,7 @@ from pathlib import Path
 
 import yaml
 from helios_core.demo.registry import DemoError
+from helios_core.llm.openai_compat import openai_compatibility
 from .memory import Memory
 from .tools import SemanticTools, TOOL_SCHEMAS
 
@@ -22,8 +23,12 @@ def profile(llm):
     if llm.provider not in ('openai', 'mistral'):
         raise DemoError('The Playground Harness currently requires an OpenAI-compatible query model configuration.')
     provider = 'helios-query'
+    compat = openai_compatibility(llm.model)
+    model = {'id': llm.model, 'contextWindow': 128000, 'maxTokens': 2000}
+    if compat.api == 'responses':
+        model['reasoningEfforts'] = {'low': 'low'}
     adapter = {'apiKeyEnv':'HELIOS_HARNESS_MODEL_KEY', 'baseURL':endpoint,
-               'api':'openai-completions', 'models':[{'id':llm.model, 'contextWindow':128000, 'maxTokens':2000}],
+               'api':('openai-responses' if compat.api == 'responses' else 'openai-completions'), 'models':[model],
                'retryPolicy':{'mode':'normal','maxRetries':1}}
     return provider, adapter
 
@@ -78,6 +83,7 @@ def interpret(playground, payload, llm):
             patch.write_text(yaml.safe_dump(config,sort_keys=False))
             harness = DeepSeekHarness(dsh_home=str(root/'runtime'),cwd=str(root),profile='sdk-minimal',
                 patches=(str(patch),),provider=provider,model=llm.model,max_tokens=2000,
+                reasoning_effort=('low' if openai_compatibility(llm.model).api == 'responses' else None),
                 request_timeout_seconds=120,initialize_timeout_seconds=30,
                 env={'HELIOS_HARNESS_MODEL_KEY':llm.api_key or '',
                      'HELIOS_HARNESS_BRIDGE':f'http://127.0.0.1:{server.server_port}/tools',

@@ -763,6 +763,7 @@ class AssistantService:
                 {
                     "role": "assistant",
                     "content": turn.text,
+                    **({"response_items": list(turn.response_items)} if turn.response_items else {}),
                     "tool_calls": [
                         {"id": call.id, "name": call.name, "arguments": call.arguments}
                         for call in turn.tool_calls

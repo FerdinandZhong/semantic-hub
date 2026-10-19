@@ -14,6 +14,7 @@ from .connections import validate_endpoint
 from .document_parser import MAX_INPUT_BYTES
 from .registry import DemoError
 from helios_core.llm import LLMError, LLMTimeoutError
+from helios_core.llm.openai_compat import openai_compatibility
 
 MAX_PAGES = 32
 MAX_SELECTED_PAGES = 6
@@ -213,8 +214,8 @@ def extract_visual(filename: str, data: bytes, pages: list[int], llm) -> dict:
         try:
             with httpx.stream('POST', endpoint + '/chat/completions',
                               headers={'Authorization': 'Bearer ' + llm.api_key, 'content-type': 'application/json'},
-                              json={'model': llm.model, 'messages': messages, 'temperature': 0,
-                                    'max_tokens': min(getattr(llm, 'max_tokens', 4000), 16000),
+                              json={'model': llm.model, 'messages': messages,
+                                    **openai_compatibility(llm.model).chat_options(min(getattr(llm, 'max_tokens', 4000), 16000), 0),
                                     'response_format': _response_format(pages)},
                               timeout=httpx.Timeout(timeout, connect=min(timeout, 10))) as response:
                 response.raise_for_status()

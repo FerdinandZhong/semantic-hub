@@ -1,5 +1,14 @@
 # Semantic foundation: progress and consumer handoff
 
+**Older/newer model compatibility — 19 October 2026:** Added centralized model-family request rules.
+GPT-4o/custom model IDs retain legacy Chat Completions. GPT-5 retains completion-token controls.
+GPT-6 uses Responses for text and agent tools, with supported low reasoning and a minimum reasoning/output budget.
+The agent adapter declares reasoning capabilities explicitly; general tool loops retain encrypted reasoning items and function call IDs.
+Visual document extraction now uses compatible generation fields without changing its output schema.
+Live GPT-4o, GPT-5.4, and GPT-6.1 Sol checks passed connections and all nine Playground scope/execution cases.
+The combined compatibility, model configuration, document extraction, agent, and tool-loop regression suite passed 120 tests.
+User model selections and deployed state were not changed. See [configuration](model-configuration.md#older-and-newer-openai-models) and [verification](model-compatibility-verification.json).
+
 **Manufacturing real-document preparation — 19 October 2026:** Prepared a nine-page, 1.64 MiB excerpt of the DOE maintenance guide.
 It preserves original page content and records the full-source checksum, excerpt checksum, and page map.
 The [linking guide](manufacturing-real-document-sources.md) maps maintenance definitions to `work_orders` and condition-monitoring context to `sensor_readings`.

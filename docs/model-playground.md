@@ -43,6 +43,8 @@ Use **Saved metrics** to run a reviewed metric without an LLM.
 Selecting a saved metric explicitly uses its saved description and grouping.
 Unsupported or ambiguous questions request clarification instead of executing a guessed query.
 The query LLM is configured independently under **Model configuration → Model playground**.
+GPT-4o and GPT-5.4 retain Chat Completions; GPT-6 models use Responses for agent tool calling.
+See [model compatibility and configuration](model-configuration.md#older-and-newer-openai-models).
 
 ## Version and execution contract
 

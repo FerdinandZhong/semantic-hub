@@ -121,3 +121,22 @@ def test_oversized_or_invalid_image_rejected():
         inspect_visual('scan.png', b'x' * (5 * 1024 * 1024 + 1))
     with pytest.raises(DemoError, match='decode'):
         inspect_visual('scan.png', b'bad image')
+
+
+@pytest.mark.parametrize('model,budget_key,effort', [
+    ('gpt-4o', 'max_tokens', None),
+    ('gpt-5.4', 'max_completion_tokens', 'none'),
+    ('gpt-6.1-sol', 'max_completion_tokens', 'low'),
+])
+def test_visual_extraction_uses_model_compatible_parameters(monkeypatch, model, budget_key, effort):
+    calls = fake_stream(monkeypatch, [result()])
+    llm = client()
+    llm.model = model
+    assert extract_visual('scan.png', png(), [1], llm)['observations'][0]['value'] == 12
+    body = calls[0]['json']
+    assert body[budget_key] == 4000
+    if effort:
+        assert body['reasoning_effort'] == effort
+        assert 'temperature' not in body and 'max_tokens' not in body
+    else:
+        assert body['temperature'] == 0

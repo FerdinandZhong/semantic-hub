@@ -24,6 +24,8 @@ from urllib.parse import quote
 
 import httpx
 
+from .openai_compat import openai_compatibility
+
 
 class LLMError(RuntimeError):
     pass
@@ -51,6 +53,7 @@ class ToolTurn:
     tokens_out: int = 0
     latency_ms: float | None = None
     raw_tool_calls: tuple[dict[str, Any], ...] = ()
+    response_items: tuple[dict[str, Any], ...] = ()
 
 
 class LLMClient:
@@ -130,14 +133,7 @@ class LLMClient:
         return self._openai_usage(system, user)[0]
 
     def _openai_generation_options(self) -> dict[str, Any]:
-        # GPT-5 Chat Completions uses the completion budget, including reasoning.
-        # Omit sampling controls for reasoning models; retain compatible endpoint defaults otherwise.
-        if re.match(r'^gpt-5(?:[.\-]|$)',self.model):
-            options={'max_completion_tokens':self.max_tokens}
-            if re.match(r'^gpt-5\.[1-9]\d*(?:[.\-]|$)',self.model):
-                options['reasoning_effort']='none'
-            return options
-        return {'max_tokens':self.max_tokens,'temperature':self.temperature}
+        return openai_compatibility(self.model).chat_options(self.max_tokens, self.temperature)
 
     def _anthropic_usage(self, system: str, user: str) -> tuple[str, int, int]:
         r = httpx.post("https://api.anthropic.com/v1/messages", timeout=self._http_timeout(),
@@ -152,6 +148,10 @@ class LLMClient:
         return text, int(usage.get("input_tokens") or 0), int(usage.get("output_tokens") or 0)
 
     def _openai_usage(self, system: str, user: str) -> tuple[str, int, int]:
+        if openai_compatibility(self.model).api == 'responses':
+            body = self._responses_request(system, [{'role': 'user', 'content': user}])
+            usage = body.get('usage') or {}
+            return self._responses_text(body), int(usage.get('input_tokens') or 0), int(usage.get('output_tokens') or 0)
         headers = {"content-type": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
@@ -166,6 +166,71 @@ class LLMClient:
             int(usage.get("prompt_tokens") or 0),
             int(usage.get("completion_tokens") or 0),
         )
+
+    @staticmethod
+    def _responses_text(body: dict) -> str:
+        return ''.join(part.get('text', '')
+                       for item in body.get('output', []) if item.get('type') == 'message'
+                       for part in item.get('content', []) if part.get('type') == 'output_text')
+
+    def _responses_request(self, system: str, messages: list[dict], tools=None) -> dict:
+        items = []
+        for message in messages:
+            if message.get('response_items'):
+                # Preserve encrypted reasoning and call IDs across stateless tool turns.
+                items.extend(message['response_items'])
+            elif message['role'] == 'tool':
+                items.append({'type': 'function_call_output', 'call_id': message['tool_call_id'],
+                              'output': message.get('content', '')})
+            elif message['role'] == 'assistant' and message.get('tool_calls'):
+                if message.get('content'):
+                    items.append({'role': 'assistant', 'content': message['content']})
+                for call in message['tool_calls']:
+                    items.append({'type': 'function_call', 'call_id': call['id'], 'name': call['name'],
+                                  'arguments': json.dumps(call['arguments'])})
+            else:
+                items.append({'role': message['role'], 'content': message.get('content', '')})
+        payload = {'model': self.model, 'instructions': system, 'input': items,
+                   **openai_compatibility(self.model).response_options(self.max_tokens)}
+        if tools:
+            payload.update(tools=[{'type': 'function', 'name': tool['name'],
+                                  'description': tool.get('description', ''),
+                                  'parameters': tool.get('inputSchema', {}), 'strict': False}
+                                 for tool in tools], tool_choice='auto',
+                           include=['reasoning.encrypted_content'])
+        headers = {'content-type': 'application/json'}
+        if self.api_key:
+            headers['Authorization'] = 'Bearer ' + self.api_key
+        response = httpx.post(f"{(self.base_url or '').rstrip('/')}/responses", headers=headers,
+                              json=payload, timeout=self._http_timeout())
+        response.raise_for_status()
+        body = response.json()
+        if body.get('status') == 'incomplete':
+            raise LLMError('The model exhausted its output budget before completing the response.')
+        if body.get('status') == 'failed' or body.get('error'):
+            raise LLMError('The model provider could not complete the response.')
+        return body
+
+    def _responses_tool_turn(self, system: str, messages: list[dict], tools: list[dict]) -> ToolTurn:
+        body = self._responses_request(system, messages, tools)
+        raw = tuple(item for item in body.get('output', []) if item.get('type') == 'function_call')
+        calls = []
+        for call in raw:
+            value = call.get('arguments') or '{}'
+            try:
+                arguments = json.loads(value)
+                if not isinstance(arguments, dict):
+                    raise ValueError('tool arguments must be a JSON object')
+                error = None
+            except (ValueError, TypeError) as exc:
+                arguments, error = {}, str(exc)
+            calls.append(ToolCall(call['call_id'], call['name'], arguments,
+                                  value if error else None, error))
+        usage = body.get('usage') or {}
+        return ToolTurn(self._responses_text(body), tuple(calls),
+                        'tool_calls' if calls else 'stop', int(usage.get('input_tokens') or 0),
+                        int(usage.get('output_tokens') or 0), raw_tool_calls=raw,
+                        response_items=tuple(body.get('output', [])))
 
     # ------------------------------------------------------------ tool calling
     def tool_turn(
@@ -320,6 +385,8 @@ class LLMClient:
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]],
     ) -> ToolTurn:
+        if openai_compatibility(self.model).api == 'responses':
+            return self._responses_tool_turn(system, messages, tools)
         headers = {"content-type": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
