@@ -43,6 +43,9 @@ Setup checks distribution origins, disables system-site-packages, and preserves 
 Eight AMP tests pass, including path contamination and state-preserving runtime repair.
 See [setup recovery](amp-deployment.md#recovery-cai-packages-reported-by-pip-check). Live CAI rerun remains required.
 
+**MCP configuration — 20 October 2026:** Both importable configurations now track `main` and refresh the package cache at startup.
+Historical verification reports retain the commits they tested.
+
 **AMP MCP configuration — 18 October 2026:** The default Agent Studio configuration now targets an authenticated CAI Application origin and pins published AMP commit `bb6a518`.
 The MCP subprocess inherits `CDSW_APIV2_KEY` from its secret environment; no credential is stored in the JSON template.
 A separate local configuration retains loopback access. English and Chinese workflow guides describe both paths.
@@ -61,7 +64,7 @@ See the [deployment guide](amp-deployment.md). Live CAI installation, ingress au
 Local API, Swagger, and MCP checks support explicit loopback-only access without a consumer token.
 Code is published at https://github.com/FerdinandZhong/semantic-hub.
 The GitHub-installed adapter passed all twelve tool calls, returned 74.1 for the supported cohort, and returned `no_data` for 1999–2020.
-See [GitHub installation verification](semantic-hub-github-mcp-verification.json). The importable MCP configuration pins that tested commit.
+See [GitHub installation verification](semantic-hub-github-mcp-verification.json). The configuration pinned that tested commit at this milestone; it now tracks `main`.
 The local consumer token was removed at the user's request. Model-provider credentials remain separate.
 At that milestone, CAI authentication and AMP packaging were planned; see the 17 October increment above.
 The saved GPT-5.4 connection returned HTTP 200 after URL normalization and generation-parameter fixes.

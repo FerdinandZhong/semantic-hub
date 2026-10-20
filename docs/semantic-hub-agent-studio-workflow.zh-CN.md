@@ -1,206 +1,140 @@
-> 本地模式更新（2026-10-15）：使用 `--local-no-auth --host 127.0.0.1 --port 8096` 启动消费者 API。
-> 本地令牌已删除，MCP 仅需设置 `SEMANTIC_HUB_URL`。Swagger 自动加载。
-> AMP 配置更新（2026-10-18）：默认 MCP 配置改用 CAI Application URL，并从环境继承 `CDSW_APIV2_KEY`。
-> CAI 入口负责验证密钥。线上 CAI 入口验收仍待执行。
+# Agent Studio 通过 MCP 查询财务数据
 
-# Semantic Hub 外部智能体演示工作流
+[English guide and tool arguments](semantic-hub-agent-studio-workflow.md)
 
-[English configuration](semantic-hub-agent-studio-workflow.md)
-
-本指南提供可粘贴的 CAI Agent Studio 配置和智能体提示词。
-当前交付不代表已创建、导入或验证远程 CAI 工作流。
-本指南没有虚构 Agent Studio 的 JSON 导入格式。
-具体界面字段取决于部署版本。
-
-外部智能体负责自然语言理解和任务规划。
-Semantic Hub 提供已发布语义、文档证据、受控查询编译和可选样本执行。
-工作流不调用 Helios Playground 或内部 LLM Harness。
+本指南以 Finance sample 为主演示。
+建议先使用一个智能体，完成已发布指标的发现、解析、编译和样本查询。
+具体界面字段取决于已安装的 Agent Studio 版本。
 
 ```text
-用户问题
-   |
-   v
-对话管理智能体
-   +--> 语义上下文专家 --> 已发布定义、覆盖范围、上下文包
-   +--> 查询与证据专家 --> 查询编译、样本结果、已发布文档
-                              |
-                              v
-                      Semantic Hub MCP --> 只读后端 API
+用户问题 -> Agent Studio 智能体 -> MCP stdio 适配器
+                                      |
+                              已部署消费者 HTTP API
+                                      |
+                      已发布定义 -> 范围检查 -> 编译 -> 样本查询
 ```
 
-## 1. 准备后端和网络
+## 1. 发布财务模型
 
-AMP 部署使用 Workbench 显示的 Application URL。UI、Swagger 和消费者 API 共用该地址。
-不要为 AMP 状态目录另开一个 API 进程。
-在 MCP 子进程的密钥环境变量中配置 `CDSW_APIV2_KEY`，或保留 Agent Studio 注入的现有值。
-清除旧的 `SEMANTIC_HUB_API_TOKEN`，因为该变量的优先级更高。
-CAI 入口验证 API v2 密钥；Hub 不生成独立令牌。
-浏览器登录态不会自动提供 MCP 凭据。线上 CAI 入口仍需验收。
-详见 [AMP 部署指南](amp-deployment.md)。
+1. 打开 Finance sample 的 Studio。
+2. 检查 `total_amount_sgd` 的定义、单位和数据范围。
+3. 添加以下独立校验 SQL，然后保存并验证。
+4. 审阅定义和证据，创建审阅版本，然后发布。
+5. 如需文档问答，将审阅后的 MAS 段落包含在该发布版本中。
 
-以下步骤用于独立本地演示。
-
-1. 选择已发布的制药行业模型。
-2. 检查指标定义和样本数据。
-3. 如需文档对比演示，发布经过审阅的第 14 页证据。
-4. 使用与编辑应用相同的状态目录启动只读 API。
-5. 确保 CAI 的 MCP 运行主机可以访问该 API。
-
-```sh
-python start_semantic_hub_api.py \
-  --state-dir <编辑应用使用的状态目录> \
-  --local-no-auth --host 127.0.0.1 --port 8096
+```sql
+SELECT SUM(amount_sgd) AS total_amount_sgd
+FROM transactions
+WHERE status = 'SETTLED';
 ```
 
-编辑界面继续使用本地 8084 端口。
-本地无认证模式仅绑定环回地址。AMP 已配置 CAI Application 入口认证。
-远程 CAI 的 `localhost` 不指向开发者电脑。
-浏览器登录态不会自动传递给 MCP。
-
-为 MCP 配置以下环境变量：
-
-```text
-SEMANTIC_HUB_URL=https://<CAI可访问的后端域名>
-```
-
-URL 只包含服务器源地址，不包含 `/api/semantic-hub/v1`。
-MCP 自动添加 API 前缀。
-本地模式没有企业级用户授权或租户隔离。
-不要将凭据写入提示词或工作流导出文件。
-
-本机准备的验证地址为 `http://127.0.0.1:8096`，因为本机 8086 端口已被占用。
-状态目录为 `/tmp/helios-builder-review`。
-本地 API 凭据文件已删除，不再需要消费者令牌。
-复现该本地运行环境时，请使用 `--port 8096`。
-这些本地路径不代表远程 CAI 已能访问该服务。
-独立 API 进程可使用 `--model-token-file ~/tokens/openai` 加载已配置 embedding 服务的凭据。
-该参数不启用 API 内部自然语言查询规划。
-缺少可用服务凭据时，明确请求 embedding 搜索应返回不可用。
+初始样本预期为 **686,572.96 SGD**，覆盖 2026 年 9 月。
+指标表示已结算付款的发送方流出金额。
+不要将付款表、交易表和双边账务金额重复相加。
+MCP 只读取已发布模型，不能发布草稿。
+详细发布流程见[财务演示说明](finance-customer-demo-story.md)。
 
 ## 2. 注册 MCP
 
-1. 按 [MCP 包说明](../apps/semantic-hub-mcp/)安装并启动适配器。
-2. 确认远程安装版本已经包含该包。
-3. 固定经过审阅的提交或发行版本。
-4. 注册下面两个工具实例，或使用平台的逐智能体工具选择。
-5. 在实际 CAI 运行环境中验证全部 12 个工具。
-
-| 实例 | 智能体 | 工具 |
-| --- | --- | --- |
-| `semantic-context` | 语义上下文专家 | `hub_status`, `list_semantic_models`, `get_semantic_model`, `list_model_versions`, `get_model_version`, `search_semantics`, `resolve_semantic_context`, `inspect_metric_coverage`, `get_model_lineage`, `get_published_documents` |
-| `semantic-query` | 查询与证据专家 | `compile_semantic_query`, `query_sample_data`, `get_published_documents` |
-
-所有工具均为只读操作。
-导入 [GitHub MCP 配置](../apps/semantic-hub-mcp/agent-studio.mcp.json)。
-启动命令为 `uvx`；参数通过 `--from` 指定 GitHub 仓库中的 MCP 包。
-配置文件已固定经过验证的 GitHub 提交 SHA。
-AMP 配置已固定包含 CAI 凭据转发的提交 `bb6a518`。
-替换 Application URL 占位符。密钥通过运行环境注入，无需写入 JSON。
-本地演示请导入 [本地 MCP 配置](../apps/semantic-hub-mcp/agent-studio.local.mcp.json)，并清除两个凭据变量。
-该包使用 stdio，不提供 HTTP MCP 服务地址。
-部分只读操作使用 HTTP POST。
-参数应遵循实际发现的工具 schema。
-精确 HTTP 路径见后端 OpenAPI 和 MCP 包。
-
-搜索结果应明确区分关键词搜索和 embedding 搜索。
-Embedding 搜索需要配置对应客户端。
-明确请求 embedding 时，配置或服务失败应直接返回错误，不应静默改用关键词。
-
-## 3. 配置智能体
-
-1. 创建 `Semantic Hub Query Assistant` 对话工作流。
-2. 如果平台支持，选择分层委派模式。
-3. 添加一个管理智能体和两个专家。
-4. 按下表分配工具和提示词。
-5. 使用当前部署中可用且支持工具调用的模型。
-6. 如果模型支持，可从 `0.1` 温度开始。
-
-| 智能体 | 委派 | MCP | 可直接使用的提示词 |
-| --- | --- | --- | --- |
-| 对话管理智能体 | 开启 | 无 | [manager.txt](agent-studio/manager.txt) |
-| 语义上下文专家 | 关闭 | `semantic-context` | [semantic-context-specialist.txt](agent-studio/semantic-context-specialist.txt) |
-| 查询与证据专家 | 关闭 | `semantic-query` | [query-evidence-specialist.txt](agent-studio/query-evidence-specialist.txt) |
-
-提示词使用英文，便于直接复用。
-没有分层委派功能时，可由单个智能体执行同一顺序。
-
-## 4. 固定语义版本
-
-1. 发现目标模型和已发布版本。
-2. 从版本响应获取 `model_id`、`version` 和 `context_sha256`。
-3. 发现阶段之后，每次调用都携带完整版本标识。
-4. 使用原始问题调用 `resolve_semantic_context`。
-5. 原样保存返回的 `bundle_id`。
-6. 使用 `inspect_metric_coverage` 检查实际数据覆盖。
-7. 将相同版本、上下文包和原始问题传给查询专家。
-8. 如发生版本冲突，停止查询并重新解析上下文。
-
-每次受控查询只选择一个指标。
-维度和筛选条件必须符合工具定义，且 `limit <= 100`。
-上市队列、观测年份、地域、人群和单位必须分别检查。
-固定 USA 人群的指标不能通过地域筛选变成韩国指标。
-存在日期字段不代表存在用户要求的日期覆盖。
-
-查询编译不代表执行成功。
-`query_sample_data` 仅查询受限样本，不连接实时企业仓库。
-DuckDB 不可用时，应报告执行不可用。
-空结果、错误和无覆盖不能解释为零。
-保留 `no_data` 和 `unsupported_scope` 等实际返回状态。
-
-可执行以下本地检查：
-
-```sh
-python -m pip install -e './apps/semantic-hub-mcp[test]'
-python -m pytest apps/semantic-hub-mcp/tests -q
-```
-
-## 5. 演示问题和验收结果
-
-以下数字是演示预期，回答仍须依据工具实际返回的证据。
-模型 ID、版本、哈希和上下文包都应从运行中的后端获取。
-发布前置步骤见[制药演示故事](pharma-intelligence-demo-story.zh-CN.md)。
-
-| 用户问题 | 应有行为 |
-| --- | --- |
-| 2020–2024 年上市新药的美国销售占比是多少？ | 检查覆盖后编译并执行样本查询。仅在实际返回时回答 74.1%。说明销售观测年份为 2025。 |
-| 1999–2020 年上市新药的美国销售占比是多少？ | 报告上市队列无覆盖，不复用 74.1%，不外推，不回答零。 |
-| 同一上市队列的韩国销售占比是多少？ | 不使用固定 USA 指标。查找支持韩国的指标，否则报告无覆盖。 |
-| 2025 年北美占整个处方药市场的比例是多少？ | 读取同一已发布版本的第 14 页证据。仅在实际存在对应段落时回答 54.7%。 |
-| 2020–2024 年北美处方药市场占比是多少？ | 请求澄清或报告无覆盖。2025 年观测不能回答该时期。 |
-| 比较美国新药销售占比和北美整体处方药市场占比。 | 分别呈现样本 SQL 结果与文档陈述，保留地域、人群和时间口径差异。 |
-
-第 14 页的北美包括 USA 和 Canada。
-其范围为零售和医院处方药市场，采用出厂价格。
-上传或草稿附件不足以支持回答；证据必须属于当前已发布版本。
-
-建议回答格式：
+1. 导入 [MCP 配置](../apps/semantic-hub-mcp/agent-studio.mcp.json)。
+2. 将 `SEMANTIC_HUB_URL` 设置为以下地址。
+3. 在密钥环境变量中配置 `CDSW_APIV2_KEY`，或保留平台注入的有效值。
+4. 清除旧的 `SEMANTIC_HUB_API_TOKEN`，因为它的优先级更高。
+5. 发现全部 12 个工具，并调用 `hub_status`。
 
 ```text
-答案：<实际结果、澄清问题或不可用说明>
-范围：<地域；人群；上市队列；观测时间；单位>
-证据类型：<已执行样本指标 / 仅编译查询 / 已发布文档段落>
-来源：<模型版本和指标，或文档修订和页码>
-限制：<样本执行、覆盖缺失、证据缺失等实际限制>
+https://semantic-hub-acpkiu.ml-c99c87a0-2d3.qzhong-a.a465-9q4k.cloudera.site
 ```
 
-## 6. 验证与排错
+URL 不包含 `/api/semantic-hub/v1`。
+该适配器使用 stdio。应用地址不是 HTTP MCP 端点。
+配置通过 `uvx --refresh --from` 安装 GitHub `main` 分支中的 MCP 包。
+启动时刷新包缓存。
+具体命令见[英文指南](semantic-hub-agent-studio-workflow.md#2-register-mcp-and-verify-discovery)。
+不要将密钥写入提示词或导出配置。
+浏览器登录态不会自动提供 MCP 凭据。
 
-1. 运行包说明中的测试和后端契约检查。
-2. 从实际 CAI 运行主机检查 MCP 工具发现。
-3. 对选定已发布版本执行上表六个问题。
-4. 保存版本、哈希、上下文包、执行状态和引用。
-5. 使用错误哈希验证后端拒绝行为。
-6. 验证样本执行不可用和文档证据缺失两种情况。
-7. 在记录中分别标注本地测试和远程 CAI 测试。
+## 3. 创建智能体
+
+1. 创建 `Finance Query Assistant` 对话工作流。
+2. 添加支持工具调用的智能体。
+3. 为其分配 `semantic-hub` 的全部 12 个只读工具。
+4. 粘贴 [finance-query-assistant.txt](agent-studio/finance-query-assistant.txt)。
+5. 使用部署中可用的工具调用模型。
+
+如需管理智能体和两个专家，可使用英文指南中的可选分工。
+简短演示无需增加委派步骤。
+
+## 4. 执行查询
+
+1. 调用 `list_semantic_models`，参数为 `q="finance"`。
+2. 如果目录为空，停止查询并完成模型发布。
+3. 读取模型、已发布版本、定义和血缘。
+4. 保留返回的 `model_id`、`version` 和 `context_sha256`。
+5. 使用原始问题调用 `resolve_semantic_context`，选择已发现的指标。
+6. 仅在返回 `ready` 时保留其 `bundle_id` 并继续。
+7. 调用 `inspect_metric_coverage`，检查时间覆盖。
+8. 单独检查发送方角色、已结算范围、SGD 单位和汇总口径。
+9. 携带相同版本、上下文包和原始问题调用 `compile_semantic_query`。
+10. 检查返回 SQL，并仅在编译状态为 `ready` 时执行 `query_sample_data`。
+11. 仅依据 `answered` 状态和实际返回行回答数值。
+
+每次查询只选一个指标，且 `limit <= 100`。
+分组或筛选字段应先加入解析请求的 `required_fields`。
+具体 JSON 参数见[英文查询步骤](semantic-hub-agent-studio-workflow.md#5-run-the-finance-conversation)。
+每个新问题都要重新解析上下文包。
+上下文包当前有效期为 300 秒，以 `hub_status` 为准。
+版本冲突或上下文过期时，重新发现并解析。
+
+## 5. 演示问题
+
+以下数字为初始样本预期，不能替代实际工具结果。
+
+| 问题 | 应有行为 |
+| --- | --- |
+| What is the total settled sender outflow in SGD for the sample? | 编译并执行；仅在实际返回时回答 686,572.96 SGD。 |
+| Show total settled sender outflow in SGD by sender jurisdiction. | 检查发送方维度；预期 GB 44,454.90、HK 350,641.68、SG 291,476.38 SGD。 |
+| What is total settled sender outflow in SGD for sender jurisdiction SG? | 使用已审阅的发送方筛选；预期 291,476.38 SGD。 |
+| What was the total settled sender outflow in SGD in 2025? | 报告缺少该时期数据，不复用 2026 年结果。 |
+| Include rejected transfers in total_amount_sgd. | 保留已发布的已结算范围，不扩大指标定义。 |
+| What is the total for last month? | 先澄清时期和指标。 |
+
+可单独追加文档问题：
+
+> According to the attached MAS announcement, how does SG QR support PayNow transfers?
+
+使用 `get_published_documents` 读取相同版本的已发布段落。
+[MAS 单页摘录](demo-inputs/finance-real/mas-sgqr-media-release-2017-11-20-page-1-excerpt.pdf)需要先审阅、关联并发布。
+上传文件本身不会使其成为 MCP 证据。
+该历史公告不能证明样本付款使用 SG QR，也不能认证样本总额或汇率。
+引用实际返回的文档标识、修订和页码。
+
+回答应包含实际结果、范围、证据类型、模型版本和限制。
+说明查询使用合成样本数据。
+仅编译 SQL 不等于执行成功。
+空结果、错误和无覆盖都不等于零。
+
+## 6. 验证状态与验收
+
+2026 年 10 月 19 日，实际 MCP stdio 客户端已通过 CAI 认证访问部署 API。
+工具发现返回全部 12 个工具。
+`hub_status`、模型列表和关键词搜索调用成功。
+但已发布目录返回 `items=[]` 和 `total=0`，搜索没有匹配结果。
+因此财务模型的解析、覆盖检查、编译和执行尚未在该部署完成。
+该记录不代表实际 Agent Studio 托管工作流已通过验收。
+
+1. 发布财务模型后，从 Agent Studio 运行上述六个问题。
+2. 保存模型版本、哈希、上下文包、SQL、状态和实际结果。
+3. 测试错误哈希、上下文过期和文档证据缺失。
+4. 将实际结果与样本预期分别记录。
+
+标准 `check_live.py` 依赖制药模型，不应直接作为财务验收脚本。
 
 | 问题 | 处理方法 |
 | --- | --- |
-| 后端不可达 | 从 MCP 运行主机检查网络，确认没有误用开发机 localhost。 |
-| 返回登录 HTML、重定向或 401/403 | 检查入口和 API 的机器凭据。 |
-| 工具缺失 | 检查安装提交、启动入口和工具发现缓存。 |
-| 版本冲突 | 重新发现已发布版本并生成上下文包，不静默切换版本。 |
-| 第 14 页段落缺失 | 检查附件是否属于该已发布版本，不引用其他版本或草稿。 |
-| 样本执行不可用 | 只展示编译结果，不声称计算得到答案。 |
-
-当前配置指南不包含远程执行通过的证据。
-只有实际验收记录才能支持“CAI 集成已验证”的结论。
+| 登录页面、重定向、401 或 403 | 检查 MCP 子进程的 CAI 密钥。 |
+| 模型列表为空 | 发布已审阅模型，确认使用相同应用地址。 |
+| 工具缺失 | 检查安装提交、入口和发现缓存。 |
+| 版本冲突 | 重新发现版本并解析上下文。 |
+| 样本执行不可用 | 说明限制；仅展示编译结果。 |
+| 文档段落缺失 | 检查该段落是否属于所选发布版本。 |

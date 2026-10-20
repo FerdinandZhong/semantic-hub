@@ -1,8 +1,9 @@
-# Semantic Hub external-agent demo workflow
+# Agent Studio finance workflow through Semantic Hub MCP
 
 [中文版](semantic-hub-agent-studio-workflow.zh-CN.md)
 
-This guide prepares a conversational workflow for CAI Agent Studio or another MCP-capable agent platform.
+This guide configures a finance query assistant in CAI Agent Studio or another MCP-capable agent platform.
+Use the single-agent setup for the short demo. The specialist setup is optional.
 It does not establish that a hosted workflow was created, imported, or tested.
 The configuration below is paste-ready guidance, not an Agent Studio JSON import format.
 Platform field names depend on the installed Agent Studio version.
@@ -26,14 +27,14 @@ Conversation Manager
 ## 1. Prepare a reachable backend
 
 1. Start the dedicated read-only Semantic Hub consumer API.
-2. Select a published pharmaceutical intelligence model.
-3. Confirm its semantic definitions and sample source are available.
-4. Publish reviewed page 14 evidence if the document contrast demonstration is required.
+2. Open Finance sample in Studio and review the settled sender-outflow definition.
+3. Validate the metric, review the draft, create a reviewed version, and publish it.
+4. Include reviewed document evidence in that release if you want a document answer.
 5. Make the backend reachable from the machine that runs MCP.
 6. Configure the MCP process with the environment below.
 
 ```text
-SEMANTIC_HUB_URL=https://<reachable-helios-origin>
+SEMANTIC_HUB_URL=https://semantic-hub-acpkiu.ml-c99c87a0-2d3.qzhong-a.a465-9q4k.cloudera.site
 ```
 
 Set the URL to the server origin, without `/api/semantic-hub/v1`.
@@ -72,21 +73,56 @@ Without an accepted provider credential, explicit embedding search remains unava
 
 The AMP delegates CAI API v2 key validation to its authenticated Application ingress.
 The Hub does not compare the caller key with the launching job owner’s key.
-Live CAI ingress acceptance remains unverified.
+Authenticated MCP calls reached this deployment on 19 October 2026. Its published catalog was empty.
+Publish Finance sample before running the query walkthrough. Drafts do not appear in MCP discovery.
 Do not paste a token into agent prompts or workflow exports.
+
+### Finance publication prerequisite
+
+Follow the [finance demo story](finance-customer-demo-story.md) for the complete review and publication procedure.
+The starter metric is `total_amount_sgd`: settled sender outflow in SGD for September 2026.
+The starter payments table contains settled payments only.
+Do not sum both ledger sides or add transaction amounts to payment amounts.
+Use this independent reference SQL in Studio before validation:
+
+```sql
+SELECT SUM(amount_sgd) AS total_amount_sgd
+FROM transactions
+WHERE status = 'SETTLED';
+```
+
+The expected starter total is 686,572.96 SGD. A changed source or definition requires a new check.
+Publication is an authoring action. The MCP tools cannot publish the draft.
 
 ## 2. Register MCP and verify discovery
 
 Import the [GitHub MCP configuration](../apps/semantic-hub-mcp/agent-studio.mcp.json).
 It uses `uvx --from` to install `apps/semantic-hub-mcp` from `FerdinandZhong/semantic-hub`.
 The [package README](../apps/semantic-hub-mcp/README.md) contains the full configuration and requirements.
-The supplied configuration pins the verified GitHub commit for a repeatable demo.
+The supplied configuration tracks `main` and refreshes the package cache at startup.
 Set `SEMANTIC_HUB_URL` to the reachable consumer API origin.
 Use `CDSW_APIV2_KEY` for the AMP.
 For local rehearsal, import [the local configuration](../apps/semantic-hub-mcp/agent-studio.local.mcp.json) and omit both credential variables.
 The package supports stdio transport; it does not host an HTTP MCP endpoint.
 
-Register two instances, or use per-agent tool selection on one instance.
+For the simplest demo, register one instance named `semantic-hub` and attach all 12 tools to one agent.
+Set the configuration's URL placeholder to the deployed origin above.
+Store `CDSW_APIV2_KEY` in the platform's secret environment configuration, outside the JSON and prompts.
+Use the following command and argument list if the platform asks for separate fields:
+
+```text
+Command: uvx
+Arguments:
+  --refresh
+  --from
+  git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp
+  semantic-hub-mcp
+```
+
+Discover tools and call `hub_status`, then `list_semantic_models` with `q="finance"`.
+An empty `items` list means no matching published model is available. Stop and complete publication.
+
+For the optional specialist setup, register two instances or select tools per agent.
 All tools below are read-only; compilation and resolution can use HTTP POST.
 
 | Instance | Assigned agent | Tools |
@@ -120,22 +156,20 @@ An explicit embedding request must report configuration or provider failures; do
 
 ## 3. Configure the conversation
 
-1. Create a conversational workflow named `Semantic Hub Query Assistant`.
-2. Choose hierarchical delegation when the installed platform supports it.
-3. Add one manager and the two specialists below.
-4. Attach the selected MCP tools to each specialist.
-5. Paste each prompt into the platform's agent instruction fields.
-6. Use a tool-capable model available in your deployment.
-7. Start with a low temperature, such as `0.1`, if the model supports it.
+1. Create a conversational workflow named `Finance Query Assistant`.
+2. Add one tool-capable agent and attach the `semantic-hub` MCP instance.
+3. Paste [finance-query-assistant.txt](agent-studio/finance-query-assistant.txt) into its instruction field.
+4. Use a model available in your deployment that supports tool calls.
+5. Start the conversation with the total-outflow question in section 5.
 
-| Agent | Delegation | MCP | Paste-ready instructions |
-| --- | --- | --- | --- |
-| Semantic Query Conversation Manager | On | None | [manager.txt](agent-studio/manager.txt) |
-| Semantic Context Specialist | Off | `semantic-context` | [semantic-context-specialist.txt](agent-studio/semantic-context-specialist.txt) |
-| Query and Evidence Specialist | Off | `semantic-query` | [query-evidence-specialist.txt](agent-studio/query-evidence-specialist.txt) |
+For optional hierarchical delegation, use the existing three prompts below.
+Assign the tool groups from section 2 and preserve the context pin across specialists.
 
-If hierarchical delegation is unavailable, apply the same sequence in a single tool-capable agent.
-Do not add another planning call into Helios.
+| Agent | Instructions |
+| --- | --- |
+| Conversation Manager | [manager.txt](agent-studio/manager.txt) |
+| Semantic Context Specialist | [semantic-context-specialist.txt](agent-studio/semantic-context-specialist.txt) |
+| Query and Evidence Specialist | [query-evidence-specialist.txt](agent-studio/query-evidence-specialist.txt) |
 
 ## 4. Preserve the context contract
 
@@ -151,8 +185,8 @@ Use one metric per typed query.
 Use supported dimensions and filters, with `limit <= 100`.
 Compile and query take `metrics=["<discovered metric>"]` and filters with `field`, `op`, and `value`.
 Resolve takes the original question as `query`; coverage, compile, and query use `question`.
-Keep launch cohort, observation year, geography, population, and unit separate.
-A fixed USA metric does not become a Korea metric through a country filter.
+Keep sender jurisdiction, recipient jurisdiction, booking date, currency, and payment status separate.
+The settled-only metric cannot include rejected transfers. SGD amounts already include the fixture conversion.
 Never remove the original question to bypass a scope check.
 
 Coverage inspection checks available facts; a date field alone does not establish coverage.
@@ -160,35 +194,107 @@ The query specialist can compile without executing when sample execution is unav
 It must label that result as compiled SQL, without claiming a computed answer.
 Preserve explicit `no_data` and `unsupported_scope` statuses from sample execution.
 
-## 5. Run the pharmaceutical conversation
+## 5. Run the finance conversation
 
-The numbers below are expected demo facts, not permission to answer without tool evidence.
-Model IDs, version names, hashes, and bundle IDs must come from the running backend.
-The existing [pharmaceutical story](pharma-intelligence-demo-story.md) explains the publication prerequisites.
+Use this first question:
+
+> What is the total settled sender outflow in SGD for the sample?
+
+The agent must perform this sequence through MCP:
+
+```text
+hub_status -> discover model/version -> read definition and lineage
+                                           |
+                                    pin version and hash
+                                           |
+                              resolve -> coverage -> compile
+                                                        |
+                                              query_sample_data
+                                                        |
+                                             answer with provenance
+```
+
+1. Call `hub_status` and inspect execution capabilities.
+2. Call `list_semantic_models` with `q="finance"`; select the intended published model.
+3. Call `get_semantic_model` and `list_model_versions` with its returned `model_id`.
+4. Select a published version and retain its `version` and `context_sha256`.
+5. Call `get_model_version` and `get_model_lineage` with the complete pin.
+6. Confirm `total_amount_sgd`, its unit, exclusions, relationships, and source period.
+7. Call `resolve_semantic_context` with the pin, original question as `query`, and selected `metric`.
+8. Continue only when resolution returns `status="ready"`; retain its `bundle_id`.
+9. Call `inspect_metric_coverage` with the pin, metric, and original question as `question`.
+10. Confirm supported coverage and check sender scope, settled status, SGD unit, and aggregation separately.
+11. Call `compile_semantic_query` with the arguments below and inspect its returned SQL and status.
+12. Call `query_sample_data` with identical arguments only after compilation returns `ready`.
+13. Report a number only when execution returns `answered` with actual rows.
+
+The following JSON illustrates compile and execution arguments.
+Replace every angle-bracket value with a tool response. Never send the placeholders literally.
+
+```json
+{
+  "model_id": "<returned model_id>",
+  "version": "<selected published version>",
+  "context_sha256": "<returned context_sha256>",
+  "bundle_id": "<returned bundle_id>",
+  "question": "What is the total settled sender outflow in SGD for the sample?",
+  "metrics": ["total_amount_sgd"],
+  "dimensions": [],
+  "filters": [],
+  "limit": 10
+}
+```
+
+Resolve a fresh bundle for each new question. Bundles currently expire after 300 seconds; check `hub_status`.
+For grouped queries, include the chosen dimension in resolution's `required_fields`.
+For example, use `payments.jurisdiction` only if the published definition confirms it represents sender jurisdiction.
+Then pass `dimensions=["payments.jurisdiction"]` to both compile and execution.
+For an SG filter, use `{"field":"payments.jurisdiction","op":"=","value":"SG"}` and include that field during resolution.
+Never infer the sender role from the field name alone.
+
+These are starter expectations, not live deployment results:
 
 | User question | Expected behavior |
 | --- | --- |
-| What is the US share of sales for new medicines launched during 2020–2024? | Resolve the USA new-medicine metric. Verify coverage, compile, and execute available sample data. Expect 74.1% only when returned. Explain that sales are observed in 2025. |
-| What is the US share for medicines launched during 1999–2020? | Report unavailable cohort coverage. Do not reuse 74.1%, extrapolate, or return zero. |
-| What is Korea's share for the same launch cohort? | Reject substitution of the fixed USA metric. Find a supported Korea metric or report unavailable coverage. |
-| What was North America's share of the entire prescription pharmaceutical market in 2025? | Retrieve the pinned release's page 14 evidence. Report 54.7% only if the actual published passage exists. Otherwise report missing published evidence. |
-| What was North America's total prescription-market share during 2020–2024? | Clarify or report unavailable coverage. The 2025 total-market observation cannot answer this period. |
-| Compare the US new-medicine share with North America's total prescription-market share. | Present sample SQL and document evidence separately. Preserve distinct population, geography, cohort, and observation period. |
+| What is the total settled sender outflow in SGD for the sample? | Execute the selected metric. Expect 686,572.96 SGD only if returned. |
+| Show total settled sender outflow in SGD by sender jurisdiction. | Resolve the published sender dimension. Expected GB 44,454.90; HK 350,641.68; SG 291,476.38 SGD. |
+| What is total settled sender outflow in SGD for sender jurisdiction SG? | Use the reviewed sender filter. Expected 291,476.38 SGD. |
+| What was the total settled sender outflow in SGD in 2025? | Report missing period coverage. Never reuse the September 2026 total. |
+| Include rejected transfers in total_amount_sgd. | Explain that this conflicts with the published settled-only definition. Do not execute a broadened total. |
+| What is the total for last month? | Clarify the reporting period and intended metric before execution. |
 
-For the document contrast, page 14 describes North America as USA and Canada.
-Its population is the retail and hospital prescription pharmaceutical market, measured at ex-manufacturer prices.
-It does not replace the USA new-medicine launch-cohort metric.
-An uploaded document or draft attachment is insufficient; the selected published version must contain the passage.
+### Optional document question
+
+Ask: “According to the attached MAS announcement, how does SG QR support PayNow transfers?”
+Call `get_published_documents` with the same model, version, and hash.
+Answer only from a returned passage and cite its returned document identifier, revision, and page when available.
+The [one-page MAS excerpt](demo-inputs/finance-real/mas-sgqr-media-release-2017-11-20-page-1-excerpt.pdf) is a local preparation asset.
+It does not become MCP evidence until reviewed, attached, and published in the selected release.
+The announcement describes historical payment context. It does not identify QR transactions in the synthetic sample.
+Do not use it to certify the sample total, settled-only definition, or fixed FX rates.
+Run the document question separately from the numeric query for a predictable demonstration.
 
 Use this answer format:
 
 ```text
-Answer: <returned result, clarification, or availability limit>
-Scope: <geography; population; cohort; observation period; unit>
-Evidence: <executed sample metric / compiled query only / published document passage>
-Source: <returned model version and metric, or document revision and page>
-Limit: <sample-only execution, missing coverage, missing passage, or other actual limitation>
+Answer: <actual returned value or availability limit>
+Scope: <settled sender outflow; September 2026 sample; SGD; selected filters>
+Evidence: <executed sample metric / compiled SQL only / published document passage>
+Source: <returned model_id, version, context_sha256, metric or document citation>
+Limit: <synthetic sample data, missing coverage, or other actual limitation>
 ```
+
+## Live verification recorded on 19 October 2026
+
+See the [redacted discovery report](semantic-hub-cai-mcp-discovery-verification.json).
+
+A real MCP stdio client connected through the adapter to the deployed Application HTTP API.
+CAI authentication succeeded. MCP discovery returned all 12 tools.
+`hub_status`, `list_semantic_models`, and keyword `search_semantics` returned successful responses.
+The catalog returned `items=[]` and `total=0`; search returned no matches.
+No published finance model was available for resolution, coverage, compilation, or execution.
+These results verify connectivity and discovery, not a completed hosted Agent Studio workflow.
+The standard live checker expects `pharma_intelligence` and is unsuitable for this finance-only acceptance run.
 
 ## 6. Validate guardrails and deployment
 
@@ -207,13 +313,13 @@ Do not assume a specific judge API or import schema.
 1. Run the package's documented local tests and backend contract checks.
 2. Start MCP with the configured reachable origin.
 3. Discover all 12 tools from the actual Agent Studio runtime.
-4. Run the six questions above against a selected published model.
+4. Run the six finance questions above against the selected published model.
 5. Record returned version, hash, bundle, query status, and evidence citations.
 6. Test an incorrect hash and confirm that the backend rejects it.
-7. Test missing sample execution and missing published page 14 evidence.
+7. Test unavailable sample execution and missing published MAS evidence.
 8. Save a transcript that distinguishes local checks from hosted workflow execution.
 
-No hosted execution evidence accompanies this configuration guide.
+Hosted Agent Studio execution remains unverified. The authenticated MCP discovery check is recorded above.
 Record actual results before claiming that the Agent Studio integration passed.
 
 ## Troubleshooting
@@ -227,4 +333,4 @@ Record actual results before claiming that the Agent Studio integration passed.
 | DuckDB or sample execution unavailable | Show compilation only or report unavailable execution. Do not claim a computed result. |
 | Document passage missing | Check publication of the reviewed attachment in this exact version. Do not quote a draft or another release. |
 | Search mode is keyword | Report keyword matching accurately. Configure embeddings separately if required. |
-| Wrong geography or date answer | Inspect fixed metric constraints and actual coverage before another query. |
+| Wrong sender role or date answer | Inspect fixed metric constraints and actual coverage before another query. |

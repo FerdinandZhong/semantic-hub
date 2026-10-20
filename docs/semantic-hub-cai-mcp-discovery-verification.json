@@ -1,0 +1,83 @@
+{
+  "calls": [
+    {
+      "tool": "hub_status",
+      "result": {
+        "service": "Semantic Hub",
+        "api_version": "v1",
+        "role": "Published semantic context for external agents",
+        "search": {
+          "keyword": true,
+          "embedding": true,
+          "embedding_storage": "Lance"
+        },
+        "version_pinning": true,
+        "bundle_ttl_seconds": 300,
+        "execution": {
+          "engine": "local_duckdb",
+          "max_rows": 100,
+          "arbitrary_sql": false
+        },
+        "authorization": "CAI Application ingress; project access, all published models; no per-model grants.",
+        "capabilities": [
+          "inventory",
+          "versions",
+          "definitions",
+          "metadata",
+          "ontology",
+          "lineage",
+          "published_documents",
+          "search",
+          "resolve",
+          "coverage",
+          "compile",
+          "sample_query"
+        ],
+        "limitations": [
+          "No model editing or publication",
+          "No live enterprise query engine",
+          "Calling agent owns natural-language interpretation"
+        ]
+      }
+    },
+    {
+      "tool": "list_semantic_models",
+      "result": {
+        "items": [],
+        "total": 0,
+        "offset": 0,
+        "limit": 100,
+        "scope": "Published semantic models only; drafts are excluded."
+      }
+    },
+    {
+      "tool": "search_semantics",
+      "result": {
+        "method": "keyword",
+        "items": [],
+        "scope": "Selected published versions",
+        "notice": "Search relevance does not establish factual support."
+      }
+    }
+  ],
+  "tools": [
+    "hub_status",
+    "list_semantic_models",
+    "get_semantic_model",
+    "list_model_versions",
+    "get_model_version",
+    "search_semantics",
+    "resolve_semantic_context",
+    "inspect_metric_coverage",
+    "get_model_lineage",
+    "get_published_documents",
+    "compile_semantic_query",
+    "query_sample_data"
+  ],
+  "checked_date": "2026-10-19",
+  "origin": "https://semantic-hub-acpkiu.ml-c99c87a0-2d3.qzhong-a.a465-9q4k.cloudera.site",
+  "transport": "local MCP stdio client -> deployed HTTP API",
+  "model_writes": 0,
+  "hosted_agent_studio_verified": false,
+  "finance_execution_verified": false
+}

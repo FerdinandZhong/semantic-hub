@@ -25,8 +25,9 @@ Unset `SEMANTIC_HUB_API_TOKEN` for this AMP configuration because that variable 
     "semantic-hub": {
       "command": "uvx",
       "args": [
+        "--refresh",
         "--from",
-        "git+https://github.com/FerdinandZhong/semantic-hub.git@bb6a51848614b8100580d165066c97526f0c8a61#subdirectory=apps/semantic-hub-mcp",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp",
         "semantic-hub-mcp"
       ],
       "env": {
@@ -43,7 +44,8 @@ For local rehearsal, use [agent-studio.local.mcp.json](agent-studio.local.mcp.js
 Use a reachable HTTPS URL for CAI. Its localhost is not your laptop.
 The adapter uses stdio and does not host an HTTP MCP endpoint.
 
-The supplied configurations pin AMP implementation commit `bb6a518`, which includes CAI credential forwarding.
+The supplied configurations install the MCP adapter from `main`.
+`--refresh` refreshes the package cache at startup.
 Local package tests passed; live CAI ingress acceptance remains unverified.
 A moving branch can use cached code. Run `uvx --refresh --from '<Git URL>' semantic-hub-mcp` to refresh it.
 Do not place tokens in the Git URL, command arguments, or agent prompts.
@@ -169,5 +171,5 @@ Use the authenticated Application origin as `SEMANTIC_HUB_URL`.
 The adapter uses `CDSW_APIV2_KEY` when `SEMANTIC_HUB_API_TOKEN` is unset.
 CAI validates that credential at its ingress; the Hub creates no separate token.
 See the [AMP deployment guide](../../docs/amp-deployment.md).
-The default configuration now pins the published AMP implementation.
+The default configuration tracks `main`.
 Call `hub_status` first, then verify discovery of all twelve tools through the deployed Application URL.

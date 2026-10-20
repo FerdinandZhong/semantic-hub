@@ -84,7 +84,7 @@ The CAI ingress/key behavior still requires a live workspace acceptance check.
 
 The existing twelve stdio MCP tools call the same Application origin.
 Import [the AMP MCP configuration](../apps/semantic-hub-mcp/agent-studio.mcp.json).
-It pins published AMP implementation commit `bb6a518`.
+It installs the MCP adapter from `main` and refreshes the package cache at startup.
 Replace the Application URL placeholder, then configure the MCP subprocess secret `CDSW_APIV2_KEY`.
 The JSON omits that secret so the subprocess inherits it from its runtime environment.
 Unset a stale `SEMANTIC_HUB_API_TOKEN` before using CAI credentials.
@@ -95,8 +95,9 @@ Unset a stale `SEMANTIC_HUB_API_TOKEN` before using CAI credentials.
     "semantic-hub": {
       "command": "uvx",
       "args": [
+        "--refresh",
         "--from",
-        "git+https://github.com/FerdinandZhong/semantic-hub.git@bb6a51848614b8100580d165066c97526f0c8a61#subdirectory=apps/semantic-hub-mcp",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp",
         "semantic-hub-mcp"
       ],
       "env": {

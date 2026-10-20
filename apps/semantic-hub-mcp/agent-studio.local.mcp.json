@@ -3,8 +3,9 @@
     "semantic-hub": {
       "command": "uvx",
       "args": [
+        "--refresh",
         "--from",
-        "git+https://github.com/FerdinandZhong/semantic-hub.git@bb6a51848614b8100580d165066c97526f0c8a61#subdirectory=apps/semantic-hub-mcp",
+        "git+https://github.com/FerdinandZhong/semantic-hub.git@main#subdirectory=apps/semantic-hub-mcp",
         "semantic-hub-mcp"
       ],
       "env": {
