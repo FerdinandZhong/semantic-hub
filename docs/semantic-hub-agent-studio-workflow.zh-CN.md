@@ -38,7 +38,9 @@ MCP 只读取已发布模型，不能发布草稿。
 
 1. 导入 [MCP 配置](../apps/semantic-hub-mcp/agent-studio.mcp.json)。
 2. 将 `SEMANTIC_HUB_URL` 设置为以下地址。
-3. 在密钥环境变量中配置 `CDSW_APIV2_KEY`，或保留平台注入的有效值。
+3. 在每个 MCP 实例的用户环境参数中明确配置 `CDSW_APIV2_KEY`。
+   替换配置中的占位符。不要假定 Agent Studio 会传递运行环境密钥。
+   填入实际密钥，不加 `Bearer ` 前缀；如有密钥字段，请使用该字段。
 4. 清除旧的 `SEMANTIC_HUB_API_TOKEN`，因为它的优先级更高。
 5. 发现全部 12 个工具，并调用 `hub_status`。
 
@@ -62,7 +64,8 @@ URL 不包含 `/api/semantic-hub/v1`。
 4. 粘贴 [finance-query-assistant.txt](agent-studio/finance-query-assistant.txt)。
 5. 使用部署中可用的工具调用模型。
 
-如需管理智能体和两个专家，可使用英文指南中的可选分工。
+如需管理智能体和两个专家，请使用[完整智能体定义](semantic-hub-agent-studio-workflow.md#3-configure-the-conversation)。
+该章节包含每个智能体的配置字段、工具分配、Backstory 和 Goal。
 简短演示无需增加委派步骤。
 
 ## 4. 执行查询

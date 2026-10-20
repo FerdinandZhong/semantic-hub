@@ -76,8 +76,10 @@ class ConsumerService:
         if metric:
             checked=check_scope(runtime,metric,payload.query,[])
             required=list(dict.fromkeys(required+[f['field'] for f in checked['filters']]))
+        # An explicitly selected metric uses only its dependencies and requested fields.
+        # Preserve []: converting it to None enables unrelated lexical field expansion.
         result=self.retrieval.resolve_context(payload.query,scope,model=payload.model_id,
-            metric=payload.metric,required_fields=required or None)
+            metric=payload.metric,required_fields=required if metric else required or None)
         if not metric and result['status']=='ready':
             chosen=result['bundle'].get('metrics',[])
             metric=next((m for m in package['context']['definition']['metrics'] if chosen and m['name']==chosen[0]['name']),None)

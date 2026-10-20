@@ -239,3 +239,51 @@ def test_explicit_local_mode_needs_no_token_and_keeps_version_binding(published,
         assert post(client, 'query', query).json()['status'] == 'answered'
         query['context_sha256'] = '0'*64
         assert post(client, 'query', query).status_code == 409
+
+
+@pytest.fixture(scope='module')
+def finance_client(tmp_path_factory):
+    tmp_path = tmp_path_factory.mktemp('consumer-finance')
+    reg = registry()
+    runtime = DemoRuntime(reg.load('finance'), tmp_path)
+    hub = DemoHub(reg, tmp_path, runtime)
+    value = runtime.workspace.seed()
+    value['metrics'][0]['reference_sql'] = (
+        "SELECT SUM(amount_sgd) AS total_amount_sgd FROM transactions WHERE status = 'SETTLED'")
+    validated(runtime, value)
+    runtime.workspace.review(review_request(runtime))
+    publish(runtime)
+    pin = dict(model_id='finance', version='v1',
+               context_sha256=runtime.workspace.release('v1')['context_sha256'])
+    try:
+        with TestClient(create_application(hub, FakeSettings(), local_no_auth=True)) as client:
+            yield client, pin
+    finally:
+        hub.close()
+
+
+@pytest.mark.parametrize('fields', [None, []])
+def test_finance_scalar_resolution_does_not_add_lexical_join_dependencies(finance_client, fields):
+    client, pin = finance_client
+    question = 'What is the total settled sender outflow in SGD for the sample?'
+    body = pin | dict(query=question, metric='total_amount_sgd')
+    if fields is not None:
+        body['required_fields'] = fields
+    resolved = post(client, 'resolve', body)
+    assert resolved.status_code == 200, resolved.text
+    context = resolved.json()
+    assert context['status'] == 'ready', context
+    assert {d['name'] for d in context['bundle']['datasets']} == {'payments'}
+    assert context['bundle']['relationships'] == []
+    query = pin | dict(bundle_id=context['bundle_id'], question=question,
+                       metrics=['total_amount_sgd'], dimensions=[], filters=[], limit=10)
+    assert post(client, 'coverage', pin | dict(metric='total_amount_sgd', question=question)).json()['status'] == 'supported'
+    compiled = post(client, 'compile', query)
+    assert compiled.status_code == 200, compiled.text
+    assert compiled.json()['status'] == 'ready'
+    answer = post(client, 'query', query)
+    assert answer.status_code == 200, answer.text
+    assert answer.json()['status'] == 'answered'
+    assert float(answer.json()['rows'][0][0]) == pytest.approx(686572.96)
+    # A caller cannot execute a dimension outside the resolved scalar bundle.
+    assert post(client, 'query', query | dict(dimensions=['transactions.currency'])).status_code == 409
