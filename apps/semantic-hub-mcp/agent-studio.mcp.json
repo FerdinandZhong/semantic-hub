@@ -9,7 +9,8 @@
         "semantic-hub-mcp"
       ],
       "env": {
-        "SEMANTIC_HUB_URL": "https://<semantic-hub-application-host>"
+        "SEMANTIC_HUB_URL": "https://<semantic-hub-application-host>",
+        "CDSW_APIV2_KEY": "<your-cai-api-v2-key>"
       }
     }
   }

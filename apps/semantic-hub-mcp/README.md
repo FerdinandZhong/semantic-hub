@@ -13,9 +13,10 @@ It connects to a separately running Semantic Hub consumer API.
 
 Import [agent-studio.mcp.json](agent-studio.mcp.json) for the CAI AMP deployment.
 Replace the URL placeholder with the Application URL shown in Workbench.
-Configure `CDSW_APIV2_KEY` as a secret environment variable for the MCP subprocess.
-When Agent Studio already injects that variable, retain its value.
-The JSON intentionally omits the credential so it can inherit the runtime secret.
+Set the MCP user environment parameter `CDSW_APIV2_KEY` explicitly to an authorized CAI API v2 key.
+The importable configuration contains a placeholder; replace it in Agent Studio before starting MCP.
+Use a secret field when the platform provides one. Do not assume Agent Studio forwards its own runtime key.
+If you use verified secret injection instead, remove the placeholder so it cannot override the injected value.
 Do not use `${CDSW_APIV2_KEY}` as a literal JSON value; generic MCP clients do not guarantee shell expansion.
 Unset `SEMANTIC_HUB_API_TOKEN` for this AMP configuration because that variable takes precedence.
 
@@ -31,7 +32,8 @@ Unset `SEMANTIC_HUB_API_TOKEN` for this AMP configuration because that variable 
         "semantic-hub-mcp"
       ],
       "env": {
-        "SEMANTIC_HUB_URL": "https://<semantic-hub-application-host>"
+        "SEMANTIC_HUB_URL": "https://<semantic-hub-application-host>",
+        "CDSW_APIV2_KEY": "<your-cai-api-v2-key>"
       }
     }
   }
@@ -46,7 +48,8 @@ The adapter uses stdio and does not host an HTTP MCP endpoint.
 
 The supplied configurations install the MCP adapter from `main`.
 `--refresh` refreshes the package cache at startup.
-Local package tests passed; live CAI ingress acceptance remains unverified.
+Authenticated MCP discovery reached the CAI Application on 19 October 2026.
+Agent Studio must still supply its own accepted machine credential.
 A moving branch can use cached code. Run `uvx --refresh --from '<Git URL>' semantic-hub-mcp` to refresh it.
 Do not place tokens in the Git URL, command arguments, or agent prompts.
 
@@ -173,3 +176,14 @@ CAI validates that credential at its ingress; the Hub creates no separate token.
 See the [AMP deployment guide](../../docs/amp-deployment.md).
 The default configuration tracks `main`.
 Call `hub_status` first, then verify discovery of all twelve tools through the deployed Application URL.
+
+## CAI login redirect (HTTP 302)
+
+A 302 commonly means CAI ingress redirected an unauthenticated request to login.
+Set both `SEMANTIC_HUB_URL` and `CDSW_APIV2_KEY` explicitly in the MCP server environment parameters.
+Use the actual key value without a `Bearer ` prefix. The adapter adds that prefix.
+Do not enter the key as a tool argument or in an agent prompt.
+Unset a stale `SEMANTIC_HUB_API_TOKEN`, because it overrides `CDSW_APIV2_KEY`.
+Restart the MCP server and call `hub_status`.
+If the redirect persists, verify that the key is valid and its user can access this Application.
+The adapter does not follow login redirects with the bearer credential.
