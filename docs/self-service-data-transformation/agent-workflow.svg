@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1740" height="1480" viewBox="0 0 1740 1480" role="img">
+<title>Self-service data transformation</title><desc>Consolidate business logic into reviewed PySpark pipelines, governed Hive tables, and parallel CSV outputs.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#245EDB"/></marker></defs>
+<rect width="1740" height="1480" fill="#F5F8FC"/>
+<text data-id="brand" x="50" y="36.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">INDEPENDENT USE CASE  /  PROPOSED DESIGN</text>
+<text data-id="title" x="50" y="87.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#14243B">Self-service data transformation</text>
+<text data-id="subtitle" x="50" y="134.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Consolidate business logic into reviewed PySpark pipelines, governed Hive tables, and parallel CSV outputs.</text>
+<rect x="60" y="200" width="500" height="155" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="input-title" x="82" y="236.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Business uploads</text>
+<text data-id="input-line-0" x="82" y="280.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">CSV files + MySQL / Excel logic</text>
+<text data-id="input-line-1" x="82" y="312.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Restricted landing area; no direct LLM access</text>
+<rect x="620" y="200" width="500" height="155" rx="12" fill="#FFF3DF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="privacy-title" x="642" y="236.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">IT intake and privacy gate</text>
+<text data-id="privacy-line-0" x="642" y="280.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">IT creates intake DDL + Atlas PII tags</text>
+<text data-id="privacy-line-1" x="642" y="312.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Only approved, sanitized context reaches AI</text>
+<rect x="1180" y="200" width="500" height="155" rx="12" fill="#EDF3FF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="coordinator-title" x="1202" y="236.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Workflow coordinator</text>
+<text data-id="coordinator-line-0" x="1202" y="280.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Tracks dependencies, artifacts, and approvals</text>
+<text data-id="coordinator-line-1" x="1202" y="312.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Routes retries; binds execution to approved version</text>
+<polyline points="560,277 620,277" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1120,277 1180,277" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="60" y="470" width="500" height="155" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="mapper-tag" x="82" y="501.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#245EDB">AGENT 1</text>
+<text data-id="mapper-title" x="82" y="534.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Mapper / Interpreter</text>
+<text data-id="mapper-line-0" x="82" y="578.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Resolve schemas, paths, and dependencies</text>
+<text data-id="mapper-line-1" x="82" y="610.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Define output contracts</text>
+<rect x="620" y="470" width="500" height="155" rx="12" fill="#EDF3FF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="converter-tag" x="642" y="501.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#245EDB">AGENT 2</text>
+<text data-id="converter-title" x="642" y="534.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">SQL / Excel Converter</text>
+<text data-id="converter-line-0" x="642" y="578.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Merge common logic → fewer PySpark jobs</text>
+<text data-id="converter-line-1" x="642" y="610.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Example target: 15 scripts → 4</text>
+<rect x="1180" y="470" width="500" height="155" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="creator-tag" x="1202" y="501.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#245EDB">AGENT 3</text>
+<text data-id="creator-title" x="1202" y="534.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Folder / Table Structure Creator</text>
+<text data-id="creator-line-0" x="1202" y="578.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Plan /input, /output, /tables paths</text>
+<text data-id="creator-line-1" x="1202" y="610.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Generate Hive external-table DDL for IT</text>
+<polyline points="1430,355 1430,415 310,415 310,470" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="560,547 620,547" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1120,547 1180,547" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1180" y="740" width="500" height="155" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="validator-tag" x="1202" y="771.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#245EDB">AGENT 4</text>
+<text data-id="validator-title" x="1202" y="804.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Validator</text>
+<text data-id="validator-line-0" x="1202" y="848.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Check code, schema, and equivalent results</text>
+<text data-id="validator-line-1" x="1202" y="880.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Use sanitized fixtures in an isolated test</text>
+<rect x="620" y="740" width="500" height="155" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="documenter-tag" x="642" y="771.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#245EDB">AGENT 5</text>
+<text data-id="documenter-title" x="642" y="804.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Documenter</text>
+<text data-id="documenter-line-0" x="642" y="848.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Explain consolidation, tests, and lineage</text>
+<text data-id="documenter-line-1" x="642" y="880.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Produce a versioned execution report</text>
+<rect x="60" y="740" width="500" height="155" rx="12" fill="#FFF3DF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="human-title" x="82" y="776.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Business review and sign-off</text>
+<text data-id="human-line-0" x="82" y="820.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Review proposed changes and output contract</text>
+<text data-id="human-line-1" x="82" y="852.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Approve the exact artifact version</text>
+<polyline points="1430,625 1430,740" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1180,817 1120,817" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="620,817 560,817" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="150,740 150,625" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<text data-id="feedback-label" x="175" y="684.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#245EDB">Feedback / revise</text>
+<polyline points="1180,775 1150,775 1150,665 870,665 870,625" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<text data-id="retry-label" x="740" y="702.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#245EDB">Failed checks → revise</text>
+<rect x="60" y="1030" width="500" height="155" rx="12" fill="#FFF3DF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="it-title" x="82" y="1066.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">IT executes approved DDL</text>
+<text data-id="it-line-0" x="82" y="1110.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Create Hive tables; confirm Atlas PII tags</text>
+<text data-id="it-line-1" x="82" y="1142.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Grant runtime access after governance checks</text>
+<rect x="620" y="1030" width="500" height="155" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="executor-tag" x="642" y="1061.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#245EDB">AGENT 6</text>
+<text data-id="executor-title" x="642" y="1094.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Executor</text>
+<text data-id="executor-line-0" x="642" y="1138.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Require business approval + IT readiness</text>
+<text data-id="executor-line-1" x="642" y="1170.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Run the approved PySpark pipeline</text>
+<rect x="1180" y="1030" width="500" height="155" rx="12" fill="#F0F8F3" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="outputs-title" x="1202" y="1066.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Parallel delivery</text>
+<text data-id="outputs-line-0" x="1202" y="1110.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Hive external tables + downstream CSVs</text>
+<text data-id="outputs-line-1" x="1202" y="1142.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Retain PySpark scripts and run evidence</text>
+<polyline points="310,895 310,1030" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="560,1107 620,1107" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1120,1107 1180,1107" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="620" y="1270" width="1060" height="80" rx="12" fill="#F0F8F3" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="reconcile-title" x="642" y="1308.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#14243B">Reconcile legacy CSVs ↔ new CSVs ↔ Hive tables → business-approved cutover</text>
+<polyline points="1430,1185 1430,1270" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="footer-0" x="50" y="1412.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">Orange boxes: human / IT gates. Dashed arrows: feedback before execution. The coordinator manages all six agents.</text>
+<text data-id="footer-1" x="50" y="1438.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">Raw PII stays outside LLM prompts. Atlas classification informs an enforced masking / access policy; tags alone do not block access.</text>
+</svg>
