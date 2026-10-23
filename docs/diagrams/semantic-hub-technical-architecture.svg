@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1220" viewBox="0 0 1600 1220" role="img">
+<title>Semantic Hub — technical architecture design</title><desc>Shared semantic context connects authoring and agents to governed queries across different data sources.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#245EDB"/></marker></defs>
+<rect width="1600" height="1220" fill="#F5F8FC"/>
+<text data-id="brand" x="50" y="36.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">SEMANTIC HUB  /  TARGET ARCHITECTURE</text>
+<text data-id="title" x="50" y="87.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#14243B">Semantic Hub — technical architecture design</text>
+<text data-id="subtitle" x="50" y="134.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Shared semantic context connects authoring and agents to governed queries across different data sources.</text>
+<text data-id="layer-175" x="70" y="187.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">CLIENTS</text>
+<text data-id="layer-425" x="70" y="437.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">SERVICES</text>
+<text data-id="layer-805" x="70" y="817.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">STORAGE</text>
+<rect x="70" y="220" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="browser-title" x="92" y="256.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Studio browser</text>
+<text data-id="browser-line-0" x="92" y="300.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Model and document authoring</text>
+<rect x="630" y="220" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="pg-client-title" x="652" y="256.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Playground browser</text>
+<text data-id="pg-client-line-0" x="652" y="300.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Question and explicit Run</text>
+<rect x="1190" y="220" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="mcp-title" x="1212" y="256.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">External agent + MCP</text>
+<text data-id="mcp-line-0" x="1212" y="300.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">stdio adapter → HTTPS API</text>
+<rect x="45" y="465" width="1510" height="310" rx="12" fill="#EDF3FF" stroke="#9FB9EF" stroke-width="2" stroke-dasharray="7 6"/>
+<rect x="70" y="490" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="author-title" x="92" y="526.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Authoring service</text>
+<text data-id="author-line-0" x="92" y="570.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Extract → draft → validate → publish</text>
+<rect x="630" y="490" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="harness-title" x="652" y="526.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Playground Harness</text>
+<text data-id="harness-line-0" x="652" y="570.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Tools → checked plan → Run</text>
+<rect x="1190" y="490" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="consumer-title" x="1212" y="526.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Consumer API</text>
+<text data-id="consumer-line-0" x="1212" y="570.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Resolve → compile → execute</text>
+<rect x="70" y="650" width="340" height="116" rx="12" fill="#F0F8F3" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="release-title" x="92" y="686.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Published context</text>
+<text data-id="release-line-0" x="92" y="730.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Version + context + source bindings</text>
+<rect x="1190" y="650" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="engine-title" x="1212" y="686.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Query execution layer</text>
+<text data-id="engine-line-0" x="1212" y="730.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Source connectors + query adapters</text>
+<polyline points="240,336 240,490" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="800,336 800,490" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1360,336 1360,490" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="240,606 240,650" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="410,680 580,680 580,548 630,548" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="context-harness-label" x="440" y="632.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Read release</text>
+<polyline points="410,735 1135,735 1135,578 1190,578" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="context-consumer-label" x="750" y="751.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Pinned context</text>
+<polyline points="970,548 1070,548 1070,680 1190,680" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="harness-engine-label" x="1080" y="637.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Run</text>
+<polyline points="1360,606 1360,650" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="70" y="850" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="state-db-title" x="92" y="886.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Relational database</text>
+<text data-id="state-db-line-0" x="92" y="930.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Drafts, evidence, releases, and audit</text>
+<rect x="630" y="850" width="340" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="lance-title" x="652" y="886.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Lance vector caches</text>
+<text data-id="lance-line-0" x="652" y="930.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Optional embedding lookup</text>
+<rect x="1190" y="850" width="340" height="190" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="sources-title" x="1212" y="886.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Connected data sources</text>
+<text data-id="sources-line-0" x="1212" y="930.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Databases</text>
+<text data-id="sources-line-1" x="1212" y="962.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Warehouses and lakehouses</text>
+<text data-id="sources-line-2" x="1212" y="994.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Files and object storage</text>
+<polyline points="240,766 240,850" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="release-store-label" x="260" y="802.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Persist</text>
+<polyline points="1360,850 1360,766" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="source-query-label" x="1380" y="802.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Read data</text>
+<polyline points="700,850 700,790 20,790 20,548 70,548" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<polyline points="900,850 900,790 1580,790 1580,548 1530,548" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<text data-id="footer-0" x="50" y="1152.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">Target design: source-specific connectors and query adapters. Dashed arrows: optional vector lookup.</text>
+<text data-id="footer-1" x="50" y="1178.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">Demo today: DuckDB over sample files; SQLite for state. Planned product state store: PostgreSQL.</text>
+</svg>

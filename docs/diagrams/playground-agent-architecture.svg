@@ -1,103 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
-<title id="title">Semantic Hub Playground — current agent architecture</title><desc id="desc">Official DeepSeek Harness coordinates bounded semantic tools. The server validates original question scope before a user can run a version-pinned query. Skills and release-scoped audit memory support the coordinator.</desc>
-<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#345be8" stroke-width="1.8"/></marker><marker id="mutedArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8" fill="none" stroke="#8090ae" stroke-width="1.5"/></marker></defs>
-<rect width="1600" height="1100" fill="#f6f8fc"/>
-<style>text{font-family:Inter,Arial,sans-serif;fill:#142442}.title{font-size:32px;font-weight:700}.h{font-size:22px;font-weight:700}.sub{font-size:16px;fill:#596b87}.body{font-size:16px}.small{font-size:14px;fill:#596b87}.label{font-size:13px;font-weight:700;letter-spacing:1.5px;fill:#506484}.edge{fill:none;stroke:#345be8;stroke-width:3;marker-end:url(#arrow)}.context{fill:none;stroke:#8090ae;stroke-width:2;stroke-dasharray:5 6;marker-end:url(#mutedArrow)}</style>
-<text x="48" y="51" class="label" style="fill:#f26332">SEMANTIC HUB</text>
-<text x="48" y="97" class="title">Playground agent architecture</text>
-<text x="48" y="128" class="sub">Current implementation · one tool-using agent · version-pinned data and evidence</text>
-<rect x="1230" y="47" width="322" height="54" rx="10" fill="#edf3ff" stroke="#d8e4ff" stroke-width="1.5"/>
-<text x="1250" y="80" class="body" style="fill:#345be8">Official DeepSeek Harness SDK</text>
-<text x="48" y="188" class="label">1 / INTERPRET AND CHECK</text>
-<rect x="48" y="224" width="230" height="150" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="70" y="259" class="h">User question</text>
-<text x="70" y="290" class="body">Original intent</text>
-<text x="70" y="315" class="body">Time · population · units</text>
-<text x="70" y="340" class="body">Selected published version</text>
-<rect x="337" y="224" width="348" height="178" rx="14" fill="#ffffff" stroke="#ff5b2a" stroke-width="3"/>
-<text x="359" y="259" class="h" style="fill:#ec542a">DeepSeek Harness</text>
-<text x="359" y="290" class="body">Query coordinator</text>
-<text x="359" y="315" class="body">Chooses bounded tools</text>
-<text x="359" y="340" class="body">Preserves the original question</text>
-<text x="359" y="365" class="body">No direct numeric answer</text>
-<path d="M278 299 H326" class="edge"/>
-<text x="337" y="436" class="label">CONFIGURABLE QUERY MODEL</text>
-<rect x="337" y="450" width="348" height="59" rx="10" fill="#edf3ff" stroke="#d8e4ff" stroke-width="1.5"/>
-<text x="358" y="486" class="body" style="fill:#345be8">GPT-4o · existing model configuration</text>
-<path d="M665 450 V413" class="context"/>
-<text x="746" y="205" class="label">READ-ONLY SEMANTIC TOOLS</text>
-<rect x="746" y="224" width="324" height="83" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="768" y="259" class="h">Inspect model</text>
-<text x="768" y="290" class="body">Metrics · typed fields · joins</text>
-<rect x="746" y="325" width="324" height="83" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="768" y="360" class="h">Inspect coverage</text>
-<text x="768" y="391" class="body">Actual dates and cohort pairs</text>
-<rect x="746" y="426" width="324" height="83" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="768" y="461" class="h">Read document evidence</text>
-<text x="768" y="492" class="body">Reviewed, published passages</text>
-<rect x="746" y="527" width="324" height="83" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="768" y="562" class="h">Prepare an answer plan</text>
-<text x="768" y="593" class="body">Typed query or document route</text>
-<path d="M685 313 H714 V265 H735" class="edge"/>
-<path d="M714 313 V366 H735" class="edge"/>
-<path d="M714 366 V467 H735" class="edge"/>
-<path d="M714 467 V568 H735" class="edge"/>
-<rect x="1133" y="224" width="419" height="215" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="1155" y="259" class="h">Server validation gates</text>
-<text x="1155" y="290" class="body">Original time scope is authoritative</text>
-<text x="1155" y="315" class="body">Exact cohort match; overlap is insufficient</text>
-<text x="1155" y="340" class="body">Enforce fields, joins, and metric filters</text>
-<text x="1155" y="365" class="body">Compile SQL from reviewed definitions</text>
-<text x="1155" y="390" class="body">Independent AI review of the query scope</text>
-<text x="1155" y="415" class="body">No arbitrary SQL from the model</text>
-<path d="M1070 568 H1101 V330 H1122" class="edge"/>
-<rect x="1133" y="463" width="419" height="74" rx="12" fill="#fff6e9" stroke="#f2dfbd" stroke-width="1.5"/>
-<text x="1155" y="494" class="h">No data / Clarify / Agent unavailable</text>
-<text x="1155" y="519" class="small">No executable answer plan is issued.</text>
-<path d="M1342 439 V452" class="edge"/>
-<rect x="1133" y="560" width="419" height="72" rx="12" fill="#edf3ff" stroke="#d8e4ff" stroke-width="1.5"/>
-<text x="1155" y="590" class="h">Checked plan + visible tool trace</text>
-<text x="1155" y="616" class="small">Original scope · source coverage · proposed SQL</text>
-<path d="M1552 331 H1573 V596 H1563" class="edge"/>
-<rect x="48" y="450" width="230" height="160" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="70" y="485" class="h">Semantic skills</text>
-<text x="70" y="516" class="body">Scope and time rules</text>
-<text x="70" y="541" class="body">Metric / document routes</text>
-<text x="70" y="566" class="body">Clarification rules</text>
-<text x="70" y="591" class="body">Receipt-only responses</text>
-<path d="M278 478 H307 V365 H326" class="context"/>
-<rect x="337" y="537" width="348" height="135" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="359" y="572" class="h">Release-scoped memory</text>
-<text x="359" y="603" class="body">SQLite turn audit + Harness sessions</text>
-<text x="359" y="628" class="body">Context hash + source snapshot</text>
-<text x="359" y="653" class="body">Past answers are not reused as facts</text>
-<path d="M685 390 H701 V600 H696" class="context"/>
-<rect x="48" y="701" width="1504" height="78" rx="12" fill="#eef2f8" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="70" y="734" class="label">SHARED PUBLISHED CONTEXT</text>
-<text x="70" y="760" class="body">Semantic definitions  •  Metadata and ontology  •  Reviewed document passages  •  Immutable release and source hashes</text>
-<path d="M906 701 V620" class="context"/>
-<text x="48" y="830" class="label">2 / INSPECT AND RUN</text>
-<rect x="48" y="855" width="280" height="123" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="70" y="890" class="h">User reviews the plan</text>
-<text x="70" y="921" class="body">Inspect scope and proposed SQL</text>
-<text x="70" y="946" class="body">Click “Run this interpretation”</text>
-<rect x="388" y="855" width="340" height="123" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="410" y="890" class="h">Revalidate the binding</text>
-<text x="410" y="921" class="body">Check release, snapshot, and scope</text>
-<text x="410" y="946" class="body">Use the stored plan ID</text>
-<rect x="790" y="855" width="340" height="123" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="812" y="890" class="h">Answer service</text>
-<text x="812" y="921" class="body">Typed SQL → local DuckDB</text>
-<text x="812" y="946" class="body">Document QA → citation checks</text>
-<rect x="1192" y="855" width="360" height="123" rx="14" fill="#ffffff" stroke="#dbe2ef" stroke-width="1.5"/>
-<text x="1214" y="890" class="h">Grounded result</text>
-<text x="1214" y="921" class="body">Value or supported document claim</text>
-<text x="1214" y="946" class="body">SQL / citations + version provenance</text>
-<path d="M1342 632 V670 H24 V916 H37" class="edge"/>
-<path d="M328 916 H377" class="edge"/>
-<path d="M728 916 H779" class="edge"/>
-<path d="M1130 916 H1181" class="edge"/>
-<text x="48" y="1024" class="small">Solid arrows: request flow     ·     Dashed arrows: configuration, skills, memory, and evidence</text>
-<text x="48" y="1054" class="small">Runtime: deepseek-harness-sdk 0.1.5rc1. GPT-4o is the configured model, not the Harness framework.</text>
-<text x="48" y="1078" class="small">Local Playground scope. This diagram does not imply autonomous publishing, specialist subagents, or live Trino execution.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="820" viewBox="0 0 1500 820" role="img">
+<title>Playground — from question to checked answer</title><desc>The agent prepares an interpretation. The user authorizes execution with Run.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#245EDB"/></marker></defs>
+<rect width="1500" height="820" fill="#F5F8FC"/>
+<text data-id="brand" x="50" y="36.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">SEMANTIC HUB  /  IMPLEMENTED ARCHITECTURE</text>
+<text data-id="title" x="50" y="87.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#14243B">Playground — from question to checked answer</text>
+<text data-id="subtitle" x="50" y="134.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">The agent prepares an interpretation. The user authorizes execution with Run.</text>
+<rect x="60" y="230" width="380" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="question-title" x="82" y="266.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Question</text>
+<text data-id="question-line-0" x="82" y="310.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Selected release + original scope</text>
+<rect x="560" y="230" width="380" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="agent-title" x="582" y="266.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Harness agent</text>
+<text data-id="agent-line-0" x="582" y="310.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Inspect context and call bounded tools</text>
+<rect x="1060" y="230" width="380" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="plan-title" x="1082" y="266.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Checked plan</text>
+<text data-id="plan-line-0" x="1082" y="310.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Server validation + query review</text>
+<polyline points="440,288 560,288" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="940,288 1060,288" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="560" y="460" width="380" height="116" rx="12" fill="#EDF3FF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="context-title" x="582" y="496.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Published context</text>
+<text data-id="context-line-0" x="582" y="540.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Definitions, passages, and source binding</text>
+<polyline points="750,460 750,346" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="context-agent-label" x="770" y="407.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Read</text>
+<rect x="1060" y="620" width="380" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="run-title" x="1082" y="656.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">User clicks Run</text>
+<text data-id="run-line-0" x="1082" y="700.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Revalidate release, scope, and plan</text>
+<rect x="560" y="620" width="380" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="execute-title" x="582" y="656.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Execute</text>
+<text data-id="execute-line-0" x="582" y="700.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">DuckDB query or cited document QA</text>
+<rect x="60" y="620" width="380" height="116" rx="12" fill="#F0F8F3" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="answer-title" x="82" y="656.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Answer + provenance</text>
+<text data-id="answer-line-0" x="82" y="700.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Result, SQL or citations, and version</text>
+<polyline points="1250,346 1250,620" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="plan-run-label" x="1270" y="472.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Inspect interpretation</text>
+<polyline points="1060,678 940,678" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="560,678 440,678" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="footer-0" x="50" y="778.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">Unsupported scope or missing data → clarification or limitation. No executable plan is issued.</text>
 </svg>

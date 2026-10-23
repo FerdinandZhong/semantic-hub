@@ -1,14 +1,16 @@
 # Playground agent architecture
 
 The Playground uses the official **DeepSeek Harness** framework.
-GPT-4o remains the configured query model.
+The query model comes from Model configuration. GPT-4o was used in the historical acceptance checks.
 These are separate choices: Harness coordinates the work; the model selects tools and proposes a typed plan.
 The integration pins `deepseek-harness-sdk` and `deepseek-harness-runtime-bin` to `0.1.5rc1`.
 The framework is a developer preview. Upgrade both packages together and rerun acceptance tests.
 
 ![Current Playground architecture](diagrams/playground-agent-architecture.png)
 
-Download the [editable SVG](diagrams/playground-agent-architecture.svg).
+Download the [editable draw.io](diagrams/playground-agent-architecture.drawio), [SVG](diagrams/playground-agent-architecture.svg), or [PNG](diagrams/playground-agent-architecture.png).
+See the [overall technical architecture](semantic-hub-technical-architecture.md) for service and storage boundaries.
+The diagram was refreshed against the implementation on 21 October 2026.
 The diagram describes the current implementation, including the explicit Run gate.
 It does not describe a fleet of independently deployed specialist agents.
 

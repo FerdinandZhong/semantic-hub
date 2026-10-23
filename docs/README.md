@@ -5,6 +5,12 @@ Reviewed on 19 October 2026 against the local working tree.
 Start with [current implementation progress and plan](implementation-progress-and-plan.md).
 Read [vision, OCR, and embeddings decisions](vision-ocr-and-embeddings-discussion.md) for the document-understanding discussion.
 
+## Architecture diagrams
+
+Use the [technical architecture](semantic-hub-technical-architecture.md) for runtime, storage, and integration boundaries.
+The [user overview](diagrams/semantic-hub-overview.drawio) and [Playground architecture](playground-agent-architecture.md) cover the authoring and query flows.
+All three views have editable draw.io, SVG, and PNG versions.
+
 ## Integrate an external agent
 
 Use the [consumer API](semantic-hub-consumer-api.md), [MCP adapter](../apps/semantic-hub-mcp/README.md), and [CAI Agent Studio workflow](semantic-hub-agent-studio-workflow.md).
@@ -80,3 +86,5 @@ AMP packaging and CAI ingress authentication are implemented. Full hosted Agent 
 - [Semantic Hub AMP deployment](amp-deployment.md): setup, persistent storage, CAI authentication, and MCP configuration.
 
 - [Manufacturing real-document evidence](manufacturing-real-document-sources.md): upload-ready DOE excerpt, page mapping, model-link instructions, and demo questions.
+
+- [Semantic context build flow](diagrams/semantic-context-build-flow.drawio): source inputs, evidence matching, validation, review, and publication.

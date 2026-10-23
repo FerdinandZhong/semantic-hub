@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="playground-agent-architecture" name="Playground — from question to checked answer">
+    <mxGraphModel dx="1500" dy="820" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1500" pageHeight="820" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="brand" value="SEMANTIC HUB  /  IMPLEMENTED ARCHITECTURE" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=1;">
+          <mxGeometry as="geometry" x="50" y="24" width="1400" height="24" />
+        </mxCell>
+        <mxCell id="title" value="Playground — from question to checked answer" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=36;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="50" y="62" width="1400" height="50" />
+        </mxCell>
+        <mxCell id="subtitle" value="The agent prepares an interpretation. The user authorizes execution with Run." vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=19;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="50" y="119" width="1400" height="30" />
+        </mxCell>
+        <mxCell id="question" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="60" y="230" width="380" height="116" />
+        </mxCell>
+        <mxCell id="question-title" value="Question" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="82" y="250" width="336" height="32" />
+        </mxCell>
+        <mxCell id="question-line-0" value="Selected release + original scope" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="82" y="296" width="336" height="28" />
+        </mxCell>
+        <mxCell id="agent" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="560" y="230" width="380" height="116" />
+        </mxCell>
+        <mxCell id="agent-title" value="Harness agent" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="582" y="250" width="336" height="32" />
+        </mxCell>
+        <mxCell id="agent-line-0" value="Inspect context and call bounded tools" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="582" y="296" width="336" height="28" />
+        </mxCell>
+        <mxCell id="plan" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="1060" y="230" width="380" height="116" />
+        </mxCell>
+        <mxCell id="plan-title" value="Checked plan" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="1082" y="250" width="336" height="32" />
+        </mxCell>
+        <mxCell id="plan-line-0" value="Server validation + query review" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="1082" y="296" width="336" height="28" />
+        </mxCell>
+        <mxCell id="ask" edge="1" parent="1" source="question" target="agent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="plan-result" edge="1" parent="1" source="agent" target="plan" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="context" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EDF3FF;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="560" y="460" width="380" height="116" />
+        </mxCell>
+        <mxCell id="context-title" value="Published context" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="582" y="480" width="336" height="32" />
+        </mxCell>
+        <mxCell id="context-line-0" value="Definitions, passages, and source binding" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="582" y="526" width="336" height="28" />
+        </mxCell>
+        <mxCell id="context-agent" edge="1" parent="1" source="context" target="agent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=0.0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="context-agent-label" value="Read" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="770" y="395" width="100" height="24" />
+        </mxCell>
+        <mxCell id="run" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="1060" y="620" width="380" height="116" />
+        </mxCell>
+        <mxCell id="run-title" value="User clicks Run" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="1082" y="640" width="336" height="32" />
+        </mxCell>
+        <mxCell id="run-line-0" value="Revalidate release, scope, and plan" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="1082" y="686" width="336" height="28" />
+        </mxCell>
+        <mxCell id="execute" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="560" y="620" width="380" height="116" />
+        </mxCell>
+        <mxCell id="execute-title" value="Execute" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="582" y="640" width="336" height="32" />
+        </mxCell>
+        <mxCell id="execute-line-0" value="DuckDB query or cited document QA" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="582" y="686" width="336" height="28" />
+        </mxCell>
+        <mxCell id="answer" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F0F8F3;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="60" y="620" width="380" height="116" />
+        </mxCell>
+        <mxCell id="answer-title" value="Answer + provenance" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="82" y="640" width="336" height="32" />
+        </mxCell>
+        <mxCell id="answer-line-0" value="Result, SQL or citations, and version" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="82" y="686" width="336" height="28" />
+        </mxCell>
+        <mxCell id="plan-run" edge="1" parent="1" source="plan" target="run" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="plan-run-label" value="Inspect interpretation" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="1270" y="460" width="220" height="24" />
+        </mxCell>
+        <mxCell id="run-execute" edge="1" parent="1" source="run" target="execute" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="execute-answer" edge="1" parent="1" source="execute" target="answer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="footer-0" value="Unsupported scope or missing data → clarification or limitation. No executable plan is issued." vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=17;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="50" y="766" width="1400" height="25" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

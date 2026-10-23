@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1220" viewBox="0 0 1600 1220" role="img">
+<title>How semantic context is built</title><desc>Two input paths converge into one reviewed, versioned semantic release.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#245EDB"/></marker></defs>
+<rect width="1600" height="1220" fill="#F5F8FC"/>
+<text data-id="brand" x="50" y="36.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#245EDB">SEMANTIC HUB  /  IMPLEMENTED ARCHITECTURE</text>
+<text data-id="title" x="50" y="87.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#14243B">How semantic context is built</text>
+<text data-id="subtitle" x="50" y="134.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" fill="#52647A">Two input paths converge into one reviewed, versioned semantic release.</text>
+<rect x="70" y="200" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="schema-title" x="92" y="236.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Structured source</text>
+<text data-id="schema-line-0" x="92" y="280.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Schema + sample snapshot</text>
+<rect x="1090" y="200" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="document-title" x="1112" y="236.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Uploaded document</text>
+<text data-id="document-line-0" x="1112" y="280.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Original file + revision + pages</text>
+<rect x="70" y="390" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="seed-title" x="92" y="426.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Seed model objects</text>
+<text data-id="seed-line-0" x="92" y="470.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Datasets, fields, and relationships</text>
+<rect x="1090" y="390" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="extract-title" x="1112" y="426.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Extract and interpret</text>
+<text data-id="extract-line-0" x="1112" y="470.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Text chunks / VLM visual observations</text>
+<polyline points="280,316 280,390" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1300,316 1300,390" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="590" y="390" width="420" height="116" rx="12" fill="#EDF3FF" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="draft-title" x="612" y="426.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Draft semantic model</text>
+<text data-id="draft-line-0" x="612" y="470.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Metrics + joins + metadata</text>
+<polyline points="490,448 590,448" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1090" y="590" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="evidence-title" x="1112" y="626.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Match and review evidence</text>
+<text data-id="evidence-line-0" x="1112" y="670.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Link passages to model objects</text>
+<polyline points="1300,506 1300,590" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="extract-evidence-label" x="1100" y="547.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Keyword / optional vectors</text>
+<polyline points="1010,468 1050,468 1050,625 1090,625" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1090,670 1030,670 1030,490 1010,490" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="attach-label" x="1090" y="727.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Attach reviewed passages</text>
+<rect x="70" y="590" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="facts-title" x="92" y="626.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Review visual facts</text>
+<text data-id="facts-line-0" x="92" y="670.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Create source + draft from approved rows</text>
+<polyline points="1300,390 1300,350 35,350 35,648 70,648" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<text data-id="extract-facts-label" x="570" y="332.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Optional document-derived source</text>
+<polyline points="490,648 540,648 540,480 590,480" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<rect x="590" y="740" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="validate-title" x="612" y="776.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Validate the exact draft</text>
+<text data-id="validate-line-0" x="612" y="820.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Model checks + reference SQL</text>
+<polyline points="800,506 800,740" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="590" y="930" width="420" height="116" rx="12" fill="white" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="review-title" x="612" y="966.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Human review</text>
+<text data-id="review-line-0" x="612" y="1010.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Approve required objects and version</text>
+<polyline points="800,856 800,930" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<text data-id="validation-review-label" x="820" y="892.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Passed validation</text>
+<rect x="1090" y="930" width="420" height="116" rx="12" fill="#F0F8F3" stroke="#CCD7E4" stroke-width="2"/>
+<text data-id="release-title" x="1112" y="966.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#14243B">Publish frozen context</text>
+<text data-id="release-line-0" x="1112" y="1010.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52647A">Definitions + evidence + source binding</text>
+<polyline points="1010,988 1090,988" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="590,798 555,798 555,420 590,420" fill="none" stroke="#245EDB" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 6"/>
+<text data-id="rework-label" x="450" y="712.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#245EDB">Revise</text>
+<text data-id="release-use" x="1090" y="1095.0" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#245EDB">Pinned release → Playground / MCP</text>
+<text data-id="footer-0" x="50" y="1152.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">AI proposes; people approve. Documents support definitions. Reviewed visual rows can also create a separate structured source.</text>
+<text data-id="footer-1" x="50" y="1178.5" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52647A">Release identity: model + version + context hash + source snapshot hash. Consumers use published context only.</text>
+</svg>

@@ -1,0 +1,195 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="semantic-context-build-flow" name="How semantic context is built">
+    <mxGraphModel dx="1600" dy="1220" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1600" pageHeight="1220" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="brand" value="SEMANTIC HUB  /  IMPLEMENTED ARCHITECTURE" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=1;">
+          <mxGeometry as="geometry" x="50" y="24" width="1500" height="24" />
+        </mxCell>
+        <mxCell id="title" value="How semantic context is built" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=36;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="50" y="62" width="1500" height="50" />
+        </mxCell>
+        <mxCell id="subtitle" value="Two input paths converge into one reviewed, versioned semantic release." vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=19;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="50" y="119" width="1500" height="30" />
+        </mxCell>
+        <mxCell id="schema" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="70" y="200" width="420" height="116" />
+        </mxCell>
+        <mxCell id="schema-title" value="Structured source" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="92" y="220" width="376" height="32" />
+        </mxCell>
+        <mxCell id="schema-line-0" value="Schema + sample snapshot" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="92" y="266" width="376" height="28" />
+        </mxCell>
+        <mxCell id="document" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="1090" y="200" width="420" height="116" />
+        </mxCell>
+        <mxCell id="document-title" value="Uploaded document" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="1112" y="220" width="376" height="32" />
+        </mxCell>
+        <mxCell id="document-line-0" value="Original file + revision + pages" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="1112" y="266" width="376" height="28" />
+        </mxCell>
+        <mxCell id="seed" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="70" y="390" width="420" height="116" />
+        </mxCell>
+        <mxCell id="seed-title" value="Seed model objects" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="92" y="410" width="376" height="32" />
+        </mxCell>
+        <mxCell id="seed-line-0" value="Datasets, fields, and relationships" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="92" y="456" width="376" height="28" />
+        </mxCell>
+        <mxCell id="extract" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="1090" y="390" width="420" height="116" />
+        </mxCell>
+        <mxCell id="extract-title" value="Extract and interpret" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="1112" y="410" width="376" height="32" />
+        </mxCell>
+        <mxCell id="extract-line-0" value="Text chunks / VLM visual observations" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="1112" y="456" width="376" height="28" />
+        </mxCell>
+        <mxCell id="schema-seed" edge="1" parent="1" source="schema" target="seed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="doc-extract" edge="1" parent="1" source="document" target="extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="draft" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EDF3FF;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="590" y="390" width="420" height="116" />
+        </mxCell>
+        <mxCell id="draft-title" value="Draft semantic model" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="612" y="410" width="376" height="32" />
+        </mxCell>
+        <mxCell id="draft-line-0" value="Metrics + joins + metadata" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="612" y="456" width="376" height="28" />
+        </mxCell>
+        <mxCell id="seed-draft" edge="1" parent="1" source="seed" target="draft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="evidence" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="1090" y="590" width="420" height="116" />
+        </mxCell>
+        <mxCell id="evidence-title" value="Match and review evidence" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="1112" y="610" width="376" height="32" />
+        </mxCell>
+        <mxCell id="evidence-line-0" value="Link passages to model objects" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="1112" y="656" width="376" height="28" />
+        </mxCell>
+        <mxCell id="extract-evidence" edge="1" parent="1" source="extract" target="evidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="extract-evidence-label" value="Keyword / optional vectors" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="1100" y="535" width="370" height="24" />
+        </mxCell>
+        <mxCell id="draft-targets" edge="1" parent="1" source="draft" target="evidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=1.0;exitY=0.672414;exitDx=0;exitDy=0;entryX=0.0;entryY=0.301724;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1050" y="468" />
+              <mxPoint x="1050" y="625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="attach-evidence" edge="1" parent="1" source="evidence" target="draft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.0;exitY=0.689655;exitDx=0;exitDy=0;entryX=1.0;entryY=0.862069;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1030" y="670" />
+              <mxPoint x="1030" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="attach-label" value="Attach reviewed passages" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="1090" y="715" width="400" height="25" />
+        </mxCell>
+        <mxCell id="facts" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="70" y="590" width="420" height="116" />
+        </mxCell>
+        <mxCell id="facts-title" value="Review visual facts" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="92" y="610" width="376" height="32" />
+        </mxCell>
+        <mxCell id="facts-line-0" value="Create source + draft from approved rows" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="92" y="656" width="376" height="28" />
+        </mxCell>
+        <mxCell id="extract-facts" edge="1" parent="1" source="extract" target="facts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=1;exitX=0.5;exitY=0.0;exitDx=0;exitDy=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1300" y="350" />
+              <mxPoint x="35" y="350" />
+              <mxPoint x="35" y="648" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="extract-facts-label" value="Optional document-derived source" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="570" y="320" width="400" height="24" />
+        </mxCell>
+        <mxCell id="facts-draft" edge="1" parent="1" source="facts" target="draft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=1;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.775862;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="540" y="648" />
+              <mxPoint x="540" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="validate" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="590" y="740" width="420" height="116" />
+        </mxCell>
+        <mxCell id="validate-title" value="Validate the exact draft" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="612" y="760" width="376" height="32" />
+        </mxCell>
+        <mxCell id="validate-line-0" value="Model checks + reference SQL" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="612" y="806" width="376" height="28" />
+        </mxCell>
+        <mxCell id="draft-validate" edge="1" parent="1" source="draft" target="validate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="review" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=white;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="590" y="930" width="420" height="116" />
+        </mxCell>
+        <mxCell id="review-title" value="Human review" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="612" y="950" width="376" height="32" />
+        </mxCell>
+        <mxCell id="review-line-0" value="Approve required objects and version" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="612" y="996" width="376" height="28" />
+        </mxCell>
+        <mxCell id="validation-review" edge="1" parent="1" source="validate" target="review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="validation-review-label" value="Passed validation" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="820" y="880" width="240" height="24" />
+        </mxCell>
+        <mxCell id="release" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F0F8F3;strokeColor=#CCD7E4;strokeWidth=2;dashed=0;">
+          <mxGeometry as="geometry" x="1090" y="930" width="420" height="116" />
+        </mxCell>
+        <mxCell id="release-title" value="Publish frozen context" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=25;fontColor=#14243B;fontStyle=1;">
+          <mxGeometry as="geometry" x="1112" y="950" width="376" height="32" />
+        </mxCell>
+        <mxCell id="release-line-0" value="Definitions + evidence + source binding" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="1112" y="996" width="376" height="28" />
+        </mxCell>
+        <mxCell id="review-publish" edge="1" parent="1" source="review" target="release" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=0;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="rework" edge="1" parent="1" source="validate" target="draft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#245EDB;strokeWidth=2;endArrow=block;endFill=1;dashed=1;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.0;entryY=0.258621;entryDx=0;entryDy=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="555" y="798" />
+              <mxPoint x="555" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rework-label" value="Revise" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#245EDB;fontStyle=0;">
+          <mxGeometry as="geometry" x="450" y="700" width="100" height="24" />
+        </mxCell>
+        <mxCell id="release-use" value="Pinned release → Playground / MCP" vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=21;fontColor=#245EDB;fontStyle=1;">
+          <mxGeometry as="geometry" x="1090" y="1080" width="440" height="30" />
+        </mxCell>
+        <mxCell id="footer-0" value="AI proposes; people approve. Documents support definitions. Reviewed visual rows can also create a separate structured source." vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=17;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="50" y="1140" width="1500" height="25" />
+        </mxCell>
+        <mxCell id="footer-1" value="Release identity: model + version + context hash + source snapshot hash. Consumers use published context only." vertex="1" parent="1" style="text;html=0;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;spacing=0;fontFamily=Arial;fontSize=17;fontColor=#52647A;fontStyle=0;">
+          <mxGeometry as="geometry" x="50" y="1166" width="1500" height="25" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
