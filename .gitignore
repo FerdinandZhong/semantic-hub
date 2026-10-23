@@ -22,3 +22,7 @@ apps/helios/ui/src/content/docs/
 .venv/
 .venv-semantic-hub/
 .venv-semantic-hub.before-isolation-*/
+
+# Local agent session state
+/.claude/
+/.omc/
