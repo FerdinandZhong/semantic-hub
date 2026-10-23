@@ -165,7 +165,7 @@ Stable identifiers, version bindings, and checksums connect these records withou
 - [Document-derived source packs](../shared/helios_core/demo/document_facts.py)
 - [Existing Atlas client](../shared/helios_core/atlas/client.py)
 - [Existing catalog harvesting](../shared/helios_core/catalog/harvest.py)
-- [Operational metadata guidance](operational-metadata.md)
+- [Operational metadata guidance](builtin/helios-compat/operational-metadata.md)
 - [Current implementation status](SEMANTIC_FOUNDATION_STATUS.md)
 - [Visual-document workflow](visual-document-facts.md)
 

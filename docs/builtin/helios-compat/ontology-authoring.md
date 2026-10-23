@@ -2,9 +2,9 @@
 
 **Local-builder distinction, 12 October 2026:** Studio now emits reviewed structural ontology artifacts.
 It does not implement the LinkML draft-operation service, ontology copilot, or trial-crawl workflow proposed below.
-See [documentation alignment](DOCS_ALIGNMENT.md).
+See [documentation alignment](../../DOCS_ALIGNMENT.md).
 
-**Status (2026-10-06):** proposal. Nothing here is built. Tasks are in [ontology-burndown.md](ontology-burndown.md) under "Side quest: ontology authoring" (OA-0 to OA-10).
+**Status (2026-10-06):** proposal. Nothing here is built. Tasks are in [ontology-burndown.md](../../../external/helios/docs/ontology-burndown.md) under "Side quest: ontology authoring" (OA-0 to OA-10).
 
 ## Recommendation in brief
 

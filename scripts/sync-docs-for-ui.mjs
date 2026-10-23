@@ -34,7 +34,7 @@ const ALLOWLIST = [
       "> **Repository layout:** This overview predates the monorepo layout in some sections. For current paths and the three Cloudera AI projects, see **Platform → Monorepo structure**.\n\n",
   },
   {
-    source: "docs/helios-walkthrough.md",
+    source: "docs/builtin/helios-compat/helios-walkthrough.md",
     slug: "walkthrough",
     title: "End-to-end walkthrough",
     project: "helios",
@@ -43,7 +43,7 @@ const ALLOWLIST = [
     order: 20,
   },
   {
-    source: "docs/console-propose.md",
+    source: "docs/builtin/helios-compat/console-propose.md",
     slug: "console-propose",
     title: "Reading a proposal",
     project: "helios",
@@ -52,7 +52,7 @@ const ALLOWLIST = [
     order: 30,
   },
   {
-    source: "docs/console-review.md",
+    source: "docs/builtin/helios-compat/console-review.md",
     slug: "console-review",
     title: "Reviewing and publishing",
     project: "helios",
@@ -61,7 +61,7 @@ const ALLOWLIST = [
     order: 40,
   },
   {
-    source: "docs/console-runs.md",
+    source: "docs/builtin/helios-compat/console-runs.md",
     slug: "console-runs",
     title: "Reading a discovery run",
     project: "helios",
@@ -70,7 +70,7 @@ const ALLOWLIST = [
     order: 50,
   },
   {
-    source: "docs/crawler-guide.md",
+    source: "external/helios/docs/crawler-guide.md",
     slug: "crawler-guide",
     title: "The Crawler: a first-time user's guide",
     project: "helios",
@@ -79,7 +79,7 @@ const ALLOWLIST = [
     order: 55,
   },
   {
-    source: "docs/talk-to-your-data-architecture.md",
+    source: "docs/builtin/helios-compat/talk-to-your-data-architecture.md",
     slug: "talk-to-your-data",
     title: "Talk to Your Data architecture",
     project: "helios",
@@ -88,7 +88,7 @@ const ALLOWLIST = [
     order: 60,
   },
   {
-    source: "docs/mcp-server.md",
+    source: "docs/builtin/helios-compat/mcp-server.md",
     slug: "mcp-server",
     title: "Helios MCP server",
     project: "helios",
@@ -97,7 +97,7 @@ const ALLOWLIST = [
     order: 70,
   },
   {
-    source: "docs/SECURITY_ARCHITECTURE.md",
+    source: "docs/builtin/helios-compat/SECURITY_ARCHITECTURE.md",
     slug: "security",
     title: "Identity and authorization",
     project: "helios",
@@ -106,7 +106,7 @@ const ALLOWLIST = [
     order: 80,
   },
   {
-    source: "docs/ui-deployment.md",
+    source: "docs/builtin/helios-compat/ui-deployment.md",
     slug: "ui-deployment",
     title: "API and UI deployment",
     project: "helios",
@@ -115,7 +115,7 @@ const ALLOWLIST = [
     order: 90,
   },
   {
-    source: "docs/ui-api-networking.md",
+    source: "docs/builtin/helios-compat/ui-api-networking.md",
     slug: "ui-api-networking",
     title: "UI-to-API networking",
     project: "helios",
@@ -124,7 +124,7 @@ const ALLOWLIST = [
     order: 100,
   },
   {
-    source: "docs/operational-metadata.md",
+    source: "docs/builtin/helios-compat/operational-metadata.md",
     slug: "operational-metadata",
     title: "Operational metadata",
     project: "helios",
@@ -133,7 +133,7 @@ const ALLOWLIST = [
     order: 110,
   },
   {
-    source: "docs/helios-metadata-database.md",
+    source: "external/helios/docs/helios-metadata-database.md",
     slug: "metadata-database",
     title: "Operational metadata database",
     project: "helios",
@@ -142,7 +142,7 @@ const ALLOWLIST = [
     order: 120,
   },
   {
-    source: "docs/ui-backend-contract.md",
+    source: "docs/builtin/helios-compat/ui-backend-contract.md",
     slug: "ui-backend-contract",
     title: "UI backend contract",
     project: "helios",
@@ -151,7 +151,7 @@ const ALLOWLIST = [
     order: 130,
   },
   {
-    source: "docs/model-graph-api.md",
+    source: "docs/builtin/helios-compat/model-graph-api.md",
     slug: "model-graph-api",
     title: "Model graph API",
     project: "helios",
@@ -160,7 +160,7 @@ const ALLOWLIST = [
     order: 140,
   },
   {
-    source: "docs/model-artifacts.md",
+    source: "external/helios/docs/model-artifacts.md",
     slug: "model-artifacts",
     title: "Model-aware artifacts",
     project: "helios",
@@ -169,7 +169,7 @@ const ALLOWLIST = [
     order: 150,
   },
   {
-    source: "docs/legacy-ui-migration.md",
+    source: "docs/builtin/helios-compat/legacy-ui-migration.md",
     slug: "legacy-ui-migration",
     title: "Legacy console UI migration",
     project: "helios",
@@ -187,7 +187,7 @@ const ALLOWLIST = [
     order: 10,
   },
   {
-    source: "docs/helios-ds-burndown.md",
+    source: "external/helios/docs/helios-ds-burndown.md",
     slug: "burndown",
     title: "Generation roadmap and burndown",
     project: "helios-ds-generation",
@@ -196,7 +196,7 @@ const ALLOWLIST = [
     order: 10,
   },
   {
-    source: "docs/helios-ds-evaluation.md",
+    source: "external/helios/docs/helios-ds-evaluation.md",
     slug: "overview",
     title: "Evaluation harness overview",
     project: "helios-ds-evaluation",
@@ -249,6 +249,10 @@ function main() {
 
   for (const entry of ALLOWLIST) {
     const sourcePath = path.join(REPO_ROOT, entry.source);
+    if (!fs.existsSync(sourcePath) && entry.source.startsWith("external/helios/")) {
+      console.warn(`sync-docs-for-ui: skipping optional provider document ${entry.source}; initialize external/helios to include it`);
+      continue;
+    }
     if (!fs.existsSync(sourcePath)) {
       console.error(`sync-docs-for-ui: missing source ${entry.source}`);
       process.exit(1);

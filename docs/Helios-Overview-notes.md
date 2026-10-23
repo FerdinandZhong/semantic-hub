@@ -1,6 +1,6 @@
 # Reading the Helios overview deck
 
-The [66-slide overview](Helios-Overview.pptx) is an architectural and product-story reference.
+The [66-slide overview](../external/helios/docs/Helios-Overview.pptx) is an architectural and product-story reference.
 Its slide text was inspected during the documentation audit on 12 October 2026.
 It is not a current walkthrough of local Semantic Hub and Studio.
 
@@ -15,7 +15,7 @@ Before presenting it as the current implementation:
 discover_models → resolve_context → validate bundle → compile/run → result evidence
 ```
 
-The conversation exposes five query tools, described in [MCP documentation](mcp-server.md).
+The conversation exposes five query tools, described in [MCP documentation](builtin/helios-compat/mcp-server.md).
 Other MCP endpoints are separate capabilities, not automatically available to that conversation.
 The audit did not revalidate the deck's literature statistics or regenerate slide images.
 See [documentation alignment](DOCS_ALIGNMENT.md) for the implementation mapping.

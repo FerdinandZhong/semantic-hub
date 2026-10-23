@@ -19,6 +19,8 @@ A shared repository history does not need to become a shared deployment lifecycl
 
 [Upstream inspection and merge result](upstream-review.md) · [Provider contract proposal](provider-contract.md) · [Bundled AMP deployment](deployment-layout.md)
 
+[Documentation cleanup completed](documentation-cleanup.md): upstream guides now live in the pinned Helios checkout; local compatibility guides remain Hub-owned.
+
 ## Execution plans
 
 The repository layout is accepted. Runtime implementation remains planned.

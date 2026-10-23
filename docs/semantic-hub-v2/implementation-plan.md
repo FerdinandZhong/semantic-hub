@@ -55,6 +55,9 @@ Do not refresh every unrelated suite after documentation-only changes.
 
 ### I1 — Add the independent Helios checkout and isolated launchers
 
+Partial progress: the pinned submodule and documentation ownership cleanup are complete.
+The compatibility lock, isolated provider environment, and launchers remain to be implemented.
+
 1. Add `external/helios` as a submodule at the verified upstream revision.
 2. Add `deployment/provider-lock.json` with revision, supported adapter version, and runtime requirements.
 3. Add checkout verification that rejects missing, dirty, or mismatched provider revisions during reproducible setup.

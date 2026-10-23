@@ -1,6 +1,6 @@
 # Helios MCP server
 
-For the current local Semantic Hub workspace, use the [consumer MCP adapter](../apps/semantic-hub-mcp/README.md) and [API contract](semantic-hub-consumer-api.md).
+For the current local Semantic Hub workspace, use the [consumer MCP adapter](../../../apps/semantic-hub-mcp/README.md) and [API contract](../../semantic-hub-consumer-api.md).
 The application described below serves the separate production artifact and authorization stack.
 
 The MCP Application exposes Helios's governed semantic and data tools to the
@@ -136,7 +136,7 @@ Document tools are excluded from this conversation workflow until source/model f
 
 Published Ossie artifacts are authoritative; the model store rejects unpublished proposal fallback.
 Compilation uses the shared compiler with the bounded model returned by retrieval validation.
-See [indexed retrieval and budgets](semantic-retrieval.md) for the current contract and limitations.
+See [indexed retrieval and budgets](../../semantic-retrieval.md) for the current contract and limitations.
 
 Use metric names and field identifiers returned by `resolve_context`.
 The typed request must stay inside that bundle's datasets, fields, metrics and relationships.

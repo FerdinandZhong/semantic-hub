@@ -1,6 +1,6 @@
 # Helios-DS-Generation
 
-Deterministic synthetic-asset generator for Helios. It turns the TPC-DS business world into native artifacts (PDF, email, chat, image, audio, video) with known ground truth. The work is tracked in [docs/helios-ds-burndown.md](../../docs/helios-ds-burndown.md).
+Deterministic synthetic-asset generator for Helios. It turns the TPC-DS business world into native artifacts (PDF, email, chat, image, audio, video) with known ground truth. The work is tracked in [docs/helios-ds-burndown.md](../../external/helios/docs/helios-ds-burndown.md).
 
 ## Layout
 

@@ -1,6 +1,6 @@
 # Operational metadata
 
-See [Helios operational metadata database](helios-metadata-database.md) for a
+See [Helios operational metadata database](../../../external/helios/docs/helios-metadata-database.md) for a
 detailed explanation of `helios.db`, journal modes, WAL checkpoints, SHM files,
 locking, restart order, and recovery.
 

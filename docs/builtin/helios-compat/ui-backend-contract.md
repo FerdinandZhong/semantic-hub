@@ -3,7 +3,7 @@
 This document records the authenticated React/API contract, originating on 24 September 2026.
 Monorepo paths were corrected on 12 October 2026.
 It does not describe the optional local `/demo` application.
-See [documentation alignment](DOCS_ALIGNMENT.md) for current scope and known gaps.
+See [documentation alignment](../../DOCS_ALIGNMENT.md) for current scope and known gaps.
 
 ## Contract boundary
 

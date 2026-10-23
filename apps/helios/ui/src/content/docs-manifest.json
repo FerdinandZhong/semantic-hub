@@ -8,7 +8,7 @@
     "audience": "user",
     "order": 10,
     "sourcePath": "README.md",
-    "excerpt": "helios Connect it to your Cloudera data lake and it helps your users speak to their data. helios is an engine that runs inside Cloudera AI Workbench, inspects an existing Cloudera lakehouse — whatever engine fronts it: Impala, Hive, Spark…",
+    "excerpt": "Semantic Hub Documentation: · · . The provider lives in the pinned Git submodule. Run after cloning. The existing built-in runtime remains in place during the v2 migration. Build, review, version, and publish semantic models for applicatio…",
     "bundlePath": "./docs/helios__overview.md"
   },
   {
@@ -19,8 +19,8 @@
     "navGroup": "Getting started",
     "audience": "user",
     "order": 20,
-    "sourcePath": "docs/helios-walkthrough.md",
-    "excerpt": "helios, end to end, with two tables A walkthrough for people who have never heard of helios, semantic layers, ontologies, or Ossie. The two tables We'll use two tables from a standard retail sample warehouse (TPC-DS): - — one row per item…",
+    "sourcePath": "docs/builtin/helios-compat/helios-walkthrough.md",
+    "excerpt": "helios, end to end, with two tables Scope: the discovery/warehouse workflow described here is separate from the four-pack local Studio. For current local navigation and approval, use . A walkthrough for people who have never heard of helio…",
     "bundlePath": "./docs/helios__walkthrough.md"
   },
   {
@@ -31,8 +31,8 @@
     "navGroup": "Console guides",
     "audience": "user",
     "order": 30,
-    "sourcePath": "docs/console-propose.md",
-    "excerpt": "Reading a proposal A proposal is helios's first draft of what your warehouse means. It is built from a run's harvest and profile results (see Reading a discovery run ) plus a language model's judgement, and it is the material the review pa…",
+    "sourcePath": "docs/builtin/helios-compat/console-propose.md",
+    "excerpt": "Reading a proposal Scope: the discovery/warehouse workflow described here is separate from the four-pack local Studio. For current local navigation and approval, use . A proposal is helios's first draft of what your warehouse means. It is…",
     "bundlePath": "./docs/helios__console-propose.md"
   },
   {
@@ -43,8 +43,8 @@
     "navGroup": "Console guides",
     "audience": "user",
     "order": 40,
-    "sourcePath": "docs/console-review.md",
-    "excerpt": "Reviewing and publishing a proposal Open it from Runs → a run → Review and publish , or from the proposal page. Every element of the proposal — each dataset, column, relationship, metric and proposed glossary term — carries one of four sta…",
+    "sourcePath": "docs/builtin/helios-compat/console-review.md",
+    "excerpt": "Reviewing and publishing a proposal Scope: this guide describes the discovery-run review workflow, not the local Studio. For local batch review, reference SQL, and version approval, use . For current model artifact paths, use ; the flat pa…",
     "bundlePath": "./docs/helios__console-review.md"
   },
   {
@@ -55,8 +55,8 @@
     "navGroup": "Console guides",
     "audience": "user",
     "order": 50,
-    "sourcePath": "docs/console-runs.md",
-    "excerpt": "Reading a discovery run The Runs section of the helios console shows what helios found when it examined your warehouse. Each run is one pass of the discovery jobs over a set of databases. Nothing on these pages changes your data or your gl…",
+    "sourcePath": "docs/builtin/helios-compat/console-runs.md",
+    "excerpt": "Reading a discovery run Scope: the discovery/warehouse workflow described here is separate from the four-pack local Studio. For current local navigation and approval, use . The Runs section of the helios console shows what helios found whe…",
     "bundlePath": "./docs/helios__console-runs.md"
   },
   {
@@ -67,7 +67,7 @@
     "navGroup": "Console guides",
     "audience": "user",
     "order": 55,
-    "sourcePath": "docs/crawler-guide.md",
+    "sourcePath": "external/helios/docs/crawler-guide.md",
     "excerpt": "The Crawler: a guide for first-time users This guide explains what the Helios Crawler does, how to run it, and how to tell whether it did a good job. It assumes you have never worked with data systems. You do not need to know how your comp…",
     "bundlePath": "./docs/helios__crawler-guide.md"
   },
@@ -79,7 +79,7 @@
     "navGroup": "Architecture",
     "audience": "developer",
     "order": 60,
-    "sourcePath": "docs/talk-to-your-data-architecture.md",
+    "sourcePath": "docs/builtin/helios-compat/talk-to-your-data-architecture.md",
     "excerpt": "Talk to Your Data architecture Contract and trust boundaries The Helios UI is an MCP-backed client. It does not query semantic artifacts, Atlas, Impala, Iceberg, or directly. The authenticated API Application contains a small conversation…",
     "bundlePath": "./docs/helios__talk-to-your-data.md"
   },
@@ -91,8 +91,8 @@
     "navGroup": "MCP and agents",
     "audience": "operator",
     "order": 70,
-    "sourcePath": "docs/mcp-server.md",
-    "excerpt": "Helios MCP server The MCP Application exposes Helios's governed semantic and data tools to the Helios conversation client and to registered external agents. It speaks MCP Python SDK 2.x Streamable HTTP with stateless JSON responses. See fo…",
+    "sourcePath": "docs/builtin/helios-compat/mcp-server.md",
+    "excerpt": "Helios MCP server For the current local Semantic Hub workspace, use the and . The application described below serves the separate production artifact and authorization stack. The MCP Application exposes Helios's governed semantic and data…",
     "bundlePath": "./docs/helios__mcp-server.md"
   },
   {
@@ -103,7 +103,7 @@
     "navGroup": "Security",
     "audience": "operator",
     "order": 80,
-    "sourcePath": "docs/SECURITY_ARCHITECTURE.md",
+    "sourcePath": "docs/builtin/helios-compat/SECURITY_ARCHITECTURE.md",
     "excerpt": "Identity and authorization boundaries Helios treats authentication, Helios resource authorization, and underlying data authorization as three separate decisions. 1. Authentication: who is this principal? Authentication adapters live at eac…",
     "bundlePath": "./docs/helios__security.md"
   },
@@ -115,7 +115,7 @@
     "navGroup": "Deploy and run",
     "audience": "operator",
     "order": 90,
-    "sourcePath": "docs/ui-deployment.md",
+    "sourcePath": "docs/builtin/helios-compat/ui-deployment.md",
     "excerpt": "Helios API and UI deployment on Cloudera AI This is the deployment runbook for two authenticated Applications in one Cloudera AI Project: The UI serves static React assets. It does not proxy API requests. The browser calls the API Applicat…",
     "bundlePath": "./docs/helios__ui-deployment.md"
   },
@@ -127,7 +127,7 @@
     "navGroup": "Deploy and run",
     "audience": "operator",
     "order": 100,
-    "sourcePath": "docs/ui-api-networking.md",
+    "sourcePath": "docs/builtin/helios-compat/ui-api-networking.md",
     "excerpt": "Helios UI-to-API networking Supported path The supported deployment path uses the stable HTTPS URLs assigned to the two Cloudera AI Applications: The second arrow is initiated by JavaScript loaded from the UI Application. It is not a serve…",
     "bundlePath": "./docs/helios__ui-api-networking.md"
   },
@@ -139,7 +139,7 @@
     "navGroup": "Operations",
     "audience": "operator",
     "order": 110,
-    "sourcePath": "docs/operational-metadata.md",
+    "sourcePath": "docs/builtin/helios-compat/operational-metadata.md",
     "excerpt": "Operational metadata See for a detailed explanation of , journal modes, WAL checkpoints, SHM files, locking, restart order, and recovery. Helios stores organizations, principals, memberships, DataSource definitions, Models, Model-to-DataSo…",
     "bundlePath": "./docs/helios__operational-metadata.md"
   },
@@ -151,7 +151,7 @@
     "navGroup": "Operations",
     "audience": "operator",
     "order": 120,
-    "sourcePath": "docs/helios-metadata-database.md",
+    "sourcePath": "external/helios/docs/helios-metadata-database.md",
     "excerpt": "Helios operational metadata database Helios stores its application state in an SQLite database named under . The location can be overridden with . This is the Helios operational metadata database. It is not the Data Lake and does not conta…",
     "bundlePath": "./docs/helios__metadata-database.md"
   },
@@ -163,8 +163,8 @@
     "navGroup": "API reference",
     "audience": "developer",
     "order": 130,
-    "sourcePath": "docs/ui-backend-contract.md",
-    "excerpt": "Helios UI backend contract (current state) This document records the backend interfaces available to a future Helios UI as of 2026-09-24. It describes the current implementation; it is not a replacement API design. Contract boundary The fu…",
+    "sourcePath": "docs/builtin/helios-compat/ui-backend-contract.md",
+    "excerpt": "Helios UI backend contract (current state) This document records the authenticated React/API contract, originating on 24 September 2026. Monorepo paths were corrected on 12 October 2026. It does not describe the optional local application.…",
     "bundlePath": "./docs/helios__ui-backend-contract.md"
   },
   {
@@ -175,8 +175,8 @@
     "navGroup": "API reference",
     "audience": "developer",
     "order": 140,
-    "sourcePath": "docs/model-graph-api.md",
-    "excerpt": "Model graph API returns an authorized, schema-agnostic projection of one Helios Model. The contract is independent of React Flow or any other rendering library. Contract Node and edge values are open vocabularies. Initial values include ,…",
+    "sourcePath": "docs/builtin/helios-compat/model-graph-api.md",
+    "excerpt": "Model graph API Scope: this is the authenticated model graph API used by the React application. Local Studio uses plus source-scoped document evidence. Its canvas integration does not replace or extend this API contract. returns an authori…",
     "bundlePath": "./docs/helios__model-graph-api.md"
   },
   {
@@ -187,7 +187,7 @@
     "navGroup": "API reference",
     "audience": "developer",
     "order": 150,
-    "sourcePath": "docs/model-artifacts.md",
+    "sourcePath": "external/helios/docs/model-artifacts.md",
     "excerpt": "Model-aware artifacts Generated artifacts belong to a Helios Model, not to a warehouse or database. New files use stable Model IDs: The proposal remains at as well, preserving the existing staged discovery/review workflow. New harvest, pro…",
     "bundlePath": "./docs/helios__model-artifacts.md"
   },
@@ -199,7 +199,7 @@
     "navGroup": "Engineering notes",
     "audience": "developer",
     "order": 160,
-    "sourcePath": "docs/legacy-ui-migration.md",
+    "sourcePath": "docs/builtin/helios-compat/legacy-ui-migration.md",
     "excerpt": "Legacy Helios Console UI migration inventory Purpose and boundary The FastAPI Application in currently serves two interfaces: 1. the authorized Helios API under ; and 2. the original Jinja2 Console UI at , , , and . The second interface is…",
     "bundlePath": "./docs/helios__legacy-ui-migration.md"
   },
@@ -211,7 +211,7 @@
     "navGroup": "Overview",
     "audience": "user",
     "order": 10,
-    "sourcePath": "docs/helios-ds-evaluation.md",
+    "sourcePath": "external/helios/docs/helios-ds-evaluation.md",
     "excerpt": "Helios-DS-Evaluation The Helios-DS-Evaluation project is a separate Cloudera AI Workbench application in this monorepo. It scores synthetic corpora and query agents against governed ground truth without sharing credentials with the data ge…",
     "bundlePath": "./docs/helios-ds-evaluation__overview.md"
   },
@@ -223,7 +223,7 @@
     "navGroup": "Overview and roadmap",
     "audience": "developer",
     "order": 10,
-    "sourcePath": "docs/helios-ds-burndown.md",
+    "sourcePath": "external/helios/docs/helios-ds-burndown.md",
     "excerpt": "Helios-DS-Generation Burn-Down Sequenced task list for building the Helios-DS asset generator: the mechanisms to create, review, edit and approve synthetic assets. Source: Helios-DS Asset Generator — Engineering Development Specification (…",
     "bundlePath": "./docs/helios-ds-generation__burndown.md"
   },

@@ -1,7 +1,8 @@
 # Bundled AMP deployment with an independent Helios repository
 
 Status: proposed v2 deployment layout, 23 October 2026.
-This refines the installation plan; no submodule or additional CAI applications have been provisioned yet.
+The pinned `external/helios` submodule now exists and owns upstream Helios documentation.
+Runtime extraction and additional CAI application provisioning remain planned.
 
 ## Recommended installation modes
 
@@ -30,7 +31,7 @@ semantic-hub/
 └── docs/
 ```
 
-These are proposed paths, not the current repository structure.
+Only `external/helios` currently exists from this proposed layout. The runtime and deployment paths remain planned.
 The Helios submodule points to the original repository at a tested commit.
 A submodule update changes a commit pointer; it does not merge Helios source into Hub packages.
 The bootstrap must explicitly initialize the checkout if the AMP clone does not initialize submodules.

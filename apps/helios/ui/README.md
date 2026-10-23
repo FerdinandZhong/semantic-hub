@@ -66,7 +66,7 @@ The server binds to `127.0.0.1:$CDSW_APP_PORT`, which is the address and port
 used by the Cloudera AI Application proxy. It serves the Vite build, supports
 single-page-application route fallback, and exposes `/healthz`.
 
-See `docs/ui-deployment.md` for the complete two-Application deployment
+See [the local compatibility deployment guide](../../../docs/builtin/helios-compat/ui-deployment.md) for the complete two-Application deployment
 runbook and `docs/ui-api-networking.md` for additional API CORS and transparent
 authentication background.
 
@@ -78,3 +78,11 @@ parameters. Primary navigation preserves both values, so routes such as
 accepted only when they are present in the authenticated API collections;
 inaccessible or stale values are removed or replaced with an authorized
 selection.
+
+## Documentation sources during the v2 transition
+
+Hub-specific guides live in `docs/builtin/helios-compat/`.
+Unmodified provider guides come from the pinned `external/helios` submodule.
+Run `git submodule update --init external/helios` from the repository root to include those provider guides in the documentation bundle.
+Without the checkout, the sync script skips provider guides and retains local compatibility documentation.
+The separate Helios checkout builds its own documentation using its own scripts.

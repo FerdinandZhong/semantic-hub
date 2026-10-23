@@ -1,0 +1,3 @@
+[submodule "external/helios"]
+	path = external/helios
+	url = https://github.com/Christopheraburns/helios.git

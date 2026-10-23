@@ -1,7 +1,7 @@
 # helios, end to end, with two tables
 
 **Scope:** the discovery/warehouse workflow described here is separate from the four-pack local Studio.
-For current local navigation and approval, use [context-builder.md](context-builder.md).
+For current local navigation and approval, use [context-builder.md](../../context-builder.md).
 
 *A walkthrough for people who have never heard of helios, semantic layers, ontologies, or Ossie.*
 

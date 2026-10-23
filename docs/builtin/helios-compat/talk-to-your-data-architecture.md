@@ -213,7 +213,7 @@ Document tools are excluded from this conversation workflow until source/model f
 
 Published Ossie artifacts are authoritative; the model store rejects unpublished proposal fallback.
 Compilation uses the shared compiler with the bounded model returned by retrieval validation.
-See [indexed retrieval and budgets](semantic-retrieval.md) for the current contract and limitations.
+See [indexed retrieval and budgets](../../semantic-retrieval.md) for the current contract and limitations.
 
 Fields resolve by `dataset.field`, physical `database.table.field`, or an
 unambiguous physical name, label, or synonym. Filters accept either `column` or

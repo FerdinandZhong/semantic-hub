@@ -1,5 +1,10 @@
 # Semantic Hub
 
+
+Documentation: [Semantic Hub guides](docs/README.md) · [External Helios provider](external/helios/README.md) · [v2 design](docs/semantic-hub-v2/README.md).
+The provider lives in the pinned `external/helios` Git submodule. Run `git submodule update --init external/helios` after cloning.
+The existing built-in runtime remains in place during the v2 migration.
+
 **Build, review, version, and publish semantic models for applications and agents.**
 
 Semantic Hub is the application name. Helios remains the internal engine and package name.

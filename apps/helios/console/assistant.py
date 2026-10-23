@@ -179,14 +179,14 @@ def _route_label(path: str) -> str:
 
 DOC_SOURCES: tuple[tuple[str, str, str], ...] = (
     ("README.md", "overview", "Helios Query (overview)"),
-    ("docs/helios-walkthrough.md", "walkthrough", "End-to-end walkthrough"),
-    ("docs/console-propose.md", "console-propose", "Reading a proposal"),
-    ("docs/console-review.md", "console-review", "Reviewing and publishing"),
-    ("docs/console-runs.md", "console-runs", "Reading a discovery run"),
-    ("docs/mcp-server.md", "mcp-server", "Helios MCP server"),
-    ("docs/SECURITY_ARCHITECTURE.md", "security", "Identity and authorization"),
-    ("docs/ui-deployment.md", "ui-deployment", "API and UI deployment"),
-    ("docs/ontology-deployment.md", "ontology-deployment", "Ontology deployment"),
+    ("docs/builtin/helios-compat/helios-walkthrough.md", "walkthrough", "End-to-end walkthrough"),
+    ("docs/builtin/helios-compat/console-propose.md", "console-propose", "Reading a proposal"),
+    ("docs/builtin/helios-compat/console-review.md", "console-review", "Reviewing and publishing"),
+    ("docs/builtin/helios-compat/console-runs.md", "console-runs", "Reading a discovery run"),
+    ("docs/builtin/helios-compat/mcp-server.md", "mcp-server", "Helios MCP server"),
+    ("docs/builtin/helios-compat/SECURITY_ARCHITECTURE.md", "security", "Identity and authorization"),
+    ("docs/builtin/helios-compat/ui-deployment.md", "ui-deployment", "API and UI deployment"),
+    ("external/helios/docs/ontology-deployment.md", "ontology-deployment", "Ontology deployment"),
 )
 
 _FRONTMATTER = re.compile(r"\A---\n.*?\n---\n", re.DOTALL)

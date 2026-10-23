@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "upstream_revision": "316f5d89926f96d366afaee641bd923af4ca6bf3",
+  "documents": [
+    {
+      "original_path": "docs/Helios-Overview.pptx",
+      "path": "external/helios/docs/Helios-Overview.pptx",
+      "owner": "helios-upstream",
+      "upstream_blob": "a0d8ddb1f9f96e6009147b2842e02ca4c5711a1e",
+      "original_blob": "a0d8ddb1f9f96e6009147b2842e02ca4c5711a1e",
+      "original_sha256": "57cc0d15aad13f8e166c7833b0f17e8150b752563841e0264d65bf80221fac87"
+    },
+    {
+      "original_path": "docs/SECURITY_ARCHITECTURE.md",
+      "path": "docs/builtin/helios-compat/SECURITY_ARCHITECTURE.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "f1b740bdd89e9104fbf8bb60434ee19c7b5071e0",
+      "original_blob": "b6de7fafdc0ad5b770c0b7645fc1f56f92f22c69",
+      "original_sha256": "f9d51409e84c68179b51dd814ce4b6b3e16778cdbf2ab2c4dc8bb7f1e1c76689"
+    },
+    {
+      "original_path": "docs/adr/0001-helios-ds-review-edit-approve.md",
+      "path": "external/helios/docs/adr/0001-helios-ds-review-edit-approve.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "56318453f7d88ee52089f1453baa26e2f394c229",
+      "original_blob": "56318453f7d88ee52089f1453baa26e2f394c229",
+      "original_sha256": "6ffa0a32bbe0df548680eba34a94a110254f41450f69dc60fd2cd6a7a45f5544"
+    },
+    {
+      "original_path": "docs/console-propose.md",
+      "path": "docs/builtin/helios-compat/console-propose.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "869d452932c02e2f30b6892fba56eae1f8d07bfe",
+      "original_blob": "2a8c3f36dad61ebcf230417a5c4e94e38615cc57",
+      "original_sha256": "2b03fd926888939df0a2ac2dbc5648b508c0135e1d5b88b57b0837d793c9ce27"
+    },
+    {
+      "original_path": "docs/console-review.md",
+      "path": "docs/builtin/helios-compat/console-review.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "df809c717ec92e6b43687c4d952126aeb638d815",
+      "original_blob": "63644d4291089c444108137f471685e189f3efe9",
+      "original_sha256": "89533a7877bf652cc009720ef4dcc9eab207286bdb00145219793132d76cfcc8"
+    },
+    {
+      "original_path": "docs/console-runs.md",
+      "path": "docs/builtin/helios-compat/console-runs.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "01cca866c8dcbfbb7c0eabb047c5065ab72fa426",
+      "original_blob": "e455c9c2b3d8281806fb1f2aa2f0a8494b21540f",
+      "original_sha256": "43f3f4b11af503fa6c09cde6a0f1406255d9e641843e817452b5bafe6c7b61d4"
+    },
+    {
+      "original_path": "docs/crawler-analysis.md",
+      "path": "external/helios/docs/crawler-analysis.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "56d6cf641c97bc1413cd5260feac770aa5089293",
+      "original_blob": "56d6cf641c97bc1413cd5260feac770aa5089293",
+      "original_sha256": "ac478a8da465ac6d3e40e4cb7fce1bb75dda17315d92d5ca27492e1c68800352"
+    },
+    {
+      "original_path": "docs/crawler-burndown.md",
+      "path": "external/helios/docs/crawler-burndown.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "b1576bdce8a927b2df92fb457057c6d8ddef1410",
+      "original_blob": "b1576bdce8a927b2df92fb457057c6d8ddef1410",
+      "original_sha256": "14383950c6a6b6b791411d38408eb3d0686b11e663b64db2d7753694a14fd5a1"
+    },
+    {
+      "original_path": "docs/crawler-configurable.md",
+      "path": "external/helios/docs/crawler-configurable.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "b7dd9a03ab767a3503bc1cfc6e7427c3e0400671",
+      "original_blob": "b7dd9a03ab767a3503bc1cfc6e7427c3e0400671",
+      "original_sha256": "e24f76de08f71a453691c9b6eb71a31a9757d1fbba9e260e4738f2bf95e7961a"
+    },
+    {
+      "original_path": "docs/crawler-guide.md",
+      "path": "external/helios/docs/crawler-guide.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "7355214c87936daf08eead1c97f1e1a328405b1e",
+      "original_blob": "7355214c87936daf08eead1c97f1e1a328405b1e",
+      "original_sha256": "fc700f3218c4152889af7dbcafb4cf9de767e392103b25448bdde66e1d6720a2"
+    },
+    {
+      "original_path": "docs/helios-ds-burndown.md",
+      "path": "external/helios/docs/helios-ds-burndown.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "540a620df1c81398ee5845543d78c6f786839a7d",
+      "original_blob": "540a620df1c81398ee5845543d78c6f786839a7d",
+      "original_sha256": "85ae6cae7cc69081867c1cde488bb5b4249a521a6aaebe6fac638787700c8012"
+    },
+    {
+      "original_path": "docs/helios-ds-evaluation.md",
+      "path": "external/helios/docs/helios-ds-evaluation.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "a0bfa458f9eca4b563bcc1b3a204a58b4fc204f1",
+      "original_blob": "a0bfa458f9eca4b563bcc1b3a204a58b4fc204f1",
+      "original_sha256": "805038cf4244ae15e6ccc3cadd133358268c74fa8a1ff3559da50586a7a79ae4"
+    },
+    {
+      "original_path": "docs/helios-metadata-database.md",
+      "path": "external/helios/docs/helios-metadata-database.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "83cbd6a358f019b5c70f58b5955414b4d04d03ae",
+      "original_blob": "83cbd6a358f019b5c70f58b5955414b4d04d03ae",
+      "original_sha256": "7ffa821f0365f204133af6c60af8d4b16057a68949c6eb070ee22fb2ea69e5bc"
+    },
+    {
+      "original_path": "docs/helios-walkthrough.md",
+      "path": "docs/builtin/helios-compat/helios-walkthrough.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "ebe5d67e7b04edc9c01d0bdba1e5c3c4f3dc025d",
+      "original_blob": "284587dbdaeb697e32f219cd03e03fa5ae8075c4",
+      "original_sha256": "8c9676bd6516394073a97105dfbdf58c7cc99293011d71e9dbbe1541a979936d"
+    },
+    {
+      "original_path": "docs/helios-without-a-lakehouse.md",
+      "path": "external/helios/docs/helios-without-a-lakehouse.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "cf9f74725b92c3b7fb3a11cb16edc94ca6dd43b1",
+      "original_blob": "cf9f74725b92c3b7fb3a11cb16edc94ca6dd43b1",
+      "original_sha256": "c822efa5aae212909c36e20275b43ab2e627fe81f96db72a237cfbe4899ddca4"
+    },
+    {
+      "original_path": "docs/legacy-ui-migration.md",
+      "path": "docs/builtin/helios-compat/legacy-ui-migration.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "eb4a5caa18088542db155741859051dfdffaea36",
+      "original_blob": "ea6d2a4f833d4b9c99b9b1ec0821055530df9d46",
+      "original_sha256": "40432d0e6792dbee59a5bc8ed2b50fcdab432561e3aec8e0d306b1a8354059f6"
+    },
+    {
+      "original_path": "docs/mcp-server.md",
+      "path": "docs/builtin/helios-compat/mcp-server.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "c4ad3ece7f1cd7395a5dbaf02de30ba72fb4e6d3",
+      "original_blob": "30508eec6ebc50499e902b4c2f370b6e653e62b6",
+      "original_sha256": "b79e49009a249b6fccc617aa25abc29fcf9b7a487d50c067c7efe962ba635f5b"
+    },
+    {
+      "original_path": "docs/model-artifacts.md",
+      "path": "external/helios/docs/model-artifacts.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "2e53347f9e0475960a100582e1402c65273bbeed",
+      "original_blob": "2e53347f9e0475960a100582e1402c65273bbeed",
+      "original_sha256": "1501f1fa61be1b5620c421c18384d9979f09948cc1c31114bd84d0e48309fe7f"
+    },
+    {
+      "original_path": "docs/model-graph-api.md",
+      "path": "docs/builtin/helios-compat/model-graph-api.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "a5908bb8b0bbfb7a22ea62b8a898c8f31710d90e",
+      "original_blob": "34c1f5dfc276b87cff2d4e88224ad9c9d54d4d22",
+      "original_sha256": "728c14a68101b0f4ab187bcfa4a7a521c236fe50b78f3d276aa723633815c657"
+    },
+    {
+      "original_path": "docs/ontology-authoring.md",
+      "path": "docs/builtin/helios-compat/ontology-authoring.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "3a03dbaeaa433ffb2794ac16e643a8988e25ccf3",
+      "original_blob": "e652dc16dc2981e7be09877a2a392aceeceb70d9",
+      "original_sha256": "abd9dbbb9582200d1139c25d8bea07c1178484759d63d4163676c5777b5ecae3"
+    },
+    {
+      "original_path": "docs/ontology-burndown.md",
+      "path": "external/helios/docs/ontology-burndown.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "18f31deb5a141924dc119285b576c7d3e530885e",
+      "original_blob": "18f31deb5a141924dc119285b576c7d3e530885e",
+      "original_sha256": "cc109c253bd390e403ea8b31987a42bbde6e3f4168e6b5307f5943b383b365b2"
+    },
+    {
+      "original_path": "docs/ontology-deployment.md",
+      "path": "external/helios/docs/ontology-deployment.md",
+      "owner": "helios-upstream",
+      "upstream_blob": "0924b2bbf06cd1b552a5f97442d44cedb55ceca6",
+      "original_blob": "0924b2bbf06cd1b552a5f97442d44cedb55ceca6",
+      "original_sha256": "125f758bee63b4983bd070e4a2746286437aba5c3e4569174b61895c39692189"
+    },
+    {
+      "original_path": "docs/operational-metadata.md",
+      "path": "docs/builtin/helios-compat/operational-metadata.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "3644fec68db44540b686fb96ecdf78a9ef12f8ab",
+      "original_blob": "a0f28de3dcbb1b9e31460ef5f5ce80a92afe1e64",
+      "original_sha256": "38f28ebb1e6b836acb188b92891ae3324ff52b98dfd9776a0178f46313387a3c"
+    },
+    {
+      "original_path": "docs/talk-to-your-data-architecture.md",
+      "path": "docs/builtin/helios-compat/talk-to-your-data-architecture.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "bae799b24b66023e3a00235004edec147935ce64",
+      "original_blob": "21b6b72e1d0d468a5bc683654ac57a2b3cdfef71",
+      "original_sha256": "5cf04731c4fe6febda9d94f791791982cb5a17e70731ce4abf4d5ca8fe9d0c12"
+    },
+    {
+      "original_path": "docs/ui-api-networking.md",
+      "path": "docs/builtin/helios-compat/ui-api-networking.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "fcbe81504008f31784074db57d3932413ebf1eb3",
+      "original_blob": "0f8a277d0830c7d9b5da268f2f97fe3dd9d9839f",
+      "original_sha256": "f36285273abce704c8bb43638ee7b48b77371ef13086d892f60d0a1731604760"
+    },
+    {
+      "original_path": "docs/ui-backend-contract.md",
+      "path": "docs/builtin/helios-compat/ui-backend-contract.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "f5a826290a62d75a940c4058e27af6828ce58111",
+      "original_blob": "18680b789070a67058a88c35248ec49f6932bdc3",
+      "original_sha256": "f988214c297bf423b8a0527a0c36f29f5609ad14da9d969c0b4154a6e126130f"
+    },
+    {
+      "original_path": "docs/ui-deployment.md",
+      "path": "docs/builtin/helios-compat/ui-deployment.md",
+      "owner": "hub-builtin-compat",
+      "upstream_blob": "4415b0219890695a284f15f667e37bda068ffda0",
+      "original_blob": "bfdc75e919c0db47812e3037314de5bd7966b4e9",
+      "original_sha256": "d590f38ab9978c256f0a0cc4a69816d13dae69c340f3e75c42b676196e5b7643"
+    }
+  ]
+}

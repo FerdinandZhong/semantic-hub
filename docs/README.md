@@ -1,6 +1,23 @@
 # Semantic Hub documentation map
 
-Reviewed on 19 October 2026 against the local working tree.
+Documentation ownership updated on 23 October 2026.
+
+## Documentation ownership
+
+- **Semantic Hub:** this directory contains Hub guides, built-in workflows, integration plans, and demo evidence.
+- **External Helios provider:** use [the provider README](../external/helios/README.md) and [its documentation directory](../external/helios/docs).
+- **Inherited local Helios behavior:** use [Built-in compatibility guides](builtin/helios-compat/README.md).
+- **Independent transformation use case:** use [its separate folder](self-service-data-transformation/README.md).
+
+The Helios provider checkout is pinned as a Git submodule. Initialize it after a non-recursive clone:
+
+```sh
+git submodule update --init external/helios
+```
+
+See [the cleanup report](semantic-hub-v2/documentation-cleanup.md) and [ownership record](documentation-ownership.json) for relocated or deduplicated guides.
+Upstream guides are maintained in Helios. Hub-specific changes stay here.
+Historical handoff snapshots remain unchanged to preserve their recorded evidence.
 
 Start with [current implementation progress and plan](implementation-progress-and-plan.md).
 Read [vision, OCR, and embeddings decisions](vision-ocr-and-embeddings-discussion.md) for the document-understanding discussion.
@@ -56,10 +73,10 @@ Explicit row review creates a source and semantic draft; publication remains a s
 | Supporting-material library (M3A) | [Guide](supporting-materials.md) | Revisioned TXT/MD, text PDF, DOCX, cited analysis, optional embeddings, batch review, and archived draft evidence |
 | Published-model playground (M2B) | [Guide](model-playground.md) | Bounded typed question interpretation, explicit execution, SQL evidence, and pinned releases |
 | Shared semantic retrieval | [Implementation](semantic-retrieval.md), [plan](semantic-retrieval-and-metadata-plan.md) | FTS5 search, dependencies, scoped bundles, cache and budgets |
-| Authenticated React/API/MCP | [API contract](ui-backend-contract.md), [MCP](mcp-server.md), [conversation](talk-to-your-data-architecture.md) | Registered models, identity, authorization, warehouse execution |
-| Crawler and document index | [Crawler guide](crawler-guide.md), [analysis](crawler-analysis.md), [plan](crawler-burndown.md) | Extracted passages, entity resolution, claims and evaluation |
-| Ontology services | [Authoring proposal](ontology-authoring.md), [deployment](ontology-deployment.md), [plan](ontology-burndown.md) | LinkML and graph services; broader authoring remains planned |
-| Deployment and operations | [UI deployment](ui-deployment.md), [networking](ui-api-networking.md), [security](SECURITY_ARCHITECTURE.md), [metadata](helios-metadata-database.md) | Authenticated deployment and operational state |
+| Inherited local React/API/MCP | [API contract](builtin/helios-compat/ui-backend-contract.md), [MCP](builtin/helios-compat/mcp-server.md), [conversation](builtin/helios-compat/talk-to-your-data-architecture.md) | Registered models, identity, authorization, warehouse execution |
+| Crawler and document index | [Crawler guide](../external/helios/docs/crawler-guide.md), [analysis](../external/helios/docs/crawler-analysis.md), [plan](../external/helios/docs/crawler-burndown.md) | Extracted passages, entity resolution, claims and evaluation |
+| Ontology services | [Authoring proposal](builtin/helios-compat/ontology-authoring.md), [deployment](../external/helios/docs/ontology-deployment.md), [plan](../external/helios/docs/ontology-burndown.md) | LinkML and graph services; broader authoring remains planned |
+| Inherited deployment and operations | [UI deployment](builtin/helios-compat/ui-deployment.md), [networking](builtin/helios-compat/ui-api-networking.md), [security](builtin/helios-compat/SECURITY_ARCHITECTURE.md), [metadata](../external/helios/docs/helios-metadata-database.md) | Authenticated deployment and operational state |
 | Research and historical evidence | [Alignment review](DOCS_ALIGNMENT.md), [walkthroughs](walkthrough/README.md), [deck notes](Helios-Overview-notes.md) | Design inputs and recorded evidence, not current deployment proof |
 
 The [alignment review](DOCS_ALIGNMENT.md) maps the remaining materials to implemented, separate, or deferred work.
