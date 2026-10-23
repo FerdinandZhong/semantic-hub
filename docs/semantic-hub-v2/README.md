@@ -10,10 +10,22 @@ Keep the current builder as an optional built-in provider.
 Run Helios independently and open its application for advanced building and Talk to Your Data.
 Add versioned API adapters where release import and delegated queries require integration.
 
+Default installation: one AMP provisions Hub and Helios applications from separate, pinned repositories within one CAI project.
+Helios is an optional Git submodule; each application has a separate environment and state.
+An external mode connects to an existing Helios deployment.
+
 Stop using upstream source merges as the normal integration mechanism.
 A shared repository history does not need to become a shared deployment lifecycle.
 
-[Upstream inspection and merge result](upstream-review.md) · [Provider contract proposal](provider-contract.md)
+[Upstream inspection and merge result](upstream-review.md) · [Provider contract proposal](provider-contract.md) · [Bundled AMP deployment](deployment-layout.md)
+
+## Execution plans
+
+The repository layout is accepted. Runtime implementation remains planned.
+
+1. [Implementation plan](implementation-plan.md): work packages I0–I8 and release gates.
+2. [Local smoke test plan](local-smoke-test-plan.md): fixtures, checks L00–L12, and evidence requirements.
+3. [AMP preparation plan](amp-preparation-plan.md): setup sequencing, checks A01–A11, and recovery.
 
 ## Requirements interpreted
 
