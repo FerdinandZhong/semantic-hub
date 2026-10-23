@@ -88,3 +88,9 @@ AMP packaging and CAI ingress authentication are implemented. Full hosted Agent 
 - [Manufacturing real-document evidence](manufacturing-real-document-sources.md): upload-ready DOE excerpt, page mapping, model-link instructions, and demo questions.
 
 - [Semantic context build flow](diagrams/semantic-context-build-flow.drawio): source inputs, evidence matching, validation, review, and publication.
+
+## Semantic Hub v2 proposal
+
+- [Independent Hub and pluggable builders](semantic-hub-v2/README.md)
+- [Upstream inspection and merge evidence](semantic-hub-v2/upstream-review.md)
+- [Provider contract proposal](semantic-hub-v2/provider-contract.md)
