@@ -1,7 +1,9 @@
 # Semantic Hub v2: independent Hub, pluggable builders
 
-Status: design proposal for review, 23 October 2026.
-This branch contains repository cleanup and design work, not the v2 runtime implementation.
+Status: local linked-provider preview in implementation, 25 October 2026.
+The branch now includes the provider registry, workspace UI, and isolated local launcher.
+See [local preview and implementation evidence](local-preview.md) for tested scope and launch commands.
+Multi-application CAI deployment, external release import, and delegated queries remain later work.
 
 ## Recommendation
 
@@ -23,7 +25,7 @@ A shared repository history does not need to become a shared deployment lifecycl
 
 ## Execution plans
 
-The repository layout is accepted. Runtime implementation remains planned.
+The repository layout is accepted. The local preview implements the first runtime increment.
 
 1. [Implementation plan](implementation-plan.md): work packages I0–I8 and release gates.
 2. [Local smoke test plan](local-smoke-test-plan.md): fixtures, checks L00–L12, and evidence requirements.

@@ -1,0 +1,1 @@
+"""Semantic Hub provider workspace."""

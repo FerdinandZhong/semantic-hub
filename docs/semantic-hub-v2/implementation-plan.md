@@ -1,7 +1,9 @@
 # Semantic Hub v2 implementation plan
 
-Status: planned work following acceptance of the repository layout.
-The plan does not claim that provider integration, the submodule, or multi-application deployment already exists.
+Status: first local runtime increment implemented, 25 October 2026.
+The pinned checkout, local launcher, provider registry, and workspace UI are available.
+See [implementation evidence](local-preview.md) for validation and remaining gaps.
+Release A still requires CAI acceptance; Releases B–D remain planned.
 
 [Architecture](README.md) · [Deployment layout](deployment-layout.md) · [Local smoke tests](local-smoke-test-plan.md) · [AMP preparation](amp-preparation-plan.md)
 
@@ -55,8 +57,8 @@ Do not refresh every unrelated suite after documentation-only changes.
 
 ### I1 — Add the independent Helios checkout and isolated launchers
 
-Partial progress: the pinned submodule and documentation ownership cleanup are complete.
-The compatibility lock, isolated provider environment, and launchers remain to be implemented.
+Progress: the pinned submodule, documentation cleanup, provider lock, isolated environments, and local launcher are implemented.
+The local launcher lives in `deployment/local/`; CAI launch wrappers remain I5 work.
 
 1. Add `external/helios` as a submodule at the verified upstream revision.
 2. Add `deployment/provider-lock.json` with revision, supported adapter version, and runtime requirements.

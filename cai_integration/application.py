@@ -15,6 +15,8 @@ def create_app(*, local=False):
     from apps.helios.console.semantic_hub_api import create_application
     app = create_application(console.state.demo_hub, console.state.demo_llm_settings,
                              local_no_auth=local, platform_auth=not local)
+    from semantic_hub.api import install
+    install(app, console.state.demo_hub, cfg['state'], local=local)
     # Mounted applications do not run their lifespan automatically.
     @asynccontextmanager
     async def lifespan(application):

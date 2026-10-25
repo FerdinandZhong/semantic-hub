@@ -26,3 +26,5 @@ apps/helios/ui/src/content/docs/
 # Local agent session state
 /.claude/
 /.omc/
+
+/.venv-helios/

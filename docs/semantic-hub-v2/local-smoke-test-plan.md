@@ -1,8 +1,9 @@
 # Local smoke test plan
 
-Status: test specification for the v2 implementation.
-The v2 harness and tests listed as proposed do not exist yet.
-Existing regression commands below can run now.
+Status: specification plus first local implementation evidence, 25 October 2026.
+The local launcher, provider tests, and browser smoke script now exist.
+See [local preview](local-preview.md) for runnable commands and verified scope.
+Release-exchange, delegated-query, and external-only packaging tests remain planned.
 
 [Implementation plan](implementation-plan.md) · [AMP preparation](amp-preparation-plan.md)
 

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "helios": {
+    "path": "external/helios",
+    "commit": "316f5d89926f96d366afaee641bd923af4ca6bf3",
+    "optional_dependencies_omitted": [
+      "lancedb",
+      "sentence-transformers"
+    ],
+    "limitations": [
+      "Document embedding and vector evidence search require optional dependencies.",
+      "Live Atlas, Impala, and model inference require separately configured credentials."
+    ],
+    "local_dependency_overrides": {
+      "linkml-runtime": "1.12.1",
+      "jsonschema": "4.26.0"
+    }
+  },
+  "link_adapter_version": 1
+}
