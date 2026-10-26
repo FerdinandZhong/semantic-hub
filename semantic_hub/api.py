@@ -3,11 +3,12 @@
 from pathlib import Path
 from urllib.parse import urlencode
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 from apps.helios.console.semantic_hub_api import authorize
 from .providers.registry import Registry
+from .shell import sidebar
 
 WEB = Path(__file__).parent / "web"
 
@@ -92,9 +93,15 @@ def install(app, hub, state, *, local=False):
                     description=s["description"],
                     native=True,
                     links={
-                        "studio": s["studio_url"],
-                        "chat": s.get("query_url"),
-                        "sources": "/demo?" + urlencode({"source": s["id"]}),
+                        "studio": "/v2/editor?" + urlencode({"source": s["id"]}),
+                        "chat": (
+                            "/v2?" + urlencode({"view": "chat", "workspace": s["id"]})
+                            if s["kind"] == "local"
+                            else None
+                        ),
+                        "sources": "/v2/editor?"
+                        + urlencode({"source": s["id"]})
+                        + "#source",
                     },
                 )
             )
@@ -114,6 +121,11 @@ def install(app, hub, state, *, local=False):
             )
         return {"items": items}
 
+    from .editor import install_editor
+    from .support_pages import install_support_pages
+
+    install_editor(app)
+    install_support_pages(app)
     app.include_router(router)
     app.mount(
         "/v2/assets", StaticFiles(directory=WEB), name="provider-workspace-assets"
@@ -121,4 +133,14 @@ def install(app, hub, state, *, local=False):
 
     @app.get("/v2", include_in_schema=False)
     def page():
-        return FileResponse(WEB / "index.html", headers={"Cache-Control": "no-store"})
+        html = (
+            (WEB / "index.html")
+            .read_text()
+            .replace("<!-- HUB_SIDEBAR -->", sidebar("home"))
+        )
+        return HTMLResponse(html, headers={"Cache-Control": "no-store"})
+
+    @app.get("/", include_in_schema=False)
+    @app.get("/v2/", include_in_schema=False)
+    def landing():
+        return RedirectResponse("/v2")

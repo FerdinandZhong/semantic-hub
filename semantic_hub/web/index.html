@@ -6,47 +6,26 @@
     <title>Semantic Hub · Workspace</title>
     <link rel="icon" href="/static/favicon.svg" />
     <link rel="stylesheet" href="/v2/assets/workspace.css" />
+    <link rel="stylesheet" href="/v2/assets/chat-history.css" />
+    <script src="/v2/assets/chat-history.js" defer></script>
     <script src="/v2/assets/workspace.js" defer></script>
   </head>
   <body>
-    <aside class="sidebar">
-      <a class="brand" href="/v2"
-        ><img src="/static/cloudera-wordmark.png" alt="Cloudera" /><span
-          >SEMANTIC HUB</span
-        ></a
-      ><span class="nav-label">WORKSPACE</span>
-      <nav aria-label="Workspace">
-        <button data-view="studio">◈ <span>Semantic Studio</span></button
-        ><button data-view="sources">▤ <span>Data sources</span></button
-        ><button data-view="tables">▦ <span>Tables</span></button
-        ><button data-view="chat">◇ <span>Talk to your data</span></button>
-      </nav>
-      <span class="nav-label">MANAGE</span>
-      <nav>
-        <button data-view="providers">
-          ↗ <span>Builders & connections</span></button
-        ><a href="/demo/materials">Supporting materials</a
-        ><a href="/demo/llm">Model configuration</a>
-      </nav>
-      <div class="sidebar-bottom">
-        <span class="dot"></span> Provider workspace
-        <span class="tag">v2 preview</span
-        ><a href="/demo">Open classic workspace ↗</a>
-      </div>
-    </aside>
+    <!-- HUB_SIDEBAR -->
     <div class="main">
       <header>
         <span
           >Workspace <span class="slash">/</span>
-          <b id="breadcrumb">Semantic Studio</b></span
+          <b id="breadcrumb">Workspaces</b></span
         ><a href="/docs">API reference ↗</a>
       </header>
-      <div class="workspace-bar">
+      <div id="workspace-bar" class="workspace-bar" hidden>
         <label for="workspace">WORKSPACE</label
         ><select id="workspace" aria-label="Selected workspace"></select
         ><span id="provider-label" class="tag"></span
         ><button id="refresh" class="quiet">Refresh</button>
       </div>
+      <div id="workspace-tabs" class="workspace-tabs" hidden></div>
       <div id="notice" role="status" hidden></div>
       <main id="content" aria-live="polite"></main>
     </div>

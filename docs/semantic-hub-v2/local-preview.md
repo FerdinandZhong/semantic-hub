@@ -1,6 +1,7 @@
 # Local v2 preview
 
-This increment adds a provider workspace at `/v2`.
+The unified UI now starts with workspace cards at `/v2`.
+See [unified UI implementation](unified-ui-implementation.md) for the approved layout and browser workflow.
 It retains the existing Built-in Studio and v1 consumer API.
 External workspaces open in native Helios through links with organization and model identifiers.
 The Hub does not import external releases or execute delegated queries yet.
@@ -94,9 +95,9 @@ Do not use the local harness as a CAI deployment launcher.
 | Area | Implemented behavior | Remaining work |
 | --- | --- | --- |
 | Provider registry | Persistent origins, workspace links, immutable provider identity, Built-in assignment | Credential references, live compatibility negotiation, controlled origin updates |
-| Studio | Compact definition list and inspector; link to existing editor | Integrated editing and full builder package extraction |
+| Studio | Existing editable Studio, source, review, and release workflows inside one shared shell | Full builder package extraction |
 | Sources and tables | Source inventory, schema inspection, bounded sample previews | External metadata import |
-| Talk | Published Built-in versions, explicit execution approval, results and provenance | External delegated execution |
+| Talk | Published Built-in versions, explicit execution approval, results, provenance, and page-session history | External delegated execution and durable conversation storage |
 | Native Helios | Independent environment, state, UI/API processes, pinned revision | Configured live backend and inference acceptance |
 | Deployment | Bundled, external, and Built-in local modes | Multi-application CAI provisioning and acceptance |
 

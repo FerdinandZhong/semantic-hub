@@ -109,3 +109,38 @@ def test_api_auth_registration_and_workspace_identity(tmp_path, monkeypatch):
         items[1]["links"]["chat"]
         == "https://ui.test/talk?organization=org&model=native"
     )
+
+
+def test_home_uses_shared_shell_and_unified_workspace_routes(tmp_path):
+    class Hub:
+        def catalog(self):
+            return {
+                "sources": [
+                    dict(
+                        id="finance",
+                        name="Finance",
+                        kind="local",
+                        description="Sample",
+                        model={"status": "published"},
+                        studio_url="/demo/context?source=finance",
+                    )
+                ]
+            }
+
+    app = FastAPI()
+    app.state.local_no_auth = True
+    app.state.platform_auth = False
+    install(app, Hub(), tmp_path, local=True)
+    client = TestClient(app)
+    response = client.get("/")
+    assert response.url.path == "/v2"
+    assert response.text.count('class="sidebar"') == 1
+    assert 'data-nav="home"' in response.text
+    assert "Open classic workspace" not in response.text
+    assert "<iframe" not in response.text
+    links = client.get("/api/semantic-hub/v2/workspaces").json()["items"][0]["links"]
+    assert links == dict(
+        studio="/v2/editor?source=finance",
+        chat="/v2?view=chat&workspace=finance",
+        sources="/v2/editor?source=finance#source",
+    )

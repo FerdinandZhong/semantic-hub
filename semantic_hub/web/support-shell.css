@@ -1,0 +1,77 @@
+/* The shared workspace stylesheet owns the sidebar and header. */
+.support-content {
+  padding: 24px 32px 48px;
+  min-width: 0;
+  --bg: #f7f8fc;
+  --line: #e3e7ee;
+  --ink: #292f3d;
+  --muted: #667085;
+  --accent: #2d62df;
+  --soft: #eff6ff;
+}
+.support-content > .heading {
+  margin-top: 0;
+}
+.support-content .heading h1 {
+  font-size: 26px;
+}
+.support-content .materials-layout {
+  min-width: 0;
+}
+.support-content .material-workspace {
+  min-width: 0;
+}
+@media (max-width: 700px) {
+  .support-content {
+    padding: 20px 16px 36px;
+  }
+}
+
+/* Headings stack above their workflow; the catalog heading uses flex elsewhere. */
+.support-content > .heading {
+  display: block;
+  margin: 0 0 24px;
+}
+.support-content > .heading > h1 {
+  margin: 5px 0 10px;
+}
+.support-content > .heading > p {
+  max-width: 900px;
+}
+.support-content > .heading > .actions {
+  margin-top: 14px;
+}
+.support-workspace-context {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 16px 32px;
+  background: white;
+  border-bottom: 1px solid var(--line);
+}
+.support-workspace-context > span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.support-workspace-context > strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.support-workspace-context > .support-workspace-builder {
+  margin-left: auto;
+}
+.support-workspace-tabs {
+  flex-direction: row;
+  margin: 0;
+}
+@media (max-width: 700px) {
+  .support-workspace-context {
+    padding: 14px 16px;
+    gap: 8px 14px;
+  }
+  .support-workspace-tabs {
+    padding: 0 16px;
+    gap: 20px;
+  }
+}

@@ -1,8 +1,8 @@
 # Semantic Hub v2: independent Hub, pluggable builders
 
-Status: local linked-provider preview in implementation, 25 October 2026.
+Status: local linked-provider preview with the unified UI, 26 October 2026.
 The branch now includes the provider registry, workspace UI, and isolated local launcher.
-See [local preview and implementation evidence](local-preview.md) for tested scope and launch commands.
+See [unified UI implementation](unified-ui-implementation.md) and [local preview and implementation evidence](local-preview.md) for tested scope and launch commands.
 Multi-application CAI deployment, external release import, and delegated queries remain later work.
 
 ## Recommendation

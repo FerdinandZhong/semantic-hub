@@ -15,14 +15,30 @@ const $ = (id) => document.getElementById(id),
 let workspaces = [],
   providers = [],
   current = null,
-  view = "studio",
+  view = "home",
   generation = 0;
 const titles = {
-  studio: "Semantic Studio",
-  sources: "Data sources",
-  tables: "Tables",
+  home: "Semantic workspaces",
+  overview: "Workspace overview",
   chat: "Talk to your data",
   providers: "Builders & connections",
+};
+const statusName = (s) =>
+  ({
+    starter: "Starter",
+    draft: "Draft",
+    reviewed: "Reviewed",
+    published: "Published",
+    configured: "Configured",
+    linked: "Linked",
+  })[s] || s;
+const editorUrl = (id, step = "define") =>
+  `/v2/editor?source=${encodeURIComponent(id)}#${step}`;
+const workspaceUrl = (id, next = "overview") =>
+  `/v2?${new URLSearchParams({ view: next, workspace: id })}`;
+const icon = (kind) => {
+  const source = document.querySelector(`[data-nav="${kind}"] svg`);
+  return source ? source.outerHTML : "";
 };
 const tag = (text, green = false) =>
   `<span class="tag ${green ? "green" : ""}">${esc(text)}</span>`;
@@ -75,27 +91,25 @@ function details(items) {
     .join("");
 }
 function providerHandoff() {
-  const key = view === "tables" ? "sources" : view;
-  return (
-    heading(titles[view], `${current.name} · ${current.provider_name}`) +
-    empty(
-      "Continue in " + current.provider_name,
-      "This workspace is linked to its native builder. Review model access and publication there. External definitions and queries are not imported into this Hub yet.",
-      anchor(
-        "Open " +
-          (view === "chat"
-            ? "Talk to your data"
-            : view === "studio"
-              ? "Studio"
-              : "data sources"),
-        current.links[key],
-        true,
-      ),
-    )
-  );
+  $("content").innerHTML =
+    heading(
+      current.name,
+      "This workspace is managed by " + current.provider_name,
+      tag("Linked provider"),
+    ) +
+    `<div class="split"><section class="panel"><div class="panel-head"><h2>Native semantic workspace</h2></div><div class="panel-body"><p>Continue in ${esc(current.provider_name)} to build this model or use its native conversation.</p><p class="muted">The provider checks model access. External definitions and queries have not been imported into this Hub.</p><div class="toolbar">${anchor("Open Studio", current.links.studio, true)}${anchor("Talk to your data", current.links.chat)}</div></div></section><section class="panel"><div class="panel-head"><h2>Workspace identity</h2></div><div class="panel-body">${details(
+      [
+        ["Builder", current.provider_name],
+        ["Organization", current.organization_id],
+        ["Native model", current.model_id],
+        ["Integration", "Navigation only"],
+      ],
+    )}</div></section></div>`;
 }
 async function load() {
-  const selected = $("workspace").value;
+  const selected =
+    $("workspace").value ||
+    new URL(location.href).searchParams.get("workspace");
   [workspaces, providers] = await Promise.all([
     api("/api/semantic-hub/v2/workspaces").then((d) => d.items),
     api("/api/semantic-hub/v2/providers").then((d) => d.items),
@@ -103,68 +117,116 @@ async function load() {
   $("workspace").innerHTML = workspaces
     .map((w) => `<option value="${esc(w.id)}">${esc(w.name)}</option>`)
     .join("");
-  const requested = new URL(location.href).searchParams.get("workspace");
-  $("workspace").value = workspaces.some(
-    (w) => w.id === (selected || requested),
-  )
-    ? selected || requested
+  $("workspace").value = selected
+    ? workspaces.some((w) => w.id === selected)
+      ? selected
+      : ""
     : workspaces[0]?.id || "";
-  current = workspaces.find((w) => w.id === $("workspace").value);
   await render();
+}
+function navigate(next, id) {
+  view = next;
+  if (id !== undefined) $("workspace").value = id;
+  const url = new URL(location.href);
+  url.searchParams.set("view", view);
+  if ($("workspace").value)
+    url.searchParams.set("workspace", $("workspace").value);
+  history.pushState(null, "", url);
+  render();
+}
+function syncShell() {
+  const scoped = view !== "home" && view !== "providers";
+  $("workspace-bar").hidden = !scoped;
+  $("workspace-tabs").hidden = !(
+    view === "overview" &&
+    current?.native &&
+    current.kind === "local"
+  );
+  $("provider-label").textContent = current?.provider_name || "No workspace";
+  $("breadcrumb").textContent = titles[view] || "Semantic workspace";
+  const active = view === "overview" ? "workspace" : view;
+  document.querySelectorAll("[data-nav]").forEach((a) => {
+    const key = a.dataset.nav;
+    a.classList.toggle("active", key === active);
+    if (key === active) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+    if (key === "workspace" || key === "chat")
+      a.href = workspaceUrl(
+        current?.id || "",
+        key === "workspace" ? "overview" : "chat",
+      );
+    if (key === "settings")
+      a.href =
+        "/v2/settings?" +
+        new URLSearchParams({ source: current?.native ? current.id : "" });
+  });
+  $("workspace-tabs").innerHTML = current?.native
+    ? `<a href="${esc(workspaceUrl(current.id))}" class="active" aria-current="page">Overview</a>` +
+      [
+        ["source", "Source data"],
+        ["define", "Studio"],
+        ["validate", "Validation & review"],
+        ["hub", "Versions & releases"],
+      ]
+        .map(
+          ([step, title]) =>
+            `<a href="${esc(editorUrl(current.id, step))}">${title}</a>`,
+        )
+        .join("")
+    : "";
 }
 async function render() {
   const ticket = ++generation;
   notice("");
   current = workspaces.find((w) => w.id === $("workspace").value);
-  $("provider-label").textContent = current?.provider_name || "No workspace";
-  $("breadcrumb").textContent = titles[view];
-  document
-    .querySelectorAll("[data-view]")
-    .forEach((b) => b.classList.toggle("active", b.dataset.view === view));
-  const url = new URL(location.href);
-  url.searchParams.set("view", view);
-  if (current) url.searchParams.set("workspace", current.id);
-  history.replaceState(null, "", url);
+  if (["studio", "tables", "sources", "review", "releases"].includes(view)) {
+    const step = {
+      studio: "define",
+      tables: "source",
+      sources: "source",
+      review: "validate",
+      releases: "hub",
+    }[view];
+    if (current?.native) {
+      location.assign(editorUrl(current.id, step));
+      return;
+    }
+    view = "overview";
+  }
+  syncShell();
   $("content").innerHTML = '<p class="muted">Loading workspace…</p>';
   try {
+    if (view === "home") {
+      renderHome();
+      return;
+    }
     if (view === "providers") {
       renderProviders();
       return;
     }
     if (!current) {
       $("content").innerHTML = empty(
-        "Create a workspace",
-        "Connect a builder to get started.",
+        "Workspace unavailable",
+        "Select an available workspace or return to the catalog.",
+        anchor("All workspaces", "/v2", true),
       );
       return;
     }
     if (!current.native) {
-      $("content").innerHTML = providerHandoff();
+      providerHandoff();
       return;
     }
-    if (view === "sources") {
-      renderSources();
+    if (view === "overview") {
+      renderOverview();
       return;
     }
     if (current.kind !== "local") {
-      $("content").innerHTML =
-        heading(titles[view], current.name) +
-        empty(
-          "Source import required",
-          "This connection stores a profile. Import and query support are not available for this source yet.",
-          anchor("Inspect source setup", current.links.studio, true),
-        );
+      $("content").innerHTML = empty(
+        "Source import required",
+        "This connection stores a profile. Source import and query execution are not available for this connector yet.",
+        anchor("Inspect source setup", editorUrl(current.id, "source"), true),
+      );
       return;
-    }
-    if (view === "studio") {
-      const data = await api(built("/demo/api/context"));
-      if (ticket !== generation) return;
-      renderStudio(data);
-    }
-    if (view === "tables") {
-      const data = await api(built("/demo/api/context/tables", "&limit=50"));
-      if (ticket !== generation) return;
-      renderTables(data, ticket);
     }
     if (view === "chat") {
       const [catalog, config] = await Promise.all([
@@ -181,109 +243,188 @@ async function render() {
     }
   }
 }
-function renderStudio(data) {
-  const d = data.draft?.definition || {},
-    metrics = d.metrics || [];
-  const model = current.model || {};
+function renderHome() {
   $("content").innerHTML =
     heading(
-      "Semantic Studio",
-      "Inspect business definitions, then open the editor to validate and publish.",
-      anchor("Open editor", current.links.studio, true),
+      "Semantic workspaces",
+      "Find a workspace. Define meaning, review changes, and ask your data.",
+      '<button id="new-workspace" class="primary">New workspace</button>',
     ) +
-    `<div class="metrics"><div class="metric"><span>METRICS</span><strong>${metrics.length}</strong></div><div class="metric"><span>SOURCE TABLES</span><strong>${model.table_count ?? "—"}</strong></div><div class="metric"><span>MODEL STATUS</span><strong style="font-size:19px">${esc(current.status)}</strong></div></div><div class="split"><section class="panel"><div class="panel-head"><h2>Business definitions</h2>${tag("Draft revision " + (data.draft?.revision ?? 0))}</div><div class="list" id="metric-list">${metrics.map((m, i) => `<button data-metric="${i}"><span>${esc(m.name.replaceAll("_", " "))}<small>${esc(m.description || "Review this definition in Studio.")}</small></span>${tag(m.unit || "Metric")}</button>`).join("") || '<div class="panel-body muted">No metrics defined yet.</div>'}</div></section><section class="panel"><div class="panel-head"><h2>Definition details</h2></div><div class="panel-body" id="metric-detail"></div></section></div><div class="toolbar" style="margin-top:20px">${anchor("Review supporting materials", "/demo/materials")}<span class="muted">Draft definitions become queryable after review and publication.</span></div>`;
-  function select(i) {
-    const m = metrics[i];
-    if (!m) return;
-    document
-      .querySelectorAll("[data-metric]")
-      .forEach((b) =>
-        b.classList.toggle("selected", Number(b.dataset.metric) === i),
-      );
-    $("metric-detail").innerHTML =
-      details([
-        ["Metric", m.name],
-        ["Business meaning", m.description],
-        ["Unit", m.unit],
-        ["Grain", m.grain],
-        ["Time rule", m.time_rule],
-      ]) + `<pre>${esc(m.expression || "No expression")}</pre>`;
-  }
-  document
-    .querySelectorAll("[data-metric]")
-    .forEach((b) => (b.onclick = () => select(Number(b.dataset.metric))));
-  select(0);
-}
-function renderSources() {
-  $("content").innerHTML =
-    heading(
-      "Data sources",
-      "Source profiles, preparation status, and the builder responsible for each workspace.",
-      anchor("Configure source", "/demo", true),
-    ) +
-    `<div class="toolbar"><input id="source-filter" aria-label="Filter data sources" placeholder="Search sources or builders…"><span class="muted">${workspaces.length} workspaces</span></div><section class="panel" id="source-table"></section>`;
+    `<div class="catalog-summary">${tag(workspaces.length + " workspaces")}${tag(providers.length + " builders")}${tag(workspaces.filter((w) => w.status === "published").length + " published models", true)}</div><div class="toolbar catalog-toolbar"><input id="workspace-search" type="search" placeholder="Search workspaces…" aria-label="Search workspaces"><select id="builder-filter" aria-label="Filter by builder"><option value="">All builders</option>${providers.map((p) => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("")}</select><select id="status-filter" aria-label="Filter by status"><option value="">All statuses</option>${[...new Set(workspaces.map((w) => w.status))].map((s) => `<option value="${esc(s)}">${esc(statusName(s))}</option>`).join("")}</select></div><div class="section-heading"><h2>Your workspaces</h2><span id="card-count" class="muted"></span></div><div id="workspace-cards" class="workspace-cards"></div>`;
   function draw() {
-    const q = $("source-filter").value.toLowerCase();
-    const list = workspaces.filter((w) =>
-      `${w.name} ${w.provider_name} ${w.kind}`.toLowerCase().includes(q),
+    const q = $("workspace-search").value.trim().toLowerCase(),
+      provider = $("builder-filter").value,
+      status = $("status-filter").value;
+    const items = workspaces.filter(
+      (w) =>
+        (w.name + " " + w.description + " " + w.provider_name)
+          .toLowerCase()
+          .includes(q) &&
+        (!provider || w.provider_id === provider) &&
+        (!status || w.status === status),
     );
-    $("source-table").innerHTML =
-      `<div class="table-scroll"><table><thead><tr><th>Source / workspace</th><th>Builder</th><th>Type</th><th>Status</th><th>Tables</th><th></th></tr></thead><tbody>${list.map((w) => `<tr><td><b>${esc(w.name)}</b></td><td>${esc(w.provider_name)}</td><td>${esc(w.kind)}</td><td>${tag(w.status, w.status === "published")}</td><td>${esc(w.model?.table_count ?? "—")}</td><td><button data-open="${esc(w.id)}">Inspect</button></td></tr>`).join("")}</tbody></table></div>`;
-    document.querySelectorAll("[data-open]").forEach(
-      (b) =>
-        (b.onclick = () => {
-          $("workspace").value = b.dataset.open;
-          view = "studio";
-          render();
+    $("card-count").textContent = items.length + " shown";
+    $("workspace-cards").innerHTML =
+      items
+        .map(
+          (w) =>
+            `<article class="workspace-card"><div class="card-top"><span class="card-icon">${icon(w.native ? "workspace" : "providers")}</span>${tag(statusName(w.status), w.status === "published")}</div><h2>${esc(w.name)}</h2><p>${esc(w.model?.description || w.description)}</p><div class="card-meta"><span><b>${esc(w.model?.table_count ?? "—")}</b> tables</span><span><b>${esc(w.model?.metric_count ?? "—")}</b> metrics</span></div><div class="card-footer">${tag(w.provider_name)}<a data-open-workspace="${esc(w.id)}" href="${esc(workspaceUrl(w.id))}">Open workspace →</a></div></article>`,
+        )
+        .join("") ||
+      empty("No matching workspaces", "Change the search or filters.");
+    document.querySelectorAll("[data-open-workspace]").forEach(
+      (a) =>
+        (a.onclick = (e) => {
+          if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+          e.preventDefault();
+          navigate("overview", a.dataset.openWorkspace);
         }),
     );
   }
-  $("source-filter").oninput = draw;
+  for (const id of ["workspace-search", "builder-filter", "status-filter"])
+    $(id).oninput = draw;
+  $("new-workspace").onclick = () => newWorkspace();
   draw();
 }
-function renderTables(data, ticket) {
+function renderOverview() {
+  const m = current.model;
+  if (!m) {
+    $("content").innerHTML =
+      heading(current.name, current.description) +
+      empty(
+        "Source profile configured",
+        "This connector requires source import before semantic authoring or queries are available.",
+        anchor("Inspect source setup", editorUrl(current.id, "source"), true),
+      );
+    return;
+  }
+  const published = (m.versions || []).filter((v) => v.published),
+    latest = published[0];
   $("content").innerHTML =
     heading(
-      "Tables",
-      `${current.name} · ${data.total} source tables. Previews are limited to 10 rows.`,
+      current.name,
+      "Inspect the current model, then continue building or use a published version.",
+      anchor("Continue in Studio", editorUrl(current.id), true),
     ) +
-    `<div class="split"><section class="panel"><div class="panel-head"><h2>Source schema</h2>${tag("Read only")}</div><div class="list" id="table-list">${data.items.map((t, i) => `<button data-table="${i}"><span>${esc(t.name)}<small>${t.field_count} columns · ${t.row_count.toLocaleString()} rows</small></span><span>→</span></button>`).join("")}</div></section><section class="panel"><div class="panel-head"><h2 id="table-title">Select a table</h2></div><div id="table-detail" class="panel-body"></div></section></div><section class="panel" style="margin-top:20px"><div class="panel-head"><h2>Sample preview</h2>${tag("Up to 10 rows")}</div><div id="table-preview"></div></section>`;
-  let selected = 0;
-  async function select(i) {
-    selected = i;
-    document
-      .querySelectorAll("[data-table]")
-      .forEach((b) =>
-        b.classList.toggle("selected", Number(b.dataset.table) === i),
-      );
-    try {
-      const t = await api(
-        built(
-          "/demo/api/context/table",
-          "&name=" + encodeURIComponent(data.items[i].name),
-        ),
-      );
-      if (ticket !== generation || selected !== i) return;
-      $("table-title").textContent = t.name;
-      $("table-detail").innerHTML = rowsTable(
-        ["Column", "Type"],
-        t.columns.map((c) => [c.name, c.type]),
-      );
-      const rows = t.rows || t.preview || [];
-      $("table-preview").innerHTML = rowsTable(
-        t.columns.map((c) => c.name),
-        rows.map((r) =>
-          Array.isArray(r) ? r : t.columns.map((c) => r[c.name]),
-        ),
-      );
-    } catch (e) {
-      if (ticket === generation) notice(e.message);
-    }
+    `<div class="metrics overview-metrics">${[
+      [m.table_count, "SOURCE TABLES"],
+      [m.metric_count, "BUSINESS METRICS"],
+      [m.draft_revision, "DRAFT REVISION"],
+      [latest?.version || "None", "PUBLISHED VERSION"],
+    ]
+      .map(
+        ([v, label]) =>
+          `<div class="metric"><span>${label}</span><strong>${esc(v)}</strong></div>`,
+      )
+      .join(
+        "",
+      )}</div><div class="split"><section class="panel"><div class="panel-head"><h2>Build and publish</h2>${tag(statusName(current.status), current.status === "published")}</div><div class="panel-body">${[
+      ["source", "Source data", "Inspect tables and supporting documents."],
+      [
+        "define",
+        "Studio",
+        "Edit definitions, field meanings, and relationships.",
+      ],
+      [
+        "validate",
+        "Validation & review",
+        "Check technical results and review each change.",
+      ],
+      [
+        "hub",
+        "Versions & releases",
+        "Publish a reviewed version for consumers.",
+      ],
+    ]
+      .map(
+        ([step, title, description], i) =>
+          `<div class="workflow-row"><div><strong>${i + 1}. ${title}</strong><p class="muted">${description}</p></div>${anchor("Open", editorUrl(current.id, step))}</div>`,
+      )
+      .join(
+        "",
+      )}</div></section><section class="panel"><div class="panel-head"><h2>Published model</h2>${tag(latest ? "Available" : "Not published", !!latest)}</div><div class="panel-body"><p>${latest ? `Version <strong>${esc(latest.version)}</strong> is published. Draft changes do not alter that release.` : "Validate and review the draft before publishing it for questions."}</p>${anchor(latest ? "Talk to your data" : "Review draft", latest ? workspaceUrl(current.id, "chat") : editorUrl(current.id, "validate"), true)}${details(
+      [
+        ["Builder", current.provider_name],
+        ["Source", m.source_name],
+        ["Data origin", m.generation_mode],
+        ["Active version", m.active_version || "No active version"],
+      ],
+    )}</div></section></div>`;
+}
+async function newWorkspace() {
+  $("setup-title").textContent = "New workspace";
+  $("setup-error").textContent = "";
+  $("setup-fields").innerHTML =
+    '<p>Build a local workspace or link an existing provider workspace.</p><div class="toolbar"><button type="button" id="create-builtin" class="primary">Built-in workspace</button><button type="button" id="link-external">Link provider workspace</button></div>';
+  $("setup-form").querySelector('[type="submit"]').hidden = true;
+  $("setup").showModal();
+  $("create-builtin").onclick = () =>
+    configureSource().catch((e) => {
+      $("setup-error").textContent = e.message;
+    });
+  $("link-external").onclick = () => {
+    $("setup").close();
+    navigate("providers");
+  };
+}
+async function configureSource() {
+  const catalog = await api("/demo/api/hub");
+  const schemas = await api("/demo/api/connections/schema");
+  $("setup-title").textContent = "New built-in workspace";
+  $("setup-fields").innerHTML =
+    `<label>Workspace name<input name="name" maxlength="120" required></label><label>Description<textarea name="description" maxlength="1500"></textarea></label><label>Source type<select id="source-kind" name="kind">${Object.keys(
+      schemas,
+    )
+      .map(
+        (k) =>
+          `<option value="${esc(k)}">${esc(k === "local" ? "Local dataset" : k)}</option>`,
+      )
+      .join(
+        "",
+      )}</select></label><div id="source-config"></div><p id="source-capability" class="muted"></p>`;
+  function fields() {
+    const kind = $("source-kind").value;
+    $("source-capability").textContent =
+      kind === "local"
+        ? "This creates an independent draft over a registered local dataset."
+        : "Profile only. Source import is not available for this connector yet. Credential references name environment variables; do not enter credentials.";
+    $("source-config").innerHTML =
+      kind === "local"
+        ? `<label>Dataset<select name="config.pack_id" required>${catalog.local_datasets.map((p) => `<option value="${esc(p.id)}">${esc(p.title)}</option>`).join("")}</select></label>`
+        : Object.entries(schemas[kind].properties)
+            .map(
+              ([key, schema]) =>
+                `<label>${esc(key.replaceAll("_", " "))}<input name="config.${esc(key)}" maxlength="${schema.maxLength || 1000}" ${(schemas[kind].required || []).includes(key) ? "required" : ""}></label>`,
+            )
+            .join("");
   }
-  document
-    .querySelectorAll("[data-table]")
-    .forEach((b) => (b.onclick = () => select(Number(b.dataset.table))));
-  if (data.items.length) select(0);
+  fields();
+  $("source-kind").onchange = fields;
+  const submit = $("setup-form").querySelector('[type="submit"]');
+  submit.hidden = false;
+  $("setup-form").onsubmit = async (e) => {
+    e.preventDefault();
+    submit.disabled = true;
+    try {
+      const values = Object.fromEntries(new FormData(e.target));
+      const config = {};
+      for (const [k, v] of Object.entries(values))
+        if (k.startsWith("config.") && v.trim()) config[k.slice(7)] = v.trim();
+      const record = await api("/demo/api/connections", {
+        name: values.name.trim(),
+        description: values.description.trim(),
+        kind: values.kind,
+        config,
+      });
+      $("setup").close();
+      await load();
+      navigate("overview", record.id);
+    } catch (error) {
+      $("setup-error").textContent = error.message;
+    } finally {
+      submit.disabled = false;
+    }
+  };
 }
 function renderProviders() {
   $("content").innerHTML =
@@ -292,8 +433,9 @@ function renderProviders() {
       "Choose where semantic models are authored. Each builder keeps its own workspace and permissions.",
       '<button id="add-provider" class="primary">Connect Helios</button>',
     ) +
-    `<div class="provider-grid">${providers.map((p) => `<section class="panel"><div class="panel-head"><h2>${esc(p.name)}</h2>${tag(p.kind === "builtin" ? "Available" : "Links only", p.kind === "builtin")}</div><div class="panel-body"><p class="muted">${p.kind === "builtin" ? "Build, review, and query the local sample models." : "Open native Helios Studio and Talk. Release import and delegated queries are not enabled."}</p>${p.kind === "builtin" ? anchor("Open source setup", "/demo", true) : `<div class="detail-row"><span>Application origin</span><strong>${esc(p.ui_origin)}</strong></div>${anchor("Open builder", p.ui_origin)}<button class="primary" style="margin-top:16px;margin-left:12px" data-link-project="${esc(p.id)}">Link a workspace</button>`}</div></section>`).join("")}</div>`;
+    `<div class="provider-grid">${providers.map((p) => `<section class="panel"><div class="panel-head"><h2>${esc(p.name)}</h2>${tag(p.kind === "builtin" ? "Available" : "Links only", p.kind === "builtin")}</div><div class="panel-body"><p class="muted">${p.kind === "builtin" ? "Build, review, and query the local sample models." : "Open native Helios Studio and Talk. Release import and delegated queries are not enabled."}</p>${p.kind === "builtin" ? '<button class="primary" id="provider-builtin-create">New workspace</button>' : `<div class="detail-row"><span>Application origin</span><strong>${esc(p.ui_origin)}</strong></div>${anchor("Open builder", p.ui_origin)}<button class="primary" style="margin-top:16px;margin-left:12px" data-link-project="${esc(p.id)}">Link a workspace</button>`}</div></section>`).join("")}</div>`;
   $("add-provider").onclick = () => setup("provider");
+  $("provider-builtin-create").onclick = () => newWorkspace();
   document
     .querySelectorAll("[data-link-project]")
     .forEach(
@@ -301,6 +443,7 @@ function renderProviders() {
     );
 }
 function setup(kind, provider) {
+  $("setup-form").querySelector('[type="submit"]').hidden = false;
   $("setup-title").textContent =
     kind === "provider"
       ? "Connect a Helios builder"
@@ -367,18 +510,19 @@ function renderChat(catalog, config, ticket) {
     ? "Synthetic sample result"
     : "Local source result";
   $("content").innerHTML =
-    heading(
-      "Talk to your data",
-      `${current.name} · Built-in workspace`,
-    ) +
+    heading("Talk to your data", `${current.name} · Built-in workspace`) +
     (!versions.length
       ? empty(
           "Publish a model to start a conversation",
           "Questions use reviewed, published definitions. Open Studio to validate and publish a version.",
-          anchor("Open Studio", current.links.studio, true),
+          anchor("Open Studio", editorUrl(current.id), true),
         )
-      : `<div class="chat-shell"><div class="toolbar"><label for="chat-version">Published version</label><select id="chat-version">${versions.map((v) => `<option>${esc(v.version)}</option>`).join("")}</select><button id="clear-chat" class="quiet">New conversation</button></div><div id="chat-thread" class="chat-thread"></div><form id="chat-form" class="composer"><textarea id="question" placeholder="Ask a question about this published model…" aria-label="Question" maxlength="2000" required></textarea><div class="composer-foot"><span>Inspect the interpretation before running.</span><button id="ask" class="primary">Prepare answer →</button></div></form></div>`);
+      : `<div class="chat-shell chat-with-history"><section class="conversation-history" aria-label="Conversation history"><h2>Conversations</h2><p>This page session · Results stay in memory until you reload.</p><button id="clear-chat" class="quiet" type="button">New conversation</button><div id="conversation-list" class="conversation-history-list"></div></section><div class="chat-conversation"><div class="toolbar"><label for="chat-version">Published version</label><select id="chat-version">${versions.map((v) => `<option>${esc(v.version)}</option>`).join("")}</select></div><div id="chat-thread" class="chat-thread"></div><form id="chat-form" class="composer"><textarea id="question" placeholder="Ask a question about this published model…" aria-label="Question" maxlength="2000" required></textarea><div class="composer-foot"><span>Inspect the interpretation before running.</span><button id="ask" class="primary">Prepare answer →</button></div></form></div></div>`);
   if (!versions.length) return;
+  if (
+    versions.some((v) => String(v.version) === String(catalog.active_version))
+  )
+    $("chat-version").value = String(catalog.active_version);
   const binding = {
     pack_id: config.pack_id,
     snapshot_sha256: config.snapshot_sha256,
@@ -389,6 +533,39 @@ function renderChat(catalog, config, ticket) {
     plan = null;
   const selected = () =>
     versions.find((v) => v.version === $("chat-version").value);
+  const history = window.HubChatHistory;
+  const workspaceId = current.id;
+  const historyKey = () =>
+    history.key(workspaceId, selected().version, selected().context_sha256);
+  function historyList() {
+    const key = historyKey(),
+      active = history.current(key);
+    $("conversation-list").innerHTML =
+      history
+        .list(key)
+        .map(
+          (item) =>
+            `<button type="button" data-conversation="${esc(item.id)}" aria-current="${item.id === active?.id}">${esc(item.title)}</button>`,
+        )
+        .join("") || "<p>No conversations for this published version yet.</p>";
+    document.querySelectorAll("[data-conversation]").forEach((button) => {
+      button.disabled = busy;
+      button.onclick = () => {
+        if (busy) return;
+        history.open(key, button.dataset.conversation);
+        reset();
+      };
+    });
+  }
+  function saveConversation(title) {
+    // Archive rendered results and provenance, never an executable interpretation.
+    const snapshot = $("chat-thread").cloneNode(true);
+    snapshot
+      .querySelectorAll("button,.chat-intro")
+      .forEach((item) => item.remove());
+    history.save(historyKey(), title, snapshot.innerHTML);
+    historyList();
+  }
   function invalidate() {
     plan = null;
     document.querySelectorAll("[data-run]").forEach((b) => b.remove());
@@ -398,8 +575,14 @@ function renderChat(catalog, config, ticket) {
     invalidate();
     $("question").value = "";
     const v = selected();
+    const conversation = history.current(historyKey());
+    historyList();
+    if (conversation) {
+      $("chat-thread").innerHTML = conversation.html;
+      return;
+    }
     $("chat-thread").innerHTML =
-      `<div class="chat-intro"><h2>What would you like to explore?</h2><p class="muted">Use a saved metric or ask about your published data and evidence.</p><div class="suggestions">${v.metrics.map((m, i) => `<button type="button" data-suggest="${i}">${esc(m.name.replaceAll("_", " "))}</button>`).join("")}</div>${anchor("Configure the query model", "/demo/llm")}</div>`;
+      `<div class="chat-intro"><h2>What would you like to explore?</h2><p class="muted">Use a saved metric or ask about your published data and evidence.</p><div class="suggestions">${v.metrics.map((m, i) => `<button type="button" data-suggest="${i}">${esc(m.name.replaceAll("_", " "))}</button>`).join("")}</div>${anchor("Configure the query model", "/v2/settings?source=" + encodeURIComponent(workspaceId))}</div>`;
     document.querySelectorAll("[data-suggest]").forEach(
       (b) =>
         (b.onclick = () => {
@@ -420,6 +603,9 @@ function renderChat(catalog, config, ticket) {
   function controls() {
     for (const id of ["ask", "chat-version", "clear-chat"])
       $(id).disabled = busy;
+    document
+      .querySelectorAll("[data-conversation]")
+      .forEach((button) => (button.disabled = busy));
     document
       .querySelectorAll("[data-suggest]")
       .forEach((b) => (b.disabled = busy));
@@ -446,6 +632,7 @@ function renderChat(catalog, config, ticket) {
       if (ticket !== generation || n !== turn) return;
       if (prepared.status !== "ready") {
         output.textContent = prepared.message || prepared.status;
+        saveConversation(original);
         return;
       }
       output.innerHTML = `<b>Review interpretation</b><p>${esc(prepared.interpretation || prepared.metric?.description || "Review the proposed scope.")}</p><details><summary>Scope and execution details</summary><pre>${esc(prepared.sql || JSON.stringify(prepared.request || prepared.scope_check || {}, null, 2))}</pre></details>`;
@@ -458,6 +645,7 @@ function renderChat(catalog, config, ticket) {
         return;
       }
       plan = prepared;
+      saveConversation(original);
       const run = document.createElement("button");
       run.className = "primary";
       run.dataset.run = "true";
@@ -505,8 +693,12 @@ function renderChat(catalog, config, ticket) {
           detail.append(pre);
           answer.append(detail);
           answer.scrollIntoView({ block: "nearest" });
+          saveConversation(original);
         } catch (e) {
-          answer.textContent = e.message;
+          if (ticket === generation && n === turn) {
+            answer.textContent = e.message;
+            saveConversation(original);
+          }
         } finally {
           if (ticket === generation) {
             busy = false;
@@ -515,7 +707,10 @@ function renderChat(catalog, config, ticket) {
         }
       };
     } catch (e) {
-      if (ticket === generation) output.textContent = e.message;
+      if (ticket === generation && n === turn) {
+        output.textContent = e.message;
+        saveConversation(original);
+      }
     } finally {
       if (ticket === generation) {
         busy = false;
@@ -529,19 +724,44 @@ function renderChat(catalog, config, ticket) {
   };
   $("question").oninput = invalidate;
   $("chat-version").onchange = reset;
-  $("clear-chat").onclick = reset;
+  $("clear-chat").onclick = () => {
+    if (busy) return;
+    history.start(historyKey());
+    reset();
+  };
   reset();
 }
 $("close-dialog").onclick = () => $("setup").close();
 $("refresh").onclick = () => load().catch((e) => notice(e.message));
-$("workspace").onchange = () => render();
-document.querySelectorAll("[data-view]").forEach(
-  (b) =>
-    (b.onclick = () => {
-      view = b.dataset.view;
-      render();
+$("workspace").onchange = () => navigate(view);
+document.querySelectorAll("[data-nav]").forEach(
+  (a) =>
+    (a.onclick = (e) => {
+      const dest = {
+        home: "home",
+        workspace: "overview",
+        chat: "chat",
+        providers: "providers",
+      }[a.dataset.nav];
+      if (dest && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+        navigate(dest);
+      }
     }),
 );
+window.addEventListener("popstate", () => {
+  const params = new URL(location.href).searchParams;
+  view = params.get("view") || "home";
+  $("workspace").value = params.get("workspace") || workspaces[0]?.id || "";
+  render();
+});
 const initial = new URL(location.href).searchParams.get("view");
-if (titles[initial]) view = initial;
-load().catch((e) => notice(e.message));
+if (
+  titles[initial] ||
+  ["studio", "tables", "sources", "review", "releases"].includes(initial)
+)
+  view = initial;
+load().catch((e) => {
+  notice(e.message);
+  $("content").innerHTML = empty("Workspace catalog unavailable", e.message);
+});

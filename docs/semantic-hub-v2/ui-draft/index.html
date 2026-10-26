@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Semantic Hub · UI design review</title>
+    <style>
+      :root {
+        font:
+          14px Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: #263247;
+        background: #f6f8fc;
+        --blue: #2d62df;
+        --line: #e3e8f0;
+        --muted: #708096;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button,
+      a {
+        cursor: pointer;
+      }
+      button {
+        border: 1px solid #dce2ec;
+        border-radius: 7px;
+        background: white;
+        color: inherit;
+        padding: 9px 13px;
+      }
+      button:hover {
+        background: #eef3ff;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #94b5ff;
+        outline-offset: 2px;
+      }
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+      svg {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+        vertical-align: middle;
+      }
+      aside {
+        position: fixed;
+        inset: 38px auto 0 0;
+        width: 224px;
+        background: #fafbfe;
+        border-right: 1px solid var(--line);
+        padding: 28px 16px;
+        display: flex;
+        flex-direction: column;
+      }
+      .brand {
+        padding: 0 12px 32px;
+      }
+      .brand strong {
+        font-size: 23px;
+        color: #ff5b16;
+        letter-spacing: 0.5px;
+      }
+      .brand small {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 2.2px;
+        color: #687792;
+        margin-top: 10px;
+        font-weight: 700;
+      }
+      .navlabel {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: #8c99ac;
+        margin: 18px 12px 9px;
+      }
+      nav {
+        display: grid;
+        gap: 5px;
+      }
+      nav button {
+        font-size: 13px;
+        line-height: 1.35;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        text-align: left;
+        border: 0;
+        background: none;
+        color: #5a6981;
+        padding: 12px;
+      }
+      nav button.active {
+        color: #2554bc;
+        background: #eaf0fd;
+        font-weight: 600;
+      }
+      .bottom {
+        margin-top: auto;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+        padding: 12px;
+      }
+      .reviewbar {
+        height: 38px;
+        background: #192b48;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 22px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        font-size: 11px;
+      }
+      .reviewbar button {
+        padding: 3px 10px;
+        background: #304568;
+        color: white;
+        border: 0;
+        font-size: 11px;
+      }
+      .main {
+        margin-left: 224px;
+      }
+      header {
+        height: 62px;
+        background: white;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .avatar {
+        background: #edf2fb;
+        border-radius: 50%;
+        padding: 9px;
+        color: #465c7f;
+      }
+      .content {
+        padding: 28px 32px;
+        max-width: 1600px;
+        margin: auto;
+      }
+      .heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 24px;
+      }
+      h1 {
+        font-size: 27px;
+        letter-spacing: -0.7px;
+        margin: 0 0 8px;
+        font-weight: 650;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 0;
+      }
+      h3 {
+        font-size: 14px;
+        margin: 0;
+      }
+      p {
+        line-height: 1.65;
+      }
+      .muted,
+      .heading p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 13px;
+      }
+      .primary {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+      }
+      .primary:hover {
+        background: #234fb8;
+      }
+      .tag {
+        display: inline-flex;
+        gap: 5px;
+        align-items: center;
+        background: #edf2fa;
+        color: #587092;
+        font-size: 11px;
+        border-radius: 5px;
+        padding: 5px 8px;
+        white-space: nowrap;
+      }
+      .tag.green {
+        background: #eaf6ef;
+        color: #28754e;
+      }
+      .tag.amber {
+        background: #fff5e5;
+        color: #99671e;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+      }
+      input,
+      select,
+      textarea {
+        border: 1px solid #dce2ec;
+        border-radius: 6px;
+        padding: 10px 12px;
+        background: white;
+        color: inherit;
+        max-width: 100%;
+      }
+      input[type="search"] {
+        flex: 1;
+      }
+      label {
+        display: block;
+        color: #607089;
+        font-size: 12px;
+      }
+      label input,
+      label textarea,
+      label select {
+        display: block;
+        margin-top: 8px;
+        width: 100%;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .card,
+      .panel {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        min-width: 0;
+      }
+      .card {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .cardtop,
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .cardicon {
+        background: #edf3ff;
+        color: #426ccb;
+        padding: 11px;
+        border-radius: 9px;
+      }
+      .card h2 {
+        font-size: 17px;
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0;
+        min-height: 42px;
+      }
+      .cardmeta {
+        display: flex;
+        gap: 20px;
+        font-size: 12px;
+        color: #6e7e94;
+      }
+      .cardmeta b {
+        color: #37485f;
+      }
+      .cardfoot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid #edf0f5;
+        padding-top: 16px;
+        margin-top: auto;
+      }
+      .sectionhead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 28px 0 14px;
+      }
+      .panelhead {
+        padding: 17px 20px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .pad {
+        padding: 20px;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 20px;
+      }
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .summary .panel {
+        padding: 18px 20px;
+      }
+      .summary b {
+        font-size: 24px;
+        display: block;
+        margin-bottom: 6px;
+      }
+      .summary span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .wsbar {
+        padding: 20px 32px 0;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+      .wsbar .row {
+        margin-bottom: 20px;
+      }
+      .wsname {
+        flex-wrap: wrap;
+        max-width: 100%;
+        font-weight: 600;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .tabs {
+        display: flex;
+        gap: 24px;
+        overflow: auto;
+      }
+      .tabs button {
+        border: 0;
+        border-radius: 0;
+        background: none;
+        padding: 14px 0;
+        color: #738098;
+        white-space: nowrap;
+      }
+      .tabs button.active {
+        border-bottom: 2px solid var(--blue);
+        color: var(--blue);
+        font-weight: 600;
+      }
+      .gridtable {
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+        text-align: left;
+      }
+      th {
+        font-weight: 500;
+        color: #718199;
+        background: #fafbfe;
+        white-space: nowrap;
+      }
+      th,
+      td {
+        padding: 13px 16px;
+        border-bottom: 1px solid #edf0f5;
+      }
+      td {
+        line-height: 1.5;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      .line {
+        padding: 14px 0;
+        border-bottom: 1px solid #edf0f5;
+      }
+      .line:last-child {
+        border: 0;
+      }
+      .line small {
+        display: block;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+      .linkbutton {
+        border: 0;
+        background: none;
+        color: var(--blue);
+        padding: 0;
+      }
+      .editor {
+        display: grid;
+        grid-template-columns: 205px minmax(280px, 1fr) 300px;
+        min-height: 470px;
+      }
+      .objects {
+        border-right: 1px solid var(--line);
+        padding: 16px 12px;
+      }
+      .objects small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: var(--muted);
+        padding: 12px 8px;
+      }
+      .objects button {
+        display: block;
+        text-align: left;
+        font-size: 12px;
+        border: 0;
+        padding: 10px 8px;
+        width: 100%;
+        background: none;
+      }
+      .objects button.selected {
+        background: #edf2ff;
+        color: var(--blue);
+        border-radius: 6px;
+      }
+      .canvas {
+        position: relative;
+        padding: 26px;
+        background-color: #fbfcff;
+        background-image: radial-gradient(#dfe5ef 0.8px, transparent 0.8px);
+        background-size: 16px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+      }
+      .node {
+        border: 1px solid #ccd9ee;
+        background: #fff;
+        border-radius: 8px;
+        padding: 18px;
+        width: 220px;
+        font-size: 13px;
+      }
+      .node.metric {
+        border-left: 4px solid var(--blue);
+        background: #f6f9ff;
+      }
+      .node small {
+        display: block;
+        font-size: 10px;
+        color: #7f8da3;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+      }
+      .node p {
+        font-size: 11px;
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+      .connector {
+        height: 42px;
+        border-left: 1.5px solid #87a3d5;
+        position: relative;
+      }
+      .connector:after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: -4px;
+        width: 6px;
+        height: 6px;
+        border-right: 1.5px solid #87a3d5;
+        border-bottom: 1.5px solid #87a3d5;
+        transform: rotate(45deg);
+      }
+      .inspector {
+        padding: 20px;
+        border-left: 1px solid var(--line);
+      }
+      .inspector label {
+        margin: 8px 0;
+      }
+      .inspector input,
+      .inspector textarea {
+        font-size: 12px;
+      }
+      .inspector textarea {
+        min-height: 75px;
+      }
+      .code {
+        font:
+          12px ui-monospace,
+          monospace;
+        background: #f6f8fc;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 14px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+      .hint {
+        border-left: 3px solid #9bb7ed;
+        background: #eff4fd;
+        padding: 13px 16px;
+        color: #57708d;
+        font-size: 12px;
+        line-height: 1.65;
+        margin: 18px 0;
+      }
+      .chat {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        min-height: 510px;
+      }
+      .history {
+        border-right: 1px solid var(--line);
+        padding: 18px;
+        background: #fafbfe;
+      }
+      .history button {
+        width: 100%;
+        text-align: left;
+        margin-top: 14px;
+        font-size: 12px;
+      }
+      .conversation {
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .message {
+        background: #f5f8ff;
+        border: 1px solid #e0e8f7;
+        border-radius: 9px;
+        padding: 16px;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .message.user {
+        align-self: flex-end;
+        background: #edf2ff;
+        max-width: 85%;
+      }
+      .answer {
+        background: #fff;
+      }
+      .composer {
+        margin-top: auto;
+        border: 1px solid #ccd9ee;
+        border-radius: 9px;
+        padding: 12px;
+      }
+      .composer textarea {
+        border: 0;
+        width: 100%;
+        resize: vertical;
+      }
+      .small {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .actionrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      #toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #20334f;
+        color: white;
+        padding: 14px 20px;
+        border-radius: 8px;
+        z-index: 20;
+        max-width: 90vw;
+        font-size: 13px;
+      }
+      dialog {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        max-width: 620px;
+        width: 90vw;
+        padding: 28px;
+      }
+      dialog::backdrop {
+        background: #162b4855;
+      }
+      .reviewlist {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        margin-top: 20px;
+      }
+      .reviewlist button {
+        text-align: left;
+        font-size: 12px;
+      }
+      .empty {
+        padding: 60px 25px;
+        text-align: center;
+      }
+      .empty h2 {
+        margin: 16px;
+      }
+      .empty p {
+        color: var(--muted);
+        max-width: 500px;
+        margin: 15px auto;
+      }
+      .statusdot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .aside-note {
+        font-size: 11px;
+        color: #8390a4;
+        margin: 12px;
+      }
+      .checklist {
+        margin: 0;
+        padding-left: 18px;
+        color: #607089;
+        line-height: 2;
+      }
+      .twofields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .formstack {
+        display: grid;
+        gap: 16px;
+      }
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: #8090a6;
+        margin-bottom: 10px;
+      }
+      .divider {
+        height: 1px;
+        background: var(--line);
+        margin: 18px 0;
+      }
+      @media (max-width: 1150px) {
+        .cards {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .editor {
+          grid-template-columns: 180px 1fr;
+        }
+        .inspector {
+          grid-column: 1/-1;
+          border-top: 1px solid var(--line);
+          border-left: 0;
+        }
+        .inspector .formstack {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 800px) {
+        aside {
+          position: static;
+          width: auto;
+          padding: 15px;
+        }
+        .brand {
+          padding: 4px 10px 12px;
+        }
+        .brand small,
+        .navlabel,
+        .bottom {
+          display: none;
+        }
+        nav {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        nav button {
+          padding: 9px;
+          font-size: 12px;
+        }
+        .main {
+          margin: 0;
+        }
+        .content {
+          padding: 22px 18px;
+        }
+        header,
+        .wsbar {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+        .split {
+          grid-template-columns: 1fr;
+        }
+        .summary {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .chat {
+          grid-template-columns: 1fr;
+        }
+        .history {
+          display: none;
+        }
+        .heading {
+          flex-wrap: wrap;
+        }
+        .reviewbar {
+          height: auto;
+          min-height: 38px;
+          padding: 8px 14px;
+          flex-wrap: wrap;
+        }
+        .editor {
+          grid-template-columns: 1fr;
+        }
+        .objects {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .objects button {
+          display: inline-block;
+          width: auto;
+        }
+        .canvas {
+          min-height: 380px;
+        }
+        .cards {
+          grid-template-columns: 1fr;
+        }
+        .wsbar .row {
+          flex-wrap: wrap;
+        }
+        .cardmeta {
+          flex-wrap: wrap;
+        }
+        .twofields {
+          grid-template-columns: 1fr;
+        }
+        .inspector .formstack {
+          grid-template-columns: 1fr;
+        }
+        .reviewlist {
+          grid-template-columns: 1fr;
+        }
+        .tabs {
+          gap: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reviewbar">
+      <span
+        >DESIGN REVIEW · Illustrative data · No live API calls or
+        execution</span
+      >
+      <div class="actionrow">
+        <span id="pagecount"></span><button id="prev">Previous</button
+        ><button id="next">Next page</button
+        ><button id="index">Page index</button>
+      </div>
+    </div>
+    <aside>
+      <div class="brand">
+        <img alt="Cloudera" width="152" src="data:image/png;base64,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"><small>SEMANTIC HUB</small>
+      </div>
+      <div class="navlabel">WORKSPACE</div>
+      <nav id="nav"></nav>
+      <div class="bottom">
+        One workspace.<br />Build, review, publish, and ask.
+      </div>
+    </aside>
+    <div class="main">
+      <header>
+        <span id="breadcrumb"></span><span class="avatar">QR</span>
+      </header>
+      <div id="workspacebar"></div>
+      <main id="content" class="content"></main>
+    </div>
+    <div id="toast" role="status" hidden></div>
+    <dialog id="dialog">
+      <div class="row">
+        <h2 id="dialogtitle"></h2>
+        <button id="close" aria-label="Close dialog">Close</button>
+      </div>
+      <div id="dialogbody"></div>
+    </dialog>
+    <script>
+      const icons = {
+        grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+        layers:
+          '<path d="m12 3 10 5-10 5L2 8l10-5ZM2 12l10 5 10-5M2 16l10 5 10-5"/>',
+        chat: '<path d="M21 11a8 8 0 0 1-8 8H5l-3 3V7a4 4 0 0 1 4-4h7a8 8 0 0 1 8 8Z"/><path d="M7 8h9M7 12h6"/>',
+        plug: '<path d="M8 3v5M16 3v5M6 8h12v3a6 6 0 0 1-12 0V8ZM12 17v4"/>',
+        settings:
+          '<path d="M3 7h18M3 17h18"/><circle cx="8" cy="7" r="3" fill="white"/><circle cx="16" cy="17" r="3" fill="white"/>',
+        db: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>',
+        file: '<path d="M14 3H5v18h14V8l-5-5Zm0 0v5h5M8 12h8M8 16h6"/>',
+        arrow: '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+        shield:
+          '<path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/>',
+      };
+      const icon = (n) =>
+        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[n] || icons.layers}</svg>`;
+      const $ = (id) => document.getElementById(id),
+        esc = (v) =>
+          String(v).replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+      const pages = [
+        ["home", "Workspace catalog"],
+        ["overview", "Workspace overview"],
+        ["sources", "Source data · tables"],
+        ["documents", "Source data · documents"],
+        ["studio", "Built-in Studio"],
+        ["review", "Validation & review"],
+        ["releases", "Versions & releases"],
+        ["chat", "Talk to your data"],
+        ["external", "Helios workspace"],
+        ["builders", "Builders & connections"],
+        ["settings", "Model configuration"],
+      ];
+      const tabs = [
+        ["overview", "Overview"],
+        ["sources", "Source data"],
+        ["studio", "Studio"],
+        ["review", "Validation & review"],
+        ["releases", "Versions & releases"],
+      ];
+      let page = "home",
+        selected = "finance",
+        saved = false,
+        approved = false,
+        question = "What is the total settled sender outflow in SGD?",
+        chatstage = 0;
+      const models = [
+        {
+          id: "finance",
+          name: "Payments & transfers",
+          description:
+            "Settled sender outflow, account relationships, and payment definitions.",
+          status: "Published",
+          builder: "Built-in",
+          tables: 6,
+          metrics: 1,
+          icon: "db",
+        },
+        {
+          id: "manufacturing",
+          name: "Manufacturing operations",
+          description:
+            "Equipment condition, maintenance evidence, and production measures.",
+          status: "Draft",
+          builder: "Built-in",
+          tables: 3,
+          metrics: 1,
+          icon: "layers",
+        },
+        {
+          id: "pharma",
+          name: "Pharma intelligence",
+          description: "Published drug approvals and reviewed market evidence.",
+          status: "Review needed",
+          builder: "Built-in",
+          tables: 8,
+          metrics: 6,
+          icon: "file",
+        },
+        {
+          id: "helios",
+          name: "Enterprise analytics",
+          description: "An independently managed semantic workspace in Helios.",
+          status: "Linked",
+          builder: "Helios",
+          tables: "—",
+          metrics: "—",
+          icon: "plug",
+        },
+      ];
+      const tag = (v, color = "") => `<span class="tag ${color}">${v}</span>`;
+      const button = (label, route, primary = false) =>
+        `<button class="${primary ? "primary" : ""}" data-page="${route}">${label}</button>`;
+      const heading = (title, description, action = "") =>
+        `<div class="heading"><div><h1>${title}</h1><p>${description}</p></div>${action}</div>`;
+      const panel = (title, body, extra = "") =>
+        `<section class="panel"><div class="panelhead"><h2>${title}</h2>${extra}</div>${body}</section>`;
+      const table = (heads, rows) =>
+        `<div class="gridtable"><table><thead><tr>${heads.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      function notify(text) {
+        $("toast").textContent = text;
+        $("toast").hidden = false;
+        setTimeout(() => ($("toast").hidden = true), 3200);
+      }
+      function dialog(title, body) {
+        $("dialogtitle").textContent = title;
+        $("dialogbody").innerHTML = body;
+        $("dialog").showModal();
+        bind($("dialogbody"));
+      }
+      function go(p) {
+        page = p;
+        if (
+          [
+            "overview",
+            "sources",
+            "documents",
+            "studio",
+            "review",
+            "releases",
+            "chat",
+          ].includes(p) &&
+          selected === "helios"
+        )
+          page = "external";
+        location.hash = page;
+        render();
+        window.scrollTo(0, 0);
+      }
+      function bind(root = document) {
+        root
+          .querySelectorAll("[data-page]")
+          .forEach((b) => (b.onclick = () => go(b.dataset.page)));
+        root
+          .querySelectorAll("[data-demo]")
+          .forEach(
+            (b) =>
+              (b.onclick = () => notify("Design preview: " + b.dataset.demo)),
+          );
+      }
+      function shell() {
+        const workspace = [
+          "overview",
+          "sources",
+          "documents",
+          "studio",
+          "review",
+          "releases",
+          "external",
+        ].includes(page);
+        const nav = [
+          ["home", "grid", "Workspaces"],
+          ["overview", "layers", "Semantic workspace"],
+          ["chat", "chat", "Talk to your data"],
+          ["builders", "plug", "Builders & connections"],
+          ["settings", "settings", "Model configuration"],
+        ];
+        $("nav").innerHTML = nav
+          .map(
+            ([p, i, n]) =>
+              `<button data-page="${p}" class="${page === p || (p === "overview" && workspace) ? "active" : ""}">${icon(i)}<span>${n}</span></button>`,
+          )
+          .join("");
+        $("breadcrumb").textContent =
+          page === "home"
+            ? "Semantic Hub / Workspaces"
+            : `Semantic Hub / ${pages.find((p) => p[0] === page)[1]}`;
+        $("pagecount").textContent =
+          `${pages.findIndex((p) => p[0] === page) + 1} / ${pages.length}`;
+        const m = models.find((m) => m.id === selected);
+        $("workspacebar").innerHTML =
+          workspace || page === "chat"
+            ? `<section class="wsbar"><div class="row"><div class="wsname"><select id="selectworkspace" aria-label="Workspace">${models.map((v) => `<option value="${v.id}" ${v.id === selected ? "selected" : ""}>${v.name}</option>`).join("")}</select>${tag(m.builder)}${tag(m.status, m.status === "Published" ? "green" : "")}</div>${button("All workspaces", "home")}</div>${workspace && page !== "external" ? `<div class="tabs" role="tablist" aria-label="Semantic workspace sections">${tabs.map(([p, n]) => `<button role="tab" aria-selected="${page === p || (p === "sources" && page === "documents")}" class="${page === p || (p === "sources" && page === "documents") ? "active" : ""}" data-page="${p}">${n}</button>`).join("")}</div>` : ""}</section>`
+            : "";
+        if ($("selectworkspace"))
+          $("selectworkspace").onchange = (e) => {
+            selected = e.target.value;
+            go(
+              selected === "helios"
+                ? "external"
+                : page === "external"
+                  ? "overview"
+                  : page,
+            );
+          };
+      }
+      function home() {
+        return (
+          heading(
+            "Semantic workspaces",
+            "Find a workspace. Define meaning, review changes, and ask your data.",
+            '<button class="primary" id="newworkspace">New workspace</button>',
+          ) +
+          `<div class="actionrow">${tag("4 workspaces")}${tag("2 builders")}${tag("1 published model", "green")}</div><div class="toolbar"><input id="search" type="search" placeholder="Search workspaces…" aria-label="Search workspaces"><select id="builderfilter" aria-label="Filter by builder"><option>All builders</option><option>Built-in</option><option>Helios</option></select><select id="statusfilter" aria-label="Filter by status"><option>All statuses</option><option>Published</option><option>Draft</option><option>Review needed</option><option>Linked</option></select></div><div class="sectionhead"><h2>Your workspaces</h2><span class="small">Business purpose first · builder shown on each card</span></div><div class="cards" id="cards"></div><div class="hint">Published definitions power governed answers. Drafts remain editable until you review and publish them.</div>`
+        );
+      }
+      function drawcards() {
+        const q = $("search").value.toLowerCase(),
+          b = $("builderfilter").value,
+          s = $("statusfilter").value;
+        const list = models.filter(
+          (m) =>
+            (m.name + " " + m.description).toLowerCase().includes(q) &&
+            (b === "All builders" || m.builder === b) &&
+            (s === "All statuses" || m.status === s),
+        );
+        $("cards").innerHTML =
+          list
+            .map(
+              (m) =>
+                `<article class="card"><div class="cardtop"><span class="cardicon">${icon(m.icon)}</span>${tag(m.status, m.status === "Published" ? "green" : m.status === "Review needed" ? "amber" : "")}</div><div><h2>${m.name}</h2></div><p>${m.description}</p><div class="cardmeta"><span><b>${m.tables}</b> tables</span><span><b>${m.metrics}</b> metrics</span></div><div class="cardfoot">${tag(m.builder)}<button class="linkbutton" data-open="${m.id}">Open workspace ${icon("arrow")}</button></div></article>`,
+            )
+            .join("") ||
+          '<p class="muted">No matching workspaces. Change the search or filters.</p>';
+        $("cards")
+          .querySelectorAll("[data-open]")
+          .forEach(
+            (b) =>
+              (b.onclick = () => {
+                selected = b.dataset.open;
+                go(selected === "helios" ? "external" : "overview");
+              }),
+          );
+      }
+      function overview() {
+        return (
+          heading(
+            "Workspace overview",
+            "A clear starting point for the selected model.",
+            button("Continue in Studio", "studio", true),
+          ) +
+          `<div class="summary">${[
+            ["6", "Source tables"],
+            ["1", "Business metric"],
+            ["2", "Supporting documents"],
+            ["v1.0", "Published version"],
+          ]
+            .map(
+              ([v, l]) =>
+                `<div class="panel"><b>${v}</b><span>${l}</span></div>`,
+            )
+            .join("")}</div><div class="split">${panel(
+            "Build and publish",
+            `<div class="pad">${[
+              [
+                "sources",
+                "Source data",
+                "Inspect tables and supporting documents.",
+              ],
+              [
+                "studio",
+                "Studio",
+                "Edit business definitions and relationships.",
+              ],
+              [
+                "review",
+                "Validation & review",
+                "Check SQL results and approve changes.",
+              ],
+              [
+                "releases",
+                "Versions & releases",
+                "Publish a reviewed version for consumers.",
+              ],
+            ]
+              .map(
+                ([p, t, d], i) =>
+                  `<div class="line row"><div><b>${i + 1}. ${t}</b><small>${d}</small></div>${button("Open", p)}</div>`,
+              )
+              .join("")}</div>`,
+          )}${panel("Published model", `<div class="pad"><div class="row"><b>v1.0</b>${tag("Available to consumers", "green")}</div><p class="muted" style="margin-top:15px">Queries use a pinned, reviewed version. Draft changes do not alter the published release.</p><div class="divider"></div>${button("Talk to your data", "chat", true)}<div class="line"><small>Builder</small>Built-in</div><div class="line"><small>Source</small>Synthetic finance sample</div></div>`)}</div>`
+        );
+      }
+      function sources() {
+        return (
+          heading(
+            "Source data",
+            "Inspect the data and evidence used by this workspace.",
+            '<button data-demo="the source setup drawer opens here.">Add source</button>',
+          ) +
+          `<div class="toolbar">${button("Tables", "sources", true)}${button("Documents", "documents")}<span class="muted">6 tables · previews limited to 10 rows</span></div><div class="split">${panel(
+            "Tables",
+            table(
+              ["Table", "Rows", "Columns", ""],
+              [
+                [
+                  "transactions",
+                  "5,011",
+                  "8",
+                  '<button id="inspecttable">Inspect</button>',
+                ],
+                [
+                  "payments",
+                  "3,841",
+                  "4",
+                  '<button data-demo="select another table to inspect its schema.">Inspect</button>',
+                ],
+                ["accounts", "200", "3", ""],
+                ["customers", "120", "4", ""],
+                ["ledger_postings", "10,022", "6", ""],
+                ["fx_rates", "4", "3", ""],
+              ],
+            ),
+          )}${panel(
+            "transactions",
+            table(
+              ["Column", "Type", "Role"],
+              [
+                ["transaction_id", "STRING", "Identifier"],
+                ["sender_account_id", "STRING", "Relationship"],
+                ["amount_sgd", "DECIMAL", "Measure"],
+                ["status", "STRING", "Dimension"],
+              ],
+            ),
+            tag("Schema"),
+          )}</div><div style="margin-top:20px">${panel(
+            "Sample preview",
+            table(
+              ["transaction_id", "sender_account_id", "amount_sgd", "status"],
+              [
+                ["TX-1001", "AC-001", "125.00", "SETTLED"],
+                ["TX-1002", "AC-004", "82.50", "REJECTED"],
+                ["TX-1003", "AC-002", "310.00", "SETTLED"],
+              ],
+            ),
+            tag("Illustrative rows"),
+          )}</div>`
+        );
+      }
+      function documents() {
+        return (
+          heading(
+            "Supporting documents",
+            "Keep the source, extracted evidence, and review decision together.",
+            '<button class="primary" data-demo="document upload opens here; nothing is uploaded in this draft.">Upload document</button>',
+          ) +
+          `<div class="toolbar">${button("Tables", "sources")}${button("Documents", "documents", true)}</div><div class="split">${panel("Document library", `<div class="pad"><div class="line row"><div><b>MAS · SGQR overview</b><small>Public guidance · evidence review pending</small></div>${tag("Needs review", "amber")}</div><div class="line row"><div><b>Payments data dictionary</b><small>Internal sample definitions · 4 linked fields</small></div>${tag("Reviewed", "green")}</div></div>`)}${panel("Evidence inspector", `<div class="pad"><div class="eyebrow">MAS · SGQR overview</div><p>Extracted passages appear here with their original page and source link.</p><div class="hint">This mockup does not reproduce MAS content. The implemented page will show verified extracted text.</div><label>Link evidence to<select><option>total_amount_sgd</option><option>Workspace context</option></select></label><div class="toolbar"><button data-demo="the original document opens alongside the evidence.">View source</button><button class="primary" data-demo="evidence review is recorded against the selected passage.">Review evidence</button></div></div>`)}</div>`
+        );
+      }
+      function studio() {
+        return (
+          heading(
+            "Semantic Studio",
+            "Edit the draft within this workspace. Your navigation and selected model stay in place.",
+            `<div class="actionrow"><span id="savestate" class="small">${saved ? "Draft saved in this preview" : "Draft revision 2"}</span><button id="savedraft">Save draft</button>${button("Validate draft", "review", true)}</div>`,
+          ) +
+          `<section class="panel editor"><div class="objects"><small>BUSINESS METRICS</small><button class="selected" data-object="metric">${icon("layers")} Total sender outflow</button><small>TABLES</small><button data-object="table">${icon("db")} payments</button><button data-object="table">${icon("db")} transactions</button><small>RELATIONSHIPS</small><button data-object="relationship">payments → customers</button><small>SUPPORTING EVIDENCE</small><button data-object="evidence">${icon("file")} Data dictionary</button></div><div class="canvas"><div class="node metric"><small>BUSINESS METRIC</small><b>Total sender outflow</b><p>Settled payments · SGD</p></div><div class="connector"></div><div class="node"><small>SOURCE TABLE</small><b>payments</b><p>amount_sgd · customer_id</p></div><div class="connector"></div><div class="node"><small>RELATED TABLE</small><b>customers</b><p>customer_id · many to one</p></div></div><div class="inspector"><div class="row"><h2 id="inspecttitle">Metric details</h2>${tag("Draft")}</div><div id="inspectbody"><div class="formstack"><label>Business name<input value="Total sender outflow"></label><label>Meaning<textarea>Settled sender outflow in SGD. Uses the settled sender payment projection.</textarea></label><label>Expression<textarea class="code">SUM(payments.amount_sgd)</textarea></label><label>Unit<select><option>SGD</option></select></label></div><div class="hint">Inspect source meaning and reference SQL before approving this metric.</div></div></div></section>`
+        );
+      }
+      function review() {
+        return (
+          heading(
+            "Validation & review",
+            "Check technical results, then make a separate human review decision.",
+            '<button id="validate" class="primary">Run validation</button>',
+          ) +
+          `<div class="hint">Illustrative validation state. No checks have run against a live model in this prototype.</div><div class="summary"><div class="panel"><b>1 / 1</b><span>Metric checks</span></div><div class="panel"><b>5 / 5</b><span>Relationship checks</span></div><div class="panel"><b>1</b><span>Changed definition</span></div><div class="panel"><b>${approved ? "Approved" : "Pending"}</b><span>Human decision</span></div></div><div class="split">${panel(
+            "Review changes",
+            table(
+              ["Object", "Change", "Technical check", "Decision"],
+              [
+                [
+                  "Total sender outflow",
+                  tag("Modified"),
+                  tag("Pass", "green"),
+                  tag(
+                    approved ? "Approved" : "Pending",
+                    approved ? "green" : "amber",
+                  ),
+                ],
+                [
+                  "payments → customers",
+                  "Unchanged",
+                  tag("Pass", "green"),
+                  "No new decision",
+                ],
+              ],
+            ),
+          )}${panel("Selected change", `<div class="pad"><label>Before</label><p class="code">Meaning: payment amount</p><label>After</label><p class="code">Meaning: settled sender outflow in SGD</p><label>Review note<textarea placeholder="Why is this definition correct?">Source mapping and reference SQL reviewed.</textarea></label><div class="toolbar"><button data-demo="the selected change is returned for revision.">Request changes</button><button id="approve" class="primary">Approve change</button></div>${button("View versions & releases", "releases")}</div>`)}</div>`
+        );
+      }
+      function releases() {
+        return (
+          heading(
+            "Versions & releases",
+            "Reviewed versions are immutable. Choose which version consumers can use.",
+            `<button id="publish" class="primary">Publish reviewed version</button>`,
+          ) +
+          panel(
+            "Version history",
+            table(
+              ["Version", "Definition state", "Publication", "Actions"],
+              [
+                [
+                  "v1.1",
+                  tag(
+                    approved ? "Reviewed" : "Review pending",
+                    approved ? "green" : "amber",
+                  ),
+                  "Not published",
+                  button("Inspect review", "review"),
+                ],
+                [
+                  "v1.0",
+                  "Reviewed",
+                  tag("Published", "green"),
+                  '<button data-demo="the immutable release details open in the inspector.">View release</button>',
+                ],
+              ],
+            ),
+          ) +
+          `<div class="split" style="margin-top:20px">${panel("Consumer access", `<div class="pad"><div class="line"><small>Model ID</small>finance</div><div class="line"><small>Published version</small>v1.0</div><div class="line"><small>Access</small>Consumer API · MCP</div><p class="muted">Requests retain the release version and context hash.</p></div>`)}${panel("Before publishing", `<div class="pad"><ul class="checklist"><li>Validation matches the current draft.</li><li>Changed definitions have human approval.</li><li>Evidence and source references are retained.</li><li>Publication does not overwrite an existing version.</li></ul></div>`)}</div>`
+        );
+      }
+      function chat() {
+        return (
+          heading(
+            "Talk to your data",
+            "Ask using the selected workspace and a published semantic version.",
+            `<div class="actionrow">${tag("Built-in")}<select aria-label="Published version"><option>Published · v1.0</option></select></div>`,
+          ) +
+          `<section class="panel chat"><div class="history"><h3>Conversations</h3><button id="newchat">New conversation</button><button class="selected">Settled sender outflow<small class="small" style="display:block;margin-top:6px">Current conversation</small></button></div><div class="conversation"><div class="message user">${esc(question)}</div><div class="message answer"><b>${chatstage === 2 ? "Answer preview" : "Review interpretation"}</b>${chatstage === 2 ? '<p style="font-size:23px;font-weight:600;margin:12px 0">SGD 686,572.96</p><p>Illustrative sample result. No query was executed by this prototype.</p>' : '<p>Total settled sender outflow · SGD · all sample dates.</p><div class="small">Metric: total_amount_sgd · version v1.0</div>'}<details style="margin:14px 0"><summary>Scope, SQL & provenance</summary><p class="code">SUM(payments.amount_sgd)\nSource: synthetic finance sample\nRelease: v1.0\nStatus: illustrative design data</p></details>${chatstage === 2 ? "" : `<button id="runquery" class="primary">Run this interpretation</button>`}</div><form class="composer" id="chatform"><textarea id="question" aria-label="Question" placeholder="Ask about this workspace…">${esc(question)}</textarea><div class="row"><span class="small">Review the interpretation before execution.</span><button class="primary">Prepare answer</button></div></form></div></section>`
+        );
+      }
+      function external() {
+        return (
+          heading(
+            "Enterprise analytics",
+            "This workspace is managed by Helios.",
+            tag("Linked provider"),
+          ) +
+          `<div class="split">${panel("Native semantic workspace", `<div class="pad"><div class="cardicon" style="display:inline-block">${icon("plug")}</div><h2 style="margin:20px 0 10px">Continue in Helios</h2><p class="muted">Helios owns this model’s authoring, permissions, and native conversation. The Hub keeps its workspace identity and provider connection.</p><div class="toolbar"><button class="primary" data-demo="native Helios Studio opens in a separate application.">Open Helios Studio ↗</button><button data-demo="native Helios Talk opens with this model selected.">Talk in Helios ↗</button></div></div>`)}${panel("Connection details", `<div class="pad"><div class="line"><small>Builder</small>Helios</div><div class="line"><small>Organization / model</small>enterprise / analytics</div><div class="line"><small>Hub integration</small>Navigation only</div><p class="muted">External release import and delegated queries are future integration steps.</p></div>`)}</div><div class="hint">Built-in editing stays inside the Hub shell. External Helios remains a separate application, as required by the provider architecture.</div>`
+        );
+      }
+      function builders() {
+        return (
+          heading(
+            "Builders & connections",
+            "Manage where workspaces are authored. Each builder retains its own state and permissions.",
+            '<button class="primary" data-demo="the provider connection form opens here.">Connect builder</button>',
+          ) +
+          `<div class="cards"><article class="card"><div class="cardtop"><span class="cardicon">${icon("layers")}</span>${tag("Available", "green")}</div><h2>Built-in builder</h2><p>Author, validate, and publish directly within the Semantic Hub workspace.</p><div class="cardfoot"><span class="small">3 workspaces</span>${button("View workspaces", "home")}</div></article><article class="card"><div class="cardtop"><span class="cardicon">${icon("plug")}</span>${tag("Linked")}</div><h2>Helios</h2><p>Open the independent Helios application for native building and conversations.</p><div class="cardfoot"><span class="small">1 workspace</span><button id="viewexternal">View workspace</button></div></article></div>`
+        );
+      }
+      function settings() {
+        return (
+          heading(
+            "Model configuration",
+            "Configure inference for the built-in builder and query workflow.",
+            '<button class="primary" data-demo="settings are validated and saved; this draft stores no credentials.">Save configuration</button>',
+          ) +
+          `<div class="split">${panel("Built-in inference", `<div class="pad formstack"><label>Role<select><option>Generation & interpretation</option><option>Embedding</option></select></label><label>Provider<select><option>Cloudera AI inference</option><option>OpenAI-compatible endpoint</option></select></label><label>Model endpoint<input placeholder="https://your-inference-endpoint"></label><label>Credential reference<input placeholder="Configured secret reference"></label><button data-demo="endpoint connectivity is checked without exposing the secret.">Test connection</button></div>`)}${panel("Configuration scope", `<div class="pad"><p class="muted">These settings apply to the built-in workspace. Configure native Helios models in Helios.</p><div class="hint">A saved metric query can run without an LLM. Free-text interpretation requires configured inference.</div></div>`)}</div>`
+        );
+      }
+      function render() {
+        shell();
+        $("content").innerHTML = {
+          home,
+          overview,
+          sources,
+          documents,
+          studio,
+          review,
+          releases,
+          chat,
+          external,
+          builders,
+          settings,
+        }[page]();
+        if (
+          ["manufacturing", "pharma"].includes(selected) &&
+          [
+            "overview",
+            "sources",
+            "documents",
+            "studio",
+            "review",
+            "releases",
+            "chat",
+          ].includes(page)
+        ) {
+          const m = models.find((m) => m.id === selected);
+          $("content").innerHTML =
+            heading(m.name, m.description) +
+            panel(
+              "Workspace layout preview",
+              `<div class="pad"><p>This workspace uses the same tabs and shared editor shell.</p><p class="muted">The detailed design walkthrough uses the Payments & transfers scenario. No finance data is shown as ${esc(m.name)} data.</p><div class="toolbar"><button id="walkthrough" class="primary">View the detailed walkthrough</button></div></div>`,
+            );
+          bind();
+          $("walkthrough").onclick = () => {
+            selected = "finance";
+            go("overview");
+          };
+          return;
+        }
+        bind();
+        if (page === "home") {
+          drawcards();
+          ["search", "builderfilter", "statusfilter"].forEach(
+            (id) => ($(id).oninput = drawcards),
+          );
+          $("newworkspace").onclick = () =>
+            dialog(
+              "New workspace",
+              '<p class="muted" style="margin-top:20px">Start with the built-in builder, or link an existing Helios model.</p><div class="toolbar"><button data-page="overview" class="primary">Built-in workspace</button><button data-page="builders">Link a Helios workspace</button></div>',
+            );
+        }
+        if (page === "sources")
+          $("inspecttable").onclick = () =>
+            notify(
+              "transactions selected. Its schema and preview are shown on this page.",
+            );
+        if (page === "studio") {
+          $("savedraft").onclick = () => {
+            saved = true;
+            $("savestate").textContent = "Draft saved in this preview";
+            notify(
+              "Preview only: draft edits stay in this screen. No live model changed.",
+            );
+          };
+          document.querySelectorAll("[data-object]").forEach(
+            (b) =>
+              (b.onclick = () => {
+                document
+                  .querySelectorAll("[data-object]")
+                  .forEach((x) => x.classList.toggle("selected", x === b));
+                $("inspecttitle").textContent =
+                  b.dataset.object === "metric"
+                    ? "Metric details"
+                    : b.dataset.object === "table"
+                      ? "Source mapping"
+                      : b.dataset.object === "relationship"
+                        ? "Relationship details"
+                        : "Linked evidence";
+                if (b.dataset.object !== "metric")
+                  $("inspectbody").innerHTML =
+                    `<p>${esc(b.textContent)}</p><p class="muted">The inspector changes with the selected object. The workspace shell and Studio tab remain in place.</p><div class="hint">Selecting a metric restores the editable definition form.</div>`;
+                else render();
+              }),
+          );
+        }
+        if (page === "review") {
+          $("validate").onclick = () =>
+            notify("Preview only: validation results are illustrative.");
+          $("approve").onclick = () => {
+            approved = true;
+            render();
+            notify("Approval state updated in this preview only.");
+          };
+        }
+        if (page === "releases")
+          $("publish").onclick = () =>
+            dialog(
+              "Publish reviewed version",
+              approved
+                ? '<p>v1.1 is reviewed in this preview. Production publication will require explicit confirmation against the current validated revision.</p><button data-demo="publication confirmation shown; no real version is published.">Confirm publication preview</button>'
+                : "<p>Review is still pending. Approve the changed definition before publishing.</p>" +
+                    button("Return to review", "review", true),
+            );
+        if (page === "chat") {
+          $("newchat").onclick = () => {
+            question = "";
+            chatstage = 0;
+            render();
+          };
+          $("question").oninput = () => {
+            question = $("question").value;
+            if ($("runquery")) $("runquery").remove();
+          };
+          $("chatform").onsubmit = (e) => {
+            e.preventDefault();
+            question = $("question").value;
+            chatstage = 1;
+            render();
+          };
+          if ($("runquery"))
+            $("runquery").onclick = () => {
+              chatstage = 2;
+              render();
+            };
+        }
+        if (page === "builders")
+          $("viewexternal").onclick = () => {
+            selected = "helios";
+            go("external");
+          };
+      }
+      $("close").onclick = () => $("dialog").close();
+      $("dialog").addEventListener("click", (e) => {
+        if (e.target.closest("[data-page]")) $("dialog").close();
+      });
+      $("prev").onclick = () => navigate(-1);
+      $("next").onclick = () => navigate(1);
+      function navigate(dir) {
+        const index = pages.findIndex((p) => p[0] === page);
+        const dest = pages[(index + dir + pages.length) % pages.length][0];
+        selected = dest === "external" ? "helios" : "finance";
+        go(dest);
+      }
+      $("index").onclick = () =>
+        dialog(
+          "Page-by-page review",
+          '<p class="muted" style="margin-top:15px">Review the catalog first, then follow the built-in workflow within the same shell.</p><div class="reviewlist">' +
+            pages
+              .map(
+                ([p, n], i) =>
+                  `<button data-jump="${p}">${String(i + 1).padStart(2, "0")} · ${n}</button>`,
+              )
+              .join("") +
+            "</div>",
+        );
+      $("dialog").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-jump]");
+        if (b) {
+          selected = b.dataset.jump === "external" ? "helios" : "finance";
+          $("dialog").close();
+          go(b.dataset.jump);
+        }
+      });
+      const initial = location.hash.slice(1);
+      if (pages.some((p) => p[0] === initial)) {
+        page = initial;
+        selected = page === "external" ? "helios" : "finance";
+      }
+      window.addEventListener("hashchange", () => {
+        const destination = location.hash.slice(1);
+        if (destination !== page && pages.some(p => p[0] === destination)) {
+          page = destination;
+          selected = page === "external" ? "helios" : "finance";
+          render();
+        }
+      });
+      render();
+    </script>
+  </body>
+</html>
