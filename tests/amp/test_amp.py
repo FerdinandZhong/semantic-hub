@@ -16,10 +16,19 @@ from cai_integration.config import configure_runtime, settings
 def test_manifest_has_setup_barrier_and_authenticated_cpu_app():
     spec = yaml.safe_load((ROOT / '.project-metadata.yaml').read_text())
     tasks = spec['tasks']
-    assert [t['type'] for t in tasks] == ['create_job', 'run_job', 'start_application']
-    assert tasks[1]['wait_for'] is True
-    assert tasks[0]['entity_label'] == tasks[1]['entity_label']
-    assert tasks[2]['bypass_authentication'] is False and tasks[2]['gpu'] == 0
+    assert [t['type'] for t in tasks] == [
+        'create_job', 'run_job', 'create_job', 'run_job', 'start_application'
+    ]
+    for create, run in ((tasks[0], tasks[1]), (tasks[2], tasks[3])):
+        assert run['wait_for'] is True
+        assert create['entity_label'] == run['entity_label']
+    assert tasks[0]['script'] == 'deployment/cai/prepare.py'
+    assert tasks[2]['script'] == 'deployment/cai/provision.py'
+    # Provisioning owns Helios; the AMP manifest owns only Hub.
+    assert tasks[4]['bypass_authentication'] is False and tasks[4]['gpu'] == 0
+    assert tasks[4]['entity_label'] == 'semantic-hub-app'
+    assert tasks[4]['script'] == 'deployment/launchers/hub.py'
+    assert spec['environment_variables']['SEMANTIC_HUB_PROVIDER_MODE']['default'] == 'bundled'
     for task in tasks:
         if 'script' in task:
             assert (ROOT / task['script']).is_file()

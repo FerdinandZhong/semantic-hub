@@ -1,17 +1,38 @@
 name: Semantic Hub
 description: >-
-  Build, review, version, and publish semantic models from structured data and
-  document evidence. Includes Studio, a model validation Playground, and a
-  published-context API for external agents through MCP.
+  Semantic Hub v2 with a built-in semantic Studio and independently deployed
+  Helios builder. Supports bundled, external, and built-in-only installation.
+  External Helios integration provides workspace navigation; release import
+  and delegated queries are not included.
 author: Cloudera Engineering
-date: '2026-10-17'
+date: '2026-10-27'
 specification_version: '1.0'
-prototype_version: '1.0'
+prototype_version: '2.0'
 runtimes:
   - editor: JupyterLab
     kernel: Python 3.11
     edition: Standard
 environment_variables:
+  SEMANTIC_HUB_PROVIDER_MODE:
+    default: bundled
+    description: bundled creates Helios applications; external links an existing deployment; builtin_only installs Hub alone.
+    required: true
+  HELIOS_UI_ORIGIN:
+    default: ""
+    description: Authenticated HTTPS Helios UI origin. Required in external mode; used in bundled mode when the management API omits application URLs.
+    required: false
+  HELIOS_API_ORIGIN:
+    default: ""
+    description: Authenticated HTTPS Helios API origin. Required in external mode; used in bundled mode when the management API omits application URLs.
+    required: false
+  SEMANTIC_HUB_RUNTIME_IDENTIFIER:
+    default: ""
+    description: Exact CAI Standard Python 3.11 runtime identifier for the Helios applications. Required in bundled mode.
+    required: false
+  HELIOS_CAI_PROXY_AUTH_CONFIRMED:
+    default: "0"
+    description: Set to 1 only after verifying that CAI ingress authenticates users and replaces client-supplied identity headers. Required for bundled native Helios; this setting is not an authentication test.
+    required: false
   SEMANTIC_HUB_STATE_DIR:
     default: /home/cdsw/state/semantic-hub
     description: Persistent project directory for models, versions, uploads, SQLite, Lance, and encrypted model credentials. Retain this directory across restarts.
@@ -32,19 +53,30 @@ tasks:
   - type: create_job
     name: semantic-hub-setup
     entity_label: semantic-hub-setup
-    script: cai_integration/setup_environment.py
+    script: deployment/cai/prepare.py
     kernel: python3
     cpu: 2
     memory: 8
-    timeout: 30
+    timeout: 45
   - type: run_job
     entity_label: semantic-hub-setup
+    wait_for: true
+  - type: create_job
+    name: semantic-hub-provision
+    entity_label: semantic-hub-provision
+    script: deployment/cai/provision.py
+    kernel: python3
+    cpu: 1
+    memory: 2
+    timeout: 30
+  - type: run_job
+    entity_label: semantic-hub-provision
     wait_for: true
   - type: start_application
     name: Semantic Hub
     entity_label: semantic-hub-app
     subdomain: semantic-hub
-    script: cai_integration/start_application.py
+    script: deployment/launchers/hub.py
     kernel: python3
     cpu: 2
     memory: 8

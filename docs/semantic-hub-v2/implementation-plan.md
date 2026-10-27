@@ -1,6 +1,6 @@
 # Semantic Hub v2 implementation plan
 
-Status: first local runtime increment implemented, 25 October 2026.
+Status: local runtime and AMP provisioning increment implemented, 27 October 2026.
 The pinned checkout, local launcher, provider registry, and workspace UI are available.
 See [implementation evidence](local-preview.md) for validation and remaining gaps.
 Release A still requires CAI acceptance; Releases B–D remain planned.
@@ -120,6 +120,11 @@ A fake provider cannot prove Helios compatibility or CAI authentication.
 
 ### I5 — Prepare repeatable AMP provisioning
 
+Progress: mode-aware preparation, pinned native launchers, checkpointed provisioning, provider registration, and endpoint verification are implemented.
+The root manifest now runs preparation and provisioning before Hub startup.
+Offline tests cover retries and ownership checks. Live A01–A08 acceptance remains pending.
+See the [AMP operator guide](amp-operator-guide.md) for configuration and limits.
+
 1. Extend `.project-metadata.yaml` and update `METADATA.yaml` for the selected release scope.
 2. Implement preparation, provisioning, provider registration, and readiness checks as separate setup responsibilities.
 3. Support `bundled`, `external`, and `builtin_only` modes.
@@ -128,8 +133,8 @@ A fake provider cannot prove Helios compatibility or CAI authentication.
 6. Preserve the kernel supervisor pattern in each required launcher.
 7. Update `tests/amp/test_amp.py` to cover the new task graph and modes.
 
-The current test asserts exactly three tasks: create setup job, run setup job, and start Hub.
-Replace that assumption with mode-specific lifecycle and dependency assertions.
+The manifest tests now assert preparation and provisioning barriers before Hub startup.
+Provisioning tests cover mode-specific resource creation and recovery.
 Keep authentication, persistent-state, import-isolation, and supervisor checks.
 
 **Exit:** AMP preparation artifacts pass local validation; a disposable CAI deployment passes A01–A08 before Release A acceptance.

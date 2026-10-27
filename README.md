@@ -6,7 +6,8 @@ The provider lives in the pinned `external/helios` Git submodule. Run `git submo
 The existing built-in runtime remains in place during the v2 migration.
 
 The [v2 local preview](docs/semantic-hub-v2/local-preview.md) adds a compact provider workspace at `/v2` and an isolated Helios launcher.
-External release import, delegated queries, and multi-application CAI provisioning remain planned.
+V2 adds mode-aware AMP preparation and Helios provisioning. Live multi-application CAI acceptance remains pending.
+External release import and delegated queries remain planned.
 
 **Build, review, version, and publish semantic models for applications and agents.**
 
@@ -26,7 +27,9 @@ Everything runs self-hosted: the models, the runtime, the applications.
 ## Deploy as a Cloudera AI AMP
 
 Import this repository using [`.project-metadata.yaml`](.project-metadata.yaml).
-The setup job builds an isolated runtime, then starts one authenticated CAI Application for the Hub UI, Swagger, and consumer API.
+The setup job prepares isolated runtimes. A provisioning job creates or reuses Helios applications in bundled mode.
+The final AMP task starts the authenticated Hub application for the UI, Swagger, and consumer API.
+Choose `builtin_only` for Hub alone or `external` to link an existing Helios deployment.
 See the [AMP deployment guide](docs/amp-deployment.md) for persistence, model configuration, MCP credentials, and acceptance checks.
 AMP packaging is implemented; a live CAI launch remains to be verified.
 

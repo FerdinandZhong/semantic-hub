@@ -1,13 +1,16 @@
 # AMP preparation and CAI acceptance plan
 
-Status: preparation plan; no application provisioning is authorized or performed by this document.
+Status: preparation and provisioning implementation added, 27 October 2026; live CAI acceptance remains pending.
+See the [operator guide](amp-operator-guide.md) for the implemented configuration and recovery procedure.
+This plan does not itself run application provisioning.
 Use the accepted layout and implementation milestones as the source of deployment scope.
 
 [Implementation plan](implementation-plan.md) · [Local smoke tests](local-smoke-test-plan.md) · [Deployment layout](deployment-layout.md)
 
 ## Current baseline and supported specification
 
-The current `.project-metadata.yaml` creates a setup job, runs it, and starts one authenticated Hub application.
+The current `.project-metadata.yaml` runs preparation and provisioning jobs before starting one authenticated Hub application.
+The provisioning job creates or reuses native Helios applications only in bundled mode.
 The existing launcher supervises an isolated Python child while preserving the CAI kernel.
 Keep those isolation and lifecycle properties in the v2 launchers.
 
@@ -30,8 +33,8 @@ Verify those behaviors against the target CAI version before selecting the exact
 | AMP metadata | `.project-metadata.yaml`, `METADATA.yaml` | Describes the implemented release scope and valid entry points |
 | Operator guide | Versioned deployment documentation | Setup, retry, upgrade, recovery, and evidence locations |
 
-All new filenames above are proposed until I5 implements them.
-Do not replace the working root manifest with placeholders for scripts that do not exist.
+The preparation, provisioning, launcher, registration, and verification files above now exist.
+The root manifest references implemented scripts. Live deployment evidence is still required.
 
 ## Installation modes
 
@@ -41,9 +44,8 @@ Do not replace the working root manifest with placeholders for scripts that do n
 | `external` | Hub only | Existing provider UI/API origins; optional MCP URL and approved authentication |
 | `builtin_only` | Hub with Built-in | Current source packs and persistent Hub state |
 
-Suggested new setting: `SEMANTIC_HUB_PROVIDER_MODE` with these three values.
-Suggested provider settings: `HELIOS_UI_ORIGIN`, `HELIOS_API_ORIGIN`, and optional `HELIOS_MCP_URL`.
-These settings are proposed names, not current runtime inputs.
+Implemented settings include `SEMANTIC_HUB_PROVIDER_MODE`, `HELIOS_UI_ORIGIN`, and `HELIOS_API_ORIGIN`.
+`HELIOS_MCP_URL` remains a future setting; native MCP deployment is outside this increment.
 Keep secret values out of committed manifest defaults and logs.
 
 ## Deployment state and filesystem

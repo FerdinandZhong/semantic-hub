@@ -1,9 +1,11 @@
 # Semantic Hub v2: independent Hub, pluggable builders
 
-Status: local linked-provider preview with the unified UI, 26 October 2026.
+Status: unified local preview and v2 AMP provisioning implementation, 27 October 2026.
 The branch now includes the provider registry, workspace UI, and isolated local launcher.
 See [unified UI implementation](unified-ui-implementation.md) and [local preview and implementation evidence](local-preview.md) for tested scope and launch commands.
-Multi-application CAI deployment, external release import, and delegated queries remain later work.
+Mode-aware AMP preparation, native launchers, and repeatable provider provisioning are implemented.
+See the [AMP operator guide](amp-operator-guide.md) for prerequisites and retry behavior.
+Live multi-application CAI acceptance remains pending. External release import and delegated queries remain later work.
 
 ## Recommendation
 

@@ -7,6 +7,12 @@ The manifest follows the [Cloudera AMP project specification](https://docs.cloud
 
 ## Deployment flow
 
+The v2 manifest adds a provisioning job between preparation and Hub startup.
+Bundled mode provisions separate Helios API and UI applications.
+External mode registers existing provider origins; built-in-only mode starts only Hub.
+See the [v2 AMP operator guide](semantic-hub-v2/amp-operator-guide.md) for prerequisites, modes, retries, and readiness limits.
+The diagram below describes the Hub runtime, which remains one application in every mode.
+
 ```text
 GitHub checkout
       |
@@ -42,10 +48,11 @@ No setup step approves, publishes, or activates a semantic version.
 5. Set `SEMANTIC_HUB_STATE_DIR` to a persistent project directory.
 6. Keep the default `/home/cdsw/state/semantic-hub` for a standard Workbench project.
 7. Leave application authentication enabled.
-8. Wait for the setup job and the Semantic Hub Application to start.
-9. Open the Application URL from Workbench.
-10. Configure drafting, query, and embedding profiles under **Model configuration**.
-11. Review and publish the versions you want remote agents to discover.
+8. Select the provider mode and complete the prerequisites in the v2 AMP operator guide.
+9. Wait for the preparation job, provisioning job, and Semantic Hub Application to start.
+10. Open the Application URL from Workbench.
+11. Configure drafting, query, and embedding profiles under **Model configuration**.
+12. Review and publish the built-in versions you want remote agents to discover.
 
 The initial source defaults to finance. The Hub also lists manufacturing, pharma, power, and pharmaceutical intelligence.
 The install contains repository source packs. It does not copy your laptop's uploads, saved credentials, or published versions.

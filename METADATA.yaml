@@ -1,6 +1,6 @@
 name: Semantic Hub
 slug: semantic-hub
-description: Versioned semantic models with human review, document evidence, a validation Playground, and an MCP consumer API on Cloudera AI.
+description: Semantic Hub v2 with built-in authoring and independently deployed Helios workspace links. Bundled, external, and built-in-only AMP modes; multi-application CAI acceptance pending.
 catalog_classification:
   - Launchable (AMP)
 launchable: true
@@ -15,4 +15,4 @@ source: Internal
 public_github_link: https://github.com/FerdinandZhong/semantic-hub
 maintainer_name: Cloudera Engineering
 date_created: '2026-10-17'
-date_updated: '2026-10-17'
+date_updated: '2026-10-27'
