@@ -494,9 +494,13 @@ function linkWorkspace(providerId) {
     if (saving || !org.value || !model.value) return;
     saving = true; submit.disabled = true;
     try {
-      await call("/api/semantic-hub/v2/projects", {provider_id: providerId, name: form.elements.name.value, organization_id: org.value, model_id: model.value});
+      const linked = await call("/api/semantic-hub/v2/projects", {provider_id: providerId, name: form.elements.name.value, organization_id: org.value, model_id: model.value});
       if (!active()) return;
-      dialog.close(); await load();
+      dialog.close();
+      await load();
+      navigate("home", linked.id);
+      notice(`Workspace linked as “${linked.name}”. Existing model links keep their original name.`);
+      document.querySelector(`[data-open-workspace="${CSS.escape(linked.id)}"]`)?.closest(".workspace-card")?.scrollIntoView({block: "nearest"});
     } catch (error) { if (active()) $("setup-error").textContent = error.message; }
     finally { saving = false; if (active()) submit.disabled = !org.value || !model.value; }
   };

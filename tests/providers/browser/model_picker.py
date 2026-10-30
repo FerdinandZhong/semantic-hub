@@ -43,6 +43,8 @@ with sync_playwright() as p:
         page.screenshot(path=str(args.output / f"picker-{width}.png"), full_page=True)
     submit.click()
     expect(page.locator("#setup")).not_to_be_visible()
+    page.wait_for_url("**view=home**")
+    expect(page.locator("#notice")).to_contain_text("Linked review fixture")
     records = page.request.get(base + "/api/semantic-hub/v2/workspaces").json()["items"]
     linked = next(row for row in records if row.get("provider_id") == provider)
     assert (
@@ -52,6 +54,8 @@ with sync_playwright() as p:
     assert linked["links"]["studio"].endswith(
         "organization=local-review&model=empty-review"
     )
+    expect(page.locator(f'[data-open-workspace="{linked["id"]}"]')).to_be_visible()
+    page.locator("[data-nav=providers]").click()
 
     pattern = "**/providers/" + provider + "/discover"
     page.route(
