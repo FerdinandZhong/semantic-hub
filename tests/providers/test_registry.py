@@ -92,6 +92,8 @@ def test_api_auth_registration_and_workspace_identity(tmp_path, monkeypatch):
         == 403
     )
     assert client.post(prefix + "/providers", json=body).status_code == 201
+    monkeypatch.setattr("semantic_hub.api.Discovery.verify", lambda *args: {})
+    client.headers["X-Helios-API-Key"] = "native-key"
     response = client.post(
         prefix + "/projects",
         json=dict(

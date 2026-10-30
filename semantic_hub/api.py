@@ -3,11 +3,12 @@
 from pathlib import Path
 from urllib.parse import urlencode
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 from apps.helios.console.semantic_hub_api import authorize
 from .providers.registry import Registry
+from .providers.discovery import Discovery
 from .shell import sidebar
 
 WEB = Path(__file__).parent / "web"
@@ -19,6 +20,11 @@ class ProviderInput(BaseModel):
     name: str = Field(max_length=120)
     ui_origin: str = Field(max_length=1000)
     api_origin: str = Field(max_length=1000)
+
+
+class DiscoveryInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    organization_id: str | None = Field(default=None, min_length=1, max_length=160)
 
 
 class ProjectInput(BaseModel):
@@ -33,6 +39,16 @@ def install(app, hub, state, *, local=False):
     registry = Registry(Path(state), local=local)
     app.state.provider_registry = registry
     router = APIRouter(prefix="/api/semantic-hub/v2", dependencies=[Depends(authorize)])
+
+    @app.middleware("http")
+    async def private_discovery_responses(request, call_next):
+        response = await call_next(request)
+        path = request.url.path
+        if path.startswith("/api/semantic-hub/v2/") and (
+            path.endswith("/discover") or path.endswith("/projects")
+        ):
+            response.headers["Cache-Control"] = "no-store"
+        return response
 
     def mutate(request, action):
         if not (
@@ -68,13 +84,35 @@ def install(app, hub, state, *, local=False):
             ),
         )
 
+    def discovery(provider_id, request):
+        return Discovery(
+            registry.provider(provider_id),
+            request.headers.get("x-helios-api-key"),
+            local=request.app.state.local_no_auth,
+        )
+
+    @router.post("/providers/{provider_id}/discover")
+    def discover(provider_id: str, body: DiscoveryInput, request: Request):
+        result = mutate(
+            request,
+            lambda: discovery(provider_id, request).discover(body.organization_id),
+        )
+        return JSONResponse(result, headers={"Cache-Control": "no-store"})
+
     @router.post("/projects", status_code=201)
     def add_project(body: ProjectInput, request: Request):
-        return mutate(
-            request,
-            lambda: registry.add_project(
+        def save():
+            discovery(body.provider_id, request).verify(
+                body.organization_id, body.model_id
+            )
+            return registry.add_project(
                 body.name, body.provider_id, body.organization_id, body.model_id
-            ),
+            )
+
+        return JSONResponse(
+            mutate(request, save),
+            status_code=201,
+            headers={"Cache-Control": "no-store"},
         )
 
     @router.get("/workspaces")

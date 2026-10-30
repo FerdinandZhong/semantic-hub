@@ -40,7 +40,7 @@ An occupied port causes an error; the launcher does not stop another process.
 4. Inspect the interpretation, then select Run.
 5. Open Builders & connections, then select Open builder for native Helios.
 6. Select a native organization and model provisioned by your Helios administrator.
-7. Link that workspace using its native organization and model identifiers.
+7. Link that workspace by selecting its organization and model in the picker.
 
 Saved metric queries do not require an LLM.
 Free-text interpretation and document answers require configured inference.
@@ -57,7 +57,8 @@ For local review only, create an authorized empty draft with:
 This opt-in command creates organization `local-review` and model `empty-review` for the local development identity.
 It also creates an explicitly unconfigured Impala connection profile because native Helios requires a model data-source reference.
 It creates no source data, semantic artifacts, published release, or query result.
-Link those identifiers through Builders & connections in the Hub.
+In Builders & connections, select Link a workspace, then Local review and Empty review model.
+The local fixture needs no API key. Hosted providers require the caller's CAI API key for discovery.
 The command refuses to change existing records with those identifiers.
 
 Stop only this launcher's processes with:

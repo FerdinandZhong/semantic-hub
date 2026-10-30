@@ -2,6 +2,7 @@
 
 Status: unified local preview and v2 AMP provisioning implementation, 27 October 2026.
 The branch now includes the provider registry, workspace UI, and isolated local launcher.
+The [Helios model picker](helios-model-picker.md) lists accessible organizations and models, then verifies access before linking.
 See [unified UI implementation](unified-ui-implementation.md) and [local preview and implementation evidence](local-preview.md) for tested scope and launch commands.
 Mode-aware AMP preparation, native launchers, and repeatable provider provisioning are implemented.
 See the [AMP operator guide](amp-operator-guide.md) for prerequisites and retry behavior.

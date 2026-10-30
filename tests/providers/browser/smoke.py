@@ -84,18 +84,19 @@ with sync_playwright() as p:
     page.locator("#setup-form button[type=submit]").click()
     page.locator(f"[data-link-project={provider}]").click()
     workspace = "Native " + provider
-    for key, value in dict(
-        name=workspace, organization_id="org-id", model_id="model-id"
-    ).items():
+    for key, value in dict(name=workspace).items():
         page.locator(f"[name={key}]").fill(value)
+    page.locator("#helios-org").select_option("local-review")
+    page.locator("#helios-model").select_option("empty-review")
     page.locator("#setup-form button[type=submit]").click()
+    page.locator("#setup").wait_for(state="hidden")
     page.locator("[data-nav=home]").click()
     page.locator("#workspace-search").fill(workspace)
     page.locator("[data-open-workspace]").click()
     link = page.get_by_role("link", name="Open Studio")
     assert (
         link.get_attribute("href")
-        == "http://127.0.0.1:8200/canvas?organization=org-id&model=model-id"
+        == "http://127.0.0.1:8200/canvas?organization=local-review&model=empty-review"
     )
     assert "Navigation only" in page.locator("#content").inner_text()
     assert not errors, errors

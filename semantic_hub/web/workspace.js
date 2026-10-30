@@ -402,6 +402,7 @@ async function configureSource() {
   $("source-kind").onchange = fields;
   const submit = $("setup-form").querySelector('[type="submit"]');
   submit.hidden = false;
+  submit.disabled = false;
   $("setup-form").onsubmit = async (e) => {
     e.preventDefault();
     submit.disabled = true;
@@ -442,8 +443,71 @@ function renderProviders() {
       (b) => (b.onclick = () => setup("project", b.dataset.linkProject)),
     );
 }
+let pickerGeneration = 0;
+function linkWorkspace(providerId) {
+  const dialog = $("setup"), form = $("setup-form");
+  if (dialog.open) return;
+  const token = ++pickerGeneration;
+  let request = 0, saving = false;
+  const provider = providers.find((item) => item.id === providerId);
+  $("setup-title").textContent = "Link a Helios workspace";
+  $("setup-error").textContent = "";
+  $("setup-fields").innerHTML = `<label>Workspace name<input name="name" required maxlength="120" placeholder="Finance analytics"></label><label>CAI API key (optional)<input id="helios-key" type="password" autocomplete="off"></label><p class="muted">The Hub sends this key to ${esc(provider?.api_origin || "the configured Helios API")}. The key stays in this dialog until it closes.</p><button type="button" id="helios-retry">Load organizations</button><label>Organization<select name="organization_id" id="helios-org" required disabled></select></label><label>Model<select name="model_id" id="helios-model" required disabled></select></label><p id="helios-status" role="status"></p>${anchor("Open Helios", provider?.ui_origin)}`;
+  const submit = form.querySelector('[type="submit"]');
+  submit.hidden = false;
+  submit.disabled = true;
+  const org = $("helios-org"), model = $("helios-model"), key = $("helios-key");
+  const active = () => token === pickerGeneration && dialog.open;
+  const clearModels = () => { model.innerHTML = ""; model.disabled = true; submit.disabled = true; };
+  const options = (select, items, placeholder) => {
+    select.innerHTML = `<option value="">${placeholder}</option>` + items.map((item) => `<option value="${esc(item.id)}">${esc(item.name || item.id)}</option>`).join("");
+    select.disabled = !items.length;
+  };
+  const call = async (path, body) => {
+    const response = await fetch(path, {method: "POST", headers: {"Content-Type": "application/json", ...(key.value ? {"X-Helios-API-Key": key.value} : {})}, body: JSON.stringify(body)});
+    const data = await response.json();
+    if (!response.ok) throw Error(response.status === 401 ? "Access requires a valid CAI API key. Enter the key and retry." : typeof data.detail === "string" ? data.detail : "Helios is unavailable. Retry the request.");
+    return data;
+  };
+  const discover = async (organizationId) => {
+    const version = ++request;
+    clearModels();
+    if (!organizationId) { org.innerHTML = ""; org.disabled = true; }
+    $("helios-status").textContent = organizationId ? "Loading models…" : "Loading organizations…";
+    $("setup-error").textContent = "";
+    try {
+      const data = await call(`/api/semantic-hub/v2/providers/${encodeURIComponent(providerId)}/discover`, organizationId ? {organization_id: organizationId} : {});
+      if (!active() || version !== request) return;
+      const items = organizationId ? data.models || [] : data.organizations || [];
+      options(organizationId ? model : org, items, organizationId ? "Select a model" : "Select an organization");
+      $("helios-status").textContent = items.length ? "" : organizationId ? "No accessible models. Ask your Helios administrator to create a model or grant access, then retry." : "No accessible organizations. Check your Helios access, then retry.";
+    } catch (error) {
+      if (active() && version === request) { $("setup-error").textContent = error.message; $("helios-status").textContent = "Request failed. Retry when ready."; }
+    }
+  };
+  org.onchange = () => { clearModels(); ++request; if (org.value) discover(org.value); };
+  model.onchange = () => { submit.disabled = saving || !org.value || !model.value; };
+  key.oninput = () => { ++request; org.innerHTML = ""; org.disabled = true; clearModels(); $("helios-status").textContent = "Load organizations with this credential."; };
+  $("helios-retry").onclick = () => discover(org.value);
+  form.onsubmit = async (event) => {
+    event.preventDefault();
+    if (saving || !org.value || !model.value) return;
+    saving = true; submit.disabled = true;
+    try {
+      await call("/api/semantic-hub/v2/projects", {provider_id: providerId, name: form.elements.name.value, organization_id: org.value, model_id: model.value});
+      if (!active()) return;
+      dialog.close(); await load();
+    } catch (error) { if (active()) $("setup-error").textContent = error.message; }
+    finally { saving = false; if (active()) submit.disabled = !org.value || !model.value; }
+  };
+  dialog.addEventListener("close", () => { if (token === pickerGeneration) ++pickerGeneration; ++request; key.value = ""; org.innerHTML = ""; model.innerHTML = ""; }, {once: true});
+  dialog.showModal();
+  discover();
+}
 function setup(kind, provider) {
+  if (kind === "project") return linkWorkspace(provider);
   $("setup-form").querySelector('[type="submit"]').hidden = false;
+  $("setup-form").querySelector('[type="submit"]').disabled = false;
   $("setup-title").textContent =
     kind === "provider"
       ? "Connect a Helios builder"
@@ -464,11 +528,7 @@ function setup(kind, provider) {
             "https://helios-api.example.com",
           ],
         ]
-      : [
-          ["name", "Workspace name", "Finance analytics"],
-          ["organization_id", "Native organization ID", ""],
-          ["model_id", "Native model ID", ""],
-        ];
+      : [];
   $("setup-fields").innerHTML =
     fields
       .map(

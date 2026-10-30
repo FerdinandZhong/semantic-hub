@@ -106,7 +106,7 @@ class Registry:
             ]
 
     def add_project(self, name, provider_id, organization, model):
-        import uuid
+        import hashlib
 
         p = self.provider(provider_id)
         if p["kind"] != "helios":
@@ -121,17 +121,33 @@ class Registry:
                 "Name, organization, and model are required (maximum 160 characters each)."
             )
         item = dict(
-            id="external-" + uuid.uuid4().hex,
+            id="external-"
+            + hashlib.sha256(
+                json.dumps([provider_id, organization.strip(), model.strip()]).encode()
+            ).hexdigest()[:32],
             name=name.strip(),
             provider_id=provider_id,
             organization_id=organization.strip(),
             model_id=model.strip(),
         )
         with self.connect() as db:
+            # Preserve references created before deterministic project IDs.
+            db.execute("BEGIN IMMEDIATE")
+            for row in db.execute("SELECT body FROM projects"):
+                existing = json.loads(row[0])
+                if all(
+                    existing.get(key) == item[key]
+                    for key in ("provider_id", "organization_id", "model_id")
+                ):
+                    return existing
             db.execute(
-                "INSERT INTO projects VALUES (?,?)", (item["id"], json.dumps(item))
+                "INSERT OR IGNORE INTO projects VALUES (?,?)",
+                (item["id"], json.dumps(item)),
             )
-        return item
+            stored = db.execute(
+                "SELECT body FROM projects WHERE id=?", (item["id"],)
+            ).fetchone()
+        return json.loads(stored[0])
 
     def links(self, project):
         p = self.provider(project["provider_id"])
