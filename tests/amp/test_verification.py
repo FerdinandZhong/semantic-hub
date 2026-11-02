@@ -1,4 +1,7 @@
 import io
+import json
+
+import pytest
 from urllib.error import HTTPError
 
 from deployment.cai.verify import probe, verify
@@ -53,3 +56,29 @@ def test_redirect_is_reported_without_response_or_secret():
     result = probe("https://hub.example", "/healthz", "private-key", opener=Redirect())
     assert result["http_status"] == 302
     assert "private-key" not in str(result) and "sensitive" not in str(result)
+
+
+@pytest.mark.parametrize("status", ["failed", "starting", "unavailable", None, {}, []])
+def test_unsuccessful_status_is_not_health(status):
+    class Response:
+        def open(self, request, timeout):
+            response = io.BytesIO(json.dumps({"status": status}).encode())
+            response.status = 200
+            return response
+
+    assert not probe("https://api.example", "/api/v1/healthz", opener=Response())[
+        "reachable"
+    ]
+
+
+@pytest.mark.parametrize("status", ["ok", "ready", "healthy"])
+def test_successful_status_is_health(status):
+    class Response:
+        def open(self, request, timeout):
+            response = io.BytesIO(json.dumps({"status": status}).encode())
+            response.status = 200
+            return response
+
+    assert probe("https://api.example", "/api/v1/healthz", opener=Response())[
+        "reachable"
+    ]

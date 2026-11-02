@@ -52,6 +52,11 @@ These are initial allocations, not measured capacity recommendations.
 
 ## Application origins
 
+For a private certificate authority, set `SSL_CERT_FILE` to the trusted PEM bundle in the project environment.
+Make the same bundle available to setup jobs and applications.
+The model picker honors this bundle while keeping redirects and environment proxy inheritance disabled.
+Keep TLS verification enabled; a trust failure must not be bypassed.
+
 External mode requires `HELIOS_UI_ORIGIN` and `HELIOS_API_ORIGIN`.
 Use exact HTTPS origins without paths, credentials, query strings, or fragments.
 
@@ -88,6 +93,14 @@ The checkpoint pins the provider revision and runtime identifier.
 A conflicting revision is rejected. Automated provider upgrades and migration rollback are outside this increment.
 Provider origins cannot silently change under an existing registry ID.
 
+## Model linking
+
+Use the [Helios model picker](helios-model-picker.md) to select an authorized organization and model.
+Hosted discovery requires the caller's explicit CAI API key.
+Hub rechecks model access before saving; it does not persist that key or substitute an owner credential.
+Workspace links appear in the shared Hub catalog. Native Helios still enforces model permissions.
+A saved link does not import a release or enable Hub delegated queries.
+
 ## Verification
 
 Local verification on 27 October 2026 passed 73 AMP and provider tests.
@@ -110,6 +123,7 @@ The verifier checks health response shapes and rejects redirects, including logi
 It saves `verification.json` without credentials.
 It always reports full CAI acceptance as pending; endpoint reachability alone is insufficient.
 
+Use the [live test runbook](live-test-runbook.md) to record target details and evidence.
 Complete the [A01–A08 acceptance checks](amp-preparation-plan.md#cai-acceptance-matrix) in a disposable CAI project.
 Verify authenticated browser navigation, CORS preflight, identity-header stripping, and native model permissions.
 Also check independent restarts, persistent credentials, retry recovery, and provider outages.

@@ -1,6 +1,7 @@
 # Semantic foundation: progress and consumer handoff
 
 Current snapshot: [implementation progress and plan](implementation-progress-and-plan.md), updated 19 October 2026.
+For current v2 deployment scope, see the [operator guide](semantic-hub-v2/amp-operator-guide.md) and [live test runbook](semantic-hub-v2/live-test-runbook.md).
 The entries below are chronological milestone records. Older pending statements can be superseded by later entries.
 
 **Vision, OCR, and embeddings decision record — 19 October 2026:** Documented the distinction between visual understanding and vector generation.

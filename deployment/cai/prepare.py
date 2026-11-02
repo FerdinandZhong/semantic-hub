@@ -47,6 +47,13 @@ def native_preflight():
         )
     if not os.environ.get("SEMANTIC_HUB_RUNTIME_IDENTIFIER"):
         raise RuntimeError("Bundled mode requires SEMANTIC_HUB_RUNTIME_IDENTIFIER")
+    if not (os.environ.get("CDSW_PROJECT_ID") or os.environ.get("CML_PROJECT_ID")):
+        raise RuntimeError("Bundled mode requires the CAI project identifier")
+    from deployment.cai.provision import CAIClient
+
+    # Validate management configuration before installing or building packages.
+    # Constructing the client performs no network request.
+    CAIClient(os.environ.get("CDSW_API_URL", ""), os.environ.get("CDSW_APIV2_KEY", ""))
     version = subprocess.check_output(["node", "--version"], text=True).strip()
     if int(version.lstrip("v").split(".")[0]) < 20:
         raise RuntimeError("Native UI requires Node.js 20 or newer")

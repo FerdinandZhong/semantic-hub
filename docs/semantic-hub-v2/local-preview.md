@@ -100,7 +100,7 @@ Do not use the local harness as a CAI deployment launcher.
 | Sources and tables | Source inventory, schema inspection, bounded sample previews | External metadata import |
 | Talk | Published Built-in versions, explicit execution approval, results, provenance, and page-session history | External delegated execution and durable conversation storage |
 | Native Helios | Independent environment, state, UI/API processes, pinned revision | Configured live backend and inference acceptance |
-| Deployment | Bundled, external, and Built-in local modes | Multi-application CAI provisioning and acceptance |
+| Deployment | Bundled, external, and Built-in local modes; mode-aware AMP provisioning | Live multi-application CAI acceptance |
 
 Provider registration uses additive tables in `providers.sqlite`.
 Existing source IDs and release bytes remain unchanged.

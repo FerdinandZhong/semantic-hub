@@ -327,3 +327,5 @@ A second, less canonical dataset (Wide World Importers or the Olist e-commerce s
 The `observability_semantic_context` branch adds metadata discovery, reviewed context releases and token retrieval for Elasticsearch/Kibana, Prometheus and Grafana.
 See [setup, review and limitations](docs/observability-semantic-context.md).
 This extension keeps native observability context separate from Ossie SQL models; NiFi discovery remains deferred.
+
+Use the [live CAI acceptance runbook](docs/semantic-hub-v2/live-test-runbook.md) for prerequisites, launch, retries, and the evidence matrix.

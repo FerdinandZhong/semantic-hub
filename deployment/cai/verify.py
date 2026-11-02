@@ -33,7 +33,11 @@ def probe(origin, path, key="", *, opener=None):
             else:
                 try:
                     value = json.loads(body)
-                    valid = isinstance(value, dict) and "status" in value
+                    valid = isinstance(value, dict) and value.get("status") in (
+                        "ok",
+                        "ready",
+                        "healthy",
+                    )
                 except (ValueError, UnicodeDecodeError):
                     valid = False
             return {

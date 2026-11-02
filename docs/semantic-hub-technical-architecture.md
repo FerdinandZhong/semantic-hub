@@ -36,7 +36,12 @@ Published releases supply both Playground and MCP consumers.
 
 ## Runtime and API boundaries
 
-The CAI AMP starts one FastAPI Application with one shared `DemoHub` and state root.
+The CAI AMP starts one Hub FastAPI Application with one shared `DemoHub` and state root.
+Bundled mode also provisions independent Helios API and UI applications.
+External mode registers existing Helios origins; `builtin_only` starts Hub alone.
+The provider registry stores shared workspace links in `providers.sqlite`.
+The [model picker](semantic-hub-v2/helios-model-picker.md) discovers authorized models and rechecks access before saving.
+External release import and delegated queries remain unavailable.
 Consumer API and Swagger routes are registered before the mounted authoring application.
 Studio, supporting materials, and Playground use that same workspace.
 The launcher runs one Uvicorn worker behind CAI Application ingress.

@@ -1,8 +1,10 @@
 # Bundled AMP deployment with an independent Helios repository
 
-Status: proposed v2 deployment layout, 23 October 2026.
+Status: implemented deployment layout, reviewed 2 November 2026; live CAI acceptance remains pending.
 The pinned `external/helios` submodule now exists and owns upstream Helios documentation.
-Runtime extraction and additional CAI application provisioning remain planned.
+Mode-aware preparation and separate Helios API/UI provisioning are implemented.
+Full built-in package extraction remains planned.
+Use the [operator guide](amp-operator-guide.md) and [live test runbook](live-test-runbook.md) for current operations.
 
 ## Recommended installation modes
 
@@ -19,7 +21,7 @@ These modes share the same provider adapter contract.
 ```text
 semantic-hub/
 ├── semantic_hub/                   Hub application and provider adapters
-├── optional-builders/builtin/      Preserved local builder
+├── apps/helios/                    Inherited built-in implementation (not yet extracted)
 ├── external/
 │   └── helios/                     Separate Git repository, pinned submodule
 ├── deployment/
@@ -31,7 +33,7 @@ semantic-hub/
 └── docs/
 ```
 
-Only `external/helios` currently exists from this proposed layout. The runtime and deployment paths remain planned.
+The provider lock, CAI scripts, and launchers exist. The optional built-in package remains future work.
 The Helios submodule points to the original repository at a tested commit.
 A submodule update changes a commit pointer; it does not merge Helios source into Hub packages.
 The bootstrap must explicitly initialize the checkout if the AMP clone does not initialize submodules.
@@ -94,7 +96,7 @@ Provider registration can be updated after provisioning; the Hub can start with 
 Application IDs and URLs are deployment state, not values committed into source control.
 
 Provisioning requires an authorized CAI application-management identity.
-Its exact API and permissions must be verified in the target environment before implementation.
+The management client is implemented; its API compatibility and permissions still require target-environment verification.
 No CAI management credentials belong in browser links or Git configuration.
 
 ## Setup versus restart
@@ -104,7 +106,7 @@ A Hub restart starts only the Hub process.
 A Helios restart starts only the relevant Helios process.
 Neither application silently upgrades, duplicates, or restarts its peer.
 
-The current `cai_integration/start_application.py` supervises the Hub process only.
+The manifest uses `deployment/launchers/hub.py`, which retains the Hub child-process supervisor.
 Keep that responsibility narrow and place multi-application orchestration in the deployment setup layer.
 The setup orchestration must account for CAI-injected ports and application-specific launch commands.
 

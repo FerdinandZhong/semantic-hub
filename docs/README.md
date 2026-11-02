@@ -106,8 +106,12 @@ AMP packaging and CAI ingress authentication are implemented. Full hosted Agent 
 
 - [Semantic context build flow](diagrams/semantic-context-build-flow.drawio): source inputs, evidence matching, validation, review, and publication.
 
-## Semantic Hub v2 proposal
+## Semantic Hub v2 implementation and design
 
 - [Independent Hub and pluggable builders](semantic-hub-v2/README.md)
 - [Upstream inspection and merge evidence](semantic-hub-v2/upstream-review.md)
 - [Provider contract proposal](semantic-hub-v2/provider-contract.md)
+
+Use the [live CAI acceptance runbook](semantic-hub-v2/live-test-runbook.md) for prerequisites, launch, retries, and the evidence matrix.
+
+See the [documentation readiness audit](semantic-hub-v2/documentation-readiness-audit.md) for reviewed files and preserved historical material.

@@ -1,5 +1,7 @@
 # Semantic Hub v2: independent Hub, pluggable builders
 
+[2 November readiness review and test evidence](readiness-review-2026-11-02.md) · [Live CAI test runbook](live-test-runbook.md)
+
 Status: unified local preview and v2 AMP provisioning implementation, 27 October 2026.
 The branch now includes the provider registry, workspace UI, and isolated local launcher.
 The [Helios model picker](helios-model-picker.md) lists accessible organizations and models, then verifies access before linking.
@@ -299,3 +301,7 @@ Shared libraries, if needed, should be small versioned dependencies rather than 
 
 A deployed Helios UI/API/MCP URL set and a permitted identity strategy are needed for the integration spike.
 They are not needed to review this design or retain the completed repository baseline.
+
+Use the [live CAI acceptance runbook](live-test-runbook.md) for prerequisites, launch, retries, and the evidence matrix.
+
+The [documentation readiness audit](documentation-readiness-audit.md) records current-guide corrections and preserved historical evidence.

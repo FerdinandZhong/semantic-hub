@@ -6,6 +6,15 @@ Repository: https://github.com/FerdinandZhong/semantic-hub
 This snapshot consolidates the recorded milestones. It does not claim a fresh full-system verification.
 The [detailed milestone log](SEMANTIC_FOUNDATION_STATUS.md) retains earlier evidence and historical limitations.
 
+## Current v2 status
+
+Reviewed 2 November 2026: provider links, the authorized model picker, and mode-aware AMP provisioning are implemented.
+The picker rechecks native model access before saving into the shared Hub catalog.
+Hosted caller identity, multi-application launch, and persistence still require live CAI acceptance.
+External release import, delegated queries, and lightweight package extraction remain planned.
+See the [operator guide](semantic-hub-v2/amp-operator-guide.md) and [live test runbook](semantic-hub-v2/live-test-runbook.md).
+The 19 October milestones below retain their original evidence.
+
 ## Current position
 
 Semantic Hub manages semantic definitions, document evidence, immutable reviewed versions, and consumer access.

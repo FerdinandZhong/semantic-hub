@@ -92,8 +92,8 @@ Preflight → prepare code and environments → create/reuse application records
 9. Register the provider and run capability-specific health and authorization probes.
 10. Save a deployment report with links, readiness states, and next actions.
 
-The exact Helios UI/API/MCP process topology is an I1 inspection output.
-Do not promise a fixed application count before confirming the pinned provider launcher requirements.
+The implemented bundled topology uses Hub, Helios API, and Helios UI applications.
+Native MCP deployment remains outside this increment.
 
 ## Choose one owner for resource creation
 
@@ -101,7 +101,7 @@ Prefer declarative AMP tasks for a fixed verified application topology.
 Use a bounded provisioning job where installation modes require conditional creation or discovery.
 Do not let both mechanisms create the same application.
 
-The first implementation spike must inspect the available CAI management API and its authentication requirements.
+The implemented client uses the CAI management API; target compatibility still requires live verification.
 Record request schemas, application identifiers, lifecycle states, and URL fields before implementing the client.
 Do not invent SDK methods or treat the current Hub ingress key as proof of management authority.
 
@@ -115,7 +115,8 @@ An application name alone is insufficient ownership evidence.
 Before creating a resource, reconcile the recorded ID with platform state.
 Reject conflicting ownership instead of adopting or deleting an unrelated application.
 
-Use bounded polling with proposed budgets of 10 minutes per application readiness stage and 30 minutes for initial environment setup.
+Provisioning uses bounded polling, with a default 600-second application readiness timeout.
+The manifest allows 45 minutes for preparation and 30 minutes for provisioning.
 Adjust budgets using measured platform behavior; report timeout as a failure.
 A retry resumes incomplete stages and never resets model state.
 
@@ -126,7 +127,9 @@ Cleanup targets only resources created by this deployment and never removes pers
 ## Runtime and credential preparation
 
 Retain the current Hub allocation of 2 CPUs, 8 GB RAM, and no GPU as the initial baseline.
-Measure Helios allocations from the pinned deployment and local rehearsal before declaring the full AMP quota requirement.
+Bundled applications initially request 6 CPUs and 24 GB total, across three applications.
+Preparation requests 2 CPUs/8 GB; provisioning requests 1 CPU/2 GB and can overlap native startup.
+These allocations are defaults, not measured capacity recommendations.
 Document total concurrent application resources and setup-job peaks.
 Do not assume every provider service needs the same allocation as Hub.
 

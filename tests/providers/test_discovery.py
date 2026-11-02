@@ -61,6 +61,42 @@ def setup(tmp_path, monkeypatch):
 BASE = "/api/semantic-hub/v2"
 
 
+def test_private_ca_bundle_is_loaded_without_proxy_inheritance(setup, monkeypatch):
+    client, _, _, _ = setup
+    import ssl
+
+    context = ssl.create_default_context()
+    calls = []
+    monkeypatch.setenv("SSL_CERT_FILE", "/operator/ca.pem")
+
+    def load_context(*, cafile):
+        calls.append(cafile)
+        return context
+
+    monkeypatch.setattr(
+        "semantic_hub.providers.discovery.ssl.create_default_context", load_context
+    )
+    response = client.post(
+        BASE + "/providers/team/discover",
+        json={},
+        headers={"X-Helios-API-Key": "alice"},
+    )
+    assert response.status_code == 200
+    assert calls == ["/operator/ca.pem"]
+
+
+def test_invalid_ca_configuration_returns_safe_error(setup, monkeypatch):
+    client, _, _, _ = setup
+    monkeypatch.setenv("SSL_CERT_FILE", "/missing/private-ca.pem")
+    response = client.post(
+        BASE + "/providers/team/discover",
+        json={},
+        headers={"X-Helios-API-Key": "alice"},
+    )
+    assert response.status_code == 502
+    assert "private-ca" not in response.text
+
+
 def test_link_reuses_legacy_reference_after_permission_check(setup):
     client, calls, _, app = setup
     legacy = dict(

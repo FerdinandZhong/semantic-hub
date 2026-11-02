@@ -38,8 +38,9 @@ python start_semantic_hub_api.py \
 ```
 
 `--local-no-auth` only accepts a loopback host.
-CAI `cdsw_v2_key` authentication is planned for AMP deployment.
-The current application does not validate CAI keys.
+The AMP uses authenticated CAI Application ingress for CAI API v2 keys.
+The application delegates key validation to ingress.
+Use the [AMP deployment guide](amp-deployment.md) for the combined hosted application.
 
 For inherited OpenAI embedding configuration, add `--model-token-file ~/tokens/openai`.
 Alternatively provide the credential environment variable selected in Model configuration.
@@ -58,7 +59,8 @@ Expand an endpoint and select **Try it out**.
 The documentation uses locally vendored Swagger UI assets.
 `/api/semantic-hub/v1/docs` also redirects to this page.
 
-Deploy this dedicated API process for remote consumers.
+Use this dedicated process for standalone deployments.
+The AMP combines authoring and consumer routes; do not start another process against its live state.
 It mounts no Studio editing, upload, review, activation, or publication routes.
 Use a reachable HTTPS deployment for CAI.
 CAI cannot reach a laptop's `localhost` directly.

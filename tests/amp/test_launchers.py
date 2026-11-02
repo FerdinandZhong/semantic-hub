@@ -172,3 +172,40 @@ def test_bundled_preflight_fails_before_install(tmp_path, monkeypatch):
         with pytest.raises(RuntimeError, match="verified ingress"):
             prepare.prepare(tmp_path)
     run.assert_not_called()
+
+
+def test_bundled_preflight_rejects_missing_project_before_install(monkeypatch):
+    monkeypatch.setenv("HELIOS_CAI_PROXY_AUTH_CONFIRMED", "1")
+    monkeypatch.setenv("SEMANTIC_HUB_RUNTIME_IDENTIFIER", "runtime")
+    monkeypatch.delenv("CDSW_PROJECT_ID", raising=False)
+    monkeypatch.delenv("CML_PROJECT_ID", raising=False)
+    with patch.object(prepare.subprocess, "check_output") as command:
+        with pytest.raises(RuntimeError, match="project identifier"):
+            prepare.native_preflight()
+    command.assert_not_called()
+
+
+def test_bundled_preflight_validates_management_configuration_without_network(
+    monkeypatch,
+):
+    from deployment.cai.provision import ProvisionError
+
+    monkeypatch.setenv("HELIOS_CAI_PROXY_AUTH_CONFIRMED", "1")
+    monkeypatch.setenv("SEMANTIC_HUB_RUNTIME_IDENTIFIER", "runtime")
+    monkeypatch.setenv("CDSW_PROJECT_ID", "project")
+    monkeypatch.setenv("CDSW_API_URL", "http://insecure.example")
+    monkeypatch.setenv("CDSW_APIV2_KEY", "private")
+    with patch.object(prepare.subprocess, "check_output") as command:
+        with pytest.raises(ProvisionError, match="HTTPS origin"):
+            prepare.native_preflight()
+    command.assert_not_called()
+
+
+def test_bundled_preflight_accepts_management_api_suffix(monkeypatch):
+    monkeypatch.setenv("HELIOS_CAI_PROXY_AUTH_CONFIRMED", "1")
+    monkeypatch.setenv("SEMANTIC_HUB_RUNTIME_IDENTIFIER", "runtime")
+    monkeypatch.setenv("CDSW_PROJECT_ID", "project")
+    monkeypatch.setenv("CDSW_API_URL", "https://workbench.example/api/v2")
+    monkeypatch.setenv("CDSW_APIV2_KEY", "private")
+    with patch.object(prepare.subprocess, "check_output", return_value="v20.1.0"):
+        assert prepare.native_preflight() == "v20.1.0"

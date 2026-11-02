@@ -214,3 +214,39 @@ def test_restart_tolerates_stale_stopped_status(tmp_path):
     client.restart = restart
     run(tmp_path, client, sleep=sleep)
     assert counts == ["1"]
+
+
+def test_readiness_rechecks_ingress_before_restart(tmp_path):
+    client = FakeClient()
+    run(tmp_path, client)
+    original = client.get
+    calls = []
+    restarted = []
+
+    def get(project, ident):
+        calls.append(ident)
+        app = original(project, ident)
+        # Initial reconciliation validates both applications first.
+        if len(calls) > 2:
+            app.update(bypass_authentication=True, status="APPLICATION_STOPPED")
+        return app
+
+    client.get = get
+    client.restart = lambda project, ident: restarted.append(ident)
+    with pytest.raises(ProvisionError, match="authentication"):
+        run(tmp_path, client)
+    assert not restarted
+
+
+def test_readiness_rechecks_ownership_during_poll(tmp_path):
+    client = FakeClient()
+    run(tmp_path, client)
+    client.apps["1"]["status"] = "APPLICATION_STARTING"
+
+    def sleep(seconds):
+        client.apps["1"].update(
+            description="another deployment", status="APPLICATION_RUNNING"
+        )
+
+    with pytest.raises(ProvisionError, match="ownership"):
+        run(tmp_path, client, sleep=sleep)

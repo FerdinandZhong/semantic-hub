@@ -12,6 +12,8 @@ Bundled mode provisions separate Helios API and UI applications.
 External mode registers existing provider origins; built-in-only mode starts only Hub.
 See the [v2 AMP operator guide](semantic-hub-v2/amp-operator-guide.md) for prerequisites, modes, retries, and readiness limits.
 The diagram below describes the Hub runtime, which remains one application in every mode.
+The manifest has five ordered tasks: create/run preparation, create/run provisioning, then start Hub.
+Use the [live CAI test runbook](semantic-hub-v2/live-test-runbook.md) to collect acceptance evidence.
 
 ```text
 GitHub checkout
@@ -180,7 +182,7 @@ The 18 October isolation fix reproduces and prevents this failure locally.
 
 1. Stop the failed setup job.
 2. Update the project checkout to the latest Semantic Hub commit.
-3. Rerun `semantic-hub-setup` with `cai_integration/setup_environment.py`.
+3. Rerun `semantic-hub-setup` with `deployment/cai/prepare.py`.
 4. Confirm the log reports `Virtual environment isolation passed; CAI runtime packages excluded.`
 5. Confirm `pip check` and all five source-pack checks pass.
 6. Start or restart the Semantic Hub Application.
@@ -200,7 +202,7 @@ The 18 October launcher fix retains the kernel and runs the server as a supervis
 It also removes the bootstrap project argument before the server parses its command line.
 
 1. Update the project checkout from `main`.
-2. Confirm the Application script is `cai_integration/start_application.py`.
+2. Confirm the Application script is `deployment/launchers/hub.py`.
 3. Restart the Application.
 4. Check for `Semantic Hub server started as child process` in the log.
 5. Confirm the Uvicorn startup message and open the Application URL.

@@ -1,6 +1,8 @@
 """Bounded, caller-authorized access to a registered Helios API."""
 
 import json
+import os
+import ssl
 from urllib.parse import quote, urlsplit
 
 import httpx
@@ -25,8 +27,14 @@ class Discovery:
 
     def get(self, path, *, params=None):
         try:
+            # Honor the operator's CA bundle without enabling proxy or credential inheritance.
+            cafile = os.environ.get("SSL_CERT_FILE")
+            verify = ssl.create_default_context(cafile=cafile) if cafile else True
             with httpx.Client(
-                timeout=httpx.Timeout(8.0), follow_redirects=False, trust_env=False
+                timeout=httpx.Timeout(8.0),
+                follow_redirects=False,
+                trust_env=False,
+                verify=verify,
             ) as client:
                 with client.stream(
                     "GET",
@@ -52,7 +60,7 @@ class Discovery:
             if not isinstance(result, dict):
                 raise ValueError()
             return result
-        except (httpx.HTTPError, ValueError, UnicodeError):
+        except (httpx.HTTPError, ValueError, UnicodeError, OSError):
             raise HTTPException(
                 502, "Helios returned an unavailable or invalid response."
             ) from None

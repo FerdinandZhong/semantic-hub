@@ -263,16 +263,30 @@ def provision(
         raise ProvisionError(
             "CAI did not return application URLs. Supply verified HELIOS_API_ORIGIN and HELIOS_UI_ORIGIN and retry."
         )
+
+    def checked_application(role, record):
+        app = client.get(project_id, record["id"])
+        marker = f'semantic-hub:{state["deployment_id"]}:{role}:{revision}'
+        if (
+            app.get("id") != record["id"]
+            or app.get("description") != marker
+            or app.get("bypass_authentication") is not False
+        ):
+            raise ProvisionError(
+                "Application ownership or ingress authentication could not be verified."
+            )
+        return app
+
     for role, record in state["applications"].items():
         deadline = clock() + timeout
-        app = client.get(project_id, record["id"])
+        app = checked_application(role, record)
         restarting = str(app.get("status", "")).lower().removeprefix(
             "application_"
         ) in {"failed", "stopped"}
         if restarting:
             client.restart(project_id, record["id"])
         while True:
-            app = client.get(project_id, record["id"])
+            app = checked_application(role, record)
             status = str(app.get("status", "")).lower().removeprefix("application_")
             record["status"] = status
             save(path, state)

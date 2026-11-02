@@ -5,7 +5,7 @@ description: >-
   External Helios integration provides workspace navigation; release import
   and delegated queries are not included.
 author: Cloudera Engineering
-date: '2026-10-27'
+date: '2026-11-02'
 specification_version: '1.0'
 prototype_version: '2.0'
 runtimes:
