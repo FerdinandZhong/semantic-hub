@@ -18,7 +18,7 @@ Run Helios independently and open its application for advanced building and Talk
 Add versioned API adapters where release import and delegated queries require integration.
 
 Default installation: one AMP provisions Hub and Helios applications from separate, pinned repositories within one CAI project.
-Helios is an optional Git submodule; each application has a separate environment and state.
+Helios is an optional independently fetched Git checkout; each application has a separate environment and state.
 An external mode connects to an existing Helios deployment.
 
 Stop using upstream source merges as the normal integration mechanism.

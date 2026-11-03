@@ -27,7 +27,7 @@ They do not certify CAI ingress, application-management permissions, or producti
 ## Fixtures and isolation
 
 Use a temporary directory for each run, with separate Hub and Helios state roots.
-Record the Hub SHA, submodule SHA, adapter version, interpreter versions, and UI build identity.
+Record the Hub SHA, provider SHA, adapter version, interpreter versions, and UI build identity.
 Use loopback addresses and reserved ports; fail clearly if an explicit port is already occupied.
 Never stop an unrelated listener to claim a port.
 

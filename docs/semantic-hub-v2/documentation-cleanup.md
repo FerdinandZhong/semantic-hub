@@ -4,9 +4,9 @@ Completed on the v2 branch on 23 October 2026.
 
 ## Result
 
-The Helios provider is now a Git submodule at `external/helios`, pinned to `316f5d89926f96d366afaee641bd923af4ca6bf3`.
+The Helios provider is an independently fetched Git checkout at `external/helios`, pinned to `316f5d89926f96d366afaee641bd923af4ca6bf3`.
 Its upstream documentation is authoritative for that provider.
-The submodule contains no Hub-specific edits.
+The checkout contains no Hub-specific edits.
 
 Thirteen byte-identical upstream documents were removed from the Hub's root documentation directory.
 References now point to their copies in the provider checkout.
@@ -23,14 +23,14 @@ The [ownership manifest](../documentation-ownership.json) records original paths
 ## Documentation readers
 
 The local UI documentation generator and navigation assistant use the relocated sources.
-The UI generator includes provider guides when the submodule is initialized.
+The UI generator includes provider guides when the provider checkout is prepared.
 It skips optional provider guides when the checkout is absent, preserving Built-in-only documentation builds.
 The provider's own documentation generator remains unchanged.
 
 Initialize the checkout from the repository root when needed:
 
 ```sh
-git submodule update --init external/helios
+python deployment/cai/prepare.py --checkout-only
 ```
 
 Do not use `--remote` during reproducible setup; use the revision pinned by the parent repository.
@@ -44,7 +44,7 @@ Do not use `--remote` during reproducible setup; use the revision pinned by the 
 - The UI documentation generator produces 20 pages with the provider checkout.
 - An isolated build without that checkout produces 15 local pages.
 - Navigation assistant tests pass: 17 tests in 2.22 seconds.
-- The Helios submodule is clean and matches the recorded revision.
+- The Helios checkout is clean and matches the recorded revision.
 - `git diff --check` passes.
 
 The assistant suite required an explicit shared-module path and temporary Helios state.

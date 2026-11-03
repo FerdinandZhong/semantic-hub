@@ -8,6 +8,10 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
+import re
+import fcntl
+from urllib.parse import urlsplit
 
 ROOT = Path(os.environ.get("CDSW_PROJECT_DIR") or Path.cwd()).resolve()
 sys.path.insert(0, str(ROOT))
@@ -18,26 +22,49 @@ def initialize_checkout(root):
 
     lock = json.loads((root / "deployment/provider-lock.json").read_text())["helios"]
     checkout = root / lock["path"]
-    if not checkout.resolve().is_relative_to(root.resolve()):
+    if checkout.resolve() == root.resolve() or not checkout.resolve().is_relative_to(
+        root.resolve()
+    ):
         raise RuntimeError("Provider checkout must be inside the project")
-    if not (checkout / ".git").exists():
-        entry = (
-            subprocess.check_output(
-                ["git", "ls-tree", "HEAD", "--", lock["path"]], cwd=root, text=True
-            )
-            .strip()
-            .split()
+    repository = lock.get("repository", "")
+    parsed = urlsplit(repository)
+    if (
+        parsed.scheme != "https"
+        or not parsed.hostname
+        or parsed.username
+        or parsed.password
+        or parsed.query
+        or parsed.fragment
+        or not re.fullmatch(r"[0-9a-f]{40}", lock["commit"])
+    ):
+        raise RuntimeError(
+            "Provider lock requires an HTTPS repository and full commit SHA"
         )
-        if len(entry) < 4 or entry[:3] != ["160000", "commit", lock["commit"]]:
-            raise RuntimeError(
-                "Provider Git submodule revision does not match the deployment lock"
-            )
-        subprocess.run(
-            ["git", "submodule", "update", "--init", "--", lock["path"]],
-            cwd=root,
-            check=True,
-        )
-    return validate_lock(root)
+    checkout.parent.mkdir(parents=True, exist_ok=True)
+    with (checkout.parent / ".helios-checkout.lock").open("a") as guard:
+        fcntl.flock(guard, fcntl.LOCK_EX)
+        if checkout.exists():
+            # Never replace a user's checkout or an incomplete foreign directory.
+            return validate_lock(root)
+        with tempfile.TemporaryDirectory(
+            prefix=".helios-bootstrap-", dir=checkout.parent
+        ) as temp:
+            staged = Path(temp) / "checkout"
+            staged.mkdir()
+            for command in (
+                ["git", "init", "--quiet"],
+                ["git", "remote", "add", "origin", repository],
+                ["git", "fetch", "--depth", "1", "origin", lock["commit"]],
+                ["git", "checkout", "--detach", lock["commit"]],
+            ):
+                subprocess.run(command, cwd=staged, check=True, timeout=600)
+            actual = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], cwd=staged, text=True
+            ).strip()
+            if actual != lock["commit"]:
+                raise RuntimeError("Fetched provider revision does not match the lock")
+            staged.rename(checkout)
+        return validate_lock(root)
 
 
 def native_preflight():
@@ -170,4 +197,8 @@ def prepare(root=ROOT):
 
 
 if __name__ == "__main__":
-    prepare()
+    # Workbench executes this script inside a kernel with its own argv.
+    if "--checkout-only" in sys.argv[1:]:
+        initialize_checkout(ROOT)
+    else:
+        prepare()

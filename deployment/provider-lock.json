@@ -2,6 +2,7 @@
   "schema_version": 1,
   "helios": {
     "path": "external/helios",
+    "repository": "https://github.com/Christopheraburns/helios.git",
     "commit": "316f5d89926f96d366afaee641bd923af4ca6bf3",
     "optional_dependencies_omitted": [
       "lancedb",

@@ -4,6 +4,19 @@ Status: ready for a disposable-project rehearsal; live multi-application accepta
 Local tests and endpoint reachability do not establish hosted acceptance.
 Use the [operator guide](amp-operator-guide.md) for configuration details.
 
+## Import-copy isolation branch
+
+Use `fix/amp-provider-bootstrap` to test the project-copy failure observed on 3 November 2026.
+This branch contains no Git submodule or `.gitmodules` file.
+Bundled preparation fetches the repository and exact commit in `deployment/provider-lock.json` into `external/helios`.
+Existing checkouts are validated, never reset or overwritten. Failed downloads leave the destination absent for retry.
+External and built-in-only modes do not fetch Helios.
+
+Import this branch into a new disposable project and retain the previous failed project for diagnosis.
+First confirm that project creation succeeds and the setup job is created.
+Then evaluate the setup and application checks below separately.
+A successful import would support the submodule-trigger hypothesis; it would not identify the exact CAI copy failure.
+
 ## Target record
 
 Complete these fields before testing. Leave unknown values blank.

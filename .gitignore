@@ -28,3 +28,5 @@ apps/helios/ui/src/content/docs/
 /.omc/
 
 /.venv-helios/
+/external/helios/
+/external/.helios-*

@@ -24,7 +24,7 @@ Verify those behaviors against the target CAI version before selecting the exact
 
 | Deliverable | Proposed location | Acceptance |
 | --- | --- | --- |
-| Pinned provider checkout | `.gitmodules`, `external/helios`, `deployment/provider-lock.json` | Checkout matches tested revision; mode without Helios skips it |
+| Pinned provider checkout | `external/helios`, `deployment/provider-lock.json` | Checkout matches tested revision; mode without Helios skips it |
 | Environment preparation | `deployment/cai/prepare.py` | Independent dependency environments and persistent state roots |
 | Provisioning client | `deployment/cai/provision.py` | Uses verified CAI API; create/reuse is idempotent |
 | Application launchers | `deployment/launchers/` | Correct working directory, imports, injected port, and kernel supervision |

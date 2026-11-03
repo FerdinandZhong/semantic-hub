@@ -57,10 +57,10 @@ Do not refresh every unrelated suite after documentation-only changes.
 
 ### I1 — Add the independent Helios checkout and isolated launchers
 
-Progress: the pinned submodule, documentation cleanup, provider lock, isolated environments, and local launcher are implemented.
+Progress: the pinned provider checkout, documentation cleanup, provider lock, isolated environments, and local launcher are implemented.
 The local launcher lives in `deployment/local/`; implemented CAI launch wrappers live in `deployment/launchers/`.
 
-1. Add `external/helios` as a submodule at the verified upstream revision.
+1. Fetch `external/helios` during setup at the locked upstream revision.
 2. Add `deployment/provider-lock.json` with revision, supported adapter version, and runtime requirements.
 3. Add checkout verification that rejects missing, dirty, or mismatched provider revisions during reproducible setup.
 4. Create separate Python environments and state roots for Hub and Helios.

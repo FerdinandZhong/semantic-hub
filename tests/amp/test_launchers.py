@@ -131,39 +131,73 @@ def test_launcher_uses_existing_kernel_supervisor(monkeypatch):
     supervise.assert_called_once_with(["python", "-I"], env={"A": "B"}, cwd="/root")
 
 
-def test_fresh_import_initializes_only_locked_gitlink(tmp_path):
-    (tmp_path / "deployment").mkdir()
-    (tmp_path / "deployment/provider-lock.json").write_text(
-        json.dumps({"helios": {"path": "external/helios", "commit": "abc123"}})
+def provider_lock(root):
+    (root / "deployment").mkdir()
+    sha = "a" * 40
+    (root / "deployment/provider-lock.json").write_text(
+        json.dumps(
+            {
+                "helios": {
+                    "path": "external/helios",
+                    "repository": "https://example.test/helios.git",
+                    "commit": sha,
+                }
+            }
+        )
     )
+    return sha
+
+
+def test_fresh_import_fetches_exact_commit(tmp_path):
+    sha = provider_lock(tmp_path)
     with patch.object(
-        prepare.subprocess,
-        "check_output",
-        return_value="160000 commit abc123\texternal/helios",
+        prepare.subprocess, "check_output", return_value=sha
     ), patch.object(prepare.subprocess, "run") as run, patch(
         "deployment.local.run.validate_lock", return_value=tmp_path / "external/helios"
     ):
         prepare.initialize_checkout(tmp_path)
-    run.assert_called_once_with(
-        ["git", "submodule", "update", "--init", "--", "external/helios"],
-        cwd=tmp_path,
-        check=True,
-    )
+    assert run.call_args_list[2].args[0] == [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "origin",
+        sha,
+    ]
+    assert (tmp_path / "external/helios").is_dir()
+    assert not list((tmp_path / "external").glob(".helios-bootstrap-*"))
 
 
-def test_gitlink_mismatch_never_fetches(tmp_path):
-    (tmp_path / "deployment").mkdir()
-    (tmp_path / "deployment/provider-lock.json").write_text(
-        json.dumps({"helios": {"path": "external/helios", "commit": "abc123"}})
-    )
+def test_failed_fetch_preserves_destination_and_can_retry(tmp_path):
+    provider_lock(tmp_path)
     with patch.object(
-        prepare.subprocess,
-        "check_output",
-        return_value="160000 commit wrong\texternal/helios",
-    ), patch.object(prepare.subprocess, "run") as run:
-        with pytest.raises(RuntimeError, match="does not match"):
+        prepare.subprocess, "run", side_effect=RuntimeError("fetch failed")
+    ):
+        with pytest.raises(RuntimeError, match="fetch failed"):
+            prepare.initialize_checkout(tmp_path)
+    assert not (tmp_path / "external/helios").exists()
+    assert not list((tmp_path / "external").glob(".helios-bootstrap-*"))
+
+
+def test_existing_checkout_is_only_validated(tmp_path):
+    provider_lock(tmp_path)
+    (tmp_path / "external/helios").mkdir(parents=True)
+    with patch.object(prepare.subprocess, "run") as run, patch(
+        "deployment.local.run.validate_lock", side_effect=RuntimeError("dirty checkout")
+    ):
+        with pytest.raises(RuntimeError, match="dirty checkout"):
             prepare.initialize_checkout(tmp_path)
     run.assert_not_called()
+
+
+def test_wrong_fetched_commit_never_installed(tmp_path):
+    provider_lock(tmp_path)
+    with patch.object(prepare.subprocess, "run"), patch.object(
+        prepare.subprocess, "check_output", return_value="b" * 40
+    ):
+        with pytest.raises(RuntimeError, match="does not match"):
+            prepare.initialize_checkout(tmp_path)
+    assert not (tmp_path / "external/helios").exists()
 
 
 def test_bundled_preflight_fails_before_install(tmp_path, monkeypatch):

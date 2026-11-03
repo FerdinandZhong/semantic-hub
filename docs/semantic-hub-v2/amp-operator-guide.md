@@ -14,6 +14,8 @@ AMP import
 ```
 
 The provisioning job owns Helios applications. The AMP manifest owns the Hub application.
+CAI initially clones only Hub. Bundled setup fetches Helios at the exact revision in the provider lock.
+No recursive submodule clone is required during project creation.
 Application startup never provisions resources or installs packages.
 Rerun the preparation or provisioning jobs for recovery; importing the whole AMP again is not an idempotent upgrade procedure.
 

@@ -27,7 +27,7 @@ def validate_lock(root=ROOT):
     checkout = root / lock["path"]
     if not (checkout / ".git").exists():
         raise RuntimeError(
-            "Helios checkout missing. Initialize the pinned submodule first; no fallback was started."
+            "Helios checkout missing. Run prepare to fetch the pinned provider first; no fallback was started."
         )
     top = subprocess.check_output(
         ["git", "-C", str(checkout), "rev-parse", "--show-toplevel"], text=True
@@ -201,7 +201,10 @@ def prepare(args):
         )
     if args.mode != "bundled":
         return
-    checkout = validate_lock()
+    sys.path.insert(0, str(ROOT))
+    from deployment.cai.prepare import initialize_checkout
+
+    checkout = initialize_checkout(ROOT)
     python = ROOT / ".venv-helios/bin/python"
     if not python.exists():
         subprocess.run(

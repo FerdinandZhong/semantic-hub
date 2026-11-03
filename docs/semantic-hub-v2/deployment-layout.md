@@ -1,7 +1,7 @@
 # Bundled AMP deployment with an independent Helios repository
 
 Status: implemented deployment layout, reviewed 2 November 2026; live CAI acceptance remains pending.
-The pinned `external/helios` submodule now exists and owns upstream Helios documentation.
+The pinned `external/helios` checkout is fetched during setup and owns upstream Helios documentation.
 Mode-aware preparation and separate Helios API/UI provisioning are implemented.
 Full built-in package extraction remains planned.
 Use the [operator guide](amp-operator-guide.md) and [live test runbook](live-test-runbook.md) for current operations.
@@ -23,7 +23,7 @@ semantic-hub/
 ├── semantic_hub/                   Hub application and provider adapters
 ├── apps/helios/                    Inherited built-in implementation (not yet extracted)
 ├── external/
-│   └── helios/                     Separate Git repository, pinned submodule
+│   └── helios/                     Separate Git repository, fetched at a pinned commit
 ├── deployment/
 │   ├── provider-lock.json          Tested provider revisions and compatibility
 │   └── cai/
@@ -34,13 +34,13 @@ semantic-hub/
 ```
 
 The provider lock, CAI scripts, and launchers exist. The optional built-in package remains future work.
-The Helios submodule points to the original repository at a tested commit.
-A submodule update changes a commit pointer; it does not merge Helios source into Hub packages.
-The bootstrap must explicitly initialize the checkout if the AMP clone does not initialize submodules.
+The provider lock records the original repository URL and a tested commit.
+Changing the provider lock selects a revision; it does not merge Helios source into Hub packages.
+The bootstrap fetches that exact commit after CAI creates the Hub project; the Hub repository contains no Git submodule.
 If that clone behavior is unsuitable, use a managed checkout at the same locked revision instead.
 
 `provider-lock.json` records the tested revision and adapter compatibility, not a second independently selected source version.
-Setup rejects disagreement between the submodule pointer and the compatibility lock.
+Setup rejects an existing checkout that differs from the compatibility lock.
 Do not follow moving `main` automatically during startup.
 
 The current inherited Helios files remain until the built-in extraction phase completes.
@@ -112,7 +112,7 @@ The setup orchestration must account for CAI-injected ports and application-spec
 
 ## Provider upgrades
 
-1. Select a new Helios revision and update the submodule pointer in a dedicated change.
+1. Select a new Helios revision and update the provider lock in a dedicated change.
 2. Run adapter compatibility and deployment checks against that revision.
 3. Update the compatibility lock after the checks pass.
 4. Back up provider state and follow the provider's supported migration procedure.

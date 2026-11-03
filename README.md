@@ -2,7 +2,7 @@
 
 
 Documentation: [Semantic Hub guides](docs/README.md) · [External Helios provider](external/helios/README.md) · [v2 design](docs/semantic-hub-v2/README.md).
-The provider lives in the pinned `external/helios` Git submodule. Run `git submodule update --init external/helios` after cloning.
+The provider lives in the pinned `external/helios` checkout, fetched during setup. Run `python deployment/cai/prepare.py --checkout-only` after cloning.
 The existing built-in runtime remains in place during the v2 migration.
 
 The [v2 local preview](docs/semantic-hub-v2/local-preview.md) adds a compact provider workspace at `/v2` and an isolated Helios launcher.

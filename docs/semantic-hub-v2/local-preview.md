@@ -19,10 +19,10 @@ Hub /v2 workspace
 
 Run commands from the repository root.
 The existing Hub environment `.venv-semantic-hub` must already exist.
-Initialize the pinned submodule before preparing the provider environment.
+Preparation fetches the pinned provider automatically. To fetch only the checkout:
 
 ```bash
-git submodule update --init external/helios
+python deployment/cai/prepare.py --checkout-only
 python deployment/local/run.py prepare
 python deployment/local/run.py start --helios-ui-port 8200 --helios-api-port 8201
 python deployment/local/run.py check
