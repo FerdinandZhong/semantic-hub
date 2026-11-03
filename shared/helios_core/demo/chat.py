@@ -60,6 +60,83 @@ def semantic_canvas(plan):
             'focus': metric.get('id') or ('metric:' + metric['name'] if metric.get('name') else None)}
 
 
+def _check(name, status, detail):
+    return {'name': name, 'status': status, 'detail': detail}
+
+
+def sql_checks(sql, request, tables):
+    """Structural checks on the executed SQL. They verify shape, not business correctness."""
+    import sqlglot
+    from sqlglot import exp
+    tree = sqlglot.parse_one(sql, read='duckdb')
+    writes = (exp.Insert, exp.Update, exp.Delete, exp.Create, exp.Drop, exp.Alter, exp.Merge)
+    read_only = isinstance(tree, (exp.Select, exp.Union)) and not any(tree.find_all(*writes))
+    used = {t.name for t in tree.find_all(exp.Table)}
+    group = tree.args.get('group')
+    grouped = {c.sql(dialect='duckdb') for c in group.find_all(exp.Column)} if group else set()
+    where = tree.args.get('where')
+    filtered = {c.sql(dialect='duckdb') for c in where.find_all(exp.Column)} if where else set()
+    missing = [f['field'] for f in request.get('filters', []) if f['field'] not in filtered]
+    return [
+        _check('Read-only SELECT', 'pass' if read_only else 'fail', 'Single SELECT statement' if read_only else 'Statement is not a plain SELECT'),
+        _check('Tables in published model', 'pass' if used <= tables else 'fail', ', '.join(sorted(used)) or 'No tables'),
+        _check('Grouping matches request', 'pass' if grouped == set(request.get('dimensions', [])) else 'fail',
+               ', '.join(sorted(grouped)) or 'No grouping'),
+        _check('Requested filters applied', 'pass' if not missing else 'fail',
+               f"{len(request.get('filters', []))} filter(s)" if not missing else 'Missing: ' + ', '.join(missing)),
+        _check('Row limit present', 'pass' if tree.args.get('limit') else 'fail',
+               f"Displays up to {request.get('limit')} rows; one extra row detects truncation" if tree.args.get('limit') else 'No LIMIT'),
+    ]
+
+
+def answer_checks(plan, result, details):
+    """Deterministic per-answer evaluation. Counts of real checks, never a confidence score."""
+    retrieval, generation = [], []
+    if plan.get('kind') == 'document' or plan.get('passages'):
+        found = plan.get('retrieval', {})
+        selected = len(plan.get('passages', []))
+        retrieval.append(_check('Passages retrieved', 'pass' if selected else 'fail',
+                                f"{selected} of {found.get('candidate_count', selected)} published passages"))
+        hits = [m for m in details.get('matches', []) if m.get('score')]
+        if details.get('method') == 'Keyword overlap':
+            retrieval.append(_check('Passages with keyword overlap', 'pass' if hits else 'warn',
+                                    f'{len(hits)} of {len(details["matches"])} (relevance signal)'))
+    if plan.get('kind') in ('metric', 'hybrid'):
+        if details.get('method') == 'Saved metric selection':
+            retrieval.append(_check('Metric retrieval', 'n/a', 'Saved metric selected directly; no retrieval score applies'))
+        else:
+            ranked = [m['name'] for m in details.get('matches', []) if m.get('kind') == 'metric']
+            name = (plan.get('metric') or {}).get('name')
+            rank = ranked.index(name) + 1 if name in ranked else None
+            retrieval.append(_check('Selected metric rank', 'pass' if rank == 1 else 'warn',
+                f'Rank {rank} of {len(ranked)} lexical metric matches (relevance signal)' if rank
+                else 'Not among lexical metric matches; chosen by the planner'))
+        scope = (plan.get('scope_check') or {}).get('checks', [])
+        if scope:
+            ok = sum(c['status'] == 'supported' for c in scope)
+            retrieval.append(_check('Scope checks', 'pass' if ok == len(scope) else 'fail', f'{ok}/{len(scope)} supported'))
+        if result.get('sql'):
+            tables = {n['id'] for n in (plan.get('graph') or {}).get('nodes', [])}
+            generation += sql_checks(result['sql'], plan['request'], tables)
+            rows = len(result.get('rows') or [])
+            generation.append(_check('Result returned', 'warn' if result.get('status') == 'no_data' or not rows else 'pass',
+                f"{rows} row(s){' · display limit reached' if result.get('truncated') else ''}"))
+    verified = result.get('verification')
+    if verified:
+        generation += [
+            _check('Citations verified', 'pass', f"{verified['citations']}/{verified['citations']} quotes found in source text"),
+            _check('Numbers grounded', 'pass', f"{verified['numbers']}/{verified['numbers']} numbers appear in cited quotes"),
+            _check('Evidence support check', 'pass', f"{verified['claims']} claim(s) passed"),
+            _check('Answer repair', 'pass' if verified['attempts'] == 1 else 'warn',
+                   'First attempt passed' if verified['attempts'] == 1 else 'Passed after one bounded repair'),
+        ]
+    elif plan.get('passages'):
+        generation.append(_check('Cited answer', 'warn', result.get('message') or 'No cited claims were accepted'))
+    scored = [c for c in retrieval + generation if c['status'] != 'n/a']
+    return {'retrieval': retrieval, 'generation': generation,
+            'summary': {'passed': sum(c['status'] == 'pass' for c in scored), 'total': len(scored)}}
+
+
 def answer(playground, payload, llm_factory, emit):
     """Submitting Ask & run authorizes this one bounded, read-only execution."""
     emit('retrieve', 'Read published definitions and find relevant evidence')
@@ -78,4 +155,5 @@ def answer(playground, payload, llm_factory, emit):
     result['metric'] = {k: plan.get('metric', {}).get(k) for k in ('name', 'description', 'unit')}
     result['request'] = plan.get('request')
     result['semantic_canvas'] = semantic_canvas(plan)
+    result['evaluation'] = answer_checks(plan, result, details)
     return result

@@ -34,6 +34,10 @@ def test_saved_metric_executes_data_and_does_not_invent_confidence(finance):
     tables = {t.name for t in __import__('sqlglot').parse_one(result['sql'], read='duckdb').find_all(__import__('sqlglot').exp.Table)}
     assert {n['id'] for n in canvas['graph']['nodes']} == tables
     assert canvas['focus'] and canvas['focus'] in canvas['graph']['metric_dependencies']
+    evaluation = result['evaluation']
+    assert evaluation['retrieval'][0]['status'] == 'n/a'
+    assert evaluation['summary']['passed'] == evaluation['summary']['total'] > 0
+    assert 'confidence' not in json.dumps(evaluation).lower()
     factory.assert_not_called()
 
 
@@ -50,6 +54,10 @@ def test_natural_question_runs_grouped_query_and_reports_actual_ranking(finance)
     assert details['confidence'] is None
     _, scope, _ = finance.playground.adopted(payload.version, payload.context_sha256)
     assert details['matches'] == finance.playground.retrieval.discover(payload.question, scope)[0]['matches']
+    checks = {c['name']: c for c in result['evaluation']['retrieval'] + result['evaluation']['generation']}
+    assert checks['Selected metric rank']['status'] == 'pass'
+    assert checks['Grouping matches request']['detail'] == 'payments.jurisdiction'
+    assert all(c['status'] == 'pass' for c in checks.values())
 
 
 def test_clarification_does_not_execute(finance, monkeypatch):
@@ -86,6 +94,10 @@ def test_document_answer_has_citations_and_real_keyword_scores(tmp_path):
         assert details['confidence'] is None and details['method'] == 'Keyword overlap'
         assert all(0 <= m['score'] <= m['query_terms'] for m in details['matches'])
         assert any(stage == 'answer' for stage, _ in events)
+        checks = {c['name']: c for c in result['evaluation']['generation']}
+        cited = sum(len(c['citations']) for c in result['claims'])
+        assert checks['Citations verified']['detail'].startswith(f'{cited}/{cited}')
+        assert 'Read-only SELECT' not in checks
     finally:
         runtime.close()
 
@@ -106,3 +118,13 @@ def test_stream_route_pins_binding_and_returns_terminal_result(finance):
         assert Decimal(str(events[-1]['result']['rows'][0][0])) == Decimal('686572.96')
         assert client.post('/demo/api/playground/chat', json=payload | {'session_id':'different'}).status_code == 409
         assert client.post('/demo/api/playground/chat', json=payload | {'sql':'DELETE FROM payments'}).status_code == 422
+
+
+def test_sql_checks_flag_unpublished_tables_grouping_filters_and_limit():
+    from helios_core.demo.chat import sql_checks
+    checks = {c['name']: c['status'] for c in sql_checks(
+        'SELECT a.x, SUM(a.y) FROM a JOIN b ON a.k = b.k GROUP BY a.x',
+        {'dimensions': ['a.z'], 'filters': [{'field': 'a.d'}], 'limit': 10}, {'a'})}
+    assert checks == {'Read-only SELECT': 'pass', 'Tables in published model': 'fail',
+                      'Grouping matches request': 'fail', 'Requested filters applied': 'fail',
+                      'Row limit present': 'fail'}

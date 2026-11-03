@@ -667,12 +667,41 @@ function renderChat(catalog, config, ticket) {
       if (result.request) sql.append(make('pre', JSON.stringify(result.request, null, 2)));
       box.append(sql);
     }
+    if (result.evaluation?.summary.total) {
+      const {passed, total} = result.evaluation.summary;
+      const evaluation = make('details', null, 'answer-detail answer-checks'); evaluation.open = passed < total;
+      evaluation.append(make('summary', `Answer checks · ${passed}/${total} passed`));
+      for (const [title, items] of [['Retrieval', result.evaluation.retrieval], ['Generation', result.evaluation.generation]]) {
+        if (!items.length) continue;
+        evaluation.append(make('h4', title)); const list = make('ul', null, 'check-list');
+        for (const c of items) {
+          const row = make('li'); row.dataset.status = c.status;
+          row.append(make('span', {pass: '✓', fail: '✕', warn: '⚠', 'n/a': '–'}[c.status], 'check-mark'), make('strong', c.name), make('span', c.detail, 'check-detail'));
+          list.append(row);
+        }
+        evaluation.append(list);
+      }
+      evaluation.append(make('p', 'Deterministic checks on this answer. Relevance signals rank matches; they are not calibrated confidence.', 'retrieval-note'));
+      box.append(evaluation);
+    }
     if (result.semantic_canvas) {
       const canvas = make('details', null, 'answer-detail answer-canvas'); canvas.append(make('summary', 'Semantic canvas · objects used'));
       canvas.dataset.canvas = JSON.stringify(result.semantic_canvas); box.append(canvas);
     }
     const provenance = make('details', null, 'answer-detail'); provenance.append(make('summary', 'Full result provenance'));
     provenance.append(make('pre', JSON.stringify(result, null, 2))); box.append(provenance);
+  }
+  function agentTrace(box, agent) {
+    const stops = {receipt: 'Stopped on a checked plan receipt', single_receipt_fallback: 'Stopped with one checked receipt',
+      no_receipt: 'Stopped without a checked plan', budget_exhausted: 'Stopped at the tool budget', sdk_error: 'Agent runtime error'};
+    const head = make('p', `Agent tool calls · ${agent.tool_calls ?? agent.trace.length}/${agent.tool_budget} budget · ${stops[agent.stop_reason] || 'Stop reason not recorded'}`, 'trace-heading');
+    const list = make('ol', null, 'agent-trace');
+    for (const step of agent.trace || []) {
+      const row = make('li'); row.dataset.status = step.status === 'rejected' ? 'fail' : 'pass';
+      row.append(make('strong', step.tool.replaceAll('_', ' ')), make('span', [step.status, step.metric, step.failure_type === 'duplicate_call' ? 'duplicate call' : step.message].filter(Boolean).join(' · '), 'check-detail'));
+      list.append(row);
+    }
+    box.append(head, list);
   }
   async function ask() {
     const original = $("question").value.trim(); if (busy || !original) return;
@@ -715,6 +744,7 @@ function renderChat(catalog, config, ticket) {
         if (event.type === 'result') {
           if (received) throw Error('A duplicate answer was received.'); received = true;
           renderAnswer(answer, event.result, v);
+          if (event.result.agent) agentTrace(progress, event.result.agent);
           const success = (!event.result.status || event.result.status === 'answered') && (event.result.columns || event.result.claims?.length);
           flow.querySelectorAll('li').forEach((li, i) => li.dataset.state = success ? 'done' : i < stage ? 'done' : i === stage ? 'attention' : 'waiting');
           summary.textContent = success ? 'Completed · View execution flow' : 'Request needs attention · View checks';

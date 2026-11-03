@@ -172,7 +172,13 @@ def answer_document(llm, question, selected):
     feedback = ''
     for attempt in range(2):
         try:
-            return _checked_answer(llm, question, selected, feedback)
+            result = _checked_answer(llm, question, selected, feedback)
+            # Counts of checks that passed; any failure above raises instead.
+            result['verification'] = {'claims': len(result['claims']),
+                'citations': sum(len(c['citations']) for c in result['claims']),
+                'numbers': sum(len(numbers(c['text'])) for c in result['claims']),
+                'support_check': bool(result['claims']), 'attempts': attempt + 1}
+            return result
         except DemoError as exc:
             if attempt:
                 raise
