@@ -1,5 +1,10 @@
 # Bundled AMP deployment with an independent Helios repository
 
+> Deployment update, 3 November 2026: Helios now runs in a separate CAI project.
+> The Hub AMP uses optional endpoint checks and never provisions Helios.
+> Earlier bundled deployment plans below are historical.
+> Use the [current operator guide](amp-operator-guide.md) and [standalone Helios guide](standalone-helios.md).
+
 Status: implemented deployment layout, reviewed 2 November 2026; live CAI acceptance remains pending.
 The pinned `external/helios` checkout is fetched during setup and owns upstream Helios documentation.
 Mode-aware preparation and separate Helios API/UI provisioning are implemented.

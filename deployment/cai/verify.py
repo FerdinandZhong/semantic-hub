@@ -55,18 +55,20 @@ def probe(origin, path, key="", *, opener=None):
         return {"reachable": False, "reason": "connection_failed"}
 
 
-def verify(mode, hub_origin, provider_origins=None, *, key="", probe_fn=probe):
-    if mode not in {"bundled", "external", "builtin_only"}:
+def verify(mode, hub_origin, provider_origins=None, *, key="", provider_key="", probe_fn=probe):
+    if mode not in {"auto", "bundled", "external", "builtin_only"}:
         raise ValueError("Unknown provider mode")
     targets = {"hub": (hub_origin, "/healthz")}
-    if mode != "builtin_only":
+    if mode not in {"auto", "builtin_only"} or (mode == "auto" and provider_origins):
         origins = provider_origins or {}
         targets.update(
-            helios_api=(origins["helios_api"], "/api/v1/healthz"),
-            helios_ui=(origins["helios_ui"], "/healthz"),
+            helios_api=(origins.get("helios_api", ""), "/api/v1/healthz"),
+            helios_ui=(origins.get("helios_ui", ""), "/healthz"),
         )
     checks = {
-        role: probe_fn(origin, path, key) for role, (origin, path) in targets.items()
+        role: probe_fn(origin, path, key if role == "hub" else provider_key)
+        if origin else {"reachable": False, "reason": "not_configured"}
+        for role, (origin, path) in targets.items()
     }
     return {
         "mode": mode,
@@ -90,14 +92,17 @@ def main():
             role: state["applications"][role]["origin"]
             for role in ("helios_api", "helios_ui")
         }
-    elif cfg["mode"] == "external":
+    elif cfg["mode"] in {"auto", "external"}:
         origins = {
             "helios_api": os.environ.get("HELIOS_API_ORIGIN", ""),
             "helios_ui": os.environ.get("HELIOS_UI_ORIGIN", ""),
         }
+        if cfg["mode"] == "auto" and not any(origins.values()):
+            origins = {}
     # Use a caller-supplied key; never serialize it or forward it through redirects.
     report = verify(
-        cfg["mode"], args.hub_origin, origins, key=os.environ.get("CDSW_APIV2_KEY", "")
+        cfg["mode"], args.hub_origin, origins, key=os.environ.get("CDSW_APIV2_KEY", ""),
+        provider_key=os.environ.get("HELIOS_HEALTH_API_KEY", "")
     )
     save(cfg["deployment"] / "verification.json", report)
     print(json.dumps(report, indent=2))

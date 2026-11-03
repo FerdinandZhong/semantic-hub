@@ -82,3 +82,28 @@ def test_successful_status_is_health(status):
     assert probe("https://api.example", "/api/v1/healthz", opener=Response())[
         "reachable"
     ]
+
+
+def test_auto_verification_without_origins_checks_hub_only():
+    calls = []
+    def ready(origin, path, key):
+        calls.append((origin, key))
+        return {"reachable": True}
+    report = verify("auto", "https://hub.example", key="hub-key", probe_fn=ready)
+    assert calls == [("https://hub.example", "hub-key")]
+    assert report["endpoints_reachable"]
+
+
+def test_auto_verification_separates_hub_and_provider_credentials():
+    calls = []
+    def ready(origin, path, key):
+        calls.append((origin, key))
+        return {"reachable": True}
+    report = verify("auto", "https://hub.example",
+        {"helios_api": "https://api.example", "helios_ui": "https://ui.example"},
+        key="hub-key", provider_key="provider-key", probe_fn=ready)
+    assert calls == [("https://hub.example", "hub-key"),
+                     ("https://api.example", "provider-key"),
+                     ("https://ui.example", "provider-key")]
+    assert report["endpoints_reachable"]
+    assert "key" not in str(report)

@@ -1,5 +1,10 @@
 # Semantic Hub v2 implementation plan
 
+> Deployment update, 3 November 2026: Helios now runs in a separate CAI project.
+> The Hub AMP uses optional endpoint checks and never provisions Helios.
+> Earlier bundled deployment plans below are historical.
+> Use the [current operator guide](amp-operator-guide.md) and [standalone Helios guide](standalone-helios.md).
+
 Status: local runtime and AMP provisioning increment implemented, 27 October 2026.
 The pinned checkout, local launcher, provider registry, and workspace UI are available.
 See [implementation evidence](local-preview.md) for validation and remaining gaps.

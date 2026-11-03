@@ -7,7 +7,7 @@ from pathlib import Path
 import time
 from urllib.parse import urlsplit
 
-MODES = {"bundled", "external", "builtin_only"}
+MODES = {"auto", "bundled", "external", "builtin_only"}
 
 
 def configuration(root=None):
@@ -16,7 +16,7 @@ def configuration(root=None):
         or os.environ.get("CDSW_PROJECT_DIR")
         or Path(__file__).resolve().parents[2]
     ).resolve()
-    mode = os.environ.get("SEMANTIC_HUB_PROVIDER_MODE", "bundled")
+    mode = os.environ.get("SEMANTIC_HUB_PROVIDER_MODE", "auto")
     if mode not in MODES:
         raise RuntimeError("Invalid SEMANTIC_HUB_PROVIDER_MODE")
 
@@ -101,7 +101,7 @@ def specification(service, root=None):
     venv = root / (".venv-helios" if native else ".venv-semantic-hub")
     python = venv / "bin/python"
     if not python.is_file():
-        raise RuntimeError("Run deployment/cai/prepare.py before starting applications")
+        raise RuntimeError("Run the application setup job before starting applications")
     env = isolated_environment(venv)
     for key in list(env):
         if key in {

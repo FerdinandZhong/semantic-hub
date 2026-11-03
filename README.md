@@ -1,12 +1,12 @@
 # Semantic Hub
 
 
-Documentation: [Semantic Hub guides](docs/README.md) · [External Helios provider](external/helios/README.md) · [v2 design](docs/semantic-hub-v2/README.md).
-The provider lives in the pinned `external/helios` checkout, fetched during setup. Run `python deployment/cai/prepare.py --checkout-only` after cloning.
+Documentation: [Semantic Hub guides](docs/README.md) · [Standalone Helios](docs/semantic-hub-v2/standalone-helios.md) · [v2 design](docs/semantic-hub-v2/README.md).
+Helios runs in a separate CAI project. The Hub AMP does not clone or install it.
 The existing built-in runtime remains in place during the v2 migration.
 
 The [v2 local preview](docs/semantic-hub-v2/local-preview.md) adds a compact provider workspace at `/v2` and an isolated Helios launcher.
-V2 adds mode-aware AMP preparation and Helios provisioning. Live multi-application CAI acceptance remains pending.
+V2 checks optional Helios endpoints and registers a healthy provider at startup. Live CAI acceptance remains pending.
 External release import and delegated queries remain planned.
 
 **Build, review, version, and publish semantic models for applications and agents.**
@@ -27,9 +27,10 @@ Everything runs self-hosted: the models, the runtime, the applications.
 ## Deploy as a Cloudera AI AMP
 
 Import this repository using [`.project-metadata.yaml`](.project-metadata.yaml).
-The setup job prepares isolated runtimes. A provisioning job creates or reuses Helios applications in bundled mode.
+The setup job prepares only the isolated Hub runtime. No provisioning job creates Helios applications.
 The final AMP task starts the authenticated Hub application for the UI, Swagger, and consumer API.
-Choose `builtin_only` for Hub alone or `external` to link an existing Helios deployment.
+The default `auto` mode connects configured, healthy Helios endpoints. Without them, a fresh install contains only the built-in builder.
+Choose `builtin_only` to skip Helios checks.
 See the [AMP deployment guide](docs/amp-deployment.md) for persistence, model configuration, MCP credentials, and acceptance checks.
 AMP packaging is implemented; a live CAI launch remains to be verified.
 

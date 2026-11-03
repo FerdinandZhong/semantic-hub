@@ -159,7 +159,7 @@ def provision(
     sleep=time.sleep,
     clock=time.monotonic,
 ):
-    if mode not in {"bundled", "external", "builtin_only"}:
+    if mode not in {"auto", "bundled", "external", "builtin_only"}:
         raise ProvisionError("Unknown provider mode.")
     if mode != "bundled":
         return {"mode": mode, "stage": "skipped", "applications": {}}
@@ -307,7 +307,7 @@ def provision(
 
 
 def main():
-    mode = os.environ.get("SEMANTIC_HUB_PROVIDER_MODE", "bundled")
+    mode = os.environ.get("SEMANTIC_HUB_PROVIDER_MODE", "auto")
     if mode != "bundled":
         provision(mode=mode, state_path=state_directory() / "provision.json")
         from deployment.cai.configure_providers import configure

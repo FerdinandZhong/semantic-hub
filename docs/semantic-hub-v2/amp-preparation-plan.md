@@ -1,5 +1,10 @@
 # AMP preparation and CAI acceptance plan
 
+> Deployment update, 3 November 2026: Helios now runs in a separate CAI project.
+> The Hub AMP uses optional endpoint checks and never provisions Helios.
+> Earlier bundled deployment plans below are historical.
+> Use the [current operator guide](amp-operator-guide.md) and [standalone Helios guide](standalone-helios.md).
+
 Status: preparation and provisioning implementation added, 27 October 2026; live CAI acceptance remains pending.
 See the [operator guide](amp-operator-guide.md) for the implemented configuration and recovery procedure.
 This plan does not itself run application provisioning.

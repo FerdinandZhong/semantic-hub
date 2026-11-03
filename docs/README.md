@@ -5,15 +5,13 @@ Documentation ownership updated on 23 October 2026.
 ## Documentation ownership
 
 - **Semantic Hub:** this directory contains Hub guides, built-in workflows, integration plans, and demo evidence.
-- **External Helios provider:** use [the provider README](../external/helios/README.md) and [its documentation directory](../external/helios/docs).
+- **External Helios provider:** use [standalone deployment notes](semantic-hub-v2/standalone-helios.md) and the upstream repository.
 - **Inherited local Helios behavior:** use [Built-in compatibility guides](builtin/helios-compat/README.md).
 - **Independent transformation use case:** use [its separate folder](self-service-data-transformation/README.md).
 
-The Helios provider checkout is pinned as a Git submodule. Initialize it after a non-recursive clone:
-
-```sh
-git submodule update --init external/helios
-```
+Helios runs as a separate CAI project. Follow [standalone Helios integration](semantic-hub-v2/standalone-helios.md).
+The Hub AMP requires no provider checkout, Git submodule, or Node.js installation.
+The optional local developer launcher still supports a pinned `external/helios` checkout.
 
 See [the cleanup report](semantic-hub-v2/documentation-cleanup.md) and [ownership record](documentation-ownership.json) for relocated or deduplicated guides.
 Upstream guides are maintained in Helios. Hub-specific changes stay here.

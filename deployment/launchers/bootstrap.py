@@ -13,6 +13,11 @@ if service == "hub":
     from cai_integration.application import create_app
 
     app = create_app(local=False)
+    from cai_integration.config import settings
+    from deployment.cai.connect_external import connect
+    import json
+
+    print("Optional Helios: " + json.dumps(connect(settings()["state"])), flush=True)
 elif service in {"helios-api", "helios-ui"}:
     import helios_core
 

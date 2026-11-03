@@ -23,7 +23,7 @@ def clean_environment(monkeypatch):
     monkeypatch.setenv("CDSW_APP_PORT", "8123")
 
 
-@pytest.mark.parametrize("mode", ["external", "builtin_only"])
+@pytest.mark.parametrize("mode", ["auto", "external", "builtin_only"])
 def test_hub_does_not_require_checkout(tmp_path, monkeypatch, mode):
     root = fixture_root(tmp_path)
     monkeypatch.setenv("SEMANTIC_HUB_PROVIDER_MODE", mode)
@@ -39,6 +39,7 @@ def test_hub_does_not_require_checkout(tmp_path, monkeypatch, mode):
 
 
 def test_native_uses_discovered_origins_and_separate_state(tmp_path, monkeypatch):
+    monkeypatch.setenv("SEMANTIC_HUB_PROVIDER_MODE", "bundled")
     root = fixture_root(tmp_path)
     deployment = root / "state/deployment"
     deployment.mkdir(parents=True)
@@ -74,7 +75,8 @@ def test_rejects_development_identity(tmp_path, monkeypatch, key):
         common.specification("hub", fixture_root(tmp_path))
 
 
-def test_native_requires_explicit_proxy_attestation(tmp_path):
+def test_native_requires_explicit_proxy_attestation(tmp_path, monkeypatch):
+    monkeypatch.setenv("SEMANTIC_HUB_PROVIDER_MODE", "bundled")
     with patch("deployment.local.run.validate_lock", return_value=tmp_path):
         with pytest.raises(RuntimeError, match="strips client identity"):
             common.specification("helios-api", fixture_root(tmp_path))
@@ -108,7 +110,7 @@ def test_state_overlap_rejected(tmp_path, monkeypatch):
         common.configuration(tmp_path)
 
 
-@pytest.mark.parametrize("mode", ["external", "builtin_only"])
+@pytest.mark.parametrize("mode", ["auto", "external", "builtin_only"])
 def test_prepare_skips_native_code_and_install(tmp_path, monkeypatch, mode):
     monkeypatch.setenv("SEMANTIC_HUB_PROVIDER_MODE", mode)
     monkeypatch.setenv("HELIOS_UI_ORIGIN", "https://ui.example")

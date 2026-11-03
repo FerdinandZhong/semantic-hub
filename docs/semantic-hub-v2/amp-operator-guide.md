@@ -1,141 +1,83 @@
-# Semantic Hub v2 AMP operator guide
+# AMP operator guide
 
-Status: implementation for local verification; live multi-application CAI acceptance is pending.
-This release links Helios workspaces. It does not import Helios releases or delegate Hub MCP queries to Helios.
-
-## Deployment sequence
+Updated 3 November 2026. Semantic Hub and Helios run in separate CAI projects.
+The Hub AMP never clones, installs, starts, or upgrades Helios.
 
 ```text
-AMP import
-  → Preparation job: Hub environment + optional pinned Helios environment/UI build
-  → Provisioning job: create/reuse native API and UI → register provider origins
-  → AMP task: start authenticated Hub application
-  → Operator: endpoint checks → browser and identity acceptance
+Hub AMP -> Hub setup -> Hub application -> Built-in builder
+                              |
+                       optional health checks
+                              |
+                       Helios API + UI
+                       (separate project)
 ```
 
-The provisioning job owns Helios applications. The AMP manifest owns the Hub application.
-CAI initially clones only Hub. Bundled setup fetches Helios at the exact revision in the provider lock.
-No recursive submodule clone is required during project creation.
-Application startup never provisions resources or installs packages.
-Rerun the preparation or provisioning jobs for recovery; importing the whole AMP again is not an idempotent upgrade procedure.
+## Install the Hub
 
-## Select a mode
+1. Import the Hub repository and select `fix/amp-provider-bootstrap` for this change.
+2. Use the root `.project-metadata.yaml` manifest.
+3. Select the Standard Python 3.11 runtime.
+4. Retain the default persistent `SEMANTIC_HUB_STATE_DIR`.
+5. Leave `SEMANTIC_HUB_PROVIDER_MODE=auto`.
+6. Leave both Helios origins empty to start with only the built-in builder.
+7. Wait for the setup job and Hub application.
+8. Open the authenticated Hub application URL.
 
-| `SEMANTIC_HUB_PROVIDER_MODE` | Preparation and provisioning |
+The manifest has three tasks: create setup job, run setup job, and start Hub.
+Setup runs `cai_integration/setup_environment.py`.
+The application runs `deployment/launchers/hub.py`.
+It uses 2 CPUs and 8 GB memory. No GPU, Node.js, or application-management key is required for Hub setup.
+Package installation still requires access to the configured Python package registry.
+
+## Connect an existing Helios project
+
+Follow [the standalone Helios guide](standalone-helios.md) first.
+
+| Setting | Purpose |
 | --- | --- |
-| `bundled` (default) | Prepare the locked native checkout; create/reuse separate Helios API and UI applications |
-| `external` | Prepare Hub; register supplied Helios UI/API origins; do not create or change external applications |
-| `builtin_only` | Prepare Hub; skip native checkout, native dependencies, and provider registration |
+| `SEMANTIC_HUB_PROVIDER_MODE=auto` | Check explicitly configured endpoints at each Hub startup |
+| `HELIOS_UI_ORIGIN` | Exact HTTPS origin of the Helios UI |
+| `HELIOS_API_ORIGIN` | Exact HTTPS origin of the Helios API |
+| `HELIOS_HEALTH_API_KEY` | Optional secret for authenticated health checks through CAI ingress |
+| `SEMANTIC_HUB_PROVIDER_MODE=builtin_only` | Skip automatic Helios registration |
 
-The built-in builder remains installed in every mode. External-only dependency extraction is future work.
-Changing modes does not delete applications or existing provider records.
+Set both origins in the Hub application's project environment, then restart the Hub.
+The health key must have access to the separate Helios project.
+Configure it as a secret environment value; do not put it in Git or URLs.
+The Hub never substitutes its inherited `CDSW_APIV2_KEY` for this key.
+Workspace discovery still uses the calling user's credential and native Helios permissions.
+The health key does not authorize workspace access.
 
-## Prerequisites
+The Hub checks UI `/healthz` and API `/api/v1/healthz`.
+Each check has a five-second deadline. TLS verification remains enabled; redirects and login pages fail readiness.
+Both checks must pass before registration as `helios-external`.
+Registration adds navigation capabilities, not external releases or delegated query execution.
+Select the provider in the workspace flow to create or link an authorized native workspace.
 
-1. Use a Standard Python 3.11 runtime and persistent project storage.
-2. For bundled mode, provide Node.js 20 or newer, npm, Git access, and package registry access.
-3. Set `SEMANTIC_HUB_RUNTIME_IDENTIFIER` to the exact runtime identifier for the native applications.
-4. Supply `CDSW_API_URL`, `CDSW_PROJECT_ID`, and `CDSW_APIV2_KEY` through the CAI job environment for bundled provisioning.
-5. Use a management identity authorized to list, create, inspect, and restart applications in that project.
-6. Verify that CAI ingress authenticates users and replaces client-supplied identity headers before enabling native Helios.
-7. Set `HELIOS_CAI_PROXY_AUTH_CONFIRMED=1` only after that verification.
+Missing configuration, failed authentication, or an unavailable service leaves a fresh Hub with only its built-in builder.
+The application log records a credential-free `Optional Helios` result.
+This is a startup check, not continuous discovery or a health monitor.
+A Helios deployment started later requires a Hub restart or an explicit retry:
 
-The proxy setting records an operator assertion. It does not test authentication.
-Native Helios trusts ingress identity headers and applies its own principal and model permissions.
-The launchers reject development identity settings. Setup creates no users, model grants, source data, or published releases.
-
-Management credentials are not written into deployment reports or application payloads by the provisioner.
-Project-level CAI credentials can still be inherited by workloads according to platform policy.
-Applications retain `bypass_authentication: false`.
-
-Initial bundled allocations total 6 CPUs and 24 GB memory: 2 CPUs and 8 GB per application.
-The preparation job requests 2 CPUs/8 GB; provisioning requests 1 CPU/2 GB and overlaps native application startup.
-These are initial allocations, not measured capacity recommendations.
-
-## Application origins
-
-For a private certificate authority, set `SSL_CERT_FILE` to the trusted PEM bundle in the project environment.
-Make the same bundle available to setup jobs and applications.
-The model picker honors this bundle while keeping redirects and environment proxy inheritance disabled.
-Keep TLS verification enabled; a trust failure must not be bypassed.
-
-External mode requires `HELIOS_UI_ORIGIN` and `HELIOS_API_ORIGIN`.
-Use exact HTTPS origins without paths, credentials, query strings, or fragments.
-
-Bundled provisioning uses URLs returned by CAI when available.
-Some API versions expose only subdomains. The provisioner does not infer a hostname from those values.
-It creates both application records and retains their IDs before reporting missing URLs.
-
-1. Copy each assigned application URL from Workbench.
-2. Set `HELIOS_UI_ORIGIN` and `HELIOS_API_ORIGIN` in the provisioning job environment.
-3. Rerun the provisioning job.
-
-Native launchers wait a bounded time for both origins in the deployment checkpoint.
-The API uses the UI origin for CORS. The UI uses the API origin for browser requests.
-If an application stopped while waiting, retrying provisioning restarts the owned application.
-Existing records with conflicting ownership, authentication, runtime, or launcher configuration are rejected.
-
-## Persistent files
-
-| Setting | Default relative to the Hub state directory |
-| --- | --- |
-| `SEMANTIC_HUB_STATE_DIR` | `/home/cdsw/state/semantic-hub` from the manifest |
-| `HELIOS_STATE_DIR` | Sibling `helios/` directory |
-| `SEMANTIC_HUB_DEPLOYMENT_STATE_DIR` | Sibling `deployment/` directory |
-| `HELIOS_ARTIFACT_DIR` | `deployment/helios-ui/` |
-
-Keep state locations stable across job reruns and application restarts.
-Hub and Helios use separate environments and databases.
-The native UI builds from a disposable copy, preserving the pinned tracked checkout.
-The deployment directory holds preparation evidence, provisioned application IDs, and verification output.
-Do not delete `provision.json` to resolve an error; it identifies the owned applications.
-Back up both state directories and encryption keys before an upgrade.
-
-The checkpoint pins the provider revision and runtime identifier.
-A conflicting revision is rejected. Automated provider upgrades and migration rollback are outside this increment.
-Provider origins cannot silently change under an existing registry ID.
-
-## Model linking
-
-Use the [Helios model picker](helios-model-picker.md) to select an authorized organization and model.
-Hosted discovery requires the caller's explicit CAI API key.
-Hub rechecks model access before saving; it does not persist that key or substitute an owner credential.
-Workspace links appear in the shared Hub catalog. Native Helios still enforces model permissions.
-A saved link does not import a release or enable Hub delegated queries.
-
-## Verification
-
-Local verification on 27 October 2026 passed 73 AMP and provider tests.
-Lint and whitespace checks passed for the new deployment code.
-Actual CLI checks confirmed built-in-only skip behavior and repeatable external registration without management credentials.
-The native bootstrap loaded the pinned Helios API in its isolated environment and passed an in-process metadata health check.
-These checks used disposable local state. No CAI applications were created.
-
-```bash
-.venv-semantic-hub/bin/python -m pytest tests/amp tests/providers -q
+```sh
+.venv-semantic-hub/bin/python deployment/cai/connect_external.py --retry
 ```
 
-After Hub starts, run this command from the project root with an authorized caller key in the environment:
+Existing provider records and workspace links survive outages and `builtin_only` restarts.
+They are not deleted, converted, or silently redirected to the built-in builder.
+A conflicting `helios-external` origin returns `provider_conflict`; register a different provider ID through the administrative flow.
 
-```bash
-python deployment/cai/verify.py --hub-origin https://YOUR-HUB-APPLICATION
-```
+## State and compatibility
 
-The verifier checks health response shapes and rejects redirects, including login redirects.
-It saves `verification.json` without credentials.
-It always reports full CAI acceptance as pending; endpoint reachability alone is insufficient.
+Back up `SEMANTIC_HUB_STATE_DIR`, including the model encryption key, before upgrades.
+Helios owns its own state in its separate project.
+The optional local launcher and legacy bundled scripts remain for compatibility.
+Neither participates in the current AMP manifest. Legacy `external` mode also uses the optional startup health check.
+Do not select legacy `bundled` mode for a new AMP deployment.
 
-Use the [live test runbook](live-test-runbook.md) to record target details and evidence.
-Complete the [A01–A08 acceptance checks](amp-preparation-plan.md#cai-acceptance-matrix) in a disposable CAI project.
-Verify authenticated browser navigation, CORS preflight, identity-header stripping, and native model permissions.
-Also check independent restarts, persistent credentials, retry recovery, and provider outages.
-Configure a permitted backend and inference endpoint before claiming native Talk works.
-Optional document embeddings/vector evidence dependencies remain omitted from the pinned provider preparation.
+## Verification status
 
-## References
-
-- [AMP project specification](https://docs.cloudera.com/machine-learning/cloud/applied-ml-prototypes/topics/ml-amp-project-spec.html)
-- [CAI API v2 REST schema](https://docs.cloudera.com/machine-learning/1.5.5/rest-api-reference/index.html)
-- [CAI API v2 usage examples](https://docs.cloudera.com/machine-learning/latest/api/topics/ml-apiv2-usage-examples.html)
-
-Target CAI API compatibility still requires live verification. Offline fixtures do not certify a target deployment.
+Local AMP and provider tests cover startup wiring, health failures, timeout, repeat registration, and credential isolation.
+A live CAI import, authenticated browser check, and separate-project authorization check remain required.
+Use [the live-test runbook](live-test-runbook.md).
+The reported project-copy exit status 24 remains unconfirmed; removing Helios provisioning cannot prove its cause.

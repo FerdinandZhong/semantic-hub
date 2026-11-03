@@ -5,6 +5,11 @@ from semantic_hub.providers.registry import Registry
 
 
 def configure(mode, *, state=None):
+    if mode == "auto":
+        from deployment.cai.connect_external import connect
+        from deployment.launchers.common import configuration
+
+        return connect(configuration()["hub"])
     if mode == "builtin_only":
         return None
     if mode == "bundled":

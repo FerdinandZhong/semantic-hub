@@ -1,5 +1,7 @@
 # Semantic Hub AMP deployment
 
+Current deployment: Hub and Helios use separate CAI projects. See the [operator guide](semantic-hub-v2/amp-operator-guide.md).
+
 The AMP follows the isolated-environment and ordered-task pattern in `../ray-serve-cai`.
 The AMP entry point is [`.project-metadata.yaml`](../.project-metadata.yaml).
 Catalog metadata is in [`METADATA.yaml`](../METADATA.yaml).
@@ -7,12 +9,13 @@ The manifest follows the [Cloudera AMP project specification](https://docs.cloud
 
 ## Deployment flow
 
-The v2 manifest adds a provisioning job between preparation and Hub startup.
-Bundled mode provisions separate Helios API and UI applications.
-External mode registers existing provider origins; built-in-only mode starts only Hub.
+The manifest prepares and starts only the Hub.
+The default `auto` mode checks configured Helios origins at startup.
+Healthy endpoints register an external builder; absent or failed endpoints leave a fresh installation with only the built-in builder.
+Helios runs in a separate project; the Hub never provisions its applications.
 See the [v2 AMP operator guide](semantic-hub-v2/amp-operator-guide.md) for prerequisites, modes, retries, and readiness limits.
 The diagram below describes the Hub runtime, which remains one application in every mode.
-The manifest has five ordered tasks: create/run preparation, create/run provisioning, then start Hub.
+The manifest has three ordered tasks: create setup job, run setup job, then start Hub.
 Use the [live CAI test runbook](semantic-hub-v2/live-test-runbook.md) to collect acceptance evidence.
 
 ```text
@@ -51,7 +54,7 @@ No setup step approves, publishes, or activates a semantic version.
 6. Keep the default `/home/cdsw/state/semantic-hub` for a standard Workbench project.
 7. Leave application authentication enabled.
 8. Select the provider mode and complete the prerequisites in the v2 AMP operator guide.
-9. Wait for the preparation job, provisioning job, and Semantic Hub Application to start.
+9. Wait for the Hub setup job and Semantic Hub Application to start.
 10. Open the Application URL from Workbench.
 11. Configure drafting, query, and embedding profiles under **Model configuration**.
 12. Review and publish the built-in versions you want remote agents to discover.
@@ -182,7 +185,7 @@ The 18 October isolation fix reproduces and prevents this failure locally.
 
 1. Stop the failed setup job.
 2. Update the project checkout to the latest Semantic Hub commit.
-3. Rerun `semantic-hub-setup` with `deployment/cai/prepare.py`.
+3. Rerun `semantic-hub-setup` with `cai_integration/setup_environment.py`.
 4. Confirm the log reports `Virtual environment isolation passed; CAI runtime packages excluded.`
 5. Confirm `pip check` and all five source-pack checks pass.
 6. Start or restart the Semantic Hub Application.

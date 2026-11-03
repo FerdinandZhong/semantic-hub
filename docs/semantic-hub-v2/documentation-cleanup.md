@@ -1,5 +1,10 @@
 # Documentation ownership cleanup
 
+> Deployment update, 3 November 2026: Helios now runs in a separate CAI project.
+> The Hub AMP uses optional endpoint checks and never provisions Helios.
+> Earlier bundled deployment plans below are historical.
+> Use the [current operator guide](amp-operator-guide.md) and [standalone Helios guide](standalone-helios.md).
+
 Completed on the v2 branch on 23 October 2026.
 
 ## Result
