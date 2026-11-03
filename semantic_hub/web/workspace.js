@@ -667,6 +667,10 @@ function renderChat(catalog, config, ticket) {
       if (result.request) sql.append(make('pre', JSON.stringify(result.request, null, 2)));
       box.append(sql);
     }
+    if (result.semantic_canvas) {
+      const canvas = make('details', null, 'answer-detail answer-canvas'); canvas.append(make('summary', 'Semantic canvas · objects used'));
+      canvas.dataset.canvas = JSON.stringify(result.semantic_canvas); box.append(canvas);
+    }
     const provenance = make('details', null, 'answer-detail'); provenance.append(make('summary', 'Full result provenance'));
     provenance.append(make('pre', JSON.stringify(result, null, 2))); box.append(provenance);
   }
@@ -740,6 +744,19 @@ function renderChat(catalog, config, ticket) {
       if (fresh(n)) {busy = false; controls(); save(original); output.scrollIntoView({block: 'nearest'});}
     }
   }
+  // Mount on first open. Restored history HTML carries only the payload, so stale SVG is replaced.
+  const mounted = new WeakSet();
+  $("chat-thread").addEventListener('toggle', e => {
+    const box = e.target;
+    if (!box.open || !box.classList?.contains('answer-canvas') || mounted.has(box) || !window.HeliosCanvas) return;
+    mounted.add(box);
+    const data = JSON.parse(box.dataset.canvas), host = make('div', null, 'answer-canvas-host'), detail = make('p', 'Select an object to inspect it.', 'answer-canvas-detail');
+    box.querySelectorAll(':scope > :not(summary)').forEach(el => el.remove()); box.append(host, detail);
+    const handle = window.HeliosCanvas.mount(host, {readOnly: true, host: {getState: () => ({definition: data.definition})},
+      onSelect: o => {detail.textContent = [o.kind || o.type, o.label || o.name || o.id, o.description || o.expression || o.location || ''].filter(Boolean).join(' · ');}});
+    handle.update({...data.graph, saved_revision: data.graph.draft_revision, dirty: false});
+    if (data.focus) handle.focus(data.focus);
+  }, true);
   $("chat-form").onsubmit = e => {e.preventDefault(); ask();};
   $("question").oninput = () => {if (suggestion?.text !== $("question").value) suggestion = null;};
   $("question").onkeydown = e => {if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {e.preventDefault(); $("chat-form").requestSubmit();}};

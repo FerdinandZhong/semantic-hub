@@ -30,6 +30,10 @@ def test_saved_metric_executes_data_and_does_not_invent_confidence(finance):
     assert result['retrieval_details']['confidence'] is None
     assert result['retrieval_details']['matches'] == []
     assert result['retrieval_details']['method'] == 'Saved metric selection'
+    canvas = result['semantic_canvas']
+    tables = {t.name for t in __import__('sqlglot').parse_one(result['sql'], read='duckdb').find_all(__import__('sqlglot').exp.Table)}
+    assert {n['id'] for n in canvas['graph']['nodes']} == tables
+    assert canvas['focus'] and canvas['focus'] in canvas['graph']['metric_dependencies']
     factory.assert_not_called()
 
 
@@ -75,6 +79,9 @@ def test_document_answer_has_citations_and_real_keyword_scores(tmp_path):
         result = answer(runtime.playground, doc_question(runtime), DocumentLLM, lambda *event:events.append(event))
         assert result['kind'] == 'document' and result['claims'][0]['citations']
         assert 'sql' not in result
+        nodes = result['semantic_canvas']['graph']['nodes']
+        assert nodes[0]['type'] == 'document_group'
+        assert {n['citation'] for n in nodes[1:]} >= {c['citation'] for c in result['claims'][0]['citations']}
         details = result['retrieval_details']
         assert details['confidence'] is None and details['method'] == 'Keyword overlap'
         assert all(0 <= m['score'] <= m['query_terms'] for m in details['matches'])

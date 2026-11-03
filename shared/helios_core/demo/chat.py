@@ -1,6 +1,7 @@
 """Read-only chat over checked Playground plans, with observable execution stages."""
 from __future__ import annotations
 
+import copy
 import json
 import re
 
@@ -32,6 +33,33 @@ def retrieval_details(playground, payload, plan):
             'note': 'Raw scores rank matches within this release. They are not probabilities; scope checks determine whether execution is allowed.'}
 
 
+def semantic_canvas(plan):
+    """Read-only HeliosCanvas payload: only the objects this plan actually used."""
+    graph = copy.deepcopy(plan.get('graph') or {'nodes': [], 'edges': []})
+    passages = plan.get('passages') or []
+    if passages:
+        tables = {n['id'] for n in graph['nodes']}
+        graph['nodes'].append({'id': 'evidence:documents', 'type': 'document_group',
+                               'label': f'Passages used ({len(passages)})'})
+        linked = set()
+        for passage in passages:
+            graph['nodes'].append({'id': passage['id'], 'type': 'document', 'label': passage['title'],
+                                   'location': passage.get('location'), 'citation': passage.get('citation')})
+            for link in passage.get('links', []):
+                kind, _, name = link['target'].partition(':')
+                table = name.split('.')[0] if kind in ('table', 'field') else None
+                if table in tables:
+                    linked.add(table)
+        graph['edges'] += [{'id': f'evidence:group:{t}', 'source': 'evidence:documents', 'target': t,
+                            'kind': 'document_evidence', 'label': 'Supporting passages',
+                            'document_id': 'evidence:documents'} for t in sorted(linked)]
+    if not graph['nodes']:
+        return None
+    metric = plan.get('metric') or {}
+    return {'graph': graph, 'definition': plan.get('graph_definition') or {'metrics': [], 'joins': []},
+            'focus': metric.get('id') or ('metric:' + metric['name'] if metric.get('name') else None)}
+
+
 def answer(playground, payload, llm_factory, emit):
     """Submitting Ask & run authorizes this one bounded, read-only execution."""
     emit('retrieve', 'Read published definitions and find relevant evidence')
@@ -49,4 +77,5 @@ def answer(playground, payload, llm_factory, emit):
     result['retrieval_details'] = details
     result['metric'] = {k: plan.get('metric', {}).get(k) for k in ('name', 'description', 'unit')}
     result['request'] = plan.get('request')
+    result['semantic_canvas'] = semantic_canvas(plan)
     return result
