@@ -214,4 +214,4 @@ It also removes the bootstrap project argument before the server parses its comm
 
 No dependency reinstall is required if the repaired setup job already passed.
 This fix passed local supervision, child-failure, and shutdown tests.
-The 3 November CAI restart passed for commit `998904c`; confirm this check again after future launcher changes.
+The latest 3 November CAI restart passed for commit `cc4890e`; confirm this check again after future launcher changes.

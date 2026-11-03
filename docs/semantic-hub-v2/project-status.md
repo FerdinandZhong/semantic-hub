@@ -10,23 +10,23 @@ This record describes completed checks; it does not monitor the application cont
 | --- | --- |
 | Repository | `FerdinandZhong/semantic-hub` |
 | Branch | `fix/amp-provider-bootstrap` |
-| Deployed application commit | `998904caaf053ec35a035384bc6162dc397dde0e` |
-| Previous deployed commit | `138cde37f77201763b4dfc23d9e423e6bfff430a` |
+| Deployed application commit | `cc4890e9022f49ef68cd8523424c011537696460` |
+| Previous deployed commit | `998904caaf053ec35a035384bc6162dc397dde0e` |
 | Main branch | These branch fixes have not been recorded as merged into `main` |
 | CAI project ID | `imgz-mrce-iohy-pjhf` |
 | Application ID | `vak0-9xsv-45cm-pkql` |
 | Application entry point | `deployment/launchers/hub.py` |
 | Setup entry point | `cai_integration/setup_environment.py` |
 | Runtime | `docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-pbj-jupyterlab-python3.11-standard:2026.04.1-b7` |
-| Latest confirmed restart | 3 November 2026, 08:55:29 UTC / 16:55:29 Singapore |
+| Latest confirmed restart | 3 November 2026, 15:28:05 UTC / 23:28:05 Singapore |
 
 [CAI project](https://ml-7ca67a86-1f3.qzhong-a.a465-9q4k.cloudera.site/qzhong/semantic-hub) · [Hub application](https://semantic-hub-yjs4ct.ml-7ca67a86-1f3.qzhong-a.a465-9q4k.cloudera.site)
 
 Documentation changes after this record do not imply another application deployment.
 
-### Local commits after the deployed commit
+### UI commits included in the latest deployment
 
-Commits `9c1acb1` to `4929695` on this branch are local. They are not pushed or deployed.
+Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 
 | Commit | Change |
 | --- | --- |
@@ -80,7 +80,7 @@ Retrieval displays relevance signals, not calibrated confidence percentages.
 Document keyword scores measure matched query terms. Free-text semantic lookup exposes raw SQLite FTS5 lexical ranking within the release.
 Direct saved-metric selection has no retrieval confidence score.
 
-Each local-commit answer reports **Answer checks · n/n passed**:
+Each answer reports **Answer checks · n/n passed**:
 
 - Retrieval checks: selected-metric rank among lexical matches, scope checks, and selected passages.
 - Generation checks: read-only SELECT, published tables, grouping, filters, row limit, and returned rows.
@@ -106,7 +106,27 @@ These checks verify structure and evidence. They do not measure business correct
 Progress screenshots used delayed delivery of real backend events to capture transient states.
 They do not establish production response time.
 
-### CAI checks after restart
+### Latest UI deployment: 15:28 UTC
+
+The fast-forward update job `7tzs-o3vu-1v6p-8gm7` succeeded with run `xrytlxv2zn8za1bj`.
+Its report verified commit `cc4890e9022f49ef68cd8523424c011537696460` before restart.
+The application returned `APPLICATION_RUNNING` after restart.
+Health, Swagger, OpenAPI, and published-model inventory returned HTTP 200.
+
+Seven hosted UI assets matched the reviewed checkout:
+workspace JavaScript, workspace CSS, chat CSS, editor CSS, generated editor JavaScript, materials JavaScript, and materials CSS.
+The editor comparison used its normal server-generated navigation transformations.
+
+The live saved finance query returned **SGD 686,572.96**, one semantic canvas node, and **6/6 answer checks passed**.
+It used `v1.0` with context hash `ca2348d85fa8b76d3c555bbb631d2f3c1bb0610f216a6ff6e86b28c856a5269f`.
+The response streamed progress and heartbeats and completed in 32.48 seconds for this observation.
+These checks establish deployed saved-metric execution; they do not establish live free-text inference or general answer correctness.
+
+Before deployment, 31 targeted local tests passed; three required loopback access outside the sandbox.
+The local browser check passed numeric execution, progress, validation, and fixture-based document presentation without page errors.
+The source update preserved persistent state and credential files. No project environment repair was needed for this update.
+
+### Earlier CAI checkpoint: 08:55 UTC
 
 | Check | Result |
 | --- | --- |
@@ -168,7 +188,7 @@ Existing JSON responses gain only additive fields. No field is removed or rename
 | Hosted authorization | Verify anonymous rejection, caller isolation, and the intended per-model authorization contract |
 | Persistence | Check uploads, saved model connections, published versions, and provider links across restart |
 | Hosted MCP / Agent Studio | Repeat the finance workflow against this exact deployment and pinned release |
-| Local UI and agent commits | Push and deploy `9c1acb1`–`4929695`; repeat the hosted chat, materials, and validation checks |
+| Hosted UI interaction acceptance | Complete manual browser review of materials and Studio validation; asset checks and saved-metric chat passed |
 | Branch integration | Review and merge the fixes into `main`; this record does not claim that merge occurred |
 | Later architecture work | External release import, delegated execution, and optional built-in package extraction |
 

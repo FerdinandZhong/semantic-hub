@@ -34,7 +34,7 @@ The final AMP task starts the authenticated Hub application for the UI, Swagger,
 The default `auto` mode connects configured, healthy Helios endpoints. Without them, a fresh install contains only the built-in builder.
 Choose `builtin_only` to skip Helios checks.
 See the [AMP deployment guide](docs/amp-deployment.md) for persistence, model configuration, MCP credentials, and acceptance checks.
-The live deployment runs commit `998904c` from `fix/amp-provider-bootstrap`; these fixes are not yet recorded as merged into `main`.
+The live deployment runs commit `cc4890e` from `fix/amp-provider-bootstrap`; these fixes are not yet recorded as merged into `main`.
 
 ## Current semantic foundation progress
 

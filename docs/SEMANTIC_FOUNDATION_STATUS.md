@@ -5,6 +5,14 @@ See also the [implementation progress and plan](implementation-progress-and-plan
 For current v2 deployment scope, see the [operator guide](semantic-hub-v2/amp-operator-guide.md) and [live test runbook](semantic-hub-v2/live-test-runbook.md).
 The entries below are chronological milestone records. Older pending statements can be superseded by later entries.
 
+**UI upgrade deployed — 3 November 2026, 23:28 Singapore:** CAI restarted at commit `cc4890e` from `fix/amp-provider-bootstrap`.
+This release includes the semantic answer canvas, deterministic answer checks, harness stop reasons, materials cleanup, and validation summary.
+All seven updated UI asset comparisons passed, including the generated Studio script.
+The authenticated finance query returned **SGD 686,572.96**, one canvas node, and 6/6 answer checks.
+The local regression check passed 31 tests; three required loopback access outside the sandbox.
+The local browser check passed numeric execution, progress, validation, and fixture-based document presentation without page errors.
+These results do not establish live free-text inference or separate-project Helios acceptance.
+
 **Independent AMP and chat deployment — 3 November 2026:** CAI runs commit `998904c` from `fix/amp-provider-bootstrap`.
 The Hub AMP provisions only Hub; optional Helios runs in a separate CAI project.
 The updated validation UI uses compact progress feedback.

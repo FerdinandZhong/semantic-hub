@@ -6,9 +6,10 @@ The previous copy failure with exit status 24 remains unexplained until CAI supp
 
 ## Recorded checkpoint: 3 November 2026
 
-The independent Hub AMP launched successfully and was updated to `998904c` on `fix/amp-provider-bootstrap`.
+The independent Hub AMP launched successfully and was last updated to `cc4890e` on `fix/amp-provider-bootstrap`.
 Its restart, authenticated health, Swagger, OpenAPI, inventory, and updated-asset checks passed.
 The streamed saved finance metric returned **SGD 686,572.96** from published `v1.0`.
+The latest response included its semantic canvas and 6/6 answer checks. Seven updated UI assets matched the reviewed code.
 See the [status record](project-status.md) for application identity, context hash, test scope, and environment repair.
 
 This checkpoint does not complete the procedures below.

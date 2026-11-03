@@ -5,13 +5,14 @@
 Recorded 3 November 2026. Read the [project status](docs/semantic-hub-v2/project-status.md) before changing deployment or reporting readiness.
 
 - Active branch: `fix/amp-provider-bootstrap`.
-- Deployed application commit: `998904caaf053ec35a035384bc6162dc397dde0e`.
+- Deployed application commit: `cc4890e9022f49ef68cd8523424c011537696460`.
 - The branch is pushed to the `semantic-hub` remote. These fixes are not recorded as merged into `main`.
 - The independent Hub AMP runs in CAI. Its latest restart and authenticated HTTP checks passed.
 - Live saved-metric execution returned **SGD 686,572.96** for finance `v1.0`.
 - Separate-project Helios acceptance and live free-text chat verification remain pending.
-- Five later local commits, `9c1acb1` to `4929695`, are not deployed or pushed.
+- UI commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
   They add the answer canvas, per-answer checks, harness stop reasons, the materials cleanup, and the validation summary.
+- The 23:28 Singapore restart passed seven UI asset comparisons and a live finance query with a canvas and 6/6 answer checks.
 
 This is a dated handoff, not a continuous health check. Verify current Git and application state before deploying.
 

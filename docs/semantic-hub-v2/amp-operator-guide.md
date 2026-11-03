@@ -78,9 +78,10 @@ Do not select legacy `bundled` mode for a new AMP deployment.
 ## Verification status
 
 Local AMP and provider tests cover startup wiring, health failures, timeout, repeat registration, and credential isolation.
-The independent Hub launched successfully in CAI and restarted at commit `998904c` on 3 November 2026.
+The independent Hub launched successfully in CAI and last restarted at commit `cc4890e` on 3 November 2026.
 Authenticated health, Swagger, OpenAPI, inventory, and saved-metric checks passed.
 The finance query returned **SGD 686,572.96**.
+The latest response included its semantic canvas and 6/6 answer checks. Seven updated UI assets matched the reviewed code.
 Separate-project Helios authorization, browser identity, live free-text inference, and complete persistence checks remain required.
 See the [deployment evidence and current status](project-status.md).
 Use [the live-test runbook](live-test-runbook.md).
