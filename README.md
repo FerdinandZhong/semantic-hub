@@ -6,7 +6,9 @@ Helios runs in a separate CAI project. The Hub AMP does not clone or install it.
 The existing built-in runtime remains in place during the v2 migration.
 
 The [v2 local preview](docs/semantic-hub-v2/local-preview.md) adds a compact provider workspace at `/v2` and an isolated Helios launcher.
-V2 checks optional Helios endpoints and registers a healthy provider at startup. Live CAI acceptance remains pending.
+V2 checks optional Helios endpoints and registers a healthy provider at startup.
+The independent Hub AMP launch, restart, authenticated API checks, and saved finance query passed on 3 November 2026.
+See the [current project status](docs/semantic-hub-v2/project-status.md) for deployed code and remaining acceptance checks.
 External release import and delegated queries remain planned.
 
 **Build, review, version, and publish semantic models for applications and agents.**
@@ -32,7 +34,7 @@ The final AMP task starts the authenticated Hub application for the UI, Swagger,
 The default `auto` mode connects configured, healthy Helios endpoints. Without them, a fresh install contains only the built-in builder.
 Choose `builtin_only` to skip Helios checks.
 See the [AMP deployment guide](docs/amp-deployment.md) for persistence, model configuration, MCP credentials, and acceptance checks.
-AMP packaging is implemented; a live CAI launch remains to be verified.
+The live deployment runs commit `998904c` from `fix/amp-provider-bootstrap`; these fixes are not yet recorded as merged into `main`.
 
 ## Current semantic foundation progress
 
@@ -50,7 +52,7 @@ The [MCP adapter](apps/semantic-hub-mcp/README.md) installs directly from this G
 The [Agent Studio workflow](docs/semantic-hub-agent-studio-workflow.md) provides the demo setup and agent prompts.
 
 The local consumer API exposes published models through explicit loopback-only no-auth mode.
-The AMP uses CAI Application ingress authentication. Per-model authorization and live CAI acceptance remain separate integration work.
+The AMP uses CAI Application ingress authentication. Per-model authorization and full hosted acceptance remain incomplete.
 The broader architecture below includes planned capabilities; it does not establish a live Atlas or Ranger integration in this demo.
 
 ---

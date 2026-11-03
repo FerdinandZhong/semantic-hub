@@ -174,7 +174,9 @@ Local mode does not prove ingress authentication.
 10. Confirm unavailable periods return missing data rather than another period's value.
 
 Local checks cover manifest ordering, persistent settings, startup guards, shared runtime, and combined UI/API/Swagger routes.
-Live CAI launch, ingress authorization, and restart persistence remain unverified until these checks run in Workbench.
+On 3 November 2026, the independent Hub launch, restart, authenticated endpoint checks, and saved finance query passed.
+Anonymous rejection, caller isolation, complete persistence, live free-text inference, and hosted MCP acceptance still require checks.
+See the [current project status](semantic-hub-v2/project-status.md) for the exact deployed branch and evidence.
 
 ## Recovery: CAI packages reported by pip check
 
@@ -204,7 +206,7 @@ Workbench then observed a lost or restarting kernel and stopped the workload.
 The 18 October launcher fix retains the kernel and runs the server as a supervised child process.
 It also removes the bootstrap project argument before the server parses its command line.
 
-1. Update the project checkout from `main`.
+1. Update the checkout from the approved deployment branch and commit recorded in the project status.
 2. Confirm the Application script is `deployment/launchers/hub.py`.
 3. Restart the Application.
 4. Check for `Semantic Hub server started as child process` in the log.
@@ -212,4 +214,4 @@ It also removes the bootstrap project argument before the server parses its comm
 
 No dependency reinstall is required if the repaired setup job already passed.
 This fix passed local supervision, child-failure, and shutdown tests.
-A live CAI Application restart remains the deployment acceptance check.
+The 3 November CAI restart passed for commit `998904c`; confirm this check again after future launcher changes.

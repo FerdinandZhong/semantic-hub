@@ -1,8 +1,25 @@
 # Semantic foundation: progress and consumer handoff
 
-Current snapshot: [implementation progress and plan](implementation-progress-and-plan.md), updated 19 October 2026.
+Current snapshot: [project status](semantic-hub-v2/project-status.md), updated 3 November 2026.
+See also the [implementation progress and plan](implementation-progress-and-plan.md).
 For current v2 deployment scope, see the [operator guide](semantic-hub-v2/amp-operator-guide.md) and [live test runbook](semantic-hub-v2/live-test-runbook.md).
 The entries below are chronological milestone records. Older pending statements can be superseded by later entries.
+
+**Independent AMP and chat deployment — 3 November 2026:** CAI runs commit `998904c` from `fix/amp-provider-bootstrap`.
+The Hub AMP provisions only Hub; optional Helios runs in a separate CAI project.
+The updated validation UI uses compact progress feedback.
+Chat supports Ask & run, natural-language suggestions, streamed stages, executed numeric results, and inspectable retrieval relevance.
+Retrieval relevance is not a calibrated confidence percentage.
+The restarted application passed authenticated health, Swagger, OpenAPI, inventory, and updated-asset checks.
+Live saved-metric execution returned **SGD 686,572.96** for finance `v1.0`.
+Separate Helios acceptance, live free-text inference, caller isolation, and complete persistence checks remain pending.
+The [current status record](semantic-hub-v2/project-status.md) distinguishes local tests, mocked inference, and live execution evidence.
+
+**Answer evidence and UI polish, local commits — 3 November 2026:** Five commits, `9c1acb1` to `4929695`, are not deployed.
+Chat answers show a semantic canvas, deterministic answer checks, and the agent tool trace.
+The agent rejects repeated successful tool calls and records its stop reason.
+Supporting materials and validation results are restructured.
+The route list and OpenAPI documents are unchanged; JSON responses gain additive fields.
 
 **Vision, OCR, and embeddings decision record — 19 October 2026:** Documented the distinction between visual understanding and vector generation.
 GPT-4o can read images through the API. A separate OCR service is optional.

@@ -106,6 +106,8 @@ AMP packaging and CAI ingress authentication are implemented. Full hosted Agent 
 
 ## Semantic Hub v2 implementation and design
 
+- [Current project status: deployed commit, live finance result, and remaining checks](semantic-hub-v2/project-status.md)
+- [Agent handoff and repository instructions](../AGENTS.md)
 - [Independent Hub and pluggable builders](semantic-hub-v2/README.md)
 - [Upstream inspection and merge evidence](semantic-hub-v2/upstream-review.md)
 - [Provider contract proposal](semantic-hub-v2/provider-contract.md)

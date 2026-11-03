@@ -7,13 +7,15 @@
 
 [2 November readiness review and test evidence](readiness-review-2026-11-02.md) · [Live CAI test runbook](live-test-runbook.md)
 
-Status: unified local preview and v2 AMP provisioning implementation, 27 October 2026.
+Status updated 3 November 2026: independent Hub AMP and updated built-in chat deployed to CAI.
+See the [current project status](project-status.md) for commit identity, live results, and remaining checks.
 The branch now includes the provider registry, workspace UI, and isolated local launcher.
 The [Helios model picker](helios-model-picker.md) lists accessible organizations and models, then verifies access before linking.
 See [unified UI implementation](unified-ui-implementation.md) and [local preview and implementation evidence](local-preview.md) for tested scope and launch commands.
-Mode-aware AMP preparation, native launchers, and repeatable provider provisioning are implemented.
+The active AMP prepares and launches Hub only. Optional health checks register an existing external Helios provider.
 See the [AMP operator guide](amp-operator-guide.md) for prerequisites and retry behavior.
-Live multi-application CAI acceptance remains pending. External release import and delegated queries remain later work.
+Hub restart and authenticated saved-metric execution passed. Separate-project Helios acceptance remains pending.
+External release import and delegated queries remain later work.
 
 ## Recommendation
 
@@ -22,14 +24,14 @@ Keep the current builder as an optional built-in provider.
 Run Helios independently and open its application for advanced building and Talk to Your Data.
 Add versioned API adapters where release import and delegated queries require integration.
 
-Default installation: one AMP provisions Hub and Helios applications from separate, pinned repositories within one CAI project.
-Helios is an optional independently fetched Git checkout; each application has a separate environment and state.
-An external mode connects to an existing Helios deployment.
+Default installation: the Hub AMP provisions Hub in its own CAI project.
+Helios runs in a separate project and owns its environment and state.
+The Hub connects to explicitly configured, healthy Helios endpoints.
 
 Stop using upstream source merges as the normal integration mechanism.
 A shared repository history does not need to become a shared deployment lifecycle.
 
-[Upstream inspection and merge result](upstream-review.md) · [Provider contract proposal](provider-contract.md) · [Bundled AMP deployment](deployment-layout.md)
+[Upstream inspection and merge result](upstream-review.md) · [Provider contract proposal](provider-contract.md) · [Historical bundled AMP deployment](deployment-layout.md)
 
 [Documentation cleanup completed](documentation-cleanup.md): upstream guides now live in the pinned Helios checkout; local compatibility guides remain Hub-owned.
 

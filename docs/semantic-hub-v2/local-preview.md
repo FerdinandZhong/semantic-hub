@@ -1,5 +1,8 @@
 # Local v2 preview
 
+For deployed code and acceptance results, read the [current project status](project-status.md).
+The CAI AMP launches Hub only; the combined local launcher below remains available for compatibility testing.
+
 The unified UI now starts with workspace cards at `/v2`.
 See [unified UI implementation](unified-ui-implementation.md) for the approved layout and browser workflow.
 It retains the existing Built-in Studio and v1 consumer API.
@@ -17,8 +20,40 @@ Hub /v2 workspace
 
 ## Start and inspect
 
+### Manual review instance: 3 November 2026
+
+The updated UI at commit `4929695` was started at `http://127.0.0.1:8300/v2`.
+Port 8299 remains assigned to the vehicle demo.
+This instance uses a separate synthetic finance fixture at `/tmp/hub-ui-review-8300-20261103`.
+It does not contain the hosted application's uploads or model credentials.
+Saved metric queries work without inference; configure query inference before testing free-text or document answers.
+
+Restart this instance with the same state directory:
+
+```bash
+SEMANTIC_HUB_STATE_DIR=/tmp/hub-ui-review-8300-20261103 \
+  .venv-semantic-hub/bin/python -m cai_integration.application --local --port 8300
+```
+
+Stop its existing process before restarting. The dated URL does not guarantee the process is still running.
+
+### Start a new instance
+
 Run commands from the repository root.
 The existing Hub environment `.venv-semantic-hub` must already exist.
+
+For a Hub-only manual check, use an isolated state directory:
+
+```bash
+SEMANTIC_HUB_STATE_DIR=/tmp/semantic-hub-manual-review \
+  .venv-semantic-hub/bin/python -m cai_integration.application --local --port 8099
+```
+
+Open `http://127.0.0.1:8099/v2`. New isolated state does not include your deployed uploads, credentials, or published releases.
+Stop this instance before starting another launcher on port 8099.
+
+### Optional combined local preview
+
 Preparation fetches the pinned provider automatically. To fetch only the checkout:
 
 ```bash
@@ -48,6 +83,8 @@ The chat streams actual retrieval, scope-check, execution, and answer actions.
 Numeric answers come from executed source queries; document answers retain published citations.
 The retrieval panel shows raw lexical relevance or matched keyword counts, not calibrated confidence percentages.
 An explicit saved metric selection has no retrieval confidence score.
+Each answer lists its deterministic **Answer checks** and the agent tool trace.
+Open **Semantic canvas** to inspect the tables, metric, and passages the answer used.
 The **Ask & run** action authorizes one bounded query from the submitted question.
 The server still checks scope, source identity, and the selected published version before execution.
 Unsupported questions return clarification without executing an answer query.

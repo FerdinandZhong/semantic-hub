@@ -82,6 +82,21 @@ Model inspection includes fact-table fields and bounded observed categories.
 This prevents a reporting timezone from becoming an invented region filter.
 An independent AI review checks each proposed metric query against the original question.
 Rejected plans are discarded before the UI can run them.
+
+Each turn allows 12 tool calls or 120 seconds.
+A rejected call returns its reason to the model and can be retried, because tool state can change.
+A repeated successful call with identical arguments is rejected and still uses the budget.
+The result records `tool_calls` and one `stop_reason`:
+
+| Stop reason | Meaning |
+| --- | --- |
+| `receipt` | The model returned a checked receipt identifier |
+| `single_receipt_fallback` | The model added prose, and exactly one checked receipt exists |
+| `no_receipt` | The turn ended without a checked plan |
+| `budget_exhausted` | The tool-call or time budget ran out |
+| `sdk_error` | The Harness runtime failed |
+
+The chat shows these with the tool trace.
 This review supplements deterministic checks; it does not guarantee every interpretation is correct.
 
 ## What happens to the problematic pharma question

@@ -1,17 +1,21 @@
 # Semantic Hub: implementation progress and next steps
 
-Updated: 19 October 2026.
-Latest application commit reviewed: `95886c2`.
+Current status updated: 3 November 2026. Historical milestone snapshot: 19 October 2026.
+Latest deployed application commit: `998904c`, branch `fix/amp-provider-bootstrap`.
 Repository: https://github.com/FerdinandZhong/semantic-hub
 This snapshot consolidates the recorded milestones. It does not claim a fresh full-system verification.
 The [detailed milestone log](SEMANTIC_FOUNDATION_STATUS.md) retains earlier evidence and historical limitations.
 
 ## Current v2 status
 
-Reviewed 2 November 2026: provider links, the authorized model picker, and mode-aware AMP provisioning are implemented.
+The independent Hub AMP runs in CAI. Helios now runs in a separate project with optional endpoint registration.
+Provider links and the authorized model picker are implemented.
 The picker rechecks native model access before saving into the shared Hub catalog.
-Hosted caller identity, multi-application launch, and persistence still require live CAI acceptance.
+The updated chat streams execution stages and returns numeric results from actual source queries.
+The live saved finance metric returned **SGD 686,572.96** after the 3 November restart.
+Hosted caller isolation, separate Helios integration, live free-text inference, and complete persistence checks remain pending.
 External release import, delegated queries, and lightweight package extraction remain planned.
+See the [current project status](semantic-hub-v2/project-status.md) for exact deployment identity, evidence, and limitations.
 See the [operator guide](semantic-hub-v2/amp-operator-guide.md) and [live test runbook](semantic-hub-v2/live-test-runbook.md).
 The 19 October milestones below retain their original evidence.
 

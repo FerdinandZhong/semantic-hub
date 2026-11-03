@@ -23,7 +23,10 @@ Candidate links can be collapsed, filtered by model or status, and sorted by rel
 **Search candidate links** searches every generated candidate across model names, targets, page labels, quotations, and matching reasons.
 All entered terms must match. Search works locally and preserves selection, including hidden selections.
 The list reports selected links outside the current filters. Clearing the search restores the full matching list.
-Analysis results start collapsed with a claim count. The document summary and each claim can be expanded separately.
+Analysis results start collapsed with a claim count.
+They open with section, claim, proposed-link, and approved-link counts, followed by the document summary.
+Claims are grouped by kind. Expand a claim to read its source quotation and section.
+Page observations show their values as read-only rows. Select **Edit values** to change them before approval.
 Candidate links keep their selection, status, source page, and score visible; expand each link to inspect its quotation and matching reason.
 Sorting preserves link selection and expanded evidence within the current document revision.
 Highest relevance is the default order across all document sections. Scores indicate relevance, not factual confidence.

@@ -4,6 +4,16 @@ Updated 3 November 2026. Use branch `fix/amp-provider-bootstrap` for this implem
 The Hub repository has no tracked Git submodule. The AMP never fetches Helios.
 The previous copy failure with exit status 24 remains unexplained until CAI supplies detailed clone/copy logs.
 
+## Recorded checkpoint: 3 November 2026
+
+The independent Hub AMP launched successfully and was updated to `998904c` on `fix/amp-provider-bootstrap`.
+Its restart, authenticated health, Swagger, OpenAPI, inventory, and updated-asset checks passed.
+The streamed saved finance metric returned **SGD 686,572.96** from published `v1.0`.
+See the [status record](project-status.md) for application identity, context hash, test scope, and environment repair.
+
+This checkpoint does not complete the procedures below.
+Separate Helios acceptance, live free-text inference, caller isolation, full persistence, and hosted Agent Studio checks remain open.
+
 ## First install: built-in only
 
 1. Create a new project from this branch using `.project-metadata.yaml`.
@@ -46,7 +56,7 @@ After successful registration:
 8. Confirm Hub MCP still excludes link-only external models from executable releases.
 
 Health probes prove endpoint readiness only. They do not prove browser identity or native query readiness.
-Live acceptance remains pending until these results are recorded.
+Live optional-provider acceptance remains pending until these results are recorded.
 
 ## Diagnostics
 
