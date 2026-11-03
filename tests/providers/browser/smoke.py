@@ -42,15 +42,11 @@ with sync_playwright() as p:
     assert "Not published" in page.locator("#content").inner_text()
     page.goto(base + "/v2?view=chat&workspace=finance", wait_until="networkidle")
     page.locator("[data-suggest]").first.click()
-    page.locator("[data-run]").wait_for()
-    page.locator("#question").fill("Changed question")
-    assert page.locator("[data-run]").count() == 0
-    page.locator("[data-suggest]").first.click()
-    page.locator("[data-run]").click()
+    assert page.locator("#question").input_value().endswith("?")
+    page.locator("#ask").click()
     page.locator("#chat-thread td").first.wait_for(timeout=30000)
-    assert Decimal(page.locator("#chat-thread td").first.inner_text()) == Decimal(
-        "686572.96"
-    )
+    assert Decimal(page.locator("#chat-thread td").first.inner_text()) == Decimal("686572.96")
+    assert page.locator("[data-run]").count() == 0
     page.screenshot(path=str(args.output / "chat.png"), full_page=True)
     routes = {
         "catalog": "/v2",

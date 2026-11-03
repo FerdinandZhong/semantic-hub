@@ -338,6 +338,15 @@ def playground_interpret(payload: Question, request: Request):
         raise HTTPException(502, 'Question interpretation failed. Rephrase or select a saved metric.') from None
 
 
+@demo_router.post('/api/playground/chat')
+def playground_chat(payload: Question, request: Request):
+    from .chat_stream import stream_answer
+    try:
+        return stream_answer(runtime_for(request).playground, payload, lambda: purpose_llm(request, 'query'))
+    except DemoError as exc:
+        raise HTTPException(409, str(exc)) from None
+
+
 @demo_router.post('/api/playground/run')
 def playground_run(payload: RunPlan, request: Request):
     try:
@@ -621,6 +630,7 @@ def configure_demo(application) -> None:
             "/demo/api/playground",
             "/demo/api/playground/interpret",
             "/demo/api/playground/run",
+            "/demo/api/playground/chat",
             "/static/demo-playground.js",
             "/static/demo-playground.css",
             "/static/demo-llm.js",

@@ -33,12 +33,12 @@ def profile(llm):
     return provider, adapter
 
 
-def interpret(playground, payload, llm):
+def interpret(playground, payload, llm, *, progress=None):
     try:
         from deepseek_harness import DeepSeekHarness
     except ImportError:
         raise DemoError('Install the pinned DeepSeek Harness SDK from demo-requirements.txt to use AI questions.') from None
-    tools = SemanticTools(playground,payload,llm)
+    tools = SemanticTools(playground,payload,llm, progress=progress)
     provider, adapter = profile(llm)
     turn = 'turn-' + secrets.token_hex(12)
     root = playground.runtime.state_root / 'playground-agent' / playground.runtime.pack.entry.id / payload.context_sha256

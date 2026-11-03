@@ -100,9 +100,11 @@ Publication freezes both the definition and the linked passages.
 
 1. Open **Playground** and select your published version.
 2. Enter: **What is the total settled sender outflow in SGD for the sample?**
-3. Click **Interpret question**.
-4. Check the metric, currency, population, filters, and SQL.
-5. Click **Run this interpretation**.
+3. In v2 **Talk to your data**, click **Ask & run**.
+4. Follow the context, scope, source-query, and answer steps.
+5. Expand **SQL & scope** to inspect the metric, currency, population, and filters.
+
+The legacy Playground still uses **Interpret question**, followed by **Run this interpretation**.
 6. Show **686,572.96 SGD**, the SQL, and the published version.
 7. Ask for the breakdown by sender jurisdiction.
 

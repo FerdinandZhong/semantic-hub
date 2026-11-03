@@ -24,7 +24,7 @@ with sync_playwright() as playwright:
     assert "This page session" in page.locator(".conversation-history").inner_text()
 
     page.locator("[data-suggest]").first.click()
-    page.locator("[data-run]").click()
+    page.locator("#ask").click()
     page.locator("#chat-thread td").first.wait_for(timeout=30000)
     expected = Decimal(page.locator("#chat-thread td").first.inner_text())
     assert expected == Decimal("686572.96")
@@ -34,7 +34,8 @@ with sync_playwright() as playwright:
     page.locator("#clear-chat").click()
     assert page.locator("#chat-thread td").count() == 0
     page.locator("[data-suggest]").first.click()
-    page.locator("[data-run]").wait_for()
+    page.locator("#ask").click()
+    page.locator("#chat-thread td").first.wait_for(timeout=30000)
     assert page.locator("[data-conversation]").count() == 2
     # Restoring an archived interpretation must not restore its execution action.
     second_id = page.locator("[data-conversation]").first.get_attribute(
@@ -45,7 +46,7 @@ with sync_playwright() as playwright:
     assert page.locator("[data-run]").count() == 0
     page.locator(f'[data-conversation="{second_id}"]').click()
     assert page.locator("[data-run]").count() == 0
-    assert page.locator("#chat-thread td").count() == 0
+    assert page.locator("#chat-thread td").count() == 1
 
     # Switching workspace uses SPA navigation, so the same memory store survives.
     alternatives = page.locator("#workspace option").evaluate_all(

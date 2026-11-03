@@ -36,14 +36,22 @@ An occupied port causes an error; the launcher does not stop another process.
 
 1. Select a Built-in workspace to inspect its definitions and table previews.
 2. Open the editor to validate, review, and publish a Built-in model.
-3. Open Talk to your data and select a saved metric.
-4. Inspect the interpretation, then select Run.
+3. Open Talk to your data and select a natural-language suggestion or enter a question.
+4. Select **Ask & run** to authorize the checked read-only query and view the answer.
 5. Open Builders & connections, then select Open builder for native Helios.
 6. Select a native organization and model provisioned by your Helios administrator.
 7. Link that workspace by selecting its organization and model in the picker.
 
 Saved metric queries do not require an LLM.
-Free-text interpretation and document answers require configured inference.
+Free-text questions and document answers require configured query inference.
+The chat streams actual retrieval, scope-check, execution, and answer actions.
+Numeric answers come from executed source queries; document answers retain published citations.
+The retrieval panel shows raw lexical relevance or matched keyword counts, not calibrated confidence percentages.
+An explicit saved metric selection has no retrieval confidence score.
+The **Ask & run** action authorizes one bounded query from the submitted question.
+The server still checks scope, source identity, and the selected published version before execution.
+Unsupported questions return clarification without executing an answer query.
+The legacy Playground keeps its separate Interpret and Run controls.
 Native Helios requires its own backend and model configuration for live data queries.
 The Hub never substitutes a Built-in sample for a failed native query.
 

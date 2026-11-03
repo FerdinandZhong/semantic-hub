@@ -164,3 +164,5 @@
     max-height: 240px;
   }
 }
+.hub-editor #notice:not(:empty) {margin:0 0 14px;padding:10px 14px;border-radius:8px;background:#f3f7fc;border:1px solid #e1e8f2;color:#4d6482;font-size:12px;line-height:1.5;}
+.hub-editor .validation-progress {margin-top:16px;}

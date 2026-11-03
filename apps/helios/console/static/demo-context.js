@@ -1,7 +1,7 @@
 "use strict";
 const $ = id => document.getElementById(id);
 let config, workspace, definition, selectedMetric = 0, selectedJoin = 0, selectedTable = null, tablePage = 0;
-let dirty = false, busy = false, inspectedVersion, versionCanvas;
+let dirty = false, busy = false, validating = false, inspectedVersion, versionCanvas;
 let documentsState=null, selectedDocumentId=null, documentLoadId=0, filePreviewId=0;
 let currentSource = new URL(location.href).searchParams.get("source");
 const viewedVersion = new URL(location.href).searchParams.get("version");
@@ -56,10 +56,10 @@ async function work(action, message) {
   if (busy) return;
   busy = true;
   $("error").hidden = true;
-  $("notice").textContent = message || "Working…";
+  $("notice").textContent = validating ? "" : message || "Working…";
   controls();
   // Freeze editors while a request captures the current draft.
-  for (const section of document.querySelectorAll('[role="tabpanel"]')) section.inert = true;
+  for (const section of document.querySelectorAll('[role="tabpanel"]')) section.inert = !(validating && section.id === 'step-validate');
   try {
     await action();
   }
@@ -101,7 +101,7 @@ function controls() {
   $("review-batch-actions").hidden=!selectedReview.size;
   $("review-batch-count").textContent=`${selectedReview.size} selected across all pages`;
   workspaceStatus();
-  $("validation-status").textContent = dirty ? "Save your changes before validation. Previous evidence no longer applies to this draft." : !ready || workspace.draft.revision === 0 ? "Save your first draft to enable validation." : workspace.draft.validation ? (validated ? "All checks passed for this saved draft." : "Validation needs attention. Inspect the results below.") : "This saved draft is ready to validate.";
+  $("validation-status").textContent = validating ? "The server is comparing metric results and checking relationship keys." : dirty ? "Save your changes before validation. Previous evidence no longer applies to this draft." : !ready || workspace.draft.revision === 0 ? "Save your first draft to enable validation." : workspace.draft.validation ? (validated ? "All checks passed for this saved draft." : "Validation needs attention. Inspect the results below.") : "This saved draft is ready to validate.";
   proposalControls();
   renderReviewReadiness();
 }
@@ -617,13 +617,37 @@ $("save").addEventListener("click",()=>work(async()=>{
   $("confirmed").checked=false;
   $("notice").textContent=`Draft revision ${workspace.draft.revision} saved. Validate this revision before review.`;
 },"Saving draft…"));
-$("validate").addEventListener("click",()=>work(async()=>{
-  accept(await api("/demo/api/context/validate",{
-    ...binding(),revision:workspace.draft.revision
-  }));
-  $("confirmed").checked=false;
-  $("notice").textContent=workspace.draft.validation.passed?"Validation passed. Continue to review when you have checked the evidence.":"Validation completed. Resolve the reported issues before review.";
-},"Executing compiled and reference SQL…"));
+function showValidationProgress(state, title, detail) {
+  let box = $("validation-progress");
+  if (!box) {
+    box = node("div", undefined, "validation-progress"); box.id = "validation-progress";
+    box.setAttribute("role", "status"); box.setAttribute("aria-live", "polite");
+    $("validation-status").before(box);
+  }
+  box.dataset.state = state;
+  box.replaceChildren();
+  const icon = node("span", state === "done" ? "✓" : state === "error" ? "!" : "", "validation-progress-icon");
+  icon.setAttribute("aria-hidden", "true");
+  const copy = node("div"); copy.append(node("strong", title), node("p", detail));
+  box.append(icon, copy); box.hidden = false;
+}
+$("validate").addEventListener("click", async () => {
+  if (busy) return;
+  validating = true;
+  showValidationProgress("running", "Validating saved draft", "Comparing compiled SQL with reference SQL and checking relationships…");
+  await work(async () => {
+    try {
+      accept(await api("/demo/api/context/validate", {...binding(), revision:workspace.draft.revision}));
+      $("confirmed").checked=false;
+      const passed = workspace.draft.validation.passed;
+      showValidationProgress(passed ? "done" : "error", passed ? "Validation complete" : "Validation needs attention",
+        passed ? "The saved draft passed its technical checks. Review the evidence below." : "Inspect the failed checks below before review.");
+    } catch (err) {
+      showValidationProgress("error", "Validation could not complete", "No new validation result was accepted. Retry or inspect the error below.");
+      throw err;
+    } finally {validating = false;}
+  });
+});
 $("review-form").addEventListener("submit",event=>{
   event.preventDefault();
   work(async()=>{

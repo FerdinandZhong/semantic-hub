@@ -208,3 +208,14 @@ body[data-view="version"] .provenance{display:none!important}
 @media(max-width:600px){#version-canvas{height:780px}.version-object-detail{padding:12px}}
 
 #version-canvas .canvas-node{cursor:pointer}
+.validation-progress {display:flex;align-items:center;gap:12px;padding:14px 16px;margin:16px 0 10px;background:#f5f8ff;border:1px solid #dfe7f7;border-radius:9px;color:#304f7d;}
+.validation-progress strong {display:block;font-size:13px;font-weight:600;}
+.validation-progress p {margin:3px 0 0;font-size:12px;line-height:1.5;color:#667892;}
+.validation-progress-icon {width:22px;height:22px;display:grid;place-items:center;flex-shrink:0;border:2px solid #dce5f6;border-top-color:#4b70cb;border-radius:50%;}
+.validation-progress[data-state=running] .validation-progress-icon {animation:validation-spin 1s linear infinite;}
+.validation-progress[data-state=done] {background:#f4faf7;border-color:#d9eae2;color:#276b50;}
+.validation-progress[data-state=done] .validation-progress-icon {border-color:#5c9b7f;font-size:12px;}
+.validation-progress[data-state=error] {background:#fff9f4;border-color:#eedeca;color:#9a612c;}
+.validation-progress[data-state=error] .validation-progress-icon {border-color:#c18e58;}
+@keyframes validation-spin {to{transform:rotate(360deg);}}
+@media(prefers-reduced-motion:reduce) {.validation-progress[data-state=running] .validation-progress-icon{animation:none;}}

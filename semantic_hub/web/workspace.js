@@ -570,229 +570,181 @@ function setup(kind, provider) {
 }
 function renderChat(catalog, config, ticket) {
   const versions = catalog.versions || [];
-  const resultScope = current.model?.synthetic
-    ? "Synthetic sample result"
-    : "Local source result";
-  $("content").innerHTML =
-    heading("Talk to your data", `${current.name} · Built-in workspace`) +
-    (!versions.length
-      ? empty(
-          "Publish a model to start a conversation",
-          "Questions use reviewed, published definitions. Open Studio to validate and publish a version.",
-          anchor("Open Studio", editorUrl(current.id), true),
-        )
-      : `<div class="chat-shell chat-with-history"><section class="conversation-history" aria-label="Conversation history"><h2>Conversations</h2><p>This page session · Results stay in memory until you reload.</p><button id="clear-chat" class="quiet" type="button">New conversation</button><div id="conversation-list" class="conversation-history-list"></div></section><div class="chat-conversation"><div class="toolbar"><label for="chat-version">Published version</label><select id="chat-version">${versions.map((v) => `<option>${esc(v.version)}</option>`).join("")}</select></div><div id="chat-thread" class="chat-thread"></div><form id="chat-form" class="composer"><textarea id="question" placeholder="Ask a question about this published model…" aria-label="Question" maxlength="2000" required></textarea><div class="composer-foot"><span>Inspect the interpretation before running.</span><button id="ask" class="primary">Prepare answer →</button></div></form></div></div>`);
-  if (!versions.length) return;
-  if (
-    versions.some((v) => String(v.version) === String(catalog.active_version))
-  )
-    $("chat-version").value = String(catalog.active_version);
-  const binding = {
-    pack_id: config.pack_id,
-    snapshot_sha256: config.snapshot_sha256,
-    session_id: config.session_id,
-  };
-  let turn = 0,
-    busy = false,
-    plan = null;
-  const selected = () =>
-    versions.find((v) => v.version === $("chat-version").value);
-  const history = window.HubChatHistory;
   const workspaceId = current.id;
-  const historyKey = () =>
-    history.key(workspaceId, selected().version, selected().context_sha256);
+  const resultScope = current.model?.synthetic ? "Synthetic sample" : "Local source snapshot";
+  $("content").innerHTML = heading("Talk to your data", "Ask a question. Follow the checks. Explore the answer and its sources.") +
+    (!versions.length ? empty("Publish a model to start a conversation", "Publish reviewed definitions and document evidence in Studio first.", anchor("Open Studio", editorUrl(current.id), true)) :
+    `<div class="chat-shell chat-with-history"><section class="conversation-history" aria-label="Conversation history"><h2>Conversations</h2><button id="clear-chat" class="quiet" type="button">＋ New conversation</button><div id="conversation-list" class="conversation-history-list"></div><p class="history-note">This page session · Cleared when you reload.</p></section><div class="chat-conversation"><div class="chat-toolbar"><span class="chat-source"><i></i>${esc(current.name)}</span><label>Published version <select id="chat-version">${versions.map(v => `<option>${esc(v.version)}</option>`).join("")}</select></label></div><div id="chat-thread" class="chat-thread" aria-label="Conversation"></div><form id="chat-form" class="composer"><textarea id="question" placeholder="Ask about your data or published documents…" aria-label="Question" maxlength="2000" required rows="2"></textarea><div class="composer-foot"><span>Read-only queries · Published definitions and evidence</span><button id="ask" class="primary">Ask &amp; run ↑</button></div></form></div></div>`);
+  if (!versions.length) return;
+  if (versions.some(v => String(v.version) === String(catalog.active_version))) $("chat-version").value = String(catalog.active_version);
+  const binding = {pack_id: config.pack_id, snapshot_sha256: config.snapshot_sha256, session_id: config.session_id};
+  const endpoint = built("/demo/api/playground/chat");
+  const history = window.HubChatHistory;
+  let busy = false, turn = 0, suggestion = null;
+  const selected = () => versions.find(v => v.version === $("chat-version").value);
+  const historyKey = () => history.key(workspaceId, selected().version, selected().context_sha256);
+  const fresh = n => ticket === generation && n === turn;
+  const make = (tag, text, cls) => {const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e;};
   function historyList() {
-    const key = historyKey(),
-      active = history.current(key);
-    $("conversation-list").innerHTML =
-      history
-        .list(key)
-        .map(
-          (item) =>
-            `<button type="button" data-conversation="${esc(item.id)}" aria-current="${item.id === active?.id}">${esc(item.title)}</button>`,
-        )
-        .join("") || "<p>No conversations for this published version yet.</p>";
-    document.querySelectorAll("[data-conversation]").forEach((button) => {
-      button.disabled = busy;
-      button.onclick = () => {
-        if (busy) return;
-        history.open(key, button.dataset.conversation);
-        reset();
-      };
-    });
+    const active = history.current(historyKey());
+    $("conversation-list").innerHTML = history.list(historyKey()).map(item => `<button type="button" data-conversation="${esc(item.id)}" aria-current="${item.id === active?.id}">${esc(item.title)}</button>`).join("") || '<p>Your questions will appear here.</p>';
+    document.querySelectorAll("[data-conversation]").forEach(b => {b.disabled = busy; b.onclick = () => {if (!busy) {history.open(historyKey(), b.dataset.conversation); reset();}};});
   }
-  function saveConversation(title) {
-    // Archive rendered results and provenance, never an executable interpretation.
-    const snapshot = $("chat-thread").cloneNode(true);
-    snapshot
-      .querySelectorAll("button,.chat-intro")
-      .forEach((item) => item.remove());
-    history.save(historyKey(), title, snapshot.innerHTML);
-    historyList();
+  function save(title) {history.save(historyKey(), title, $("chat-thread").innerHTML); historyList();}
+  function controls() {
+    for (const id of ["ask", "chat-version", "clear-chat", "question"]) $(id).disabled = busy;
+    document.querySelectorAll("[data-suggest],[data-conversation]").forEach(b => b.disabled = busy);
+    $("ask").textContent = busy ? "Working…" : "Ask & run ↑";
   }
-  function invalidate() {
-    plan = null;
-    document.querySelectorAll("[data-run]").forEach((b) => b.remove());
+  function starters(v) {
+    const items = v.metrics.map(m => ({metric: m.name, text: m.name === 'total_amount_sgd'
+      ? 'What is the total settled sender outflow in SGD for the sample?'
+      : `What is the value of ${m.name.replaceAll('_', ' ')} for this sample?`, label: 'Published metric'}));
+    for (const m of v.metrics) for (const q of m.example_questions || []) {
+      if (q && !items.some(i => i.text === q)) items.push({text: q, label: 'Ask a question'});
+    }
+    if (v.metrics.some(m => m.name === 'total_amount_sgd')) items.push({text: 'Show total settled sender outflow in SGD by sender jurisdiction.', label: 'Explore the data'});
+    if (v.evidence_passages) items.push({text: (v.document_titles || []).some(t => /mas.*sg.?qr|sg.?qr.*mas/i.test(t)) ? 'According to the attached MAS announcement, how does SG QR support PayNow transfers?' : 'What do the published documents explain about this dataset?', label: 'Explore document evidence'});
+    return items.slice(0, 4);
   }
   function reset() {
-    turn++;
-    invalidate();
-    $("question").value = "";
-    const v = selected();
-    const conversation = history.current(historyKey());
-    historyList();
-    if (conversation) {
-      $("chat-thread").innerHTML = conversation.html;
-      return;
+    turn++; suggestion = null; $("question").value = ""; historyList();
+    const item = history.current(historyKey());
+    if (item) {$("chat-thread").innerHTML = item.html; return;}
+    const examples = starters(selected());
+    $("chat-thread").innerHTML = `<div class="chat-intro"><div class="chat-intro-icon">✧</div><h2>What would you like to know?</h2><p>Get answers from your data, with reviewed definitions<br>and citations from published documents.</p><div class="suggestions">${examples.map((s, i) => `<button type="button" data-suggest="${i}"><span>${esc(s.label)}</span>${esc(s.text)}<b aria-hidden="true">↗</b></button>`).join('')}</div><p class="chat-intro-foot">${esc(resultScope)} · ${selected().metrics.length} published metric${selected().metrics.length === 1 ? '' : 's'} · ${selected().evidence_passages || 0} document passages</p></div>`;
+    document.querySelectorAll('[data-suggest]').forEach(b => b.onclick = () => {suggestion = examples[Number(b.dataset.suggest)]; $("question").value = suggestion.text; $("question").focus();});
+  }
+  function retrieval(box, data) {
+    box.replaceChildren();
+    const title = make('div', null, 'retrieval-heading');
+    title.append(make('strong', 'Semantic retrieval'), make('span', data.method, 'tag'));
+    box.append(title);
+    if (data.matches?.length) {
+      const list = make('div', null, 'retrieval-matches');
+      for (const match of data.matches.slice(0, 4)) {
+        const row = make('div', null, 'retrieval-match');
+        const score = typeof match.score === 'number' && Number.isFinite(match.score)
+          ? (match.query_terms != null ? `${match.score} / ${match.query_terms} terms` : match.score.toFixed(3)) : 'Not scored';
+        row.append(make('span', match.name + (match.location ? ' · ' + match.location : '')), make('strong', score)); list.append(row);
+      }
+      box.append(list);
+    } else box.append(make('p', data.method === 'Saved metric selection' ? 'Exact published metric selected' : 'No lexical match score is available for this question.'));
+    box.append(make('p', data.note, 'retrieval-note'));
+    box.hidden = false;
+  }
+  function renderAnswer(box, result, version) {
+    box.replaceChildren();
+    const blocked = ['needs_clarification', 'unavailable', 'insufficient_evidence', 'conflicting_evidence', 'no_data'].includes(result.status);
+    if (blocked) box.append(make('p', result.message || 'No verified answer is available for this question.', 'answer-summary'));
+    if (result.columns && !blocked) {
+      if (result.rows?.length === 1 && result.columns.length === 1 && result.rows[0][0] != null) {
+        const value = result.rows[0][0], number = Number(value);
+        const display = Number.isFinite(number) ? new Intl.NumberFormat('en-SG', {maximumFractionDigits: 8}).format(number) : String(value);
+        box.append(make('p', result.metric?.description || 'Query result', 'answer-label'));
+        box.append(make('div', `${result.unit || ''} ${display}`.trim(), 'answer-value'));
+        box.append(make('p', 'Calculated from the selected source snapshot using the published metric.', 'answer-summary'));
+      } else box.append(make('p', `${result.rows?.length || 0} rows returned${result.truncated ? ' (display limit reached)' : ''}.`, 'answer-summary'));
+      const table = make('div'); table.innerHTML = rowsTable(result.columns, result.rows || []); box.append(table);
     }
-    $("chat-thread").innerHTML =
-      `<div class="chat-intro"><h2>What would you like to explore?</h2><p class="muted">Use a saved metric or ask about your published data and evidence.</p><div class="suggestions">${v.metrics.map((m, i) => `<button type="button" data-suggest="${i}">${esc(m.name.replaceAll("_", " "))}</button>`).join("")}</div>${anchor("Configure the query model", "/v2/settings?source=" + encodeURIComponent(workspaceId))}</div>`;
-    document.querySelectorAll("[data-suggest]").forEach(
-      (b) =>
-        (b.onclick = () => {
-          const m = v.metrics[Number(b.dataset.suggest)];
-          $("question").value = m.description || m.name;
-          ask(m.name);
-        }),
-    );
+    for (const claim of result.claims || []) {
+      box.append(make('p', claim.text, 'answer-summary'));
+      for (const citation of claim.citations || []) {
+        const source = make('details', null, 'citation-card');
+        source.append(make('summary', `${citation.title || citation.id || 'Published evidence'}${citation.location ? ' · ' + citation.location : ''}`));
+        source.append(make('blockquote', citation.quote || ''));
+        box.append(source);
+      }
+    }
+    if (!blocked && !result.columns && !result.claims?.length) box.append(make('p', result.message || 'No supported answer was returned. Try a more specific question.'));
+    const meta = make('div', null, 'answer-meta');
+    meta.append(make('span', `${result.context_version || version.version} · ${resultScope}`));
+    if (result.context_sha256) meta.append(make('span', `Context ${result.context_sha256.slice(0, 12)}`));
+    box.append(meta);
+    if (result.sql) {
+      const sql = make('details', null, 'answer-detail'); sql.append(make('summary', 'SQL & scope'));
+      sql.append(make('pre', result.sql));
+      if (result.request) sql.append(make('pre', JSON.stringify(result.request, null, 2)));
+      box.append(sql);
+    }
+    const provenance = make('details', null, 'answer-detail'); provenance.append(make('summary', 'Full result provenance'));
+    provenance.append(make('pre', JSON.stringify(result, null, 2))); box.append(provenance);
   }
-  function message(text, who = "") {
-    const div = document.createElement("div");
-    div.className = "bubble " + who;
-    div.textContent = text;
-    $("chat-thread").append(div);
-    div.scrollIntoView({ block: "nearest" });
-    return div;
-  }
-  function controls() {
-    for (const id of ["ask", "chat-version", "clear-chat"])
-      $(id).disabled = busy;
-    document
-      .querySelectorAll("[data-conversation]")
-      .forEach((button) => (button.disabled = busy));
-    document
-      .querySelectorAll("[data-suggest]")
-      .forEach((b) => (b.disabled = busy));
-  }
-  async function ask(metric = null) {
-    if (busy || !$("question").value.trim()) return;
-    const original = $("question").value.trim();
-    invalidate();
-    const n = ++turn;
-    busy = true;
-    controls();
-    const v = selected();
-    message(original, "user");
-    const output = message("Preparing a checked interpretation…");
+  async function ask() {
+    const original = $("question").value.trim(); if (busy || !original) return;
+    const shortcut = suggestion?.text === original ? suggestion.metric : null;
+    suggestion = null; const n = ++turn, v = selected(); busy = true; controls();
+    $("chat-thread").querySelector('.chat-intro')?.remove();
+    $("chat-thread").append(make('div', original, 'bubble user'));
+    $("question").value = '';
+    const output = make('article', null, 'chat-answer');
+    const progress = make('details', null, 'answer-progress'); progress.open = true;
+    const summary = make('summary', 'Working on your question'); progress.append(summary);
+    const flow = make('ol', null, 'chat-flow');
+    const steps = ['retrieve', 'check', 'execute', 'answer'];
+    const labels = ['Find context', 'Check scope', 'Read data', 'Answer'];
+    steps.forEach((s, i) => {const row = make('li', labels[i]); row.dataset.stage = s; row.dataset.state = 'waiting'; flow.append(row);});
+    const action = make('p', 'Starting…', 'progress-action'); action.setAttribute('role', 'status');
+    progress.append(flow, action); const evidence = make('div', null, 'retrieval-panel'); evidence.hidden = true;
+    const answer = make('div', null, 'answer-body');
+    output.append(progress, evidence, answer); $("chat-thread").append(output); output.scrollIntoView({block: 'nearest'});
+    let stage = -1, received = false;
+    function update(s, detail) {
+      stage = Math.max(stage, steps.indexOf(s));
+      flow.querySelectorAll('li').forEach((li, i) => li.dataset.state = i < stage ? 'done' : i === stage ? 'running' : 'waiting');
+      action.textContent = detail;
+    }
+    const controller = new AbortController();
+    // Bound network waiting, including a proxy that buffers the response.
+    const timeout = setTimeout(() => controller.abort(), 250000);
+    let reader;
     try {
-      const prepared = await api(built("/demo/api/playground/interpret"), {
-        ...binding,
-        version: v.version,
-        context_sha256: v.context_sha256,
-        question: original,
-        metric,
-        mode: metric ? "metric" : "auto",
-      });
-      if (ticket !== generation || n !== turn) return;
-      if (prepared.status !== "ready") {
-        output.textContent = prepared.message || prepared.status;
-        saveConversation(original);
-        return;
-      }
-      output.innerHTML = `<b>Review interpretation</b><p>${esc(prepared.interpretation || prepared.metric?.description || "Review the proposed scope.")}</p><details><summary>Scope and execution details</summary><pre>${esc(prepared.sql || JSON.stringify(prepared.request || prepared.scope_check || {}, null, 2))}</pre></details>`;
-      if ($("question").value.trim() !== original) {
-        output.append(
-          document.createTextNode(
-            "Question changed. Prepare a new interpretation before running.",
-          ),
-        );
-        return;
-      }
-      plan = prepared;
-      saveConversation(original);
-      const run = document.createElement("button");
-      run.className = "primary";
-      run.dataset.run = "true";
-      run.textContent = "Run this interpretation";
-      output.append(run);
-      run.onclick = async () => {
-        if (!plan || busy) return;
-        const saved = plan;
-        invalidate();
-        busy = true;
-        controls();
-        const answer = message("Running the approved interpretation…");
-        try {
-          const result = await api(built("/demo/api/playground/run"), {
-            ...binding,
-            plan_id: saved.plan_id,
-          });
-          if (ticket !== generation || n !== turn) return;
-          if (result.columns) {
-            answer.innerHTML = `<b>${esc(result.message || "Query result")}</b>${rowsTable(result.columns, result.rows || [])}<p class="muted">${esc(result.context_version || v.version)} · ${esc(resultScope)}</p>`;
-          } else {
-            answer.textContent =
-              result.message ||
-              "Response received. Inspect the evidence below.";
-          }
-          if (result.claims?.length) {
-            for (const claim of result.claims) {
-              const paragraph = document.createElement("p");
-              paragraph.textContent = claim.text;
-              answer.append(paragraph);
-              for (const citation of claim.citations || []) {
-                const quote = document.createElement("blockquote");
-                quote.textContent =
-                  (citation.title || citation.id || "Published evidence") +
-                  ": " +
-                  citation.quote;
-                answer.append(quote);
-              }
-            }
-          }
-          const detail = document.createElement("details");
-          detail.innerHTML = "<summary>Result provenance</summary>";
-          const pre = document.createElement("pre");
-          pre.textContent = JSON.stringify(result, null, 2);
-          detail.append(pre);
-          answer.append(detail);
-          answer.scrollIntoView({ block: "nearest" });
-          saveConversation(original);
-        } catch (e) {
-          if (ticket === generation && n === turn) {
-            answer.textContent = e.message;
-            saveConversation(original);
-          }
-        } finally {
-          if (ticket === generation) {
-            busy = false;
-            controls();
-          }
+      const response = await fetch(endpoint, {method: 'POST', headers: {'Content-Type': 'application/json'}, signal: controller.signal,
+        body: JSON.stringify({...binding, version: v.version, context_sha256: v.context_sha256, question: original, metric: shortcut || null, mode: shortcut ? 'metric' : 'auto'})});
+      if (!response.ok) {const data = await response.json(); throw Error(typeof data.detail === 'string' ? data.detail : 'The chat request was rejected. Reload and retry.');}
+      if (!(response.headers.get('content-type') || '').includes('application/x-ndjson')) throw Error('The service returned an unexpected response. Check application access.');
+      reader = response.body.getReader(); const decoder = new TextDecoder(); let buffer = '';
+      const handle = event => {
+        if (event.type === 'error') throw Error(event.message);
+        if (event.type === 'progress') update(event.stage, event.detail);
+        if (event.type === 'retrieval') retrieval(evidence, event.detail);
+        if (event.type === 'result') {
+          if (received) throw Error('A duplicate answer was received.'); received = true;
+          renderAnswer(answer, event.result, v);
+          const success = (!event.result.status || event.result.status === 'answered') && (event.result.columns || event.result.claims?.length);
+          flow.querySelectorAll('li').forEach((li, i) => li.dataset.state = success ? 'done' : i < stage ? 'done' : i === stage ? 'attention' : 'waiting');
+          summary.textContent = success ? 'Completed · View execution flow' : 'Request needs attention · View checks';
+          action.textContent = success ? 'Answer ready. Inspect the result and its sources below.' : 'No complete answer was issued for this request.';
+          progress.open = !success;
         }
       };
-    } catch (e) {
-      if (ticket === generation && n === turn) {
-        output.textContent = e.message;
-        saveConversation(original);
+      while (true) {
+        const {value, done} = await reader.read();
+        if (!fresh(n)) {controller.abort(); return;}
+        buffer += decoder.decode(value || new Uint8Array(), {stream: !done});
+        const lines = buffer.split('\n'); buffer = lines.pop();
+        for (const line of lines) if (line.trim()) handle(JSON.parse(line));
+        if (done) {if (buffer.trim()) handle(JSON.parse(buffer)); break;}
+      }
+      if (!received) throw Error('The connection ended before an answer arrived. Please retry.');
+    } catch (error) {
+      controller.abort();
+      if (fresh(n)) {
+        summary.textContent = 'Request interrupted'; progress.open = true;
+        flow.querySelector('[data-state="running"]')?.setAttribute('data-state', 'attention');
+        action.textContent = 'No complete answer was returned.';
+        answer.replaceChildren(make('p', error.name === 'AbortError' ? 'The request timed out. Please retry.' : error.message, 'chat-error'));
       }
     } finally {
-      if (ticket === generation) {
-        busy = false;
-        controls();
-      }
+      clearTimeout(timeout); reader?.releaseLock();
+      if (fresh(n)) {busy = false; controls(); save(original); output.scrollIntoView({block: 'nearest'});}
     }
   }
-  $("chat-form").onsubmit = (e) => {
-    e.preventDefault();
-    ask();
-  };
-  $("question").oninput = invalidate;
+  $("chat-form").onsubmit = e => {e.preventDefault(); ask();};
+  $("question").oninput = () => {if (suggestion?.text !== $("question").value) suggestion = null;};
+  $("question").onkeydown = e => {if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {e.preventDefault(); $("chat-form").requestSubmit();}};
   $("chat-version").onchange = reset;
-  $("clear-chat").onclick = () => {
-    if (busy) return;
-    history.start(historyKey());
-    reset();
-  };
+  $("clear-chat").onclick = () => {if (!busy) {history.start(historyKey()); reset();}};
   reset();
 }
 $("close-dialog").onclick = () => $("setup").close();

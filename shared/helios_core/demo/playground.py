@@ -77,10 +77,12 @@ class Playground:
             if not item.get('published'):
                 continue
             release = self.runtime.workspace.release(item['version'])
+            published_passages = passages(release)
             versions.append({
                 'version': release['version'], 'context_sha256': release['context_sha256'],
                 'title': release['definition']['title'], 'reviewer': release['reviewer'],
-                'evidence_passages': len(passages(release)),
+                'evidence_passages': len(published_passages),
+                'document_titles': list(dict.fromkeys(p['title'] for p in published_passages)),
                 'metrics': [{key: metric.get(key) for key in ('name', 'description', 'unit', 'example_questions')}
                             for metric in release['definition']['metrics']],
             })
@@ -102,14 +104,14 @@ class Playground:
             context=self.runtime.session_id)
         return release, scope, model_id
 
-    def interpret(self, payload: Question, llm=None):
+    def interpret(self, payload: Question, llm=None, *, progress=None):
         # Saved metrics remain deterministic. Real model clients use the official
         # Harness; injected test doubles exercise the compiler and scope boundary.
         from helios_core.llm.client import LLMClient
         if payload.metric is None and isinstance(llm, LLMClient):
             self.runtime.check_binding(payload)
             from .agent.harness import interpret
-            return interpret(self, payload, llm)
+            return interpret(self, payload, llm, progress=progress)
         return self._interpret(payload, llm)
 
     def _interpret(self, payload: Question, llm=None, *, metric_question=None):
@@ -305,7 +307,7 @@ class Playground:
                 self.plans.popitem(last=False)
         return response
 
-    def execute(self, payload: RunPlan, llm=None, llm_factory=None):
+    def execute(self, payload: RunPlan, llm=None, llm_factory=None, *, progress=None):
         self.runtime.check_binding(payload)
         with self.lock:
             stored = self.plans.get(payload.plan_id)
@@ -318,6 +320,8 @@ class Playground:
                 raise DemoError('The published evidence changed. Interpret the question again.')
             if llm is None and llm_factory is not None:
                 llm = llm_factory()
+            if progress:
+                progress('answer', 'Read the retrieved passages and verify cited claims')
             answer = answer_document(llm, plan['question'], plan['passages'])
             self.runtime.check_binding(payload)
             self.adopted(plan['version'], plan['context_sha256'])
@@ -335,6 +339,8 @@ class Playground:
         model = self.retrieval.validate_request(stored['bundle_id'], scope, plan['request'], model=model_id)
         # Fetch one extra row to report truncation honestly.
         execution = Compiler(model).compile(SemanticRequest.from_dict(plan['request'] | {'limit': plan['request']['limit']+1}), dialect='duckdb')
+        if progress:
+            progress('execute', 'Execute read-only SQL against the selected source snapshot')
         result = self.runtime.query_local(execution.sql, limit=plan['request']['limit']+1)
         data = result_payload(result)
         truncated = len(data['rows']) > plan['request']['limit']
@@ -365,6 +371,8 @@ class Playground:
                 'document_revision':None, 'original_sha256':result_response['result_sha256'],
                 'attachment_sha256':plan['context_sha256'], 'preview_url':None, 'links':[],
                 'extraction':'source_text', 'source_kind':'sql', 'sql':execution.sql}
+            if progress:
+                progress('answer', 'Combine executed SQL with published passages and verify citations')
             answer = answer_document(llm, plan['question'], [sql_evidence] + plan['passages'])
             self.runtime.check_binding(payload)
             self.adopted(plan['version'], plan['context_sha256'])

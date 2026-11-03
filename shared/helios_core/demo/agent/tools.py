@@ -49,7 +49,8 @@ class FixedPlan:
 
 
 class SemanticTools:
-    def __init__(self, playground, payload, llm):
+    def __init__(self, playground, payload, llm, *, progress=None):
+        self.progress = progress
         self.playground, self.runtime, self.payload, self.llm = playground, playground.runtime, payload, llm
         self.release, _, _ = playground.adopted(payload.version, payload.context_sha256)
         self.metrics = {m['name']:m for m in self.release['definition']['metrics']}
@@ -146,6 +147,16 @@ class SemanticTools:
         jsonschema.validate(args, spec['parameters'])
         self.runtime.check_binding(self.payload)
         self.playground.adopted(self.payload.version, self.payload.context_sha256)
+        if self.progress:
+            labels = {
+                'inspect_model': ('retrieve', 'Inspect published metrics and fields'),
+                'read_document_evidence': ('retrieve', 'Retrieve published document passages'),
+                'inspect_coverage': ('check', 'Check source dates, population, and filters'),
+                'prepare_query': ('check', 'Compile and validate a read-only query'),
+                'prepare_document': ('check', 'Check published evidence for the question'),
+                'request_clarification': ('check', 'Identify missing or unsupported scope'),
+            }
+            self.progress(*labels[name])
         step = {'tool':name,'status':'running'}
         self.trace.append(step)
         try:
