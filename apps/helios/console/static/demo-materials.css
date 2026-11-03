@@ -61,3 +61,26 @@ button.compact{min-height:30px;padding:4px 10px;font-size:11px}
 .library-item>strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
 .library-item>small{margin-top:2px}
 @media(max-width:1050px){#materials-list{max-height:none}}
+/* Analysis results: counts first, claims grouped by kind, quotes on demand. */
+.analysis-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin:12px 0}
+.analysis-stat{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#f7f8fc}
+.analysis-stat strong{display:block;font-size:20px;line-height:1.2;color:var(--ink)}
+.analysis-stat span{font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.analysis-summary-text{margin:4px 0 14px;font-size:13px;line-height:1.55;white-space:pre-wrap}
+.claim-group{margin:14px 0}
+.claim-group>h4{margin:0 0 6px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.claim-group .claim{margin:0;padding:10px 0;border:0;border-top:1px solid var(--line);border-radius:0}
+.claim-statement{margin:0;font-size:13px;color:var(--ink)}
+.claim-source>summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:4px}
+.clamped-text{margin:6px 0 0;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.clamped.open .clamped-text{display:block}
+.link-button{padding:0;border:0;background:none;color:var(--accent);font-size:12px;cursor:pointer;min-height:0}
+.material-link .badge[data-status=approved]{background:#e7f5ef;color:#13866d}
+.material-link .badge[data-status=rejected]{background:#fdeceb;color:#b42318}
+.material-link .badge[data-status=stale]{background:#fff4e2;color:#98691b}
+.material-link .badge[data-status=proposed]{background:#edf3ff;color:#2d62df}
+.visual-facts{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0;font-size:12px}
+.visual-facts dt{color:var(--muted)}.visual-facts dd{margin:0;overflow-wrap:anywhere}
+.visual-quote{margin:8px 0;padding-left:12px;border-left:3px solid #d5ddea;font-size:12px;white-space:pre-wrap}
+.visual-edit>summary{cursor:pointer;font-size:12px;color:var(--accent);margin:6px 0}
+.claim-group .claim-source{margin:0;padding:0;border:0;background:none}.claim-group .claim-source blockquote{margin:6px 0 2px}
