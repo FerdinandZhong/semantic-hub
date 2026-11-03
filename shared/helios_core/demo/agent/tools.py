@@ -73,6 +73,7 @@ class SemanticTools:
                 props['document_question']={'type':'string','description':'For a combined question, quote the COMPLETE document clause exactly. Both clauses must cover the original question apart from connectors.'}
         self.trace, self.receipts = [], {}
         self.attempts = 0
+        self.calls, self.budget_exhausted = set(), False
         self.started = time.monotonic()
         self.inspected = False
         self.checked = {}
@@ -140,11 +141,17 @@ class SemanticTools:
         import jsonschema
         self.attempts += 1
         if self.attempts > 12 or time.monotonic()-self.started > 120:
+            self.budget_exhausted = True
             raise DemoError('Agent tool budget exceeded. Narrow the question.')
         spec = next((t for t in self.schemas if t['name']==name), None)
         if spec is None:
             raise DemoError('Unknown semantic tool.')
         jsonschema.validate(args, spec['parameters'])
+        key = json.dumps([name, args], sort_keys=True, default=str)
+        if key in self.calls:
+            # A repeated successful call returns the same result. Rejected calls stay retryable because tool state can change.
+            self.trace.append({'tool':name,'status':'rejected','failure_type':'duplicate_call'})
+            raise DemoError('Duplicate call with identical arguments. Use the earlier result or change the arguments.')
         self.runtime.check_binding(self.payload)
         self.playground.adopted(self.payload.version, self.payload.context_sha256)
         if self.progress:
@@ -161,6 +168,7 @@ class SemanticTools:
         self.trace.append(step)
         try:
             value = self.dispatch(name,args)
+            self.calls.add(key)
             step['status'] = value.get('status','checked')
             if args.get('metric'): step['metric'] = args['metric']
             if name=='prepare_query':step['request']={k:v for k,v in args.items() if k in ('metric','dimensions','filters')}

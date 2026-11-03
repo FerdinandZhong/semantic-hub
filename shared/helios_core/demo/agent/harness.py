@@ -70,6 +70,7 @@ def interpret(playground, payload, llm, *, progress=None):
     worker.start()
     response = None
     failure = None
+    stop_reason = 'receipt'
     try:
         with tempfile.TemporaryDirectory(prefix='config-',dir=root) as temp:
             patch = Path(temp)/'cordis.patch.yml'
@@ -106,19 +107,22 @@ def interpret(playground, payload, llm, *, progress=None):
                 # Multiple receipts need an explicit choice; never guess between plans.
                 if response is None and len(tools.receipts)==1:
                     response = next(iter(tools.receipts.values()))
+                    stop_reason = 'single_receipt_fallback'
                 if response is None:
                     raise ValueError('No checked receipt')
             finally:
                 harness.close()
     except Exception as exc:
         failure = type(exc).__name__
+        stop_reason = ('budget_exhausted' if tools.budget_exhausted
+                       else 'no_receipt' if str(exc) == 'No checked receipt' else 'sdk_error')
         # Never surface SDK errors containing provider headers or a prompt transcript.
         response = {'status':'unavailable', 'choices':[],
                     'message':'The agent could not produce a checked answer plan within its budget. No query answer was issued. Try a narrower question or a saved metric.'}
     finally:
         server.shutdown();server.server_close();worker.join(timeout=2)
     response['agent'] = {'framework':'DeepSeek Harness','sdk_version':'0.1.5rc1', 'provider':llm.provider,
-        'model':llm.model,'turn_id':turn,'tool_budget':12,'trace':tools.trace,'failure_type':failure,
+        'model':llm.model,'turn_id':turn,'tool_budget':12,'tool_calls':tools.attempts,'stop_reason':stop_reason,'trace':tools.trace,'failure_type':failure,
         'memory_scope':'Selected published context and source snapshot; previous answers are not reused as facts.'}
     memory.record(turn,payload.context_sha256,playground.runtime.pack.fingerprint,payload.question,response,tools.trace)
     if response.get('plan_id'):

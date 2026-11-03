@@ -79,8 +79,15 @@ def test_tools_require_inspection_and_are_read_only(pharma):
 def test_tools_budget_and_no_cross_release_memory(pharma,tmp_path):
     from helios_core.demo.agent.memory import Memory
     tools=SemanticTools(pharma.playground,question(pharma,metric=None),planner())
-    for _ in range(12):tools.call('inspect_model',{})
-    with pytest.raises(DemoError):tools.call('inspect_model',{})
+    tools.call('inspect_model',{})
+    # Identical successful calls are rejected but still count toward the budget.
+    for _ in range(11):
+        with pytest.raises(DemoError,match='Duplicate'):
+            tools.call('inspect_model',{})
+    assert tools.trace[-1]['failure_type']=='duplicate_call' and not tools.budget_exhausted
+    with pytest.raises(DemoError,match='budget'):
+        tools.call('inspect_model',{})
+    assert tools.budget_exhausted
     a,b=Memory(tmp_path/'release-a'),Memory(tmp_path/'release-b')
     a.record('turn-a','release-a','snapshot-a','question',{'status':'no_data'},[])
     import sqlite3
@@ -202,3 +209,32 @@ def test_auto_scope_failure_checks_documents_before_final_refusal(pharma,monkeyp
     tools.read_documents=True
     result=tools.call('request_clarification',args|{'message':'No matching geography'})
     assert tools.receipts[result['receipt_id']]['scope_check']['reason_dimensions']==['geography']
+
+
+@pytest.mark.parametrize('behaviour,expected',[('quiet','no_receipt'),('crash','sdk_error'),('flood','budget_exhausted')])
+def test_harness_records_stop_reason_from_real_tool_bridge(pharma,monkeypatch,behaviour,expected):
+    import sys
+    import types
+    import urllib.request
+    from helios_core.demo.agent import harness
+    class FakeHarness:
+        def __init__(self,**kwargs):
+            self.env=kwargs['env']
+        def start(self):
+            if behaviour=='crash':
+                raise RuntimeError('provider down')
+        def run(self,prompt,session_id):
+            # Drive the actual bridge the SDK plugin uses.
+            for _ in range(13 if behaviour=='flood' else 0):
+                request=urllib.request.Request(self.env['HELIOS_HARNESS_BRIDGE'],data=json.dumps({'tool':'inspect_model','args':{}}).encode(),
+                    headers={'Authorization':'Bearer '+self.env['HELIOS_HARNESS_BRIDGE_TOKEN'],'Content-Type':'application/json'})
+                urllib.request.urlopen(request).read()
+            return types.SimpleNamespace(final_response='I could not decide.')
+        def close(self):
+            pass
+    monkeypatch.setitem(sys.modules,'deepseek_harness',types.SimpleNamespace(DeepSeekHarness=FakeHarness))
+    llm=types.SimpleNamespace(provider='openai',model='gpt-4o-mini',base_url=None,api_key='test')
+    result=harness.interpret(pharma.playground,question(pharma,metric=None),llm)
+    assert result['status']=='unavailable'
+    assert result['agent']['stop_reason']==expected
+    assert result['agent']['tool_calls']==(13 if behaviour=='flood' else 0)
