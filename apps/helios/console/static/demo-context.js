@@ -352,6 +352,18 @@ function renderValidation() {
   const report=workspace.draft.validation;
   if (!report || dirty) return;
   for (const message of report.errors) container.append(node("p",message,"panel fail"));
+  const checks=[...report.metrics.map(m=>({name:m.name,kind:"Metric reconciliation",passed:m.passed,detail:m.passed?"Compiled and reference SQL return the same result":(m.error||"Results differ")})),
+    ...report.joins.map(j=>({name:j.name,kind:"Relationship keys",passed:j.passed,detail:`${j.duplicate_keys} duplicate · ${j.null_target_keys} null target · ${j.unmatched_source_rows} unmatched`}))];
+  if(checks.length){
+    const passed=checks.filter(c=>c.passed).length,summary=node("div",undefined,"panel validation-summary"),list=node("ul",undefined,"check-list");
+    summary.append(node("h2",`${passed}/${checks.length} checks passed`));
+    // Failures first so they are read before the passing evidence.
+    for(const c of [...checks].sort((a,b)=>a.passed-b.passed)){
+      const row=node("li");row.dataset.status=c.passed?"pass":"fail";
+      row.append(node("span",c.passed?"✓":"✕","check-mark"),node("strong",c.name),node("span",`${c.kind} · ${c.detail}`,"check-detail"));list.append(row);
+    }
+    summary.append(list);container.append(summary);
+  }
   for (const metric of report.metrics) {
     const card=node("div",undefined,"panel"), header=node("div",undefined,"panel-heading");
     header.append(node("h2",metric.name),node("span",metric.passed?"Reconciled":"Needs attention",metric.passed?"pass":"fail"));

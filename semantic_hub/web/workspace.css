@@ -9,8 +9,12 @@
   background: #f7f8fc;
   font-size: 14px;
   --blue: #2d62df;
-  --line: #e3e7ee;
+  --line: #e9edf4;
   --muted: #667085;
+  --blue-soft: #edf3ff;
+  --green: #13866d;
+  --amber: #98691b;
+  --radius: 10px;
 }
 * {
   box-sizing: border-box;

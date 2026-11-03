@@ -47,11 +47,11 @@
 }
 .hub-editor .editor-steps button,
 .hub-editor .overview-tab {
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 10px;
+  padding: 12px 14px;
   font-size: 13px;
   white-space: nowrap;
   border-radius: 0;
@@ -166,3 +166,14 @@
 }
 .hub-editor #notice:not(:empty) {margin:0 0 14px;padding:10px 14px;border-radius:8px;background:#f3f7fc;border:1px solid #e1e8f2;color:#4d6482;font-size:12px;line-height:1.5;}
 .hub-editor .validation-progress {margin-top:16px;}
+/* Validation summary: the same n/n check list the chat answers use. */
+.hub-editor .validation-summary h2{margin:0 0 8px;font-size:16px}
+.hub-editor .check-list{list-style:none;margin:0;padding:0}
+.hub-editor .check-list li{display:grid;grid-template-columns:20px minmax(0,320px) 1fr;gap:8px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}
+.hub-editor .check-list li:last-child{border-bottom:0}
+.hub-editor .check-detail{color:var(--muted);overflow-wrap:anywhere}
+.hub-editor .check-mark{font-weight:700;text-align:center}
+.hub-editor .check-list [data-status=pass] .check-mark{color:#13866d}
+.hub-editor .check-list [data-status=fail] .check-mark{color:#c0362c}
+@media(max-width:700px){.hub-editor .check-list li{grid-template-columns:20px 1fr}.hub-editor .check-detail{grid-column:2}}
+.hub-editor .check-list strong{overflow-wrap:anywhere}
