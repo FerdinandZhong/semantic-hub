@@ -84,3 +84,23 @@ button.compact{min-height:30px;padding:4px 10px;font-size:11px}
 .visual-quote{margin:8px 0;padding-left:12px;border-left:3px solid #d5ddea;font-size:12px;white-space:pre-wrap}
 .visual-edit>summary{cursor:pointer;font-size:12px;color:var(--accent);margin:6px 0}
 .claim-group .claim-source{margin:0;padding:0;border:0;background:none}.claim-group .claim-source blockquote{margin:6px 0 2px}
+/* Stage rhythm: every child sits on one 12px gap; buttons never touch the text around them. */
+.material-stage{display:grid;gap:12px;justify-items:stretch}
+.material-stage>h3,.material-stage>p{margin:0}
+.material-stage>h3{font-size:15px}
+.material-stage>button,.material-stage>.button-link{justify-self:start;margin-top:4px}
+.material-stage>button+p{margin-top:2px}
+.material-stage .help{font-size:12px;line-height:1.55}
+#visual-pages{max-width:320px}
+/* One hairline per section: the disclosure carries it, the preview does not box itself twice. */
+.material-stage>details{margin-top:8px;padding-top:14px;border-top:1px solid var(--line)}
+.material-stage>details>summary{margin-bottom:2px}
+.visual-review-layout{margin-top:14px;gap:24px}
+.visual-original label{display:grid;gap:6px;margin:0}
+.visual-original select{margin:0;max-width:240px}
+.visual-original img{margin-top:12px;border-color:var(--line);border-radius:8px}
+#visual-summary{margin:10px 0 0;color:var(--muted)}
+.material-stage select:focus-visible,.material-stage input:focus-visible{outline:2px solid #a5bef9;outline-offset:0;border-color:var(--accent)}
+#visual-pages-help{margin-top:-6px}
+.material-stage .help{color:var(--muted)}
+.material-stage>label{margin:0}
