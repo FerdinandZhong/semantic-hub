@@ -220,7 +220,7 @@
     function render() {
       world.replaceChildren();
       mini.replaceChildren();
-      const pills=[];
+      const pills=[],placed=[];
       const nodes=visibleNodes(),ids=new Set(nodes.map(n=>n.id));
       nodes.forEach(position);
       graph.edges.map(edge=> {
@@ -253,7 +253,11 @@
         const full=String(e.label||e.name||(derived?'SQL dependency':'many-to-one')),text=full.length>26?full.slice(0,25)+'…':full;
         const sameColumn=Math.abs(a.x-b.x)<10;
         const mx=sameColumn?a.x+230+bulge*0.75:a.x>b.x?(a.x+b.x+230)/2:(a.x+230+b.x)/2,my=(a.y+b.y)/2+(sameColumn?38:35),w=text.length*5.4+16;
-        const pill=svg('g',{class:`canvas-edge-pill ${evidence?'evidence':derived?'derived':'declared'}`,transform:`translate(${mx} ${my})`});
+        // Step a label down until it clears the ones already placed, so none hide each other.
+        let py=my;
+        while(placed.some(q=>Math.abs(q.y-py)<20&&Math.abs(q.x-mx)<(q.w+w)/2+4))py+=20;
+        placed.push({x:mx,y:py,w});
+        const pill=svg('g',{class:`canvas-edge-pill ${evidence?'evidence':derived?'derived':'declared'}`,transform:`translate(${mx} ${py})`});
         const t=svg('text',{y:3.5,'text-anchor':'middle',class:'canvas-edge-label'});
         t.textContent=text;
         const pillTip=svg('title');
