@@ -864,6 +864,7 @@ function renderTree(){
       });
       b.dataset.objectId=id;
       b.classList.add("tree-object");
+      b.title=b.textContent;
       group.append(b);
     }tree.append(group);
   }

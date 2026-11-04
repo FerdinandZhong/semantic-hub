@@ -177,3 +177,49 @@
 .hub-editor .check-list [data-status=fail] .check-mark{color:#c0362c}
 @media(max-width:700px){.hub-editor .check-list li{grid-template-columns:20px 1fr}.hub-editor .check-detail{grid-column:2}}
 .hub-editor .check-list strong{overflow-wrap:anywhere}
+/* Studio and Validation: compact header, slim draft bar, calm panels, readable tables. */
+.hub-editor .heading .eyebrow{display:none}
+.hub-editor .heading h1{margin:0 0 4px;font-size:22px}
+.hub-editor .heading #workspace-description{color:var(--muted);font-size:13px}
+.hub-editor .editor-content{padding:20px 30px 28px}
+.hub-editor .workspace-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:10px 14px;border:1px solid var(--line);border-left:1px solid var(--line);border-radius:10px;background:#fff}
+.hub-editor .workspace-bar>div:first-child{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px}
+.hub-editor #draft-status{font-size:14px}
+.hub-editor #draft-status::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:#13866d;vertical-align:1px}
+.hub-editor #active-status{margin:0;font-size:12px}
+.hub-editor .workspace-bar .actions{display:flex;gap:8px}
+.hub-editor .workspace-bar button{min-height:34px;padding:0 14px;font-size:13px}
+.hub-editor .studio-layout{grid-template-columns:200px minmax(320px,1fr) 320px;border-color:var(--line);border-radius:12px}
+.hub-editor .studio-tree{background:#fafbfc}
+.hub-editor .studio-tree details{padding:10px 8px}
+.hub-editor .studio-tree summary{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.hub-editor .studio-tree .tree-object{margin-top:2px;padding:6px 10px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow-wrap:normal}
+.hub-editor .studio-tree .tree-object:hover{background:var(--blue-soft)}
+.hub-editor .inspector-heading{padding:12px 16px}
+.hub-editor .inspector-tabs{padding:8px 12px;gap:4px}
+.hub-editor .inspector-tabs button{min-height:30px;padding:0 10px;border:0;border-radius:6px;font-size:12px;font-weight:500}
+.hub-editor .inspector-tabs button[aria-selected=true]{background:var(--blue-soft);color:var(--blue)}
+.hub-editor .studio-inspector .panel{padding:14px 16px}
+.hub-editor .studio-inspector label{font-size:12px;font-weight:600;color:#344054}
+.hub-editor .studio-inspector input,.hub-editor .studio-inspector textarea,.hub-editor .studio-inspector select{min-height:34px;padding:7px 10px;font-size:13px;border-radius:8px}
+.hub-editor .studio-inspector textarea{min-height:64px}
+.hub-editor .studio-inspector .form-grid{gap:12px}
+.hub-editor .studio-inspector .secondary,.hub-editor .studio-inspector button{min-height:32px;font-size:12px}
+/* Review tables: sticky pale header, 12px cells, one-row pagination. */
+.hub-editor .review-table th{position:sticky;top:0;background:#f7f8fc;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.hub-editor .review-table td,.hub-editor .review-table th{padding:10px 12px;font-size:12px}
+.hub-editor .review-table tbody tr:hover{background:#fafbfe}
+.hub-editor .review-pagination{border-top:1px solid var(--line)}
+.hub-editor .review-page-nav,.hub-editor #review-page-numbers{flex-wrap:nowrap}
+.hub-editor .review-page-nav button{min-width:34px;min-height:34px;height:34px;border-radius:8px}
+.hub-editor .review-page-info select{min-height:34px}
+.hub-editor .panel{border-color:var(--line);border-radius:12px;box-shadow:none}
+/* Second pass: one control height (34px) across toolbars, headings and inspector tabs. */
+.hub-editor .inspector-tabs{flex-wrap:nowrap}
+.hub-editor .inspector-tabs button{flex:1 1 auto;padding:0 4px;white-space:nowrap}
+.hub-editor .review-toolbar{align-items:flex-end;gap:10px}
+.hub-editor .review-toolbar input,.hub-editor .review-toolbar select,.hub-editor .review-toolbar button,.hub-editor #baseline,.hub-editor .panel-heading>button,.hub-editor .panel-heading .actions button{min-height:34px;height:34px;padding-top:0;padding-bottom:0;font-size:13px;border-radius:8px}
+.hub-editor .review-toolbar button{margin-bottom:0}
+.hub-editor .review-toolbar label,.hub-editor .review-workspace .panel-heading label{font-size:12px;color:#344054}
+.hub-editor .panel-heading{align-items:center}
+.hub-editor #validation-status{margin:8px 0 0;color:var(--muted);font-size:13px}
