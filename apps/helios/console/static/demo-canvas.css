@@ -31,3 +31,63 @@
 .canvas-node.document rect,.canvas-node.document_group rect{fill:#eff6ff;stroke:#3b82f6}
 .canvas-edge.evidence{stroke:#2563eb;stroke-dasharray:2 5}
 .canvas-view-options{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px}.canvas-view-options>label{flex:0 1 210px}.canvas-display-actions{margin:0}
+/* Clean, modern canvas: soft card, one-row toolbar, quiet edges, pill labels. */
+.semantic-canvas{background:#fff;border:1px solid #e9edf4;border-radius:12px}
+.semantic-canvas .canvas-toolbar{flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;background:#fff;border-bottom:1px solid #eef1f6}
+.semantic-canvas .canvas-toolbar input[type=search]{order:1;flex:1 1 170px;width:auto;min-width:140px;height:34px;padding:0 10px 0 32px;border:1px solid #e4e7ec;border-radius:8px;color:#292f3d;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%2398a2b3' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cpath d='M10 10l3 3'/%3E%3C/svg%3E") 11px center no-repeat}
+.semantic-canvas .canvas-toolbar>select{order:1}
+.semantic-canvas .canvas-modes{order:2;display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:#f2f4f7}
+.semantic-canvas .canvas-modes button{height:28px;padding:0 12px;border:0;border-radius:7px;background:transparent;color:#667085;font-weight:500}
+.semantic-canvas .canvas-modes button[aria-pressed=true]{background:#fff;color:#292f3d;box-shadow:0 1px 2px rgba(16,24,40,.1)}
+.semantic-canvas .canvas-toolbar>button{order:3;height:34px;padding:0 12px;border:1px solid #e4e7ec;border-radius:8px;background:#fff;color:#344054;font-weight:500}
+.semantic-canvas .canvas-toolbar>button:hover{background:#f9fafb}
+.semantic-canvas .canvas-legend{gap:18px;padding:8px 14px;border-bottom:1px solid #eef1f6;font-size:11px;color:#667085}
+.canvas-key{display:inline-flex;align-items:center;gap:6px}
+.canvas-key i{display:inline-block;width:20px;height:0;border-top:2px solid #98a2b3}
+.canvas-key.derived i{border-top:2px dashed #8b6ae6}
+.canvas-key.evidence i{border-top:2px dotted #d4a03a}
+.canvas-key.swatch i{width:8px;height:8px;border:0;border-radius:50%}
+.canvas-key.added i{background:#13866d}.canvas-key.modified i{background:#d4a03a}.canvas-key.removed i{background:#c0362c}.canvas-key.affected i{background:#2d62df}
+.semantic-canvas .canvas-stage{background-color:#fafbfc;background-image:radial-gradient(#e4e7ec 1px,transparent 1px);background-size:20px 20px}
+.semantic-canvas .canvas-status{background:rgba(255,255,255,.92);border-top:1px solid #eef1f6;color:#667085}
+/* Bottom-right control cluster, with the minimap above it. */
+.semantic-canvas .canvas-zoom{left:auto;right:14px;bottom:46px;gap:6px}
+.semantic-canvas .canvas-zoom button{min-width:34px;min-height:34px;border:1px solid #e4e7ec;border-radius:8px;background:#fff;color:#344054;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.semantic-canvas .canvas-stage>svg:nth-child(2){right:14px;bottom:92px;border:1px solid #e4e7ec;border-radius:10px;background:rgba(255,255,255,.9)}
+.semantic-canvas .mini-node{fill:#d0d5dd;stroke:none}.semantic-canvas .mini-node.selected{fill:#2d62df}
+/* Node cards. */
+.semantic-canvas .canvas-node .canvas-node-card{fill:#fff;stroke:#d9dee7;stroke-width:1;filter:drop-shadow(0 1px 2px rgba(16,24,40,.08))}
+.semantic-canvas .canvas-node.selected .canvas-node-card,.semantic-canvas .canvas-node:focus .canvas-node-card{stroke:#2d62df;stroke-width:2}
+.semantic-canvas .canvas-node text{fill:#292f3d;font-size:13px;font-weight:600}
+.semantic-canvas .canvas-node .canvas-node-detail{fill:#667085;font-size:10.5px;font-weight:400}
+.semantic-canvas .canvas-node .canvas-node-chip{fill:#edf3ff}
+.semantic-canvas .canvas-node .canvas-node-glyph{fill:#2d62df;font-size:12px;font-weight:700}
+.semantic-canvas .canvas-node.metric .canvas-node-chip{fill:#f3efff}.semantic-canvas .canvas-node.metric .canvas-node-glyph{fill:#6941c6}
+.semantic-canvas .canvas-node.document .canvas-node-chip,.semantic-canvas .canvas-node.document_group .canvas-node-chip{fill:#fff4e2}
+.semantic-canvas .canvas-node.document .canvas-node-glyph,.semantic-canvas .canvas-node.document_group .canvas-node-glyph{fill:#98691b}
+.semantic-canvas .canvas-node.column .canvas-node-chip,.semantic-canvas .canvas-node.attribute .canvas-node-chip,.semantic-canvas .canvas-node.field .canvas-node-chip{fill:#f2f4f7}
+.semantic-canvas .canvas-node.column .canvas-node-glyph,.semantic-canvas .canvas-node.attribute .canvas-node-glyph,.semantic-canvas .canvas-node.field .canvas-node-glyph{fill:#667085}
+.semantic-canvas .canvas-node rect.canvas-node-tag{fill:#f2f4f7;stroke:none;filter:none}
+.semantic-canvas .canvas-node rect.canvas-node-tag.primary{fill:#edf3ff}
+.semantic-canvas .canvas-node.metric rect.canvas-node-tag.primary{fill:#f3efff}
+.semantic-canvas .canvas-node.document rect.canvas-node-tag.primary,.semantic-canvas .canvas-node.document_group rect.canvas-node-tag.primary{fill:#fff4e2}
+.semantic-canvas .canvas-node .canvas-node-tag-text{fill:#475467;font-size:10px;font-weight:500}
+.semantic-canvas .canvas-node.added .canvas-node-card{stroke:#13866d;stroke-width:2}.semantic-canvas .canvas-node.modified .canvas-node-card{stroke:#d4a03a;stroke-width:2}
+.semantic-canvas .canvas-node.removed .canvas-node-card{stroke:#c0362c;stroke-dasharray:5 3;opacity:.75}.semantic-canvas .canvas-node.affected .canvas-node-card{stroke:#2d62df;stroke-width:2}
+/* Edges: quiet lines, kind shown by dash style, labels as pills. */
+.semantic-canvas .canvas-edge{stroke:#98a2b3;stroke-width:1.5}
+.semantic-canvas .canvas-edge.derived{stroke:#8b6ae6;stroke-dasharray:6 5}
+.semantic-canvas .canvas-edge.evidence{stroke:#d4a03a;stroke-dasharray:2 5;stroke-linecap:round}
+.semantic-canvas .canvas-edge:hover{stroke-width:3}
+.semantic-canvas .canvas-edge-pill{pointer-events:none}
+.semantic-canvas .canvas-edge-pill rect{fill:#fff;stroke:#e4e7ec}
+.semantic-canvas .canvas-edge-pill.derived rect{fill:#f3efff;stroke:#e1d8fa}
+.semantic-canvas .canvas-edge-pill.evidence rect{fill:#fff4e2;stroke:#f3dfb7}
+.semantic-canvas .canvas-edge-label{fill:#475467;font-size:10px;font-weight:500;paint-order:normal;stroke:none}
+
+/* Narrow canvases put search on its own row; wide ones keep a single toolbar row. */
+.semantic-canvas{container-type:inline-size}
+.semantic-canvas .canvas-toolbar input[type=search]{flex:1 1 100%}
+.semantic-canvas .canvas-modes{margin-right:auto}
+@container (min-width:780px){.semantic-canvas .canvas-toolbar input[type=search]{flex:1 1 200px}.semantic-canvas .canvas-modes{margin-right:0}}
+.canvas-change-keys{display:inline-flex;gap:14px}

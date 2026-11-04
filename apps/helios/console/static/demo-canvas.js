@@ -153,12 +153,17 @@
     changes.append(button('Previous change',()=>navigateChange(-1)),changeLabel,button('Next change',()=>navigateChange(1)));
     bar.append(changes);
     const legend=el('div',undefined,'canvas-legend');
-    legend.append(el('span','━━ Declared relationships'),el('span','┄┄ SQL-derived dependencies'),el('span','··· Document evidence'),el('span',readOnly?'Read-only version':'Added · Modified · Removed · Affected'));
+    const key=(cls,text)=>{const s=el('span',undefined,'canvas-key '+cls);s.append(el('i'),document.createTextNode(text));return s;};
+    legend.append(key('declared','Declared relationships'),key('derived','SQL-derived dependencies'),key('evidence','Document evidence'));
+    if(readOnly)legend.append(el('span','Read-only version',undefined));
+    const changeKeys=el('span',undefined,'canvas-change-keys');
+    changeKeys.hidden=true;
+    if(!readOnly){changeKeys.append(key('swatch added','Added'),key('swatch modified','Modified'),key('swatch removed','Removed'),key('swatch affected','Affected'));legend.append(changeKeys);}
     const dependencyWarnings=el('details',undefined,'canvas-dependency-warnings');
     const warningSummary=el('summary'),warningList=el('ul');
     dependencyWarnings.append(warningSummary,warningList);
     dependencyWarnings.hidden=true;
-    const defs=svg('defs'),marker=svg('marker',{id:'canvas-arrow',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'});marker.append(svg('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'#64748b'}));defs.append(marker);surface.append(defs,world);
+    const defs=svg('defs'),marker=svg('marker',{id:'canvas-arrow',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'});marker.append(svg('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'#98a2b3'}));defs.append(marker);surface.append(defs,world);
     stage.append(surface,mini,zoomControls,status);
     root.replaceChildren(bar,optionsPanel,legend,dependencyWarnings,stage);
     function label(n) {
@@ -187,9 +192,9 @@
         const group=document?3:metric?2:column?1:0;
         const peers=visibleNodes().filter(x=> (kind(x).startsWith('document')?3:kind(x)==='metric'?2:isColumn(x)?1:0)===group);
         positions[n.id]= {
-          x:(document?740:metric?(lens==='metadata'||expanded.size?740:350):column?370:25),automatic:true,y:peers.findIndex(x=>x.id===n.id)*110+30
+          x:(document?740:metric?(lens==='metadata'||expanded.size?740:430):column?370:25),automatic:true,y:peers.findIndex(x=>x.id===n.id)*110+30
         };
-      }if(positions[n.id].automatic&&kind(n)==='metric')positions[n.id].x=lens==='metadata'||expanded.size?740:350;return positions[n.id];
+      }if(positions[n.id].automatic&&kind(n)==='metric')positions[n.id].x=lens==='metadata'||expanded.size?740:430;return positions[n.id];
     }
 
     function applyTransform() {
@@ -215,6 +220,7 @@
     function render() {
       world.replaceChildren();
       mini.replaceChildren();
+      const pills=[];
       const nodes=visibleNodes(),ids=new Set(nodes.map(n=>n.id));
       nodes.forEach(position);
       graph.edges.map(edge=> {
@@ -229,8 +235,10 @@
         }return e;
       }).filter(e=>ids.has(e.source)&&ids.has(e.target)&&e.source!==e.target).forEach(e=> {
         const a=positions[e.source],b=positions[e.target],derived=(e.kind||e.type||'').includes('depend'),evidence=e.kind==='document_evidence';
+        // Same-column edges bulge right, further for longer hops, so they separate instead of stacking.
+        const bulge=40+Math.min(Math.abs(a.y-b.y)*0.3,140);
         const p=svg('path', {
-          d:a.x>b.x?`M ${a.x} ${a.y+35} C ${a.x-70} ${a.y+35}, ${b.x+300} ${b.y+35}, ${b.x+230} ${b.y+35}`:`M ${a.x+230} ${a.y+35} C ${a.x+300} ${a.y+35}, ${b.x-70} ${b.y+35}, ${b.x} ${b.y+35}`,'data-edge-id':e.id,'marker-end':'url(#canvas-arrow)',class:`canvas-edge ${evidence?'evidence':derived?'derived':'declared'} ${mode==='Changes'?changeStatus(e):''}`
+          d:Math.abs(a.x-b.x)<10?`M ${a.x+230} ${a.y+38} C ${a.x+230+bulge} ${a.y+38}, ${b.x+230+bulge} ${b.y+38}, ${b.x+230} ${b.y+38}`:a.x>b.x?`M ${a.x} ${a.y+35} C ${a.x-70} ${a.y+35}, ${b.x+300} ${b.y+35}, ${b.x+230} ${b.y+35}`:`M ${a.x+230} ${a.y+35} C ${a.x+300} ${a.y+35}, ${b.x-70} ${b.y+35}, ${b.x} ${b.y+35}`,'data-edge-id':e.id,'marker-end':'url(#canvas-arrow)',class:`canvas-edge ${evidence?'evidence':derived?'derived':'declared'} ${mode==='Changes'?changeStatus(e):''}`
         });
         p.onclick=()=> {
           if(evidence){const doc=graph.nodes.find(n=>n.id===e.document_id);if(doc)select(doc);return;}
@@ -242,32 +250,44 @@
           options.onSelect?.(e);
         };
         world.append(p);
-        const t=svg('text', {
-          x:(a.x+b.x+230)/2,y:(a.y+b.y)/2+25,class:'canvas-edge-label'
-        });
-        t.textContent=String(e.label||e.name||(derived?'SQL dependency':'many-to-one')).slice(0,38);
-        world.append(t);
+        const full=String(e.label||e.name||(derived?'SQL dependency':'many-to-one')),text=full.length>26?full.slice(0,25)+'…':full;
+        const sameColumn=Math.abs(a.x-b.x)<10;
+        const mx=sameColumn?a.x+230+bulge*0.75:a.x>b.x?(a.x+b.x+230)/2:(a.x+230+b.x)/2,my=(a.y+b.y)/2+(sameColumn?38:35),w=text.length*5.4+16;
+        const pill=svg('g',{class:`canvas-edge-pill ${evidence?'evidence':derived?'derived':'declared'}`,transform:`translate(${mx} ${my})`});
+        const t=svg('text',{y:3.5,'text-anchor':'middle',class:'canvas-edge-label'});
+        t.textContent=text;
+        const pillTip=svg('title');
+        pillTip.textContent=full;
+        pill.append(pillTip,svg('rect',{x:-w/2,y:-9,width:w,height:18,rx:9}),t);
+        pills.push(pill);
       });
       nodes.forEach((n,i)=> {
         const p=position(n,i),g=svg('g', {
           transform:`translate(${p.x} ${p.y})`,class:`canvas-node ${kind(n)} ${selected===n.id?'selected':''} ${mode==='Changes'?changeStatus(n):''}`,'data-node-id':n.id,tabindex:0,role:'button','aria-label':`${kind(n)}: ${label(n)}`
         });
-        g.append(svg('rect', {
-          width:230,height:76,rx:9
-        }));
-        const t=svg('text', {
-          x:12,y:22
+        g.append(svg('rect',{width:230,height:76,rx:10,class:'canvas-node-card'}));
+        const k=kind(n),glyphs={dataset:'▦',metric:'∑',document:'¶',document_group:'¶',column:'≡',attribute:'≡',field:'≡',concept:'◇'};
+        const tip=svg('title');
+        tip.textContent=label(n);
+        const chip=svg('circle',{cx:22,cy:24,r:11,class:'canvas-node-chip'});
+        const glyph=svg('text',{x:22,y:28.5,'text-anchor':'middle',class:'canvas-node-glyph'});
+        glyph.textContent=glyphs[k]||'•';
+        const t=svg('text',{x:40,y:23});
+        t.textContent=label(n).slice(0,24);
+        const detail=svg('text',{x:40,y:40,class:'canvas-node-detail'});
+        detail.textContent=String(n.expression||n.metadata?.expression||n.description||'').slice(0,30);
+        g.append(tip,chip,glyph,t,detail);
+        const tags=[k==='document_group'?'collection':k,Array.isArray(n.columns)?`${n.columns.length} column${n.columns.length===1?'':'s'}`:null,n.data_type||n.metadata?.data_type,mode==='Changes'?changeStatus(n):''].filter(Boolean);
+        let cursor=12;
+        tags.slice(0,3).forEach((tag,i)=>{
+          const word=String(tag).slice(0,16),w=word.length*5.6+14;
+          if(cursor+w>220)return;
+          g.append(svg('rect',{x:cursor,y:50,width:w,height:16,rx:8,class:'canvas-node-tag'+(i?'':' primary')}));
+          const tt=svg('text',{x:cursor+w/2,y:61.3,'text-anchor':'middle',class:'canvas-node-tag-text'});
+          tt.textContent=word;
+          g.append(tt);
+          cursor+=w+6;
         });
-        t.textContent=label(n).slice(0,32);
-        const sub=svg('text', {
-          x:12,y:43,class:'canvas-node-type'
-        });
-        sub.textContent=[kind(n)==='document_group'?'document collection':kind(n),n.data_type||n.metadata?.data_type,mode==='Changes'?changeStatus(n):''].filter(Boolean).join(' · ');
-        const detail=svg('text', {
-          x:12,y:63,class:'canvas-node-detail'
-        });
-        detail.textContent=String(n.expression||n.metadata?.expression||n.description||'').slice(0,34);
-        g.append(t,sub,detail);
         if(mode==='Edit'&&isColumn(n)) {
           const handle=svg('circle', {
             cx:221,cy:38,r:7,class:'canvas-connect-handle','data-connect-field':n.id,'aria-label':'Drag relationship from '+label(n)
@@ -331,6 +351,8 @@
         r.onclick=()=>focus(n.id);
         mini.append(r);
       });
+      // Labels draw last so a narrow gap never hides them behind a node.
+      pills.forEach(pill=>world.append(pill));
       if(nodes.length) {
         const ps=nodes.map(n=>positions[n.id]);
         mini.setAttribute('viewBox',`0 0 ${Math.max(...ps.map(p=>p.x))+260} ${Math.max(...ps.map(p=>p.y))+106}`);
@@ -420,6 +442,7 @@
     function setMode(m) {
       if(readOnly && m!=='Lineage')return;
       mode=m;
+      changeKeys.hidden=m!=='Changes';
       render();
       if(m==='Changes')navigateChange(0);
     }

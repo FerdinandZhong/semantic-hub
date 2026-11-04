@@ -785,7 +785,6 @@ function renderChat(catalog, config, ticket) {
     const handle = window.HeliosCanvas.mount(host, {readOnly: true, host: {getState: () => ({definition: data.definition})},
       onSelect: o => {detail.textContent = [o.kind || o.type, o.label || o.name || o.id, o.description || o.expression || o.location || ''].filter(Boolean).join(' · ');}});
     handle.update({...data.graph, saved_revision: data.graph.draft_revision, dirty: false});
-    if (data.focus) handle.focus(data.focus);
   }, true);
   $("chat-form").onsubmit = e => {e.preventDefault(); ask();};
   $("question").oninput = () => {if (suggestion?.text !== $("question").value) suggestion = null;};
