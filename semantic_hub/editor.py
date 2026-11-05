@@ -14,6 +14,7 @@ WEB = Path(__file__).parent / "web"
 
 def render_editor(source: str = "") -> str:
     from .shell import sidebar
+    from .support_pages import workspace_context_bar
 
     page = (CONSOLE / "templates" / "demo-context.html").read_text()
     page = re.sub(
@@ -22,8 +23,8 @@ def render_editor(source: str = "") -> str:
     page = page.replace("<body>", '<body class="hub-editor">')
     page = page.replace("<main>", '<main class="main editor-main">', 1)
     page = page.replace(
-        "Local sample workspace</span></header>",
-        "Built-in workspace</span></header>",
+        '<span class="badge">Local sample workspace</span></header>',
+        "<span>Built-in builder</span></header>",
         1,
     )
     page = page.replace(
@@ -37,6 +38,7 @@ def render_editor(source: str = "") -> str:
     page = page.replace(
         "</head>",
         '<link rel="stylesheet" href="/v2/assets/workspace.css">'
+        '<link rel="stylesheet" href="/v2/assets/support-shell.css">'
         '<link rel="stylesheet" href="/v2/assets/editor-shell.css"></head>',
     )
     overview = escape(
@@ -44,7 +46,7 @@ def render_editor(source: str = "") -> str:
     )
     page = page.replace(
         '<div class="steps" role="tablist" aria-label="Context workflow">',
-        '<nav class="steps editor-steps" aria-label="Workspace workflow">'
+        '<nav class="steps editor-steps workspace-tabs" aria-label="Workspace workflow">'
         f'<a class="overview-tab" href="{overview}">Overview</a>'
         '<div class="editor-tabs" role="tablist" aria-label="Editing workflow">',
     )
@@ -53,16 +55,13 @@ def render_editor(source: str = "") -> str:
         '    </div></nav>\n    <section id="step-source"',
         1,
     )
-    # Keep workspace identity and workflow above the editor's save toolbar.
-    workflow = re.search(r'<nav class="steps editor-steps".*?</nav>', page, re.S)
+    # Match the Materials frame: workspace bar and workflow tabs sit under the header.
+    workflow = re.search(r'<nav class="steps editor-steps.*?</nav>', page, re.S)
+    frame = workspace_context_bar(source)
     if workflow:
         page = page[: workflow.start()] + page[workflow.end() :]
-        page = page.replace(
-            '<div class="workspace-bar">',
-            workflow.group() + '<div class="workspace-bar">',
-            1,
-        )
-    page = page.replace("</header>", '</header><div class="editor-content">', 1)
+        frame += workflow.group()
+    page = page.replace("</header>", "</header>" + frame + '<div class="editor-content">', 1)
     page = page.replace("</main>", "</div></main>", 1)
     # These anchors are private hooks used by the original editor script.
     # Keep them out of navigation so the shared sidebar remains authoritative.
@@ -84,6 +83,12 @@ def editor_script() -> str:
     script = (CONSOLE / "static" / "demo-context.js").read_text()
     script = script.replace(
         "function stepFromHash() {",
+        "const PAGE_NAMES={source:'Source data',define:'Studio',"
+        "validate:'Validation & review',review:'Versions & releases'};\n"
+        "let crumbStep='define';\n"
+        "function crumb(name){if(name)crumbStep=name;"
+        '$("workspace-breadcrumb").textContent=["Workspace",config?.connection_name,'
+        'PAGE_NAMES[crumbStep]].filter(Boolean).join(" / ");}\n'
         "function stepFromHash() {\n"
         '  if(location.hash==="#define")return "define";\n'
         '  if(location.hash==="#review")return "review";',
@@ -102,7 +107,11 @@ def editor_script() -> str:
         '$("pack-title").textContent=config.title;',
         '$("pack-title").textContent=config.title;\n'
         '  $("workspace-heading").textContent=`${config.connection_name} · '
-        '${$("step-review").hidden ? "Semantic Studio" : "Versions & releases"}`;',
+        '${$("step-review").hidden ? "Semantic Studio" : "Versions & releases"}`;\n'
+        '  crumb();$("support-workspace-name").textContent=config.connection_name;',
+    )
+    script = script.replace(
+        '$("workspace-breadcrumb").textContent=`Workspace / ${title}`;', "crumb(name);"
     )
     script = script.replace(
         'new URL("/demo/context",location.origin)',

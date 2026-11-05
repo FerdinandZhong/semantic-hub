@@ -10,7 +10,11 @@
         const workspace = data?.items?.find(
           (item) => item.id === document.body.dataset.source,
         );
-        if (workspace) workspaceName.textContent = workspace.name;
+        if (workspace) {
+          workspaceName.textContent = workspace.name;
+          document.getElementById("support-crumb-name").textContent =
+            workspace.name;
+        }
       })
       .catch(() => {}); // Keep the actual source ID if workspace metadata is unavailable.
   }

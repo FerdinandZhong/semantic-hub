@@ -20,7 +20,7 @@
   padding: 0;
 }
 .hub-editor .heading .eyebrow {
-  margin: 0 0 6px;
+  margin: 0 0 5px;
   font-size: 10px;
 }
 .hub-editor .heading h1 {
@@ -37,34 +37,34 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 0;
-  margin: 0 0 16px;
-  padding: 0;
-  border-bottom: 1px solid var(--line);
+  margin: 0;
+  line-height: normal;
 }
 .hub-editor .editor-tabs {
   display: contents;
 }
-.hub-editor .editor-steps button,
-.hub-editor .overview-tab {
+/* Buttons and the Overview link share the Materials link-tab style. */
+.hub-editor .editor-steps button {
   flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 14px;
+  padding: 15px 0;
   font-size: 13px;
   white-space: nowrap;
-  border-radius: 0;
-}
-.hub-editor .overview-tab {
-  color: var(--muted);
+  border: 0;
   border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  box-shadow: none;
+  line-height: inherit;
 }
 .hub-editor .editor-steps span {
   display: none;
 }
 .hub-editor .editor-steps button[aria-selected="true"] {
   background: transparent;
+  border-color: var(--blue);
+  color: var(--blue);
+  font-weight: 600;
 }
 .hub-editor .sidebar nav {
   margin-top: 0;
@@ -145,11 +145,7 @@
   }
 }
 @media (max-width: 760px) {
-  .hub-editor .editor-steps {
-    overflow-x: auto;
-  }
-  .hub-editor .editor-steps button,
-  .hub-editor .overview-tab {
+  .hub-editor .editor-steps a {
     flex: none;
   }
 }
@@ -180,7 +176,7 @@
 /* Studio and Validation: compact header, slim draft bar, calm panels, readable tables. */
 .hub-editor .heading #studio-summary{margin:4px 0 0;color:var(--muted);font-size:12px}
 .hub-editor .heading #workspace-description{color:var(--muted);font-size:13px}
-.hub-editor .editor-content{padding:20px 30px 28px}
+.hub-editor .editor-content{padding:24px 32px 48px}
 .hub-editor .workspace-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:10px 14px;border:1px solid var(--line);border-left:1px solid var(--line);border-radius:10px;background:#fff}
 .hub-editor .workspace-bar>div:first-child{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px}
 .hub-editor #draft-status{font-size:14px}

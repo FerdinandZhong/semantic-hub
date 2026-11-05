@@ -16,6 +16,15 @@ CONSOLE = Path(__file__).resolve().parents[1] / "apps" / "helios" / "console"
 WEB = Path(__file__).parent / "web"
 
 
+def workspace_context_bar(source: str) -> str:
+    """The workspace bar shared by Materials and the built-in editor pages."""
+    return (
+        '<div class="support-workspace-context"><span>Semantic workspace</span>'
+        f'<strong id="support-workspace-name">{escape(source)}</strong>'
+        '<span class="support-workspace-builder">Built-in builder</span></div>'
+    )
+
+
 def render_support_page(kind: str, source: str = "") -> str:
     from .shell import sidebar
 
@@ -44,13 +53,17 @@ def render_support_page(kind: str, source: str = "") -> str:
             for label, url, active in tabs
         )
         workspace_context = (
-            '<div class="support-workspace-context"><span>Semantic workspace</span>'
-            f'<strong id="support-workspace-name">{escape(source)}</strong>'
-            '<span class="support-workspace-builder">Built-in builder</span></div>'
-            '<nav class="workspace-tabs support-workspace-tabs" aria-label="Workspace workflow">'
+            workspace_context_bar(source) + '<nav class="workspace-tabs support-workspace-tabs" aria-label="Workspace workflow">'
             + tab_html
             + "</nav>"
         )
+    header = (
+        f'<header><div>Workspace / <span id="support-crumb-name">{escape(source)}</span>'
+        " / Source data</div><span>Built-in builder</span></header>"
+        if workspace_context
+        else f'<header><div><b>Semantic Hub</b><span class="slash">/</span>{title}</div>'
+        "<span>Built-in workflow</span></header>"
+    )
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Semantic Hub · {title}</title>
@@ -62,8 +75,7 @@ def render_support_page(kind: str, source: str = "") -> str:
 <script src="/v2/support-assets/{kind}.js" defer></script>
 </head><body data-support-page="{kind}" data-source="{source_attr}">
 {sidebar(active, source)}<main class="main">
-<header><div><b>Semantic Hub</b><span class="slash">/</span>{title}</div>
-<span>Built-in workflow</span></header>
+{header}
 {workspace_context}<div class="support-content">{content}</div></main></body></html>"""
 
 
