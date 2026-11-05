@@ -13,6 +13,8 @@ Recorded 3 November 2026. Read the [project status](docs/semantic-hub-v2/project
 - UI commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
   They add the answer canvas, per-answer checks, harness stop reasons, the materials cleanup, and the validation summary.
 - The 23:28 Singapore restart passed seven UI asset comparisons and a live finance query with a canvas and 6/6 answer checks.
+- Four later commits, `6960649` to `a01c33a`, are local only. They are not pushed or deployed.
+  They give the materials stages consistent spacing, restyle the semantic canvas, and compact the Studio and Validation pages.
 
 This is a dated handoff, not a continuous health check. Verify current Git and application state before deploying.
 
@@ -79,6 +81,7 @@ Use numbered steps for procedures and ASCII diagrams for processes with more tha
 ## Operational references
 
 - [Current project status and remaining checks](docs/semantic-hub-v2/project-status.md)
+- [UI polish and ontology plan](docs/semantic-hub-v2/ui-ontology-plan.md)
 - [AMP operator guide](docs/semantic-hub-v2/amp-operator-guide.md)
 - [Live acceptance runbook](docs/semantic-hub-v2/live-test-runbook.md)
 - [Local preview and test commands](docs/semantic-hub-v2/local-preview.md)

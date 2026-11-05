@@ -49,7 +49,7 @@ Original question + published version
 | Scope enforcement | `agent/scope.py` checks original question periods against actual source rows. |
 | Memory | `agent/memory.py` records release-scoped turn summaries in SQLite. Harness also retains native session events. |
 | Execution | The existing Playground validates the stored plan again before bounded DuckDB execution or document QA. |
-| UI | Agent checks display the framework, configured model, tool results, requested period, and observed coverage. |
+| UI | Agent checks display the framework, configured model, tool results, requested period, and observed coverage. Talk to your data also shows the tool trace, calls used against the budget, the stop reason, and deterministic answer checks. |
 
 This increment uses explicit query instructions as a skill module.
 It does not install a general-purpose skill marketplace or an autonomous skill discovery system.

@@ -42,6 +42,7 @@ The repository layout is accepted. The local preview implements the first runtim
 1. [Implementation plan](implementation-plan.md): work packages I0–I8 and release gates.
 2. [Local smoke test plan](local-smoke-test-plan.md): fixtures, checks L00–L12, and evidence requirements.
 3. [AMP preparation plan](amp-preparation-plan.md): setup sequencing, checks A01–A11, and recovery.
+4. [UI polish and ontology plan](ui-ontology-plan.md): phases P0–P6, the ontology tab, and glossary authoring.
 
 ## Requirements interpreted
 

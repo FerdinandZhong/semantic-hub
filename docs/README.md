@@ -73,7 +73,7 @@ Explicit row review creates a source and semantic draft; publication remains a s
 | Shared semantic retrieval | [Implementation](semantic-retrieval.md), [plan](semantic-retrieval-and-metadata-plan.md) | FTS5 search, dependencies, scoped bundles, cache and budgets |
 | Inherited local React/API/MCP | [API contract](builtin/helios-compat/ui-backend-contract.md), [MCP](builtin/helios-compat/mcp-server.md), [conversation](builtin/helios-compat/talk-to-your-data-architecture.md) | Registered models, identity, authorization, warehouse execution |
 | Crawler and document index | [Crawler guide](../external/helios/docs/crawler-guide.md), [analysis](../external/helios/docs/crawler-analysis.md), [plan](../external/helios/docs/crawler-burndown.md) | Extracted passages, entity resolution, claims and evaluation |
-| Ontology services | [Authoring proposal](builtin/helios-compat/ontology-authoring.md), [deployment](../external/helios/docs/ontology-deployment.md), [plan](../external/helios/docs/ontology-burndown.md) | LinkML and graph services; broader authoring remains planned |
+| Ontology services | [Authoring proposal](builtin/helios-compat/ontology-authoring.md), [deployment](../external/helios/docs/ontology-deployment.md), [plan](../external/helios/docs/ontology-burndown.md) | LinkML and graph services; broader authoring remains planned. See the [UI polish and ontology plan](semantic-hub-v2/ui-ontology-plan.md), phases P4–P6 |
 | Inherited deployment and operations | [UI deployment](builtin/helios-compat/ui-deployment.md), [networking](builtin/helios-compat/ui-api-networking.md), [security](builtin/helios-compat/SECURITY_ARCHITECTURE.md), [metadata](../external/helios/docs/helios-metadata-database.md) | Authenticated deployment and operational state |
 | Research and historical evidence | [Alignment review](DOCS_ALIGNMENT.md), [walkthroughs](walkthrough/README.md), [deck notes](Helios-Overview-notes.md) | Design inputs and recorded evidence, not current deployment proof |
 
@@ -108,6 +108,7 @@ AMP packaging and CAI ingress authentication are implemented. Full hosted Agent 
 
 - [Current project status: deployed commit, live finance result, and remaining checks](semantic-hub-v2/project-status.md)
 - [Agent handoff and repository instructions](../AGENTS.md)
+- [UI polish and ontology plan: phases P0–P6](semantic-hub-v2/ui-ontology-plan.md)
 - [Independent Hub and pluggable builders](semantic-hub-v2/README.md)
 - [Upstream inspection and merge evidence](semantic-hub-v2/upstream-review.md)
 - [Provider contract proposal](semantic-hub-v2/provider-contract.md)

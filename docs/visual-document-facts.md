@@ -37,7 +37,7 @@ Vision extraction identifies content; embeddings rank related semantic objects.
 2. Find **1. Analyze pages with AI**. Page selection remains visible.
 3. Enter up to six physical page numbers and select **Analyze selected pages with AI**.
 4. Expand **Review page results** and inspect each proposed row beside its original page.
-5. Correct entity, metric, value, unit, period, population, denominator, quotation, and uncertainty as needed.
+5. Each row shows its values read-only. Select **Edit values** to correct entity, metric, value, unit, period, population, denominator, quotation, and uncertainty.
 6. Select the rows to retain.
 7. Under **Create a new semantic model**, expand the approval form and enter title, reviewer, and note.
 8. Confirm source-page review and select **Approve rows and create model**.

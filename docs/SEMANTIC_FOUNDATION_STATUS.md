@@ -23,11 +23,12 @@ Live saved-metric execution returned **SGD 686,572.96** for finance `v1.0`.
 Separate Helios acceptance, live free-text inference, caller isolation, and complete persistence checks remain pending.
 The [current status record](semantic-hub-v2/project-status.md) distinguishes local tests, mocked inference, and live execution evidence.
 
-**Answer evidence and UI polish, local commits — 3 November 2026:** Five commits, `9c1acb1` to `4929695`, are not deployed.
+**Answer evidence and UI polish — 3 November 2026:** Five commits, `9c1acb1` to `4929695`, are pushed and deployed in `cc4890e`.
 Chat answers show a semantic canvas, deterministic answer checks, and the agent tool trace.
 The agent rejects repeated successful tool calls and records its stop reason.
 Supporting materials and validation results are restructured.
 The route list and OpenAPI documents are unchanged; JSON responses gain additive fields.
+Four later local commits, `6960649` to `a01c33a`, restyle the materials stages, the semantic canvas, and the Studio and Validation pages. They are not pushed or deployed.
 
 **Vision, OCR, and embeddings decision record — 19 October 2026:** Documented the distinction between visual understanding and vector generation.
 GPT-4o can read images through the API. A separate OCR service is optional.

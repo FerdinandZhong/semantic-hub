@@ -51,7 +51,7 @@ Repeat analysis -> New document revision (earlier evidence remains unchanged)
 4. Select **Analyze content** to extract proposed definitions, rules, entities, and context using the drafting model.
 5. Select **Find model links** to match passages to model definitions.
 6. Enable embedding matching when its profile is ready under **Model configuration**.
-7. Review each suggested passage, target, and explanation. Select relevant links and enter your reviewer name and note.
+7. Review each suggested passage, target, and explanation. Each link shows a coloured status badge, its section location, and a relevance signal. Select relevant links and enter your reviewer name and note.
 8. Approve the selected links, then choose their target model and add them to its draft.
 9. Open Studio to inspect the supporting documents and canvas links. Validate and review the model before publication.
 
@@ -81,7 +81,7 @@ Upload transcribes them automatically with the draft model: images use page 1, a
 Text pages in a mixed PDF keep their extracted text; transcripts are added as labeled `vision` sections.
 If the draft model is missing or rejects the request, the upload is kept and a notice asks for manual page analysis.
 Original page previews accompany proposed observations and retain their physical page numbers.
-Reviewers correct and select rows, confirm source-page review, and create a new typed fact source with a semantic draft.
+Reviewers correct rows under **Edit values**, select them, confirm source-page review, and create a new typed fact source with a semantic draft.
 The source retains units, periods, populations, denominators, uncertainty, original checksum, extraction, and reviewer decisions.
 Creating reviewed facts does not publish the semantic model.
 Studio validation, object review, version creation, and publication remain separate actions.

@@ -24,6 +24,10 @@ The approved review artifact remains in [ui-draft](ui-draft/README.md).
 - Settings and supporting materials use that same shell.
 - Navigation uses consistent SVG icons instead of text symbols.
 - Native Helios opens through an explicit external-provider handoff.
+- Chat answers show answer checks, a semantic canvas of the objects used, and the agent tool trace.
+- Studio and Validation use a compact header and draft bar. The canvas uses node cards, pill edge labels, and a keyed legend.
+- Validation opens with an "n/n checks passed" summary. Supporting-material analysis opens with counts and grouped claims.
+- Planned follow-up work is in the [UI polish and ontology plan](ui-ontology-plan.md).
 
 The editor is not an iframe or a separately styled application.
 It uses ordinary internal page navigation and the existing editor scripts.

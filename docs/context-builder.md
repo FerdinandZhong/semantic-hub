@@ -255,11 +255,13 @@ Declared join edges preserve source fields, target fields, cardinality, and mean
 ## Canvas, decisions, and versions
 
 Studio provides an object tree, canvas, and inspector.
-The canvas toolbar keeps mode selection, object search, Connect fields, Fit, and View options visible.
+The canvas toolbar shows object search on its own row, then a Lineage/Edit/Changes control with Connect fields, Fit, and View options.
+Nodes are cards with a kind icon and tags such as dataset and column count. Edge labels are pills that never hide each other.
+A keyed legend separates declared relationships, SQL-derived dependencies, and document evidence. Change keys appear only in Changes mode.
 View options groups the graph view, neighborhood controls, column inspection, and fullscreen.
 Columns inspects the selected dataset. Neighbors returns to that dataset's relationships, even when a column is selected.
 Show all restores the semantic overview. The fullscreen button changes to Exit fullscreen while the canvas fills the screen.
-Zoom controls sit on the canvas. The Connect fields dialog uses a single-column form on all screen sizes.
+Zoom controls and the minimap sit at the bottom right of the canvas. The Connect fields dialog uses a single-column form on all screen sizes.
 Forms offer an alternative to field connections on the canvas.
 The canvas distinguishes declared relationships from dependencies parsed from metric SQL.
 It does not show execution-observed lineage.
@@ -273,6 +275,7 @@ The review table supports numbered pages, 10/25/50 rows per page, and selection 
 Batch decisions appear separately from pagination.
 The confirmation dialog shows selected objects, reviewer, decision note, and explicit confirmation in a single-column form.
 The version page lists failed checks and unapproved-object counts, with links to validation and missing reference SQL.
+Validation results open with an "n/n checks passed" list: one row per metric reconciliation and relationship key check, failures first.
 The review table separates missing validation from actual blockers.
 “Not validated” means the saved draft needs validation; “Unsaved changes” means existing evidence no longer applies.
 “Blocked” includes the reason that prevents approval.

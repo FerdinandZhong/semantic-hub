@@ -36,6 +36,19 @@ Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 | `80e5a05` | Supporting-material analysis shows counts, grouped claims, formatted locations, and status badges |
 | `4929695` | Validation opens with an n/n check summary; Studio tabs match the workspace tabs |
 
+### Local commits after the deployed commit
+
+Commits `6960649` to `a01c33a` are local. They are not pushed or deployed.
+
+| Commit | Change |
+| --- | --- |
+| `6960649` | Supporting-material stages use one spacing rhythm and a single divider |
+| `f812f98` | The semantic canvas uses node cards, pill-labelled edges, a one-row toolbar, a keyed legend, and a wider metric column |
+| `8ecf3d2` | Studio and Validation use a compact header and draft bar, a truncating object tree, and uniform control heights |
+| `a01c33a` | Canvas edge labels step aside so none hide each other |
+
+These commits change static assets only: CSS, `demo-canvas.js`, `demo-context.js`, and `workspace.js`. They add no routes, fields, or Python code.
+
 ## Implemented architecture
 
 ```text
@@ -101,6 +114,7 @@ These checks verify structure and evidence. They do not measure business correct
 | Browser experience checks | Numeric query, validation, progress, and document presentation passed | Document presentation used a fixture |
 | Local commits `9c1acb1`–`4929695` | 181 tests passed across the providers, AMP, retrieval, chat, document, playground, agent, and Studio suites | Chat and document inference were mocked; the harness test used a fake SDK through the real tool bridge |
 | Local browser, local commits | Saved-metric chat showed 6/6 checks and a 2-node canvas; the restored history re-mounted the canvas; no page errors | Materials analysis used mocked results; no configured LLM |
+| UI-only local commits `6960649`–`a01c33a` | 75 tests passed (providers, Studio context, chat), run before the last canvas label and spacing tweaks; browser captures of Studio, Validation, Materials and the chat canvas showed no page errors | The later tweaks touched static JS and CSS only; no CAI check has run |
 | Exposed API, local commits | Route list and both OpenAPI documents are identical to `998904c` | JSON bodies gain the additive fields listed below |
 
 Progress screenshots used delayed delivery of real backend events to capture transient states.
@@ -189,6 +203,8 @@ Existing JSON responses gain only additive fields. No field is removed or rename
 | Persistence | Check uploads, saved model connections, published versions, and provider links across restart |
 | Hosted MCP / Agent Studio | Repeat the finance workflow against this exact deployment and pinned release |
 | Hosted UI interaction acceptance | Complete manual browser review of materials and Studio validation; asset checks and saved-metric chat passed |
+| Local UI commits | Push and deploy `6960649`–`a01c33a`; repeat the Studio, Validation, Materials and chat-canvas checks on CAI |
+| UI polish and ontology | Follow the [UI polish and ontology plan](ui-ontology-plan.md), phases P0–P6 |
 | Branch integration | Review and merge the fixes into `main`; this record does not claim that merge occurred |
 | Later architecture work | External release import, delegated execution, and optional built-in package extraction |
 
