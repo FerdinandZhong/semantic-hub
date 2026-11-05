@@ -1,13 +1,13 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: planned; nothing in this plan is implemented yet.
+Recorded 4 November 2026. Status: P0 and P1 done locally (`36ed508`, `eb62311`); P2–P6 planned. Nothing here is pushed or deployed.
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–P1 UI fixes are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`eb62311` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -61,7 +61,7 @@ Each phase is one or more commits with its own tests. P0–P4 add no routes and 
 3. Check other readers of `glossary_terms` for the same mismatch, including `materials.py:386`.
 
 Files: `shared/helios_core/demo/builder_artifacts.py`, a new test in `apps/helios/tests/`.
-Status: Done — confirmed by `test_name_keyed_glossary_term_is_a_concept_link_target` and `test_name_keyed_glossary_term_is_a_concept_candidate`; `proposals.py` had the same mismatch and is fixed too.
+Status: Done in `36ed508` — confirmed by `test_name_keyed_glossary_term_is_a_concept_link_target` and `test_name_keyed_glossary_term_is_a_concept_candidate`; `proposals.py` had the same mismatch and is fixed too.
 Risk: published artifacts change only for definitions that hold terms. The finance sample holds none.
 
 ### P1 — Quick UI fixes (CSS and small JS)
@@ -73,7 +73,7 @@ Risk: published artifacts change only for definitions that hold terms. The finan
 
 Files: `apps/helios/console/static/demo-canvas.js`, `semantic_hub/web/editor-shell.css`, `apps/helios/console/static/demo-context.js`.
 
-Done: local commit "Keep canvas text readable and align page titles and summaries" (hash: see `git log`). Fit stays at 0.85 or larger, titles are 25 px, the Studio and Validation header shows object counts, and inspector inputs use weight 400 with 12 px spacing.
+Done: `eb62311`. Fit stays at 0.85 or larger, titles are 25 px, the Studio and Validation header shows object counts, and inspector inputs use weight 400 with 12 px spacing.
 
 ### P2 — One shared page frame
 

@@ -38,7 +38,7 @@ Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 
 ### Local commits after the deployed commit
 
-Commits `6960649` to the P1 UI fixes commit (after `36ed508`) are local. They are not pushed or deployed.
+Commits `6960649` to `eb62311` are local. They are not pushed or deployed.
 
 | Commit | Change |
 | --- | --- |
@@ -48,7 +48,7 @@ Commits `6960649` to the P1 UI fixes commit (after `36ed508`) are local. They ar
 | `a01c33a` | Canvas edge labels step aside so none hide each other |
 | `6043abf` | Docs: UI polish and ontology plan |
 | `36ed508` | P0: name-keyed glossary terms become concept link targets |
-| P1 UI fixes (this commit) | Canvas Fit stays at 0.85 or larger, 25 px page titles, Studio and Validation summary strip, normal-weight inspector inputs with a 12 px rhythm |
+| `eb62311` | Canvas Fit stays at 0.85 or larger, 25 px page titles, Studio and Validation summary strip, normal-weight inspector inputs with a 12 px rhythm |
 
 These commits change static assets only: CSS, `demo-canvas.js`, `demo-context.js`, and `workspace.js`. They add no routes, fields, or Python code.
 
