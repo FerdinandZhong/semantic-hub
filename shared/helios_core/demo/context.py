@@ -428,6 +428,27 @@ class ContextWorkspace:
             "rows": rows,
         }
 
+    def unknown_term_columns(self, term: dict) -> list:
+        return [c for c in term.get("columns", []) if str(c).removeprefix("source.") not in self._fields]
+
+    def check_glossary(self, terms: list, stored: list = ()) -> None:
+        """Input check for authored terms. Terms identical to the stored draft are skipped, so old proposal-shaped terms never block a save."""
+        seen = set()
+        for term in terms:
+            name = str(term.get("name") or term.get("term") or "").strip()
+            if term not in stored:
+                if not name:
+                    raise DemoError("Every glossary term needs a name")
+                if not str(term.get("definition") or "").strip():
+                    raise DemoError(f"Glossary term '{name}' needs a definition")
+                if len(name) > 160 or len(str(term["definition"])) > 1000:
+                    raise DemoError(f"Glossary term '{name}' is too long (name 160, definition 1,000 characters)")
+                if unknown := self.unknown_term_columns(term):
+                    raise DemoError(f"Glossary term '{name}' maps to unknown source fields: {', '.join(map(str, unknown))}")
+            if name.lower() in seen:
+                raise DemoError(f"Glossary term names must be unique: '{name}' appears twice")
+            seen.add(name.lower())
+
     def save(
         self, revision: int, definition: ContextDefinition, baseline_version=None
     ) -> dict:
@@ -949,9 +970,17 @@ class ContextWorkspace:
                 "context": (
                     "context",
                     value["title"],
-                    {k: value.get(k) for k in ("title", "description", "dataset_meanings", "field_roles", "glossary_terms", "proposal_provenance")},
+                    {k: value.get(k) for k in ("title", "description", "dataset_meanings", "field_roles", "proposal_provenance")},
                 )
             }
+            used = set()
+            for index, term in enumerate(value.get("glossary_terms", [])):
+                label = str(term.get("name") or term.get("term") or f"#{index + 1}")
+                key = "term:" + label
+                if key in used:
+                    key = f"{key}#{index + 1}"
+                used.add(key)
+                result[key] = ("glossary", label, term)
             for attachment in value.get("document_attachments", []):
                 result["document:" + attachment["id"]] = (
                     "document", attachment["filename"], attachment
@@ -1057,7 +1086,7 @@ class ContextWorkspace:
         for item in items:
             reasons = (
                 list(validation.get("errors", []))
-                if item["kind"] in ("context", "field", "document", "ontology")
+                if item["kind"] in ("context", "field", "document", "ontology", "glossary")
                 else []
             )
             if not validation:

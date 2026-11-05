@@ -340,6 +340,34 @@ function renderJoins() {
   if (!definition.joins.length) $("joins").append(node("p","No relationships. Metrics can group by fields in their own table.","muted"));
   $("add-join").disabled=definition.joins.length>=20;
 }
+let selectedTerm=0;
+const termName=t=>t.name||t.term||"";
+const sourceFieldIds=()=>(sourceGraph?.nodes||[]).flatMap(n=>(n.columns||[]).map(c=>c.qualified||`${n.name}.${c.name}`)).sort();
+function renderGlossary(){
+  const terms=definition.glossary_terms||(definition.glossary_terms=[]),list=$("term-list"),editor=$("term-editor");
+  selectedTerm=Math.max(0,Math.min(selectedTerm,terms.length-1));
+  list.replaceChildren();editor.replaceChildren();
+  terms.forEach((t,i)=>{const b=button(termName(t)||"(unnamed)",()=>{selectedTerm=i;renderGlossary();},"secondary");b.setAttribute("aria-pressed",String(i===selectedTerm));list.append(b);});
+  $("add-term").disabled=terms.length>=100;
+  if(!terms.length){editor.append(node("p","No glossary terms. Add one to name a business concept and map it to fields.","muted"));return;}
+  const t=terms[selectedTerm],field=(label,control,onInput)=>{const l=node("label",label);control.addEventListener("input",()=>{onInput(control);markDirty();});l.append(control);editor.append(l);return control;};
+  const name=node("input");name.value=termName(t);name.maxLength=160;name.id="term-name";
+  field("Term name",name,c=>{t.name=c.value;delete t.term;const b=list.children[selectedTerm];if(b)b.textContent=c.value||"(unnamed)";});
+  const def=node("textarea");def.rows=3;def.maxLength=1000;def.value=t.definition||"";def.id="term-definition";
+  field("Definition",def,c=>{t.definition=c.value;});
+  const syn=node("textarea");syn.rows=2;syn.placeholder="One synonym per line";syn.value=(t.synonyms||[]).join("\n");syn.id="term-synonyms";
+  field("Synonyms (optional)",syn,c=>{const v=c.value.split("\n").map(x=>x.trim()).filter(Boolean);if(v.length)t.synonyms=v;else delete t.synonyms;});
+  const cols=node("select");cols.multiple=true;cols.size=6;cols.id="term-columns";
+  const chosen=new Set((t.columns||[]).map(c=>String(c).replace(/^source\./,"")));
+  for(const id of sourceFieldIds()){const o=node("option",id);o.value=id;o.selected=chosen.has(id);cols.append(o);}
+  field("Mapped columns",cols,c=>{t.columns=[...c.selectedOptions].map(o=>"source."+o.value);});
+  editor.append(node("p","Hold Ctrl or Cmd to select several fields.","help"),button("Remove term",()=>{terms.splice(selectedTerm,1);renderGlossary();markDirty();},"secondary danger"));
+}
+$("add-term").addEventListener("click",()=>{
+  (definition.glossary_terms||(definition.glossary_terms=[])).push({name:"",definition:"",columns:[]});
+  selectedTerm=definition.glossary_terms.length-1;
+  renderGlossary();markDirty();inspector("glossary");$("term-name").focus();
+});
 $("add-join").addEventListener("click",()=>{
   definition.joins.push({
     id:`join-${crypto.randomUUID()}`,name:"relationship_"+(definition.joins.length+1),from_field:"",to_field:"",meaning:"",cardinality:"many_to_one"
@@ -508,8 +536,14 @@ async function loadVersionView(){
   $("version-content").replaceChildren();
   versionObjects("Metrics",def.metrics||[],item=>item.name);
   versionObjects("Relationships",def.joins||[],item=>item.name);
+  const terms=def.glossary_terms||[],termSection=versionSection(`Glossary terms (${terms.length})`);
+  if(!terms.length)termSection.append(node("p","None recorded in this version.","muted"));
+  for(const t of terms){
+    const detail=node("details");detail.append(node("summary",t.name||t.term||"(unnamed)"));
+    versionProperties(detail,[["Definition",t.definition],["Synonyms",(t.synonyms||[]).join(", ")],["Mapped columns",(t.columns||[]).map(c=>String(c).replace(/^source\./,"")).join(", ")||"None"]]);termSection.append(detail);
+  }
   const metadata=versionSection("Business metadata");
-  versionProperties(metadata,[["Dataset meanings",def.dataset_meanings],["Field meanings",def.field_meanings],["Field roles",def.field_roles],["Glossary terms",def.glossary_terms]]);
+  versionProperties(metadata,[["Dataset meanings",def.dataset_meanings],["Field meanings",def.field_meanings],["Field roles",def.field_roles]]);
   if(artifacts){
     versionObjects("Supporting documents",artifacts.documents||[],item=>item.filename||item.id);
     const ontology=versionSection("Ontology");
@@ -613,6 +647,7 @@ function accept(data, resetEditors=true) {
     $("context-description").value=definition.description;
     renderMetric();
     renderJoins();
+    renderGlossary();
     if(selectedTable)renderTable(selectedTable);
   }
   renderValidation();
@@ -704,6 +739,7 @@ async function load() {
   await loadDocuments();
   renderArtifactVersions();
   sourceGraph=await api("/demo/api/context/source-graph");
+  renderGlossary();
   if (!canvasHandle && window.HeliosCanvas) {
     canvasHandle = window.HeliosCanvas.mount($("studio-canvas"), {
       host:window.contextStudio,
@@ -785,6 +821,7 @@ window.contextStudio = {
     mutator(definition);
     renderMetric();
     renderJoins();
+    renderGlossary();
     markDirty();
   }
 };
@@ -795,6 +832,7 @@ document.addEventListener("studio:select",event=>{
   };
   studioTarget=ontologyTarget(type,id,object);
   $("open-ontology").hidden=!studioTarget;
+  if(type==="term"){selectedTerm=Math.max(0,definition.glossary_terms.findIndex(t=>"term:"+termName(t)===id));renderGlossary();inspector("glossary");}
   if(type==="document")showDocumentInspector(id);
   if(type==="document_group")showDocumentGroup();
   if(type==="metric"){
@@ -830,7 +868,7 @@ document.addEventListener("studio:select",event=>{
 function inspector(type){
   if(type!=="source")delete $("source-inspector").dataset.documentId;
   const editable=[...document.querySelectorAll("#step-define .studio-inspector > .panel")].filter(panel=>!["source-inspector","changes-inspector"].includes(panel.id));
-  editable.forEach((panel,index)=>panel.hidden=["context","metric","join"][index]!==type);
+  editable.forEach((panel,index)=>panel.hidden=["context","metric","join","glossary"][index]!==type);
   $("source-inspector").hidden=type!=="source";
   $("changes-inspector").hidden=type!=="changes";
   document.querySelectorAll("[data-inspector]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.inspector===type)));
@@ -853,11 +891,11 @@ $("nav-studio").addEventListener("click",event=>{
 function renderTree(){
   const tree=$("studio-tree");
   tree.replaceChildren(node("h3","Semantic objects"));
-  const counts=[["dataset",(sourceGraph?.nodes||[]).filter(n=>n.kind==="dataset"||n.type==="dataset").length],["metric",definition.metrics.length],["relationship",definition.joins.length],["document",currentDocuments().length]];
+  const counts=[["dataset",(sourceGraph?.nodes||[]).filter(n=>n.kind==="dataset"||n.type==="dataset").length],["metric",definition.metrics.length],["relationship",definition.joins.length],["glossary term",(definition.glossary_terms||[]).length],["document",currentDocuments().length]];
   let sum=$("studio-summary");
   if(!sum){sum=node("p",undefined,"help");sum.id="studio-summary";$("workspace-description").after(sum);}
-  sum.textContent=counts.filter(([k,n])=>n||k!=="document").map(([k,n])=>`${n} ${k}${n===1?"":"s"}`).join(" · ");
-  for(const [label,objects,type] of [["Datasets",(sourceGraph?.nodes||[]).filter(n=>n.kind==="dataset" || n.type==="dataset"),"dataset"],["Metrics",definition.metrics,"metric"],["Relationships",definition.joins,"join"],["Documents",currentDocuments().map(doc=>({id:documentObjectId(doc),label:doc.filename.split("/").pop()})),"document"]]){
+  sum.textContent=counts.filter(([k,n])=>n||k!=="document"&&k!=="glossary term").map(([k,n])=>`${n} ${k}${n===1?"":"s"}`).join(" · ");
+  for(const [label,objects,type] of [["Datasets",(sourceGraph?.nodes||[]).filter(n=>n.kind==="dataset" || n.type==="dataset"),"dataset"],["Metrics",definition.metrics,"metric"],["Relationships",definition.joins,"join"],["Glossary terms",(definition.glossary_terms||[]).map(t=>({id:"term:"+termName(t),label:termName(t)||"(unnamed)",...t})),"term"],["Documents",currentDocuments().map(doc=>({id:documentObjectId(doc),label:doc.filename.split("/").pop()})),"document"]]){
     const group=node("details");
     group.open=type!=="document";
     group.append(node("summary",`${label} (${objects.length})`));
@@ -1331,7 +1369,7 @@ function ontologyModel(bundle){
   }
   const glossary=terms.filter(t=>t.key.startsWith("glossary:")).map(t=>{
     const term=t.properties.term||{};
-    return {id:t.key,label:term.name||term.term||t.key,kind:"term",description:term.definition||term.description,columns:term.columns||[],status:t.properties.status,props:t.properties};
+    return {id:t.key,label:term.name||term.term||t.key,kind:"term",description:term.definition||term.description,mappedColumns:(term.columns||[]).map(c=>String(c).replace(/^source\./,"")),status:t.properties.status,props:t.properties};
   });
   for(const term of glossary)(mapsFrom.has(term.id)?nodes.set(term.id,term):unmapped.push(term));
   const termById=new Map(glossary.map(t=>[t.id,t]));
@@ -1372,7 +1410,7 @@ function showOntologyObject(object){
     const kinds={dataset:"Class (dataset)",concept:"Class (concept)",attribute:"Attribute",metric:"Metric",term:"Glossary term"};
     const fields=object.kind==="dataset"?fieldsOf(object.id):[];
     const used=object.kind==="attribute"?model.usage.get(object.id)||[]:object.kind==="dataset"?[...new Set(fields.flatMap(f=>model.usage.get(f)||[]))]:[];
-    const mapped=object.kind==="dataset"?fields:object.kind==="attribute"?[object.id,...(model.termsFor.get(object.id)||[]).map(t=>`term ${t.label}`)]:object.kind==="metric"?model.edges.filter(e=>e.target===object.id&&e.kind==="sql_dependency").map(e=>e.source):object.kind==="term"?object.columns:[];
+    const mapped=object.kind==="dataset"?fields:object.kind==="attribute"?[object.id,...(model.termsFor.get(object.id)||[]).map(t=>`term ${t.label}`)]:object.kind==="metric"?model.edges.filter(e=>e.target===object.id&&e.kind==="sql_dependency").map(e=>e.source):object.kind==="term"?object.mappedColumns:[];
     const evidence=[humanize(object.props?.evidence),...ontologyDocuments(object)].filter(Boolean);
     rows.push(["Kind",kinds[object.kind]],["Definition",object.meaning||object.description||"No definition recorded"],["Expression",object.expression],["Data type",object.data_type],["Mapped columns",mapped.length?mapped.join(", "):"None"],["Used by metrics",object.kind==="metric"?"":used.length?used.map(k=>k.replace(/^metric:/,"")).join(", "):"None"],["Evidence",evidence.length?evidence.join(", "):"No evidence recorded"],["Status",humanize(object.status)||"Not recorded"]);
   }
@@ -1382,7 +1420,7 @@ function renderUnmappedTerms(){
   const box=$("ontology-unmapped"),list=ontologyData.unmapped;
   box.replaceChildren(node("h3",`Unmapped terms (${list.length})`));
   if(!list.length){
-    box.append(node("p",ontologyData.counts.terms?"Every glossary term maps to a field or class.":"No glossary terms yet. Terms come from AI proposals and, once it ships, Studio authoring.","help"));
+    box.append(node("p",ontologyData.counts.terms?"Every glossary term maps to a field or class.":"No glossary terms yet. Add terms in Studio or accept them from AI proposals.","help"));
     return;
   }
   const items=node("ul",undefined,"ontology-terms");

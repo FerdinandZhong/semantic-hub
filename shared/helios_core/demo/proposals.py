@@ -110,9 +110,8 @@ class ProposalWorkspace:
             value['field_roles'] = {}
             value['glossary_terms'] = proposed['glossary_terms']
             for term in value['glossary_terms']:
-                for column in term.get('columns', []):
-                    if column.removeprefix('source.') not in self.workspace._fields:
-                        raise DemoError('Proposal glossary invented a source field')
+                if self.workspace.unknown_term_columns(term):
+                    raise DemoError('Proposal glossary invented a source field')
             for relationship in proposed['relationships']:
                 for side in ('from', 'to'):
                     field = relationship[side].removeprefix('source.') + '.' + relationship[side + '_column']

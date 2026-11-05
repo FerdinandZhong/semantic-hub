@@ -516,9 +516,12 @@ def context_export(request: Request, version: str):
 
 @demo_router.post("/api/context/draft")
 def context_save(payload: SaveContext, request: Request):
-    return context_action(
-        request, lambda w: w.save(payload.revision, payload.definition), payload
-    )
+    def save(workspace):
+        with workspace.connection() as connection:
+            stored = workspace._draft(connection, payload.revision)["definition"].get("glossary_terms", [])
+        workspace.check_glossary(payload.definition.glossary_terms, stored)
+        return workspace.save(payload.revision, payload.definition)
+    return context_action(request, save, payload)
 
 
 @demo_router.post("/api/context/validate")
