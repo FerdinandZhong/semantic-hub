@@ -97,6 +97,8 @@ Status: Done in `3609359`. The headline answer stays on top; the tabs are Table,
 
 Files: `semantic_hub/web/workspace.js`, `semantic_hub/web/chat-history.css`.
 
+Follow-ups: `28f22f7` gives the Overview bar the shared 50 px height, so workflow tabs sit at 110 px on every workspace page at desktop widths; at 390 px the Overview bar still wraps more than the shared bar. `6e905b3` updates the chat history browser check for tabbed results and names the workspace in the Overview breadcrumb. Local checks after P3: chat history and chat experience browser scripts pass; the smoke passes chat and page routes and stops at provider registration, as before. A restored conversation reopens with tabs closed, because history is saved when the answer completes.
+
 ### P4 — Read-only ontology view
 
 1. Add an "Ontology" tab between Studio and Validation, inside the main UI.
