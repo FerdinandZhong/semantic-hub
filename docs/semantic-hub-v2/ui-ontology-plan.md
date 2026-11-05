@@ -1,13 +1,13 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: P0–P2 done locally (`36ed508`, `eb62311`, `5cfbcaa`); P3–P6 planned. Nothing here is pushed or deployed.
+Recorded 4 November 2026. Status: P0–P3 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`); P4–P6 planned. Nothing here is pushed or deployed.
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`5cfbcaa` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`3609359` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -92,6 +92,8 @@ Follow-up `3eef7b4`: one header (API reference link) and the same sidebar positi
 1. Replace the stacked disclosures with tabs: Answer, Table, Semantic canvas, SQL & checks, Provenance.
 2. Hide the table for a single-value result, or format its value like the headline.
 3. Keep restored history working; the canvas tab re-mounts from its saved payload.
+
+Status: Done in `3609359`. The headline answer stays on top; the tabs are Table, Semantic canvas, SQL & checks and Provenance. The browser smoke now opens the Table tab before reading the value.
 
 Files: `semantic_hub/web/workspace.js`, `semantic_hub/web/chat-history.css`.
 
