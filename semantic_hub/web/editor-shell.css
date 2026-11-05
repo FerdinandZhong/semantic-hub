@@ -219,3 +219,6 @@
 .hub-editor .review-toolbar label,.hub-editor .review-workspace .panel-heading label{font-size:12px;color:#344054}
 .hub-editor .panel-heading{align-items:center}
 .hub-editor #validation-status{margin:8px 0 0;color:var(--muted);font-size:13px}
+/* The inherited editor CSS sets line heights and a logo margin; reset them so the sidebar matches every other page. */
+.hub-editor .sidebar,.hub-editor .sidebar .brand,.hub-editor .sidebar .brand span,.hub-editor .sidebar .nav-label{line-height:normal}
+.hub-editor .sidebar .brand img{margin:0}

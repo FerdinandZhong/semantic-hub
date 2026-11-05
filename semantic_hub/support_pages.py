@@ -59,7 +59,7 @@ def render_support_page(kind: str, source: str = "") -> str:
         )
     header = (
         f'<header><div>Workspace / <span id="support-crumb-name">{escape(source)}</span>'
-        " / Source data</div><span>Built-in builder</span></header>"
+        " / Source data</div><a href=\"/docs\">API reference ↗</a></header>"
         if workspace_context
         else f'<header><div><b>Semantic Hub</b><span class="slash">/</span>{title}</div>'
         "<span>Built-in workflow</span></header>"

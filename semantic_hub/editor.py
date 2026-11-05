@@ -24,7 +24,7 @@ def render_editor(source: str = "") -> str:
     page = page.replace("<main>", '<main class="main editor-main">', 1)
     page = page.replace(
         '<span class="badge">Local sample workspace</span></header>',
-        "<span>Built-in builder</span></header>",
+        '<a href="/docs">API reference ↗</a></header>',
         1,
     )
     page = page.replace(
