@@ -610,7 +610,7 @@ function renderChat(catalog, config, ticket) {
   function reset() {
     turn++; suggestion = null; $("question").value = ""; historyList();
     const item = history.current(historyKey());
-    if (item) {$("chat-thread").innerHTML = item.html; return;}
+    if (item) {$("chat-thread").innerHTML = item.html; $("chat-thread").querySelectorAll('.answer-canvas:not([hidden] *)').forEach(mountCanvas); return;}
     const examples = starters(selected());
     $("chat-thread").innerHTML = `<div class="chat-intro"><div class="chat-intro-icon">✧</div><h2>What would you like to know?</h2><p>Get answers from your data, with reviewed definitions<br>and citations from published documents.</p><div class="suggestions">${examples.map((s, i) => `<button type="button" data-suggest="${i}"><span>${esc(s.label)}</span>${esc(s.text)}<b aria-hidden="true">↗</b></button>`).join('')}</div><p class="chat-intro-foot">${esc(resultScope)} · ${selected().metrics.length} published metric${selected().metrics.length === 1 ? '' : 's'} · ${selected().evidence_passages || 0} document passages</p></div>`;
     document.querySelectorAll('[data-suggest]').forEach(b => b.onclick = () => {suggestion = examples[Number(b.dataset.suggest)]; $("question").value = suggestion.text; $("question").focus();});
@@ -637,15 +637,22 @@ function renderChat(catalog, config, ticket) {
     box.replaceChildren();
     const blocked = ['needs_clarification', 'unavailable', 'insufficient_evidence', 'conflicting_evidence', 'no_data'].includes(result.status);
     if (blocked) box.append(make('p', result.message || 'No verified answer is available for this question.', 'answer-summary'));
+    const tabs = [];
     if (result.columns && !blocked) {
-      if (result.rows?.length === 1 && result.columns.length === 1 && result.rows[0][0] != null) {
+      const single = result.rows?.length === 1 && result.columns.length === 1 && result.rows[0][0] != null;
+      const table = make('div');
+      if (single) {
         const value = result.rows[0][0], number = Number(value);
         const display = Number.isFinite(number) ? new Intl.NumberFormat('en-SG', {maximumFractionDigits: 8}).format(number) : String(value);
         box.append(make('p', result.metric?.description || 'Query result', 'answer-label'));
         box.append(make('div', `${result.unit || ''} ${display}`.trim(), 'answer-value'));
         box.append(make('p', 'Calculated from the selected source snapshot using the published metric.', 'answer-summary'));
-      } else box.append(make('p', `${result.rows?.length || 0} rows returned${result.truncated ? ' (display limit reached)' : ''}.`, 'answer-summary'));
-      const table = make('div'); table.innerHTML = rowsTable(result.columns, result.rows || []); box.append(table);
+        table.innerHTML = rowsTable(result.columns, [[display]]);
+      } else {
+        box.append(make('p', `${result.rows?.length || 0} rows returned${result.truncated ? ' (display limit reached)' : ''}.`, 'answer-summary'));
+        table.innerHTML = rowsTable(result.columns, result.rows || []);
+      }
+      if (result.rows?.length) tabs.push(['Table', [table]]);
     }
     for (const claim of result.claims || []) {
       box.append(make('p', claim.text, 'answer-summary'));
@@ -661,16 +668,16 @@ function renderChat(catalog, config, ticket) {
     meta.append(make('span', `${result.context_version || version.version} · ${resultScope}`));
     if (result.context_sha256) meta.append(make('span', `Context ${result.context_sha256.slice(0, 12)}`));
     box.append(meta);
-    if (result.sql) {
-      const sql = make('details', null, 'answer-detail'); sql.append(make('summary', 'SQL & scope'));
-      sql.append(make('pre', result.sql));
-      if (result.request) sql.append(make('pre', JSON.stringify(result.request, null, 2)));
-      box.append(sql);
+    if (result.semantic_canvas) {
+      const canvas = make('div', null, 'answer-canvas'); canvas.dataset.canvas = JSON.stringify(result.semantic_canvas);
+      tabs.push(['Semantic canvas', [canvas]]);
     }
+    const checks = [];
+    let checkLabel = 'SQL & checks';
     if (result.evaluation?.summary.total) {
       const {passed, total} = result.evaluation.summary;
-      const evaluation = make('details', null, 'answer-detail answer-checks'); evaluation.open = passed < total;
-      evaluation.append(make('summary', `Answer checks · ${passed}/${total} passed`));
+      checkLabel = `SQL & checks · ${passed}/${total} passed`;
+      const evaluation = make('div', null, 'answer-checks');
       for (const [title, items] of [['Retrieval', result.evaluation.retrieval], ['Generation', result.evaluation.generation]]) {
         if (!items.length) continue;
         evaluation.append(make('h4', title)); const list = make('ul', null, 'check-list');
@@ -682,15 +689,48 @@ function renderChat(catalog, config, ticket) {
         evaluation.append(list);
       }
       evaluation.append(make('p', 'Deterministic checks on this answer. Relevance signals rank matches; they are not calibrated confidence.', 'retrieval-note'));
-      box.append(evaluation);
+      checks.push(evaluation);
     }
-    if (result.semantic_canvas) {
-      const canvas = make('details', null, 'answer-detail answer-canvas'); canvas.append(make('summary', 'Semantic canvas · objects used'));
-      canvas.dataset.canvas = JSON.stringify(result.semantic_canvas); box.append(canvas);
+    if (result.sql) {
+      checks.push(make('pre', result.sql));
+      if (result.request) checks.push(make('pre', JSON.stringify(result.request, null, 2)));
     }
-    const provenance = make('details', null, 'answer-detail'); provenance.append(make('summary', 'Full result provenance'));
-    provenance.append(make('pre', JSON.stringify(result, null, 2))); box.append(provenance);
+    if (checks.length) tabs.push([checkLabel, checks]);
+    tabs.push(['Provenance', [make('pre', JSON.stringify(result, null, 2))]]);
+    const strip = make('div', null, 'answer-tabs'); strip.setAttribute('role', 'tablist'); strip.setAttribute('aria-label', 'Answer details');
+    const panels = make('div', null, 'answer-tab-panels');
+    const uid = 'at' + (++answerSeq);
+    tabs.forEach(([label, nodes], i) => {
+      const tab = make('button', label, 'answer-tab'); tab.type = 'button';
+      tab.id = `${uid}-t${i}`; tab.setAttribute('role', 'tab'); tab.setAttribute('aria-selected', 'false'); tab.setAttribute('aria-controls', `${uid}-p${i}`); tab.tabIndex = i ? -1 : 0;
+      const panel = make('div', null, 'answer-tab-panel'); panel.id = `${uid}-p${i}`; panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', tab.id); panel.hidden = true;
+      panel.append(...nodes); strip.append(tab); panels.append(panel);
+    });
+    box.append(strip, panels);
   }
+  let answerSeq = 0;
+  // Delegated, so tabs keep working after a history restore replaces the thread HTML.
+  function selectTab(tab, open) {
+    const strip = tab.parentElement;
+    for (const t of strip.children) {
+      const on = open && t === tab;
+      t.setAttribute('aria-selected', on); t.tabIndex = on || (!open && t === tab) ? 0 : -1;
+      const panel = document.getElementById(t.getAttribute('aria-controls')); panel.hidden = !on;
+      if (on) mountCanvas(panel.querySelector('.answer-canvas'));
+    }
+  }
+  $("chat-thread").addEventListener('click', e => {
+    const tab = e.target.closest?.('.answer-tab');
+    if (tab) selectTab(tab, tab.getAttribute('aria-selected') !== 'true');
+  });
+  $("chat-thread").addEventListener('keydown', e => {
+    const tab = e.target.closest?.('.answer-tab'), step = {ArrowRight: 1, ArrowLeft: -1}[e.key];
+    if (!tab || (!step && e.key !== 'Home' && e.key !== 'End')) return;
+    const all = [...tab.parentElement.children];
+    const next = all[e.key === 'Home' ? 0 : e.key === 'End' ? all.length - 1 : (all.indexOf(tab) + step + all.length) % all.length];
+    e.preventDefault(); next.focus();
+    selectTab(next, tab.getAttribute('aria-selected') === 'true');
+  });
   function agentTrace(box, agent) {
     const stops = {receipt: 'Stopped on a checked plan receipt', single_receipt_fallback: 'Stopped with one checked receipt',
       no_receipt: 'Stopped without a checked plan', budget_exhausted: 'Stopped at the tool budget', sdk_error: 'Agent runtime error'};
@@ -776,16 +816,15 @@ function renderChat(catalog, config, ticket) {
   }
   // Mount on first open. Restored history HTML carries only the payload, so stale SVG is replaced.
   const mounted = new WeakSet();
-  $("chat-thread").addEventListener('toggle', e => {
-    const box = e.target;
-    if (!box.open || !box.classList?.contains('answer-canvas') || mounted.has(box) || !window.HeliosCanvas) return;
+  function mountCanvas(box) {
+    if (!box || mounted.has(box) || !window.HeliosCanvas) return;
     mounted.add(box);
     const data = JSON.parse(box.dataset.canvas), host = make('div', null, 'answer-canvas-host'), detail = make('p', 'Select an object to inspect it.', 'answer-canvas-detail');
-    box.querySelectorAll(':scope > :not(summary)').forEach(el => el.remove()); box.append(host, detail);
+    box.replaceChildren(host, detail);
     const handle = window.HeliosCanvas.mount(host, {readOnly: true, host: {getState: () => ({definition: data.definition})},
       onSelect: o => {detail.textContent = [o.kind || o.type, o.label || o.name || o.id, o.description || o.expression || o.location || ''].filter(Boolean).join(' · ');}});
     handle.update({...data.graph, saved_revision: data.graph.draft_revision, dirty: false});
-  }, true);
+  }
   $("chat-form").onsubmit = e => {e.preventDefault(); ask();};
   $("question").oninput = () => {if (suggestion?.text !== $("question").value) suggestion = null;};
   $("question").onkeydown = e => {if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {e.preventDefault(); $("chat-form").requestSubmit();}};

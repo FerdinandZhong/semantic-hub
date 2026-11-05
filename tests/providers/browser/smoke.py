@@ -44,8 +44,9 @@ with sync_playwright() as p:
     page.locator("[data-suggest]").first.click()
     assert page.locator("#question").input_value().endswith("?")
     page.locator("#ask").click()
+    page.get_by_role("tab", name="Table").click(timeout=30000)  # the value now sits in the Table tab, formatted like the headline
     page.locator("#chat-thread td").first.wait_for(timeout=30000)
-    assert Decimal(page.locator("#chat-thread td").first.inner_text()) == Decimal("686572.96")
+    assert Decimal(page.locator("#chat-thread td").first.inner_text().replace(",", "")) == Decimal("686572.96")
     assert page.locator("[data-run]").count() == 0
     page.screenshot(path=str(args.output / "chat.png"), full_page=True)
     routes = {
