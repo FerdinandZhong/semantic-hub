@@ -91,3 +91,13 @@
 .semantic-canvas .canvas-modes{margin-right:auto}
 @container (min-width:780px){.semantic-canvas .canvas-toolbar input[type=search]{flex:1 1 200px}.semantic-canvas .canvas-modes{margin-right:0}}
 .canvas-change-keys{display:inline-flex;gap:14px}
+/* Grouped layout (ontology view): a framed box per dataset and compact field rows. */
+.semantic-canvas .canvas-group{cursor:pointer}
+.semantic-canvas .canvas-group .canvas-group-frame{fill:#f6f8fb;stroke:#d9dee7;stroke-width:1.5;filter:none}
+.semantic-canvas .canvas-group.selected .canvas-group-frame,.semantic-canvas .canvas-group:focus .canvas-group-frame{stroke:#2d62df;stroke-width:2}
+.semantic-canvas .canvas-group .canvas-group-title{fill:#292f3d;font-size:14px;font-weight:600}
+.grouped-canvas .canvas-node{cursor:pointer}
+.semantic-canvas .canvas-node .canvas-field-name{font-size:12px;font-weight:500}
+.semantic-canvas .canvas-node.term .canvas-node-chip,.semantic-canvas .canvas-node.concept .canvas-node-chip{fill:#e8f6f1}
+.semantic-canvas .canvas-node.term .canvas-node-glyph,.semantic-canvas .canvas-node.concept .canvas-node-glyph{fill:#13866d}
+@media(max-width:700px){.grouped-canvas .canvas-stage>svg:nth-child(2){display:none}}

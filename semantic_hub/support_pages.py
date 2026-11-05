@@ -43,6 +43,7 @@ def render_support_page(kind: str, source: str = "") -> str:
             ("Overview", overview, False),
             ("Source data", editor + "#source", True),
             ("Studio", editor + "#define", False),
+            ("Ontology", editor + "#ontology", False),
             ("Validation & review", editor + "#validate", False),
             ("Versions & releases", editor + "#hub", False),
         ]

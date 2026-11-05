@@ -14,8 +14,9 @@
     return e;
   }   function mount(root, options= {
   }) {
-    const readOnly=Boolean(options.readOnly);
+    const readOnly=Boolean(options.readOnly),grouped=options.layout==='grouped';
     root.classList.add('semantic-canvas');
+    if(grouped)root.classList.add('grouped-canvas');
     let graph= {
       nodes:[],edges:[]
     }, selected='', mode='Lineage', lens='semantic', expanded=new Set(), positions= {
@@ -49,7 +50,7 @@
     });
     optionsToggle.setAttribute('aria-expanded','false');
     optionsToggle.setAttribute('aria-controls',optionsPanel.id);
-    bar.append(modes);
+    if(!grouped)bar.append(modes);
     const view=el('select');
     view.setAttribute('aria-label','Graph view');
     [['semantic','Semantic'],['metadata','Metadata']].forEach(([v,t])=> {
@@ -91,7 +92,8 @@
     zoomOut.setAttribute('aria-label','Zoom out');zoomIn.setAttribute('aria-label','Zoom in');
     zoomControls.append(zoomOut,zoomIn);
     if(!readOnly)bar.append(button('Connect fields',()=>openRelationship()));
-    bar.append(button('Fit',fit),optionsToggle);
+    bar.append(button('Fit',fit));
+    if(!grouped)bar.append(optionsToggle);
     const displayActions=el('div',undefined,'canvas-display-actions');
     function selectedObject() {
       const node=graph.nodes.find(n=>n.id===selected);
@@ -156,6 +158,7 @@
     const key=(cls,text)=>{const s=el('span',undefined,'canvas-key '+cls);s.append(el('i'),document.createTextNode(text));return s;};
     legend.append(key('declared','Declared relationships'),key('derived','SQL-derived dependencies'),key('evidence','Document evidence'));
     if(readOnly)legend.append(el('span','Read-only version',undefined));
+    if(grouped)legend.replaceChildren(key('declared','Declared relationship'),key('derived','Metric uses field'),key('evidence','Term maps to'),el('span','Read-only ontology'));
     const changeKeys=el('span',undefined,'canvas-change-keys');
     changeKeys.hidden=true;
     if(!readOnly){changeKeys.append(key('swatch added','Added'),key('swatch modified','Modified'),key('swatch removed','Removed'),key('swatch affected','Affected'));legend.append(changeKeys);}
@@ -218,6 +221,7 @@
     }
 
     function render() {
+      if(grouped)return renderGrouped();
       world.replaceChildren();
       mini.replaceChildren();
       const pills=[],placed=[];
@@ -270,7 +274,7 @@
           transform:`translate(${p.x} ${p.y})`,class:`canvas-node ${kind(n)} ${selected===n.id?'selected':''} ${mode==='Changes'?changeStatus(n):''}`,'data-node-id':n.id,tabindex:0,role:'button','aria-label':`${kind(n)}: ${label(n)}`
         });
         g.append(svg('rect',{width:230,height:76,rx:10,class:'canvas-node-card'}));
-        const k=kind(n),glyphs={dataset:'▦',metric:'∑',document:'¶',document_group:'¶',column:'≡',attribute:'≡',field:'≡',concept:'◇'};
+        const k=kind(n),glyphs={dataset:'▦',metric:'∑',document:'¶',document_group:'¶',column:'≡',attribute:'≡',field:'≡',concept:'◇',term:'Aa'};
         const tip=svg('title');
         tip.textContent=label(n);
         const chip=svg('circle',{cx:22,cy:24,r:11,class:'canvas-node-chip'});
@@ -381,6 +385,106 @@
       if(anchor&&focusKind==='columns')status.textContent='Dataset columns · Use Neighbors for relationships or Show all for the overview.';
     }
 
+
+    // Grouped layout: one framed box per dataset (kind 'dataset') holding its fields, other objects in a column on the right.
+    function layoutGrouped() {
+      const frames=graph.nodes.filter(n=>kind(n)==='dataset'),rest=graph.nodes.filter(n=>kind(n)!=='dataset'&&!isColumn(n));
+      const fieldsOf=f=>graph.nodes.filter(n=>isColumn(n)&&parentId(n)===f.id),height=f=>46+fieldsOf(f).length*38;
+      const cols=Math.max(1,Math.min(Math.ceil(frames.length/3),4)),target=frames.reduce((a,f)=>a+height(f)+20,0)/cols;
+      let col=0,y=0;
+      positions={};
+      frames.forEach(f=>{
+        if(y>0&&y+height(f)>target*1.15&&col<cols-1){col++;y=0;}
+        positions[f.id]={x:col*320,y,w:236,h:height(f)};
+        fieldsOf(f).forEach((n,i)=>{positions[n.id]={x:col*320+12,y:y+40+i*38,w:212,h:32};});
+        y+=height(f)+24;
+      });
+      rest.forEach((n,i)=>{positions[n.id]={x:cols*320+10,y:i*96,w:230,h:76};});
+    }
+    function groupedBounds() {
+      const ps=Object.values(positions);
+      return {left:Math.min(...ps.map(p=>p.x)),top:Math.min(...ps.map(p=>p.y)),w:Math.max(...ps.map(p=>p.x+p.w))-Math.min(...ps.map(p=>p.x)),h:Math.max(...ps.map(p=>p.y+p.h))-Math.min(...ps.map(p=>p.y))};
+    }
+    function fitGrouped() {
+      layoutGrouped();
+      if(!graph.nodes.length)return;
+      const b=groupedBounds();
+      transform.k=Math.max(.85,Math.min(1.2,(stage.clientWidth-60)/b.w,(stage.clientHeight-60)/b.h));
+      transform.x=30-b.left*transform.k;
+      transform.y=30-b.top*transform.k;
+      applyTransform();
+    }
+    function renderGrouped() {
+      world.replaceChildren();
+      mini.replaceChildren();
+      layoutGrouped();
+      const ids=new Set(graph.nodes.map(n=>n.id)),pills=[],placed=[];
+      graph.edges.filter(e=>ids.has(e.source)&&ids.has(e.target)&&e.source!==e.target).forEach(e=>{
+        const a=positions[e.source],b=positions[e.target],derived=(e.kind||'').includes('depend'),evidence=e.kind==='term_mapping';
+        const ay=a.y+a.h/2,by=b.y+Math.min(b.h/2,20);
+        let d,mx,my;
+        if(Math.abs(a.x+a.w-b.x-b.w)<10||Math.abs(a.x-b.x)<10){
+          const bulge=60+Math.min(Math.abs(ay-by)*.15,60),x1=a.x+a.w,x2=b.x+b.w;
+          d=`M ${x1} ${ay} C ${x1+bulge} ${ay}, ${x2+bulge} ${by}, ${x2} ${by}`;mx=Math.max(x1,x2)+bulge*.75;my=(ay+by)/2;
+        }else if(a.x<b.x){
+          d=`M ${a.x+a.w} ${ay} C ${a.x+a.w+50} ${ay}, ${b.x-50} ${by}, ${b.x} ${by}`;mx=(a.x+a.w+b.x)/2;my=(ay+by)/2;
+        }else{
+          d=`M ${a.x} ${ay} C ${a.x-50} ${ay}, ${b.x+b.w+50} ${by}, ${b.x+b.w} ${by}`;mx=(a.x+b.x+b.w)/2;my=(ay+by)/2;
+        }
+        const p=svg('path',{d,'data-edge-id':e.id,'marker-end':'url(#canvas-arrow)',class:`canvas-edge ${evidence?'evidence':derived?'derived':'declared'}`});
+        p.onclick=()=>options.onSelect?.(e);
+        world.append(p);
+        const full=String(e.label||''),text=full.length>26?full.slice(0,25)+'…':full,w=text.length*5.4+16;
+        let py=my;
+        while(placed.some(q=>Math.abs(q.y-py)<20&&Math.abs(q.x-mx)<(q.w+w)/2+4))py+=20;
+        placed.push({x:mx,y:py,w});
+        const pill=svg('g',{class:`canvas-edge-pill ${evidence?'evidence':derived?'derived':'declared'}`,transform:`translate(${mx} ${py})`});
+        const t=svg('text',{y:3.5,'text-anchor':'middle',class:'canvas-edge-label'}),tip=svg('title');
+        t.textContent=text;tip.textContent=full;
+        pill.append(tip,svg('rect',{x:-w/2,y:-9,width:w,height:18,rx:9}),t);
+        pills.push(pill);
+      });
+      const frames=graph.nodes.filter(n=>kind(n)==='dataset'),cards=graph.nodes.filter(n=>kind(n)!=='dataset');
+      const wire=(g,n)=>{
+        g.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;ev.stopPropagation();select(n);});
+        g.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();select(n);}};
+        world.append(g);
+        mini.append(svg('rect',{x:positions[n.id].x,y:positions[n.id].y,width:positions[n.id].w,height:positions[n.id].h,class:`mini-node ${selected===n.id?'selected':''}`}));
+      };
+      frames.forEach(n=>{
+        const p=positions[n.id],g=svg('g',{transform:`translate(${p.x} ${p.y})`,class:`canvas-node canvas-group dataset ${selected===n.id?'selected':''}`,'data-node-id':n.id,tabindex:0,role:'button','aria-label':`${kind(n)}: ${label(n)}`});
+        const count=graph.nodes.filter(c=>isColumn(c)&&parentId(c)===n.id).length,title=svg('text',{x:14,y:25,class:'canvas-group-title'}),sub=svg('text',{x:222,y:25,'text-anchor':'end',class:'canvas-node-detail'});
+        title.textContent=label(n).slice(0,22);sub.textContent=`${count} field${count===1?'':'s'}`;
+        g.append(svg('rect',{width:p.w,height:p.h,rx:12,class:'canvas-group-frame'}),title,sub);
+        wire(g,n);
+      });
+      cards.forEach(n=>{
+        const p=positions[n.id],g=svg('g',{transform:`translate(${p.x} ${p.y})`,class:`canvas-node ${kind(n)} ${selected===n.id?'selected':''}`,'data-node-id':n.id,tabindex:0,role:'button','aria-label':`${kind(n)}: ${label(n)}`}),tip=svg('title');
+        tip.textContent=label(n);
+        g.append(svg('rect',{width:p.w,height:p.h,rx:isColumn(n)?8:10,class:'canvas-node-card'}),tip);
+        if(isColumn(n)){
+          const t=svg('text',{x:12,y:20.5,class:'canvas-field-name'}),ty=svg('text',{x:p.w-10,y:20.5,'text-anchor':'end',class:'canvas-node-detail'});
+          t.textContent=label(n).split('.').pop().slice(0,24);ty.textContent=n.data_type||'';
+          g.append(t,ty);
+        }else{
+          const glyphs={metric:'∑',concept:'◇',term:'Aa'},chip=svg('circle',{cx:22,cy:24,r:11,class:'canvas-node-chip'}),glyph=svg('text',{x:22,y:28.5,'text-anchor':'middle',class:'canvas-node-glyph'}),t=svg('text',{x:40,y:23}),detail=svg('text',{x:40,y:40,class:'canvas-node-detail'});
+          glyph.textContent=glyphs[kind(n)]||'•';t.textContent=label(n).slice(0,24);detail.textContent=String(n.expression||n.description||'').slice(0,30);
+          g.append(chip,glyph,t,detail);
+          const tags=[kind(n),n.status].filter(Boolean);let cursor=12;
+          tags.forEach((tag,i)=>{
+            const word=String(tag).slice(0,16),w=word.length*5.6+14;
+            g.append(svg('rect',{x:cursor,y:50,width:w,height:16,rx:8,class:'canvas-node-tag'+(i?'':' primary')}));
+            const tt=svg('text',{x:cursor+w/2,y:61.3,'text-anchor':'middle',class:'canvas-node-tag-text'});tt.textContent=word;g.append(tt);cursor+=w+6;
+          });
+        }
+        wire(g,n);
+      });
+      pills.forEach(pill=>world.append(pill));
+      if(graph.nodes.length){const b=groupedBounds();mini.setAttribute('viewBox',`${b.left} ${b.top} ${b.w} ${b.h}`);}
+      applyTransform();
+      status.textContent=graph.nodes.length?`${frames.length} datasets · ${graph.nodes.length-frames.length} fields and objects · Select an object to inspect it.`:'No ontology objects available.';
+    }
+
     function focus(id) {
       const n=graph.nodes.find(n=>n.id===id);
       if(!n)return;
@@ -395,12 +499,13 @@
       }
       render();
       const p=positions[id];
-      transform.x=stage.clientWidth/2-(p.x+115)*transform.k;
-      transform.y=stage.clientHeight/2-(p.y+38)*transform.k;
+      transform.x=stage.clientWidth/2-(p.x+(p.w||230)/2)*transform.k;
+      transform.y=stage.clientHeight/2-(p.y+(p.h||76)/2)*transform.k;
       applyTransform();
     }
 
     function fit() {
+      if(grouped)return fitGrouped();
       const nodes=visibleNodes();
       if(!nodes.length)return;
       nodes.forEach(position);

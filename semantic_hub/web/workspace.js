@@ -167,6 +167,7 @@ function syncShell() {
       [
         ["source", "Source data"],
         ["define", "Studio"],
+        ["ontology", "Ontology"],
         ["validate", "Validation & review"],
         ["hub", "Versions & releases"],
       ]
@@ -326,6 +327,11 @@ function renderOverview() {
         "define",
         "Studio",
         "Edit definitions, field meanings, and relationships.",
+      ],
+      [
+        "ontology",
+        "Ontology",
+        "Inspect classes, fields, metrics, and relationships. Read-only.",
       ],
       [
         "validate",

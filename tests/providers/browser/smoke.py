@@ -29,7 +29,7 @@ with sync_playwright() as p:
     page.screenshot(path=str(args.output / "catalog.png"), full_page=True)
     page.locator("[data-open-workspace=finance]").click()
     page.get_by_role("heading", name="Build and publish").wait_for()
-    assert page.locator("#workspace-tabs a").count() == 5
+    assert page.locator("#workspace-tabs a").count() == 6
     page.screenshot(path=str(args.output / "overview.png"), full_page=True)
     page.locator("[data-nav=home]").click()
     page.locator("#new-workspace").click()

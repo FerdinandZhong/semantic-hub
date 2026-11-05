@@ -84,7 +84,7 @@ def editor_script() -> str:
     script = script.replace(
         "function stepFromHash() {",
         "const PAGE_NAMES={source:'Source data',define:'Studio',"
-        "validate:'Validation & review',review:'Versions & releases'};\n"
+        "ontology:'Ontology',validate:'Validation & review',review:'Versions & releases'};\n"
         "let crumbStep='define';\n"
         "function crumb(name){if(name)crumbStep=name;"
         '$("workspace-breadcrumb").textContent=["Workspace",config?.connection_name,'
@@ -107,7 +107,7 @@ def editor_script() -> str:
         '$("pack-title").textContent=config.title;',
         '$("pack-title").textContent=config.title;\n'
         '  $("workspace-heading").textContent=`${config.connection_name} · '
-        '${$("step-review").hidden ? "Semantic Studio" : "Versions & releases"}`;\n'
+        '${$("step-review").hidden ? ($("step-ontology").hidden ? "Semantic Studio" : "Ontology") : "Versions & releases"}`;\n'
         '  crumb();$("support-workspace-name").textContent=config.connection_name;',
     )
     script = script.replace(

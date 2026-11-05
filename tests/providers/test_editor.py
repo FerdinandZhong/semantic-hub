@@ -23,7 +23,7 @@ def client():
     return TestClient(app)
 
 
-def test_editor_uses_one_shared_shell_and_five_workflow_destinations():
+def test_editor_uses_one_shared_shell_and_six_workflow_destinations():
     response = client().get("/v2/editor?source=payments")
     assert response.status_code == 200
     assert response.headers["cache-control"] == "no-store"
@@ -40,7 +40,8 @@ def test_editor_uses_one_shared_shell_and_five_workflow_destinations():
     overview = next(a for a in links if a.get("class") == "overview-tab")
     assert overview["href"] == workspace["href"]
     tabs = [a["data-step"] for _, a in elements if "data-step" in a]
-    assert tabs == ["source", "define", "validate", "review"]
+    assert tabs == ["source", "define", "ontology", "validate", "review"]
+    assert "ontology:'Ontology'" in editor_script()
     assert all(not a.get("href", "").startswith("/demo") for a in links)
     assert not any("target" in a for a in links)
 

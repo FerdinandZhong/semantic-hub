@@ -73,7 +73,7 @@ def test_source_materials_remain_in_workspace_navigation(client):
     assert 'id="support-workspace-name">finance &amp; cash</strong>' in html
     assert 'aria-label="Workspace workflow"' in html
     assert 'class="active" aria-current="page">Source data</a>' in html
-    for step in ("source", "define", "validate", "hub"):
+    for step in ("source", "define", "ontology", "validate", "hub"):
         assert f"/v2/editor?source=finance+%26+cash#{step}" in html
     assert "/v2?view=overview&amp;workspace=finance+%26+cash" in html
 

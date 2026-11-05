@@ -21,8 +21,9 @@
     <div class="steps" role="tablist" aria-label="Context workflow">
       <button id="tab-source" role="tab" aria-controls="step-source" aria-selected="false" data-step="source"><span>1</span>Source data</button>
       <button id="tab-define" role="tab" aria-controls="step-define" aria-selected="true" tabindex="-1" data-step="define"><span>2</span>Studio</button>
-      <button id="tab-validate" role="tab" aria-controls="step-validate" aria-selected="false" tabindex="-1" data-step="validate"><span>3</span>Validation &amp; review</button>
-      <button id="tab-review" role="tab" aria-controls="step-review" aria-selected="false" tabindex="-1" data-step="review"><span>4</span>Versions &amp; releases</button>
+      <button id="tab-ontology" role="tab" aria-controls="step-ontology" aria-selected="false" tabindex="-1" data-step="ontology"><span>3</span>Ontology</button>
+      <button id="tab-validate" role="tab" aria-controls="step-validate" aria-selected="false" tabindex="-1" data-step="validate"><span>4</span>Validation &amp; review</button>
+      <button id="tab-review" role="tab" aria-controls="step-review" aria-selected="false" tabindex="-1" data-step="review"><span>5</span>Versions &amp; releases</button>
     </div>
     <section id="step-source" role="tabpanel" aria-labelledby="tab-source" hidden>
       <section class="panel documents-panel" id="source-documents" aria-labelledby="documents-heading">
@@ -59,7 +60,7 @@
       </div>
       <button type="button" data-next="define">Continue to definitions →</button>
     </section>
-    <section id="step-define" role="tabpanel" aria-labelledby="tab-define"><div class="studio-layout"><section id="studio-tree" class="studio-tree" aria-label="Semantic object tree"></section><section id="studio-canvas" class="studio-canvas" aria-label="Relationship canvas"></section><section class="studio-inspector" aria-label="Object inspector"><div class="inspector-heading"><h2>Inspector</h2><span class="badge subtle">Editable draft</span></div><div class="inspector-tabs"><button data-inspector="context" type="button">Context</button><button data-inspector="metric" type="button">Metric</button><button data-inspector="join" type="button">Relationship</button><button data-inspector="source" type="button">Source</button><button data-inspector="changes" type="button">Changes</button></div><div id="source-inspector" class="panel" hidden></div><div id="changes-inspector" class="panel" hidden><p class="muted">Choose a change in the canvas to inspect its saved evidence.</p></div>
+    <section id="step-define" role="tabpanel" aria-labelledby="tab-define"><div class="studio-layout"><section id="studio-tree" class="studio-tree" aria-label="Semantic object tree"></section><section id="studio-canvas" class="studio-canvas" aria-label="Relationship canvas"></section><section class="studio-inspector" aria-label="Object inspector"><div class="inspector-heading"><h2>Inspector</h2><button id="open-ontology" class="secondary" type="button" hidden>Open in Ontology</button><span class="badge subtle">Editable draft</span></div><div class="inspector-tabs"><button data-inspector="context" type="button">Context</button><button data-inspector="metric" type="button">Metric</button><button data-inspector="join" type="button">Relationship</button><button data-inspector="source" type="button">Source</button><button data-inspector="changes" type="button">Changes</button></div><div id="source-inspector" class="panel" hidden></div><div id="changes-inspector" class="panel" hidden><p class="muted">Choose a change in the canvas to inspect its saved evidence.</p></div>
       <div class="panel"><h2>Context identity</h2><div class="form-grid"><label>Context title<input id="context-title" maxlength="100"></label><label>Description<textarea id="context-description" rows="2" maxlength="1500"></textarea></label></div></div>
       <div class="panel"><div class="panel-heading"><h2>Metric definitions</h2><button type="button" id="add-metric" class="secondary">+ Add metric</button></div>
         <div class="metric-layout"><div id="metric-list" class="metric-list" aria-label="Metrics"></div><div id="metric-editor">
@@ -92,6 +93,12 @@
       <div class="panel"><div class="panel-heading"><h2>Many-to-one relationships</h2><button type="button" id="add-join" class="secondary">+ Add relationship</button></div>
         <p class="muted">Validation checks unique target keys and complete source matches before a version can pass.</p><div id="joins"></div></div>
 </section></div><details class="code-drawer"><summary>Definition code · JSON preview</summary><pre id="definition-code"></pre></details><button type="button" data-next="validate">Open validation &amp; review →</button>
+    </section>
+    <section id="step-ontology" role="tabpanel" aria-labelledby="tab-ontology" hidden>
+      <div class="ontology-head"><p id="ontology-counts" class="ontology-counts" role="status">Loading ontology…</p>
+        <label>Show<select id="ontology-version"><option value="draft">Draft</option></select></label></div>
+      <p id="ontology-note" class="help"></p>
+      <div class="studio-layout ontology-layout"><section id="ontology-canvas" class="studio-canvas" aria-label="Ontology canvas"></section><section class="studio-inspector" aria-label="Ontology inspector"><div class="inspector-heading"><h2>Inspector</h2><span class="badge subtle">Read-only</span></div><div id="ontology-detail" class="panel"></div><div id="ontology-unmapped" class="panel"></div></section></div>
     </section>
     <section id="step-validate" role="tabpanel" aria-labelledby="tab-validate" hidden>
       <div class="panel"><div class="panel-heading"><h2>Reconcile the saved draft</h2><button type="button" id="validate" disabled>Validate SQL</button></div>

@@ -222,3 +222,19 @@
 /* The inherited editor CSS sets line heights and a logo margin; reset them so the sidebar matches every other page. */
 .hub-editor .sidebar,.hub-editor .sidebar .brand,.hub-editor .sidebar .brand span,.hub-editor .sidebar .nav-label{line-height:normal}
 .hub-editor .sidebar .brand img{margin:0}
+/* Ontology tab: counts line, canvas plus a read-only inspector. */
+.hub-editor[data-section="ontology"] #studio-summary{display:none}
+.hub-editor .ontology-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 6px}
+.hub-editor .ontology-counts{margin:0;font-size:14px;font-weight:600}
+.hub-editor .ontology-head label{display:flex;align-items:center;gap:8px;margin:0;font-size:12px;color:var(--muted)}
+.hub-editor .ontology-head select{min-height:34px;width:auto}
+.hub-editor #ontology-note{margin:0 0 12px}
+.hub-editor .ontology-layout.studio-layout{grid-template-columns:minmax(320px,1fr) 320px}
+@media (min-width: 951px){.hub-editor .ontology-layout.studio-layout{height:clamp(560px,calc(100vh - 280px),760px)}}
+.hub-editor .ontology-layout .panel h3{margin:0 0 10px;font-size:14px;overflow-wrap:anywhere}
+.hub-editor .ontology-terms{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.hub-editor #open-ontology{margin-left:auto;margin-right:8px;padding:0 10px}
+@media (max-width: 950px) {
+  .hub-editor .ontology-layout.studio-layout{grid-template-columns:1fr}
+  .hub-editor .ontology-layout .studio-canvas{height:560px}
+}

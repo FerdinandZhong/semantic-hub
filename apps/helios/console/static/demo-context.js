@@ -6,7 +6,7 @@ let documentsState=null, selectedDocumentId=null, documentLoadId=0, filePreviewI
 let currentSource = new URL(location.href).searchParams.get("source");
 const viewedVersion = new URL(location.href).searchParams.get("version");
 const pageSize = 20;
-const stepHashes = {source:"#source",define:"#studio",validate:"#validate",review:"#hub"};
+const stepHashes = {source:"#source",define:"#studio",ontology:"#ontology",validate:"#validate",review:"#hub"};
 function stepFromHash() {
   return Object.keys(stepHashes).find(name=>stepHashes[name]===location.hash) || "define";
 }
@@ -149,12 +149,13 @@ function markDirty() {
 function step(name, focus = false) {
   if(viewedVersion)return;
   if(location.hash!==stepHashes[name])history.replaceState(null,"",stepHashes[name]);
-  const hub=name==="review", title=hub ? "Versions & releases" : "Semantic Studio";
-  document.body.dataset.section=hub ? "hub" : "studio";
+  const hub=name==="review", ont=name==="ontology", title=hub ? "Versions & releases" : ont ? "Ontology" : "Semantic Studio";
+  document.body.dataset.section=hub ? "hub" : ont ? "ontology" : "studio";
   $("workspace-breadcrumb").textContent=`Workspace / ${title}`;
   $("workspace-heading").textContent=title;
   $("workspace-description").textContent=hub
     ? "Review versions, compare changes, publish approved context, and choose the version used for queries."
+    : ont ? "Read-only view of the classes, fields, metrics and relationships recorded in the draft or a reviewed version."
     : "Build and refine semantic definitions, inspect relationships, and validate changes before review.";
   workspaceStatus();
   $("version-evidence").hidden=!["validate","review"].includes(name);
@@ -173,16 +174,17 @@ function step(name, focus = false) {
     $("step-" + tab.dataset.step).hidden = !active;
     if (active && focus) tab.focus();
   }
+  if(ont){loadOntology(pendingOntologyFocus);pendingOntologyFocus="";}
 }
 for (const tab of document.querySelectorAll("[data-step]")) {
   tab.addEventListener("click", () => step(tab.dataset.step));
   tab.addEventListener("keydown", event => {
-    const names = ["source","define","validate","review"], index = names.indexOf(tab.dataset.step);
+    const names = Object.keys(stepHashes), count = names.length, index = names.indexOf(tab.dataset.step);
     let target;
-    if (event.key === "ArrowRight") target = names[(index+1)%4];
-    if (event.key === "ArrowLeft") target = names[(index+3)%4];
+    if (event.key === "ArrowRight") target = names[(index+1)%count];
+    if (event.key === "ArrowLeft") target = names[(index+count-1)%count];
     if (event.key === "Home") target = names[0];
-    if (event.key === "End") target = names[3];
+    if (event.key === "End") target = names[count-1];
     if (target) {
       event.preventDefault();
       step(target, true);
@@ -709,6 +711,7 @@ async function load() {
     });
   } studioChanged();
   $("notice").textContent="";
+  if(!$("step-ontology").hidden)loadOntology();
   if(new URL(location.href).searchParams.get("draft")==="ai"){
     step("source");$("evidence-draft").scrollIntoView({block:"start"});
   }
@@ -790,6 +793,8 @@ document.addEventListener("studio:select",event=>{
     type,id,node:object
   }=event.detail||{
   };
+  studioTarget=ontologyTarget(type,id,object);
+  $("open-ontology").hidden=!studioTarget;
   if(type==="document")showDocumentInspector(id);
   if(type==="document_group")showDocumentGroup();
   if(type==="metric"){
@@ -824,7 +829,7 @@ document.addEventListener("studio:select",event=>{
 });
 function inspector(type){
   if(type!=="source")delete $("source-inspector").dataset.documentId;
-  const editable=[...document.querySelectorAll(".studio-inspector > .panel")].filter(panel=>!["source-inspector","changes-inspector"].includes(panel.id));
+  const editable=[...document.querySelectorAll("#step-define .studio-inspector > .panel")].filter(panel=>!["source-inspector","changes-inspector"].includes(panel.id));
   editable.forEach((panel,index)=>panel.hidden=["context","metric","join"][index]!==type);
   $("source-inspector").hidden=type!=="source";
   $("changes-inspector").hidden=type!=="changes";
@@ -1297,6 +1302,123 @@ $("document-form").addEventListener("submit",event=>{
     $("notice").textContent="Document added to the draft. Review its content and links before approving the version.";
   },"Adding document…");
 });
+
+// Read-only ontology view. It draws the ontology graph the artifacts endpoint already returns.
+let ontologyCanvas, ontologyData, ontologySeq=0, studioTarget="", pendingOntologyFocus="";
+const plural=(count,word)=>`${count} ${word}${count===1?"":"s"}`;
+function ontologyTarget(type,id,object){
+  if(type==="dataset"||type==="table")return object?.name||String(id).replace(/^dataset:/,"");
+  if(type==="column")return object?.qualified||String(id).replace(/^field:/,"");
+  if(type==="metric")return `metric:${object?.name||String(id).replace(/^metric:/,"")}`;
+  return "";
+}
+function ontologyModel(bundle){
+  const graph=bundle.ontology?.graph||{nodes:[],edges:[]},of=label=>graph.nodes.filter(n=>n.label===label);
+  const nodes=new Map(),edges=[],usage=new Map(),termsFor=new Map(),unmapped=[];
+  const metricKeys=of("OssieElement").filter(n=>n.properties.kind==="metric").map(n=>n.key);
+  for(const n of of("Class")){
+    const concept=n.key.startsWith("concept:");
+    nodes.set(n.key,{id:n.key,label:concept?n.key.slice(8):n.key,kind:concept?"concept":"dataset",status:n.properties.status,props:n.properties});
+  }
+  for(const n of of("Attribute")){
+    const table=n.key.split(".")[0];
+    if(nodes.has(table))nodes.set(n.key,{id:n.key,label:n.key,kind:"attribute",data_type:n.properties.datatype,dataset_id:table,meaning:n.properties.meaning,status:n.properties.status,props:n.properties});
+  }
+  const terms=of("GlossaryTerm"),mapsFrom=new Set(graph.edges.filter(e=>e.type==="MAPS_TO"&&e.from_label==="GlossaryTerm").map(e=>e.from_key));
+  for(const key of metricKeys){
+    const p=terms.find(t=>t.key===key)?.properties||{};
+    nodes.set(key,{id:key,label:key.slice(7),kind:"metric",description:p.description,expression:p.expression,status:p.status,props:p});
+  }
+  const glossary=terms.filter(t=>t.key.startsWith("glossary:")).map(t=>{
+    const term=t.properties.term||{};
+    return {id:t.key,label:term.name||term.term||t.key,kind:"term",description:term.definition||term.description,columns:term.columns||[],status:t.properties.status,props:t.properties};
+  });
+  for(const term of glossary)(mapsFrom.has(term.id)?nodes.set(term.id,term):unmapped.push(term));
+  const termById=new Map(glossary.map(t=>[t.id,t]));
+  for(const e of graph.edges){
+    if(e.type==="RANGE"&&nodes.has(e.from_key)&&nodes.has(e.to_key))edges.push({id:`range:${e.properties.join||e.from_key}`,source:e.from_key,target:e.to_key,kind:"relationship",label:String(e.properties.cardinality||"relationship").replaceAll("_","-"),props:e.properties});
+    if(e.type==="MAPS_TO"&&e.from_label==="GlossaryTerm"&&nodes.has(e.from_key)&&nodes.has(e.to_key)){
+      edges.push({id:`maps:${e.from_key}:${e.to_key}`,source:e.from_key,target:e.to_key,kind:e.to_label==="Attribute"?"term_mapping":"concept_mapping",label:"maps to",props:e.properties});
+      if(termById.has(e.from_key)){const list=termsFor.get(e.to_key)||[];list.push(termById.get(e.from_key));termsFor.set(e.to_key,list);}
+    }
+  }
+  // A metric uses a field when its expression names it.
+  for(const key of metricKeys){
+    const expression=nodes.get(key).expression||"";
+    for(const n of nodes.values()){
+      if(n.kind!=="attribute"||!new RegExp(`(^|[^\\w.])${n.id.replace(".","\\.")}(?!\\w)`).test(expression))continue;
+      edges.push({id:`uses:${key}:${n.id}`,source:n.id,target:key,kind:"sql_dependency",label:"Used in expression"});
+      usage.set(n.id,[...(usage.get(n.id)||[]),key]);
+    }
+  }
+  const counts={classes:of("Class").length,attributes:of("Attribute").length,metrics:metricKeys.length,relationships:graph.edges.filter(e=>e.type==="RANGE").length,terms:glossary.length};
+  return {nodes:[...nodes.values()],edges,byId:new Map([...nodes,...termById]),usage,termsFor,unmapped,counts,documents:bundle.documents||[],version:bundle.version};
+}
+function ontologyDocuments(object){
+  const target={dataset:`table:${object.id}`,attribute:`field:${object.id}`,metric:`metric:${object.label}`,concept:`concept:${object.label}`}[object.kind];
+  return ontologyData.documents.filter(doc=>(doc.semantic_links||[]).some(link=>link.target===target)).map(doc=>doc.filename);
+}
+function showOntologyObject(object){
+  const box=$("ontology-detail");box.replaceChildren();
+  if(!object){box.append(node("p","Select a class, field, metric or relationship to inspect it.","help"));return;}
+  const model=ontologyData,rows=[],fieldsOf=id=>model.nodes.filter(n=>n.kind==="attribute"&&n.dataset_id===id).map(n=>n.id);
+  const humanize=value=>value?String(value).replaceAll("_"," "):"";
+  if(object.source!==undefined){
+    const p=object.props||{};
+    box.append(node("h3",p.join||object.id));
+    rows.push(["Kind","Relationship (RANGE)"],["From field",object.source],["To field",p.target_field||object.target],["Cardinality",humanize(p.cardinality)],["Meaning",p.meaning],["Evidence",humanize(p.provenance)||"No evidence recorded"],["Status",humanize(p.status)||"Not recorded"]);
+  }else{
+    box.append(node("h3",object.label));
+    const kinds={dataset:"Class (dataset)",concept:"Class (concept)",attribute:"Attribute",metric:"Metric",term:"Glossary term"};
+    const fields=object.kind==="dataset"?fieldsOf(object.id):[];
+    const used=object.kind==="attribute"?model.usage.get(object.id)||[]:object.kind==="dataset"?[...new Set(fields.flatMap(f=>model.usage.get(f)||[]))]:[];
+    const mapped=object.kind==="dataset"?fields:object.kind==="attribute"?[object.id,...(model.termsFor.get(object.id)||[]).map(t=>`term ${t.label}`)]:object.kind==="metric"?model.edges.filter(e=>e.target===object.id&&e.kind==="sql_dependency").map(e=>e.source):object.kind==="term"?object.columns:[];
+    const evidence=[humanize(object.props?.evidence),...ontologyDocuments(object)].filter(Boolean);
+    rows.push(["Kind",kinds[object.kind]],["Definition",object.meaning||object.description||"No definition recorded"],["Expression",object.expression],["Data type",object.data_type],["Mapped columns",mapped.length?mapped.join(", "):"None"],["Used by metrics",object.kind==="metric"?"":used.length?used.map(k=>k.replace(/^metric:/,"")).join(", "):"None"],["Evidence",evidence.length?evidence.join(", "):"No evidence recorded"],["Status",humanize(object.status)||"Not recorded"]);
+  }
+  versionProperties(box,rows);
+}
+function renderUnmappedTerms(){
+  const box=$("ontology-unmapped"),list=ontologyData.unmapped;
+  box.replaceChildren(node("h3",`Unmapped terms (${list.length})`));
+  if(!list.length){
+    box.append(node("p",ontologyData.counts.terms?"Every glossary term maps to a field or class.":"No glossary terms yet. Terms come from AI proposals and, once it ships, Studio authoring.","help"));
+    return;
+  }
+  const items=node("ul",undefined,"ontology-terms");
+  for(const term of list){const item=node("li");item.append(button(term.label,()=>showOntologyObject(term),"secondary"));items.append(item);}
+  box.append(items);
+}
+function focusOntology(id){
+  ontologyCanvas?.focus(id);
+  const object=ontologyData?.byId.get(id);
+  showOntologyObject(object);
+  if(!object)$("ontology-detail").append(node("p",`${id} is not in this ontology. Save the draft to include new objects.`,"help"));
+}
+async function loadOntology(focusId){
+  if(!workspace)return;
+  const seq=++ontologySeq,select=$("ontology-version"),previous=select.value;
+  select.replaceChildren(...["draft",...(workspace.versions||[]).map(v=>v.version)].map(value=>{const option=node("option",value==="draft"?"Draft":value);option.value=value;return option;}));
+  select.value=[...select.options].some(o=>o.value===previous)?previous:"draft";
+  const version=select.value,empty=message=>{$("ontology-counts").textContent=message;ontologyData=null;$("ontology-detail").replaceChildren();$("ontology-unmapped").replaceChildren();ontologyCanvas?.destroy();ontologyCanvas=null;};
+  $("ontology-note").textContent=version==="draft"?`Saved draft revision ${workspace.draft.revision}.${dirty?" Unsaved edits are not shown until you save.":""}`:`Reviewed version ${version}.`;
+  try{
+    const model=ontologyModel(await api(`/demo/api/context/artifacts?version=${encodeURIComponent(version)}`));
+    if(seq!==ontologySeq)return;
+    if(!model.counts.classes){empty("This ontology has no classes because the draft has no datasets.");return;}
+    ontologyData=model;
+    const c=model.counts;
+    $("ontology-counts").textContent=[`${c.classes} ${c.classes===1?"class":"classes"}`,plural(c.attributes,"attribute"),plural(c.metrics,"metric"),plural(c.relationships,"relationship"),plural(c.terms,"glossary term")].join(" · ");
+    if(!ontologyCanvas)ontologyCanvas=window.HeliosCanvas.mount($("ontology-canvas"),{readOnly:true,layout:"grouped",onSelect:showOntologyObject});
+    ontologyCanvas.update({nodes:model.nodes,edges:model.edges,scope:`ontology:${version}:${model.version}`});
+    showOntologyObject(null);renderUnmappedTerms();
+    if(focusId)focusOntology(focusId);
+  }catch(err){
+    if(seq===ontologySeq)empty(`The ontology is unavailable: ${err.message}`);
+  }
+}
+$("ontology-version").addEventListener("change",()=>loadOntology());
+$("open-ontology").addEventListener("click",()=>{pendingOntologyFocus=studioTarget;step("ontology");});
 inspector("metric");
 window.addEventListener("hashchange",()=>step(stepFromHash()));
 if(viewedVersion)prepareVersionView();
