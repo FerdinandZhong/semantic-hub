@@ -143,7 +143,9 @@ function syncShell() {
     current.kind === "local"
   );
   $("provider-label").textContent = current?.provider_name || "No workspace";
-  $("breadcrumb").textContent = titles[view] || "Semantic workspace";
+  // Match the workflow pages: "Workspace / <workspace> / Overview".
+  $("breadcrumb").textContent =
+    view === "overview" && current ? `${current.name} / Overview` : titles[view] || "Semantic workspace";
   const active = view === "overview" ? "workspace" : view;
   document.querySelectorAll("[data-nav]").forEach((a) => {
     const key = a.dataset.nav;

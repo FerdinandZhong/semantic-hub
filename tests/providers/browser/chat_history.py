@@ -14,6 +14,15 @@ args = parser.parse_args()
 base = args.base_url.rstrip("/")
 args.output.mkdir(parents=True, exist_ok=True)
 
+
+
+def answer_value(page):
+    """Read the result cell; it sits in the closed Table tab, formatted like the headline."""
+    cell = page.locator("#chat-thread td").first
+    cell.wait_for(state="attached", timeout=30000)
+    return Decimal(cell.text_content().replace(",", ""))
+
+
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=True, executable_path=args.chromium)
     page = browser.new_page(viewport={"width": 1440, "height": 1000})
@@ -25,8 +34,7 @@ with sync_playwright() as playwright:
 
     page.locator("[data-suggest]").first.click()
     page.locator("#ask").click()
-    page.locator("#chat-thread td").first.wait_for(timeout=30000)
-    expected = Decimal(page.locator("#chat-thread td").first.inner_text())
+    expected = answer_value(page)
     assert expected == Decimal("686572.96")
     first_id = page.locator("[data-conversation]").first.get_attribute(
         "data-conversation"
@@ -35,14 +43,14 @@ with sync_playwright() as playwright:
     assert page.locator("#chat-thread td").count() == 0
     page.locator("[data-suggest]").first.click()
     page.locator("#ask").click()
-    page.locator("#chat-thread td").first.wait_for(timeout=30000)
+    answer_value(page)
     assert page.locator("[data-conversation]").count() == 2
     # Restoring an archived interpretation must not restore its execution action.
     second_id = page.locator("[data-conversation]").first.get_attribute(
         "data-conversation"
     )
     page.locator(f'[data-conversation="{first_id}"]').click()
-    assert Decimal(page.locator("#chat-thread td").first.inner_text()) == expected
+    assert answer_value(page) == expected
     assert page.locator("[data-run]").count() == 0
     page.locator(f'[data-conversation="{second_id}"]').click()
     assert page.locator("[data-run]").count() == 0
@@ -59,7 +67,7 @@ with sync_playwright() as playwright:
     page.locator("[data-conversation]").first.wait_for()
     assert page.locator("[data-conversation]").count() == 2
     page.locator(f'[data-conversation="{first_id}"]').click()
-    assert Decimal(page.locator("#chat-thread td").first.inner_text()) == expected
+    assert answer_value(page) == expected
     assert page.locator("[data-run]").count() == 0
 
     for width in (1440, 980, 390):
