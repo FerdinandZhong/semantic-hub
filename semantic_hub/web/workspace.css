@@ -924,3 +924,17 @@ dialog select {
     max-width: 100%;
   }
 }
+/* Same 50 px bar as Materials and the editor, so switching workflow tabs never moves the page. */
+#workspace-bar {
+  min-height: 50px;
+  padding: 0 32px;
+}
+#workspace-bar select {
+  min-height: 34px;
+  padding: 6px 10px;
+}
+@media (max-width: 700px) {
+  #workspace-bar {
+    padding: 8px 16px;
+  }
+}
