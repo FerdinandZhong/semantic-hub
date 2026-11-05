@@ -85,6 +85,8 @@ Files: `semantic_hub/editor.py`, `semantic_hub/support_pages.py`, `semantic_hub/
 Risk: both files patch inherited templates with regexes. Keep the existing patch tests passing.
 Status: Done in `5cfbcaa`.
 
+Follow-up `3eef7b4`: one header (API reference link) and the same sidebar position on all workspace pages. Verified locally: tabs at 110 px and h1 at 204 px on Materials, Studio, Validation and Versions; 75 tests passed; the browser smoke passes chat and page-route checks, then stops at provider registration as before. Open: the Overview tab's taller workspace selector puts its tabs at 132 px, so switching to Overview still shifts the layout by 22 px.
+
 ### P3 — Chat answer tabs
 
 1. Replace the stacked disclosures with tabs: Answer, Table, Semantic canvas, SQL & checks, Provenance.
