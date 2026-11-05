@@ -178,8 +178,7 @@
 @media(max-width:700px){.hub-editor .check-list li{grid-template-columns:20px 1fr}.hub-editor .check-detail{grid-column:2}}
 .hub-editor .check-list strong{overflow-wrap:anywhere}
 /* Studio and Validation: compact header, slim draft bar, calm panels, readable tables. */
-.hub-editor .heading .eyebrow{display:none}
-.hub-editor .heading h1{margin:0 0 4px;font-size:22px}
+.hub-editor .heading #studio-summary{margin:4px 0 0;color:var(--muted);font-size:12px}
 .hub-editor .heading #workspace-description{color:var(--muted);font-size:13px}
 .hub-editor .editor-content{padding:20px 30px 28px}
 .hub-editor .workspace-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:10px 14px;border:1px solid var(--line);border-left:1px solid var(--line);border-radius:10px;background:#fff}
@@ -200,10 +199,11 @@
 .hub-editor .inspector-tabs button{min-height:30px;padding:0 10px;border:0;border-radius:6px;font-size:12px;font-weight:500}
 .hub-editor .inspector-tabs button[aria-selected=true]{background:var(--blue-soft);color:var(--blue)}
 .hub-editor .studio-inspector .panel{padding:14px 16px}
-.hub-editor .studio-inspector label{font-size:12px;font-weight:600;color:#344054}
+.hub-editor .studio-inspector label{margin:0;font-size:12px;font-weight:600;color:#344054}
 .hub-editor .studio-inspector input,.hub-editor .studio-inspector textarea,.hub-editor .studio-inspector select{min-height:34px;padding:7px 10px;font-size:13px;border-radius:8px}
 .hub-editor .studio-inspector textarea{min-height:64px}
 .hub-editor .studio-inspector .form-grid{gap:12px}
+.hub-editor .studio-inspector input,.hub-editor .studio-inspector textarea,.hub-editor .studio-inspector select{font-weight:400}
 .hub-editor .studio-inspector .secondary,.hub-editor .studio-inspector button{min-height:32px;font-size:12px}
 /* Review tables: sticky pale header, 12px cells, one-row pagination. */
 .hub-editor .review-table th{position:sticky;top:0;background:#f7f8fc;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}

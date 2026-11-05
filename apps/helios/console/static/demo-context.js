@@ -848,6 +848,10 @@ $("nav-studio").addEventListener("click",event=>{
 function renderTree(){
   const tree=$("studio-tree");
   tree.replaceChildren(node("h3","Semantic objects"));
+  const counts=[["dataset",(sourceGraph?.nodes||[]).filter(n=>n.kind==="dataset"||n.type==="dataset").length],["metric",definition.metrics.length],["relationship",definition.joins.length],["document",currentDocuments().length]];
+  let sum=$("studio-summary");
+  if(!sum){sum=node("p",undefined,"help");sum.id="studio-summary";$("workspace-description").after(sum);}
+  sum.textContent=counts.filter(([k,n])=>n||k!=="document").map(([k,n])=>`${n} ${k}${n===1?"":"s"}`).join(" · ");
   for(const [label,objects,type] of [["Datasets",(sourceGraph?.nodes||[]).filter(n=>n.kind==="dataset" || n.type==="dataset"),"dataset"],["Metrics",definition.metrics,"metric"],["Relationships",definition.joins,"join"],["Documents",currentDocuments().map(doc=>({id:documentObjectId(doc),label:doc.filename.split("/").pop()})),"document"]]){
     const group=node("details");
     group.open=type!=="document";

@@ -7,7 +7,7 @@ Read the [project status](project-status.md) for what is deployed.
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`a01c33a` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–P1 UI fixes are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -72,6 +72,8 @@ Risk: published artifacts change only for definitions that hold terms. The finan
 4. Set inspector input text to normal weight and tighten field spacing to the 12 px rhythm used in Materials.
 
 Files: `apps/helios/console/static/demo-canvas.js`, `semantic_hub/web/editor-shell.css`, `apps/helios/console/static/demo-context.js`.
+
+Done: local commit "Keep canvas text readable and align page titles and summaries" (hash: see `git log`). Fit stays at 0.85 or larger, titles are 25 px, the Studio and Validation header shows object counts, and inspector inputs use weight 400 with 12 px spacing.
 
 ### P2 — One shared page frame
 

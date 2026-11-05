@@ -405,7 +405,7 @@
       if(!nodes.length)return;
       nodes.forEach(position);
       const ps=nodes.map(n=>positions[n.id]),left=Math.min(...ps.map(p=>p.x)),top=Math.min(...ps.map(p=>p.y)),w=Math.max(...ps.map(p=>p.x))+260-left,h=Math.max(...ps.map(p=>p.y))+106-top;
-      transform.k=Math.max(.15,Math.min(1.2,(stage.clientWidth-60)/w,(stage.clientHeight-60)/h));
+      transform.k=Math.max(.85,Math.min(1.2,(stage.clientWidth-60)/w,(stage.clientHeight-60)/h));
       transform.x=30-left*transform.k;
       transform.y=30-top*transform.k;
       applyTransform();
