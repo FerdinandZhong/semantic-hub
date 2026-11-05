@@ -1,13 +1,13 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: P0–P4 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`, `110e188`); P5–P6 planned. Nothing here is pushed or deployed.
+Recorded 4 November 2026. Status: P0–P5 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`, `110e188`, `958c089`); P6 planned. Nothing here is pushed or deployed.
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`110e188` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`958c089` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -124,6 +124,12 @@ Check: rerun the route and OpenAPI comparison; it must stay identical.
 
 Risk: changes the saved definition. Keep `glossary_terms` backward compatible with existing proposals.
 
+Status: Done in `958c089`. Studio has a Glossary inspector tab (name, definition, synonyms, mapped columns from the draft's source fields) and a "Glossary terms (n)" tree group. Terms save through the existing draft save route; no route or OpenAPI change. The save handler rejects a term with no name, no definition, a duplicate name (case-insensitive), an unknown column, or a name over 160 or definition over 1,000 characters. It skips terms identical to the stored draft, so old proposal-shaped terms (`term` key, `confidence`, empty definition) still save. The column check is shared with proposals (`ContextWorkspace.unknown_term_columns`).
+Review: each term is its own review item (`term:<name>`, kind `glossary`), and the context item no longer carries `glossary_terms`. A save clears validation and item decisions, so a changed term must be approved before a version is published. Published bundles list glossary items only for definitions that hold terms. Consumer payloads keep their shape. Authored terms carry no `confidence`.
+The version page lists each term with definition, synonyms and mapped columns.
+Fix found on the way: the Ontology tab failed with "Cannot read properties of undefined (reading 'y')" once a term mapped to a field, because term nodes used a `columns` key that the canvas read as dataset columns. Term nodes now use `mappedColumns`.
+Deferred: term edits are not drawn in the Studio canvas; no import or export of terms; the Ontology tab reads saved drafts only, so unsaved terms appear after Save draft.
+
 ### P6 — Typed term relations (requires a separate approval)
 
 1. Add `term_relations: [{from, to, relation, status, note}]` to the definition, using a SKOS-style set: broader, narrower, related, part-of, synonym.
@@ -141,5 +147,5 @@ Risk: changes the saved definition. Keep `glossary_terms` backward compatible wi
 
 ## Open questions
 
-- P5: should term edits require the same reviewer sign-off as metric edits?
+- Decided 5 November 2026: term edits require the same review as other semantic edits.
 - P6: approve typed relations now, or after P4 and P5 ship?
