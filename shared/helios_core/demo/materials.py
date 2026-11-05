@@ -384,8 +384,9 @@ class MaterialLibrary:
                 for concept in metric.get('ontology_concepts', []):
                     add('concept:' + concept, concept, metric['description'])
             for term in definition.get('glossary_terms', []):
-                if isinstance(term.get('term'), str) and term['term'].strip():
-                    add('concept:' + term['term'], term['term'], str(term.get('definition', term.get('description', ''))))
+                label = term.get('name') or term.get('term')
+                if isinstance(label, str) and label.strip():
+                    add('concept:' + label, label, str(term.get('definition', term.get('description', ''))))
             tables = {f.split('.')[0] for f in model['fields']}
             for table in sorted(tables):
                 add('table:' + table, table, definition.get('dataset_meanings', {}).get(table, ''))

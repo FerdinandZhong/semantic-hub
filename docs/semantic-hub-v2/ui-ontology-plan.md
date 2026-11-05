@@ -61,6 +61,7 @@ Each phase is one or more commits with its own tests. P0–P4 add no routes and 
 3. Check other readers of `glossary_terms` for the same mismatch, including `materials.py:386`.
 
 Files: `shared/helios_core/demo/builder_artifacts.py`, a new test in `apps/helios/tests/`.
+Status: Done — confirmed by `test_name_keyed_glossary_term_is_a_concept_link_target` and `test_name_keyed_glossary_term_is_a_concept_candidate`; `proposals.py` had the same mismatch and is fixed too.
 Risk: published artifacts change only for definitions that hold terms. The finance sample holds none.
 
 ### P1 — Quick UI fixes (CSS and small JS)

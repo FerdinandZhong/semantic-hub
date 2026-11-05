@@ -55,3 +55,10 @@ def test_explicit_provenance_reference_remains_matchable(library):
         'This source reference identifies the source document used for the cohort.')
     assert any(link['source'] == 'pharma_intelligence'
                and link['target'] == 'field:trial_cohorts.source_id' for link in item['links'])
+
+
+def test_name_keyed_glossary_term_is_a_concept_candidate(library):
+    definition = {'description': '', 'metrics': [], 'dataset_meanings': {}, 'field_roles': {},
+                  'glossary_terms': [{'name': 'Customer class', 'definition': 'Proposed meaning'}]}
+    model = {'source': 's', 'title': 't', 'snapshot_sha256': '', 'definition_sha256': '', 'definition': definition, 'fields': {}}
+    assert 'concept:Customer class' in {t['target'] for t in library._targets([model])}

@@ -192,3 +192,14 @@ def test_added_connection_identity_and_original_upload_digest_are_preserved(tmp_
     wrong_target = metadata | {'links': [metadata['links'][0] | {'target': 'model:another-connection'}]}
     with pytest.raises(DemoError, match='unknown semantic target'):
         builder.attach('excerpt.md', excerpt, [], supporting_material=wrong_target)
+
+
+def test_name_keyed_glossary_term_is_a_concept_link_target(tmp_path):
+    from helios_core.demo.context import ContextDefinition
+    builder = artifacts(tmp_path)
+    definition = builder.workspace.seed()
+    definition['glossary_terms'] = [{'name': 'Customer class', 'definition': 'Proposed meaning'}]
+    builder.workspace.save(builder.workspace.view()['draft']['revision'], ContextDefinition.model_validate(definition))
+    link = {'chunk_id': 'c1', 'location': 'p1', 'quote': 'class', 'target': 'concept:Customer class', 'reviewer': 'r'}
+    metadata = {'document_id': 'd1', 'revision': 1, 'sha256': 'a' * 64, 'source_id': 'manufacturing', 'links': [link]}
+    assert builder.validate_supporting_material(metadata, b'customer class')['links'][0]['target'] == 'concept:Customer class'

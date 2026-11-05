@@ -73,7 +73,7 @@ class BuilderArtifacts:
             targets.update('field:' + dataset['name'] + '.' + field['name'] for field in dataset['fields'])
         targets.update('metric:' + metric['name'] for metric in definition['metrics'])
         targets.update('concept:' + concept for metric in definition['metrics'] for concept in metric.get('ontology_concepts', []))
-        targets.update('concept:' + term['term'] for term in definition.get('glossary_terms', []) if isinstance(term.get('term'), str))
+        targets.update('concept:' + label for label in ((term.get('name') or term.get('term')) for term in definition.get('glossary_terms', [])) if isinstance(label, str))
         for link in provenance['links']:
             if link['target'] not in targets:
                 raise DemoError('Supporting material link references an unknown semantic target')

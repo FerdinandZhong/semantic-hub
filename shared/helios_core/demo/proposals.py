@@ -96,7 +96,7 @@ class ProposalWorkspace:
             allowed_concepts = (
                 {t.name for t in self.workspace.pack.tables} | set(self.workspace._fields)
                 | {concept for metric in draft['definition']['metrics'] for concept in metric.get('ontology_concepts', [])}
-                | {term['term'] for term in draft['definition'].get('glossary_terms', []) if isinstance(term.get('term'), str)}
+                | {label for label in ((term.get('name') or term.get('term')) for term in draft['definition'].get('glossary_terms', [])) if isinstance(label, str)}
             )
             source_metrics = [{k: v for k, v in metric.items() if k not in {'reference_sql', 'filters'}} for metric in draft['definition']['metrics']]
             source_tables = sorted({'source.' + c.table for metric in source_metrics for c in sqlglot.parse_one(metric['expression']).find_all(exp.Column)})
