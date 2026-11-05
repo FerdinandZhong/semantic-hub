@@ -1,13 +1,13 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: P0 and P1 done locally (`36ed508`, `eb62311`); P2–P6 planned. Nothing here is pushed or deployed.
+Recorded 4 November 2026. Status: P0–P2 done locally (`36ed508`, `eb62311`, `5cfbcaa`); P3–P6 planned. Nothing here is pushed or deployed.
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`eb62311` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`5cfbcaa` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -83,6 +83,7 @@ Done: `eb62311`. Fit stays at 0.85 or larger, titles are 25 px, the Studio and V
 
 Files: `semantic_hub/editor.py`, `semantic_hub/support_pages.py`, `semantic_hub/web/editor-shell.css`, `semantic_hub/web/support-shell.css`.
 Risk: both files patch inherited templates with regexes. Keep the existing patch tests passing.
+Status: Done in `5cfbcaa`.
 
 ### P3 — Chat answer tabs
 
