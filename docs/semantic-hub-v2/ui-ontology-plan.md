@@ -1,13 +1,13 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: P0–P3 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`); P4–P6 planned. Nothing here is pushed or deployed.
+Recorded 4 November 2026. Status: P0–P4 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`, `110e188`); P5–P6 planned. Nothing here is pushed or deployed.
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`3609359` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`110e188` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -110,6 +110,9 @@ Follow-ups: `28f22f7` gives the Overview bar the shared 50 px height, so workflo
 5. Lay the graph out left to right, which also fixes the unused canvas space.
 
 New canvas work: group frames and a left-to-right layout option. Data comes from existing endpoints.
+
+Status: Done in `110e188`. The Ontology tab reads `/demo/api/context/artifacts` (draft or a reviewed version) and mounts `HeliosCanvas` with `{readOnly:true, layout:'grouped'}`; Studio, version and chat canvases render byte-identical SVG. Finance `v1` shows "6 classes · 26 attributes · 1 metric · 5 relationships · 0 glossary terms". Metric-to-field links come from the metric expression. Studio offers "Open in Ontology" for datasets, fields and metrics. The route and OpenAPI comparison is identical.
+Deferred: the read-only version page (`/v2/editor?...&version=v1`) has no workflow tabs, so it has no Ontology tab; the tab's version selector covers reviewed versions instead. Unmapped terms are listed only, not drawn. At Fit scale 0.85 the finance graph needs panning.
 Check: rerun the route and OpenAPI comparison; it must stay identical.
 
 ### P5 — Glossary authoring in the draft
