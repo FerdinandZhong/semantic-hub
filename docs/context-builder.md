@@ -255,6 +255,10 @@ Declared join edges preserve source fields, target fields, cardinality, and mean
 ## Canvas, decisions, and versions
 
 Studio provides an object tree, canvas, and inspector.
+The inspector's Glossary tab adds, edits, and removes glossary terms with a name, definition, synonyms, and mapped source columns.
+Saving rejects a term with no name, no definition, a duplicate name, an unknown column, or over-long text. Earlier AI-proposed terms still load and save.
+The separate Ontology tab, between Studio and Validation & review, shows the draft or a reviewed version read-only:
+one framed box per dataset with its fields, metrics, relationships, and any unmapped terms. In Studio, **Open in Ontology** jumps to the selected dataset or metric.
 The canvas toolbar shows object search on its own row, then a Lineage/Edit/Changes control with Connect fields, Fit, and View options.
 Nodes are cards with a kind icon and tags such as dataset and column count. Edge labels are pills that never hide each other.
 A keyed legend separates declared relationships, SQL-derived dependencies, and document evidence. Change keys appear only in Changes mode.
@@ -269,6 +273,7 @@ Node positions remain temporary layout preferences. The canvas no longer exposes
 Layout changes do not change the semantic draft.
 
 Stable object identifiers distinguish renames from deletion and addition.
+Each glossary term is its own review item, so a term change must be approved before a version can be published.
 Change review displays added, modified, removed, and affected objects against a visible baseline.
 Reviewers can approve selected eligible items or request changes.
 The review table supports numbered pages, 10/25/50 rows per page, and selection across pages.

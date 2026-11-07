@@ -28,7 +28,13 @@ Chat answers show a semantic canvas, deterministic answer checks, and the agent 
 The agent rejects repeated successful tool calls and records its stop reason.
 Supporting materials and validation results are restructured.
 The route list and OpenAPI documents are unchanged; JSON responses gain additive fields.
-Later local commits, `6960649` to `eb62311`, restyle the materials stages, the semantic canvas, and the Studio and Validation pages. They are not pushed or deployed.
+Later local commits, `6960649` to `eb62311`, restyle the materials stages, the semantic canvas, and the Studio and Validation pages.
+
+**UI polish and ontology phases P0–P5, local commits — 4–7 November 2026:** Commits `36ed508` to `ddd53a4` are not pushed or deployed.
+They fix glossary term keys, align every workspace page to one frame, put chat answer details behind tabs,
+add a read-only Ontology tab, and add glossary authoring with per-term review.
+The route list and OpenAPI documents are unchanged. P6, typed term relations, is not started.
+See the [plan](semantic-hub-v2/ui-ontology-plan.md) and the [project status](semantic-hub-v2/project-status.md).
 
 **Vision, OCR, and embeddings decision record — 19 October 2026:** Documented the distinction between visual understanding and vector generation.
 GPT-4o can read images through the API. A separate OCR service is optional.

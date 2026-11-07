@@ -1,6 +1,6 @@
 # Semantic Hub project status
 
-Recorded 3 November 2026. The independent Hub AMP is running in CAI.
+Recorded 3 November 2026; local development status updated 7 November 2026. The independent Hub AMP is running in CAI.
 The updated chat and validation UI are deployed. Full acceptance remains incomplete.
 This record describes completed checks; it does not monitor the application continuously.
 
@@ -38,19 +38,24 @@ Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 
 ### Local commits after the deployed commit
 
-Commits `6960649` to `eb62311` are local. They are not pushed or deployed.
+Commits `6960649` to `ddd53a4` are local. They are not pushed or deployed. Checked on 7 November 2026: the remote branch has no newer commits.
 
-| Commit | Change |
+| Commits | Change |
 | --- | --- |
-| `6960649` | Supporting-material stages use one spacing rhythm and a single divider |
-| `f812f98` | The semantic canvas uses node cards, pill-labelled edges, a one-row toolbar, a keyed legend, and a wider metric column |
-| `8ecf3d2` | Studio and Validation use a compact header and draft bar, a truncating object tree, and uniform control heights |
-| `a01c33a` | Canvas edge labels step aside so none hide each other |
-| `6043abf` | Docs: UI polish and ontology plan |
-| `36ed508` | P0: name-keyed glossary terms become concept link targets |
-| `eb62311` | Canvas Fit stays at 0.85 or larger, 25 px page titles, Studio and Validation summary strip, normal-weight inspector inputs with a 12 px rhythm |
+| `6960649`, `f812f98`, `8ecf3d2`, `a01c33a` | Materials spacing; canvas node cards, pill edge labels and keyed legend; compact Studio and Validation pages |
+| `6043abf` | Docs: the [UI polish and ontology plan](ui-ontology-plan.md) |
+| `36ed508` | P0: name-keyed glossary terms become concept link targets in three readers |
+| `eb62311`, `c5731f5` | P1: canvas Fit stays at 0.85 or larger, 25 px titles, Studio summary counts, normal-weight inspector values |
+| `5cfbcaa`, `90127eb`, `3eef7b4`, `17620ca`, `28f22f7` | P2: one page frame and breadcrumb on all workspace pages; tabs at the same position; one header and sidebar position |
+| `3609359`, `d704414`, `6e905b3`, `0b68dfc` | P3: chat answer details behind Table, Semantic canvas, SQL & checks and Provenance tabs; Overview breadcrumb names the workspace |
+| `110e188`, `ce7428e` | P4: read-only Ontology tab built from the existing ontology graph |
+| `958c089`, `ddd53a4` | P5: glossary authoring in Studio, save-time term checks, and per-term review items |
 
-These commits change static assets only: CSS, `demo-canvas.js`, `demo-context.js`, and `workspace.js`. They add no routes, fields, or Python code.
+These commits change CSS, JavaScript, templates, browser checks, and Python.
+The Python changes are the template patching in `semantic_hub/editor.py` and `semantic_hub/support_pages.py`,
+the glossary key fix, and the P5 term checks and review items in `shared/helios_core/demo/context.py`,
+`shared/helios_core/demo/proposals.py`, and `apps/helios/console/demo.py`.
+No route was added and no consumer payload changed shape.
 
 ## Implemented architecture
 
@@ -105,6 +110,13 @@ Each answer reports **Answer checks · n/n passed**:
 
 These checks verify structure and evidence. They do not measure business correctness, and there is no LLM judge.
 
+Local commits after `cc4890e` add the following. They are not deployed.
+
+- One page frame on every workspace page: breadcrumb "Workspace / <workspace> / <page>", workspace bar, then workflow tabs at the same position.
+- Chat answers keep the headline visible and move Table, Semantic canvas, "SQL & checks · n/n passed", and Provenance into tabs.
+- An Ontology tab, between Studio and Validation & review, shows classes, fields, metrics and relationships read-only, grouped by dataset.
+- Studio has a Glossary tab. Each term edit is a separate review item and must be approved before publication.
+
 ## Verification evidence
 
 ### Local checks recorded for these changes
@@ -117,7 +129,11 @@ These checks verify structure and evidence. They do not measure business correct
 | Browser experience checks | Numeric query, validation, progress, and document presentation passed | Document presentation used a fixture |
 | Local commits `9c1acb1`–`4929695` | 181 tests passed across the providers, AMP, retrieval, chat, document, playground, agent, and Studio suites | Chat and document inference were mocked; the harness test used a fake SDK through the real tool bridge |
 | Local browser, local commits | Saved-metric chat showed 6/6 checks and a 2-node canvas; the restored history re-mounted the canvas; no page errors | Materials analysis used mocked results; no configured LLM |
-| UI-only local commits `6960649`–P1 UI fixes | 75 tests passed (providers, Studio context, chat), run before the last canvas label and spacing tweaks; browser captures of Studio, Validation, Materials and the chat canvas showed no page errors | The later tweaks touched static JS and CSS only; no CAI check has run |
+| P0–P1, `36ed508`–`c5731f5` | 160 tests passed for P0, 75 for P1; P1 browser measurements showed canvas Fit 0.85, 25 px titles, no overflow and no page errors | Local only; inference mocked |
+| P2–P3, `5cfbcaa`–`0b68dfc` | 75 tests passed; tabs at 110 px on every workspace page at 1440 and 980 px; chat history and chat experience browser scripts passed | At 390 px the Overview bar wraps more than the shared bar |
+| P4, `110e188` | 75 tests passed; route list and OpenAPI identical; existing Studio, version and chat canvases render identical SVG | Draft view not tried on a fresh unvalidated draft |
+| P5, `958c089` | 117 tests passed, plus 92 in the Playground, agent, document, consumer, Hub and AMP suites; add, edit, delete and rejection flow passed in the browser | Version page checked with a stubbed response; no CAI check |
+| Browser smoke after P2–P5 | Passes chat and all page-route checks, then stops at provider registration, which needs external endpoints | Same stopping point as before this work |
 | Exposed API, local commits | Route list and both OpenAPI documents are identical to `998904c` | JSON bodies gain the additive fields listed below |
 
 Progress screenshots used delayed delivery of real backend events to capture transient states.
@@ -206,13 +222,26 @@ Existing JSON responses gain only additive fields. No field is removed or rename
 | Persistence | Check uploads, saved model connections, published versions, and provider links across restart |
 | Hosted MCP / Agent Studio | Repeat the finance workflow against this exact deployment and pinned release |
 | Hosted UI interaction acceptance | Complete manual browser review of materials and Studio validation; asset checks and saved-metric chat passed |
-| Local UI commits | Push and deploy `6960649`–P1 UI fixes; repeat the Studio, Validation, Materials and chat-canvas checks on CAI |
-| UI polish and ontology | Follow the [UI polish and ontology plan](ui-ontology-plan.md), phases P0–P6 |
+| Local UI and ontology commits | Push and deploy `6960649`–`ddd53a4`; repeat Studio, Ontology, Glossary, Validation, Materials and chat-tab checks on CAI |
+| Drafts that already hold terms | Re-approve once after deployment; terms moved from the context review item to per-term items |
+| UI polish and ontology | P0–P5 done locally; P6 typed term relations needs approval and a consumer and MCP compatibility check |
 | Branch integration | Review and merge the fixes into `main`; this record does not claim that merge occurred |
 | Later architecture work | External release import, delegated execution, and optional built-in package extraction |
 
 The sibling Helios checkout was synchronized with upstream commit `72818c4` and merged locally as `3a46e18`.
-No push of that sibling checkout was recorded. The Hub deployment does not depend on that checkout.
+The sibling AMP branch was pushed on 5 November 2026 at `0127f3b`. The Hub deployment does not depend on that checkout.
+
+### Standalone Helios AMP preparation: 5 November 2026
+
+The sibling checkout now has an AMP package on published branch `feat/standalone-amp`, commit `0127f3b`.
+Upstream main was fetched again on 5 November at `72818c4`; the AMP branch contains that revision.
+One authenticated Helios Application serves its native UI and API; Hub can use that origin for both provider settings.
+The package includes isolated Python setup, a checksum-pinned Node build, native admin setup, and a kernel-preserving launcher.
+Python 3.12 setup, production UI build, native imports, temporary metadata migration, and 13 packaging tests passed locally.
+Native browser, fixture identity/grant, and graceful shutdown checks passed.
+The upstream UI build reported 14 npm advisories, including one critical advisory.
+The package is pushed but not deployed. Live CAI launch, SSO, persistence, native query, and Hub registration checks remain pending.
+See the [standalone integration guide](standalone-helios.md).
 
 Use the [live-test runbook](live-test-runbook.md) for acceptance and the [operator guide](amp-operator-guide.md) for startup and retry procedures.
 Use the [local preview guide](local-preview.md) for development checks.

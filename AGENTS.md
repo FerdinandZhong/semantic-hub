@@ -2,7 +2,7 @@
 
 ## Current status
 
-Recorded 3 November 2026. Read the [project status](docs/semantic-hub-v2/project-status.md) before changing deployment or reporting readiness.
+Recorded 3 November 2026; local development status updated 7 November 2026. Read the [project status](docs/semantic-hub-v2/project-status.md) before changing deployment or reporting readiness.
 
 - Active branch: `fix/amp-provider-bootstrap`.
 - Deployed application commit: `cc4890e9022f49ef68cd8523424c011537696460`.
@@ -13,10 +13,19 @@ Recorded 3 November 2026. Read the [project status](docs/semantic-hub-v2/project
 - UI commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
   They add the answer canvas, per-answer checks, harness stop reasons, the materials cleanup, and the validation summary.
 - The 23:28 Singapore restart passed seven UI asset comparisons and a live finance query with a canvas and 6/6 answer checks.
-- Later commits, `6960649` to `eb62311`, are local only. They are not pushed or deployed.
-  They give the materials stages consistent spacing, restyle the semantic canvas, and compact the Studio and Validation pages.
+- Later commits, `6960649` to `ddd53a4` (21 commits), are local only. They are not pushed or deployed.
+  They finish phases P0–P5 of the [UI polish and ontology plan](docs/semantic-hub-v2/ui-ontology-plan.md):
+  a shared page frame, chat answer tabs, a read-only Ontology tab, and glossary authoring with per-term review.
+  P6, typed term relations, is not started and needs separate approval.
 
 This is a dated handoff, not a continuous health check. Verify current Git and application state before deploying.
+
+Standalone Helios update, 5 November 2026: `../helios` now contains the local `feat/standalone-amp` package.
+One authenticated Application serves its native UI and API. Use that origin for both Hub provider settings.
+Python 3.12 setup, native UI build, 13 packaging tests, browser checks, and local graceful shutdown passed.
+The Helios package is pushed to `origin/feat/standalone-amp` at `0127f3b`; live CAI deployment and acceptance remain pending.
+Upstream main was fetched again on 5 November at `72818c4`; the AMP branch contains that revision.
+See the [standalone Helios guide](docs/semantic-hub-v2/standalone-helios.md) before using the older two-Application instructions.
 
 ## Repository and architecture
 
@@ -51,6 +60,9 @@ Legacy bundled scripts and the ignored `external/helios` checkout are not the cu
 | Agent harness, tools, and budget | `shared/helios_core/demo/agent/` |
 | Document answer verification | `shared/helios_core/demo/document_answers.py` |
 | Supporting materials UI | `apps/helios/console/static/demo-materials.js` |
+| Studio, Ontology tab, and glossary editor | `apps/helios/console/static/demo-context.js`, `apps/helios/console/static/demo-canvas.js` |
+| Shared page frame patching | `semantic_hub/editor.py`, `semantic_hub/support_pages.py` |
+| Glossary term checks and per-term review items | `shared/helios_core/demo/context.py` (`check_glossary`, `objects`) |
 | Provider and deployment tests | `tests/providers/`, `tests/amp/` |
 | Chat regression tests | `apps/helios/tests/test_chat.py` |
 

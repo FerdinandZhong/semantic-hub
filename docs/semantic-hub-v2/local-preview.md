@@ -83,8 +83,8 @@ The chat streams actual retrieval, scope-check, execution, and answer actions.
 Numeric answers come from executed source queries; document answers retain published citations.
 The retrieval panel shows raw lexical relevance or matched keyword counts, not calibrated confidence percentages.
 An explicit saved metric selection has no retrieval confidence score.
-Each answer lists its deterministic **Answer checks** and the agent tool trace.
-Open **Semantic canvas** to inspect the tables, metric, and passages the answer used.
+Each answer shows its headline, then tabs: **Table**, **Semantic canvas**, **SQL & checks · n/n passed**, and **Provenance**.
+The progress panel shows the agent tool trace. Open **Semantic canvas** to inspect the tables, metric, and passages the answer used.
 The **Ask & run** action authorizes one bounded query from the submitted question.
 The server still checks scope, source identity, and the selected published version before execution.
 Unsupported questions return clarification without executing an answer query.

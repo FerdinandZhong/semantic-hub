@@ -7,7 +7,7 @@ Read the [project status](project-status.md) for what is deployed.
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`958c089` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`ddd53a4` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 

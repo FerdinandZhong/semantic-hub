@@ -82,7 +82,7 @@ Results record context, snapshot, SQL, and result hashes.
 The graph shows definition dependencies and the relationships used by the query.
 It does not claim to visualize returned entity instances or observed execution lineage.
 
-**Talk to your data** answers use the same checked plan and add three disclosures:
+**Talk to your data** answers use the same checked plan. The headline answer stays visible; Table, Semantic canvas, SQL & checks, and Provenance sit in tabs below it. They add:
 
 - **Answer checks · n/n passed**: deterministic retrieval and generation checks, such as metric rank, scope checks, structural SQL checks, and citation and number grounding. These are counts of real checks, not a confidence score.
 - **Semantic canvas**: the tables, metric, and document passages that the answer used.

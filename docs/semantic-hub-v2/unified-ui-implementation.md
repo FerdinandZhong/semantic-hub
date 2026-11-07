@@ -27,7 +27,11 @@ The approved review artifact remains in [ui-draft](ui-draft/README.md).
 - Chat answers show answer checks, a semantic canvas of the objects used, and the agent tool trace.
 - Studio and Validation use a compact header and draft bar. The canvas uses node cards, pill edge labels, and a keyed legend.
 - Validation opens with an "n/n checks passed" summary. Supporting-material analysis opens with counts and grouped claims.
-- Planned follow-up work is in the [UI polish and ontology plan](ui-ontology-plan.md).
+- Every workspace page uses one frame: breadcrumb "Workspace / <workspace> / <page>", workspace bar, then workflow tabs at the same position.
+- Workflow tabs are Overview, Source data, Studio, Ontology, Validation & review, and Versions & releases.
+- Chat answers keep the headline visible and put Table, Semantic canvas, SQL & checks, and Provenance in tabs.
+- Studio has a Glossary tab, and the Ontology tab shows the ontology graph read-only.
+- Progress and remaining phases are in the [UI polish and ontology plan](ui-ontology-plan.md).
 
 The editor is not an iframe or a separately styled application.
 It uses ordinary internal page navigation and the existing editor scripts.
