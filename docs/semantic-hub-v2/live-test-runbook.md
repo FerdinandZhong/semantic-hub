@@ -29,6 +29,24 @@ Record the source commit, runtime identifier, task logs, application URL, and re
 Do not record credentials in test evidence.
 If project copying fails again, collect the CAI server clone/copy logs; no application code has run at that point.
 
+## UI checks after deploying commits past `cc4890e`
+
+Run these after deploying the UI polish and ontology commits. Record each result in the [project status](project-status.md).
+
+1. Open Overview, Source data, Studio, Ontology, Validation & review, and Versions & releases for finance.
+   Confirm the breadcrumb reads "Workspace / Finance sample / <page>" and the tabs do not move between pages.
+2. Ask the saved finance metric in Talk to your data. Confirm the headline shows **SGD 686,572.96** once.
+   Open Table, Semantic canvas, and "SQL & checks · 6/6 passed", then Provenance.
+3. Start a new conversation, reopen the first one, and confirm its tabs and canvas still work.
+4. Open Ontology. Confirm the counts line, one framed box per dataset, and that selecting an object fills the inspector.
+5. In Studio, add a glossary term mapped to `payments.amount_sgd` and save.
+   Confirm validation becomes stale, the term appears in the review table, and Ontology counts one glossary term.
+6. Delete the test term and save, so the published finance release stays unchanged.
+7. Open Supporting materials and confirm the analysis counts, grouped claims, and **Edit values** controls.
+8. Repeat steps 1, 2, and 4 at a phone width and confirm there is no horizontal scrolling.
+
+Drafts that already hold glossary terms need their review decisions approved again once, because terms now have their own review items.
+
 ## Optional provider checks
 
 Prepare the independent project using [the standalone Helios guide](standalone-helios.md).

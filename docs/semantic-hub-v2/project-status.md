@@ -224,7 +224,7 @@ Existing JSON responses gain only additive fields. No field is removed or rename
 | Hosted UI interaction acceptance | Complete manual browser review of materials and Studio validation; asset checks and saved-metric chat passed |
 | Local UI and ontology commits | Push and deploy `6960649`–`ddd53a4`; repeat Studio, Ontology, Glossary, Validation, Materials and chat-tab checks on CAI |
 | Drafts that already hold terms | Re-approve once after deployment; terms moved from the context review item to per-term items |
-| UI polish and ontology | P0–P5 done locally; P6 typed term relations needs approval and a consumer and MCP compatibility check |
+| UI polish and ontology | P0–P5 done locally. P6 approved 7 November in the low-risk form and in progress; consumers will see an additive `definition.term_relations`, with the ontology graph unchanged |
 | Branch integration | Review and merge the fixes into `main`; this record does not claim that merge occurred |
 | Later architecture work | External release import, delegated execution, and optional built-in package extraction |
 

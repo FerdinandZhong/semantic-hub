@@ -33,7 +33,7 @@ Later local commits, `6960649` to `eb62311`, restyle the materials stages, the s
 **UI polish and ontology phases P0–P5, local commits — 4–7 November 2026:** Commits `36ed508` to `ddd53a4` are not pushed or deployed.
 They fix glossary term keys, align every workspace page to one frame, put chat answer details behind tabs,
 add a read-only Ontology tab, and add glossary authoring with per-term review.
-The route list and OpenAPI documents are unchanged. P6, typed term relations, is not started.
+The route list and OpenAPI documents are unchanged. P6, typed term relations, was approved on 7 November 2026 in a low-risk form and is in progress: relations are stored in the definition only, and the ontology graph, edge whitelist, Helios loader and artifact hashes stay unchanged.
 See the [plan](semantic-hub-v2/ui-ontology-plan.md) and the [project status](semantic-hub-v2/project-status.md).
 
 **Vision, OCR, and embeddings decision record — 19 October 2026:** Documented the distinction between visual understanding and vector generation.

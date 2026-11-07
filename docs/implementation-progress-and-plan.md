@@ -51,19 +51,21 @@ Structured sources + supporting documents
 | --- | --- | --- |
 | Hub and navigation | Source-scoped model catalog, details, versions, Studio, and Playground entry points | [Studio guide](context-builder.md) |
 | Interface | Blue theme, aligned controls, simplified canvas controls, review pagination, and clearer document actions | Historical milestone log and linked UI verification records |
-| Studio canvas | Dataset, field, metric, relationship, and document evidence views | Read-only published-version inspection preserves model immutability |
+| Studio canvas | Dataset, field, metric, relationship, and document evidence views; node cards, pill edge labels, and a keyed legend | Read-only published-version inspection preserves model immutability |
+| Ontology tab | Read-only view of classes, fields, metrics, relationships, and glossary terms, grouped by dataset | Local only; built from the existing ontology graph, see the [UI polish and ontology plan](semantic-hub-v2/ui-ontology-plan.md) |
+| Glossary authoring | Studio Glossary tab with save-time term checks and one review item per term | Local only; term edits need approval before publication |
 | Review and versions | Draft saving, validation, object review, reviewed versions, publication, comparisons, and query activation | Review and publication are explicit user actions |
 | Starter sources | Finance, manufacturing, pharma batch quality, and power fixtures | Synthetic data remains distinct from external source evidence |
 | Pharma intelligence | Separate public-source pharmaceutical intelligence model and demo material | [Model guide](pharma-intelligence.md), [two demo stories](pharma-intelligence-demo-story.md) |
 | Supporting materials | Shared library, revisions, selected-page visual analysis, claims, matching, review, and draft attachment | [Materials guide](supporting-materials.md) |
 | Document-derived models | Reviewed visual rows can create a new source and draft model with provenance | [Visual facts](visual-document-facts.md); creation does not publish |
 | Document workflow UX | Dropzone upload; Extract / Analyze / Use-in-a-model steps; create a new model, attach evidence, or both | Scanned pages are transcribed by the draft VLM on upload; mixed PDFs keep text pages |
-| Playground chat | UOB-style transcript: user bubbles, AI answer cards, bottom composer, saved-metric chips | Earlier turns are read-only; each question is still an independent request |
+| Playground chat | UOB-style transcript: user bubbles, AI answer cards, bottom composer, saved-metric chips; answer tabs for Table, Semantic canvas, SQL & checks, and Provenance | Earlier turns are read-only; each question is still an independent request. Answer checks are deterministic counts, not confidence |
 | Embeddings | Optional text vectors and Lance storage with model/endpoint fingerprints and cache reuse | Text embeddings; no direct image/text embedding endpoint integrated |
 | Model credentials | Direct masked API-key entry, environment references, encrypted local storage, and connection testing | [Configuration guide](model-configuration.md); CAI ingress credentials remain separate |
 | Playground | Published-version metric queries, scoped document answers, combined evidence, and explicit query plans | Lightweight model verification; not a general warehouse agent |
 | Query scope | Separate geography and time diagnostics; missing cohorts do not fall back to another period | Narrow live acceptance cases passed; broad natural-language correctness remains unproven |
-| Agent modules | Harness, skills, bounded tools, and release-scoped audit memory | [Agent architecture](playground-agent-architecture.md) |
+| Agent modules | Harness, skills, bounded tools, release-scoped audit memory, a 12-call budget, duplicate-call rejection, and a recorded stop reason | [Agent architecture](playground-agent-architecture.md) |
 | External consumers | Read-only published inventory, versions, definitions, ontology, lineage, search, and frozen evidence | [Consumer API](semantic-hub-consumer-api.md) |
 | Bounded execution | Pinned version, expiring context bundle, typed compilation, and bounded local sample execution | External agents retain their own warehouse execution tools |
 | MCP | Twelve tools; local stdio/HTTP verification; GitHub uvx installation configuration | [Adapter](../apps/semantic-hub-mcp/README.md) |

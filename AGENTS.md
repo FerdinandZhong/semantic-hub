@@ -16,7 +16,7 @@ Recorded 3 November 2026; local development status updated 7 November 2026. Read
 - Later commits, `6960649` to `ddd53a4` (21 commits), are local only. They are not pushed or deployed.
   They finish phases P0–P5 of the [UI polish and ontology plan](docs/semantic-hub-v2/ui-ontology-plan.md):
   a shared page frame, chat answer tabs, a read-only Ontology tab, and glossary authoring with per-term review.
-  P6, typed term relations, is not started and needs separate approval.
+  P6, typed term relations, was approved on 7 November 2026 in a low-risk form and is in progress: relations are stored in the definition only, and the ontology graph, edge whitelist, Helios loader and artifact hashes stay unchanged.
 
 This is a dated handoff, not a continuous health check. Verify current Git and application state before deploying.
 
