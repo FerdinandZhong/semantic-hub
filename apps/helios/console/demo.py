@@ -520,6 +520,7 @@ def context_save(payload: SaveContext, request: Request):
         with workspace.connection() as connection:
             stored = workspace._draft(connection, payload.revision)["definition"].get("glossary_terms", [])
         workspace.check_glossary(payload.definition.glossary_terms, stored)
+        workspace.check_relations(payload.definition.term_relations, payload.definition.glossary_terms, stored)
         return workspace.save(payload.revision, payload.definition)
     return context_action(request, save, payload)
 

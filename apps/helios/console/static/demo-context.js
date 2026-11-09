@@ -343,16 +343,45 @@ function renderJoins() {
 let selectedTerm=0;
 const termName=t=>t.name||t.term||"";
 const sourceFieldIds=()=>(sourceGraph?.nodes||[]).flatMap(n=>(n.columns||[]).map(c=>c.qualified||`${n.name}.${c.name}`)).sort();
+const RELATION_TYPES=["broader","narrower","related","part_of","synonym"],relationText=r=>`${r.from} ${r.relation.replaceAll("_"," ")} ${r.to}`;
+const sameName=(a,b)=>String(a).trim().toLowerCase()===String(b).trim().toLowerCase();
+const relationsOf=t=>(definition.term_relations||[]).filter(r=>sameName(r.from,termName(t))||sameName(r.to,termName(t))).length;
+const termLabel=t=>(termName(t)||"(unnamed)")+(relationsOf(t)?` · ${relationsOf(t)} relation${relationsOf(t)===1?"":"s"}`:"");
+function renderRelations(editor,t){
+  const all=definition.term_relations||(definition.term_relations=[]),name=termName(t),section=node("div",undefined,"term-relations");
+  section.append(node("h3","Relations"));
+  const mine=all.filter(r=>sameName(r.from,name)||sameName(r.to,name));
+  if(!mine.length)section.append(node("p","No relations. Relations stay in the saved definition and need review like other edits.","help"));
+  for(const r of mine){
+    const row=node("p",undefined,"term-relation-row");
+    row.append(node("span",relationText(r)),button("Remove",()=>{all.splice(all.indexOf(r),1);if(!all.length)delete definition.term_relations;renderGlossary();markDirty();},"secondary"));
+    section.append(row);
+  }
+  const others=definition.glossary_terms.filter(o=>o!==t&&termName(o).trim());
+  if(name.trim()&&others.length){
+    const type=node("select"),target=node("select");type.id="relation-type";target.id="relation-target";type.setAttribute("aria-label","Relation type");target.setAttribute("aria-label","Related term");
+    for(const r of RELATION_TYPES){const o=node("option",r.replaceAll("_"," "));o.value=r;type.append(o);}
+    for(const o of others){const op=node("option",termName(o));op.value=termName(o);target.append(op);}
+    const add=button("Add relation",()=>{
+      const r={from:name,relation:type.value,to:target.value};
+      if(all.some(x=>sameName(x.from,r.from)&&x.relation===r.relation&&sameName(x.to,r.to)))return;
+      all.push(r);renderGlossary();markDirty();
+    },"secondary");
+    add.id="relation-add";add.disabled=all.length>=200;
+    const form=node("div",undefined,"term-relation-form");form.append(node("span",name),type,target,add);section.append(form);
+  }
+  editor.append(section);
+}
 function renderGlossary(){
   const terms=definition.glossary_terms||(definition.glossary_terms=[]),list=$("term-list"),editor=$("term-editor");
   selectedTerm=Math.max(0,Math.min(selectedTerm,terms.length-1));
   list.replaceChildren();editor.replaceChildren();
-  terms.forEach((t,i)=>{const b=button(termName(t)||"(unnamed)",()=>{selectedTerm=i;renderGlossary();},"secondary");b.setAttribute("aria-pressed",String(i===selectedTerm));list.append(b);});
+  terms.forEach((t,i)=>{const b=button(termLabel(t),()=>{selectedTerm=i;renderGlossary();},"secondary");b.setAttribute("aria-pressed",String(i===selectedTerm));list.append(b);});
   $("add-term").disabled=terms.length>=100;
   if(!terms.length){editor.append(node("p","No glossary terms. Add one to name a business concept and map it to fields.","muted"));return;}
   const t=terms[selectedTerm],field=(label,control,onInput)=>{const l=node("label",label);control.addEventListener("input",()=>{onInput(control);markDirty();});l.append(control);editor.append(l);return control;};
   const name=node("input");name.value=termName(t);name.maxLength=160;name.id="term-name";
-  field("Term name",name,c=>{t.name=c.value;delete t.term;const b=list.children[selectedTerm];if(b)b.textContent=c.value||"(unnamed)";});
+  field("Term name",name,c=>{t.name=c.value;delete t.term;const b=list.children[selectedTerm];if(b)b.textContent=termLabel(t);});
   const def=node("textarea");def.rows=3;def.maxLength=1000;def.value=t.definition||"";def.id="term-definition";
   field("Definition",def,c=>{t.definition=c.value;});
   const syn=node("textarea");syn.rows=2;syn.placeholder="One synonym per line";syn.value=(t.synonyms||[]).join("\n");syn.id="term-synonyms";
@@ -362,6 +391,7 @@ function renderGlossary(){
   for(const id of sourceFieldIds()){const o=node("option",id);o.value=id;o.selected=chosen.has(id);cols.append(o);}
   field("Mapped columns",cols,c=>{t.columns=[...c.selectedOptions].map(o=>"source."+o.value);});
   editor.append(node("p","Hold Ctrl or Cmd to select several fields.","help"),button("Remove term",()=>{terms.splice(selectedTerm,1);renderGlossary();markDirty();},"secondary danger"));
+  renderRelations(editor,t);
 }
 $("add-term").addEventListener("click",()=>{
   (definition.glossary_terms||(definition.glossary_terms=[])).push({name:"",definition:"",columns:[]});
@@ -541,6 +571,12 @@ async function loadVersionView(){
   for(const t of terms){
     const detail=node("details");detail.append(node("summary",t.name||t.term||"(unnamed)"));
     versionProperties(detail,[["Definition",t.definition],["Synonyms",(t.synonyms||[]).join(", ")],["Mapped columns",(t.columns||[]).map(c=>String(c).replace(/^source\./,"")).join(", ")||"None"]]);termSection.append(detail);
+  }
+  if((def.term_relations||[]).length){
+    termSection.append(node("h4",`Term relations (${def.term_relations.length})`));
+    const list=node("ul",undefined,"version-term-relations");
+    for(const r of def.term_relations)list.append(node("li",relationText(r)+(r.note?` — ${r.note}`:"")));
+    termSection.append(list);
   }
   const metadata=versionSection("Business metadata");
   versionProperties(metadata,[["Dataset meanings",def.dataset_meanings],["Field meanings",def.field_meanings],["Field roles",def.field_roles]]);
@@ -1350,7 +1386,7 @@ function ontologyTarget(type,id,object){
   if(type==="metric")return `metric:${object?.name||String(id).replace(/^metric:/,"")}`;
   return "";
 }
-function ontologyModel(bundle){
+function ontologyModel(bundle,relations=[]){
   const graph=bundle.ontology?.graph||{nodes:[],edges:[]},of=label=>graph.nodes.filter(n=>n.label===label);
   const nodes=new Map(),edges=[],usage=new Map(),termsFor=new Map(),unmapped=[];
   const metricKeys=of("OssieElement").filter(n=>n.properties.kind==="metric").map(n=>n.key);
@@ -1389,7 +1425,17 @@ function ontologyModel(bundle){
       usage.set(n.id,[...(usage.get(n.id)||[]),key]);
     }
   }
-  const counts={classes:of("Class").length,attributes:of("Attribute").length,metrics:metricKeys.length,relationships:graph.edges.filter(e=>e.type==="RANGE").length,terms:glossary.length};
+  // Typed term relations come from the shown definition, not from the artifact graph.
+  const byName=new Map(glossary.map(t=>[t.label.trim().toLowerCase(),t])),lower=x=>String(x).trim().toLowerCase();
+  let termRelations=0;
+  relations.forEach((r,index)=>{
+    const a=byName.get(lower(r.from)),b=byName.get(lower(r.to));
+    if(!a||!b)return;
+    for(const t of [a,b])if(!nodes.has(t.id)){nodes.set(t.id,t);const at=unmapped.indexOf(t);if(at>=0)unmapped.splice(at,1);}
+    edges.push({id:`term-relation:${index}`,source:a.id,target:b.id,kind:"term_relation",label:r.relation.replaceAll("_"," "),relation:r,props:r});
+    termRelations++;
+  });
+  const counts={classes:of("Class").length,termRelations,attributes:of("Attribute").length,metrics:metricKeys.length,relationships:graph.edges.filter(e=>e.type==="RANGE").length,terms:glossary.length};
   return {nodes:[...nodes.values()],edges,byId:new Map([...nodes,...termById]),usage,termsFor,unmapped,counts,documents:bundle.documents||[],version:bundle.version};
 }
 function ontologyDocuments(object){
@@ -1401,7 +1447,10 @@ function showOntologyObject(object){
   if(!object){box.append(node("p","Select a class, field, metric or relationship to inspect it.","help"));return;}
   const model=ontologyData,rows=[],fieldsOf=id=>model.nodes.filter(n=>n.kind==="attribute"&&n.dataset_id===id).map(n=>n.id);
   const humanize=value=>value?String(value).replaceAll("_"," "):"";
-  if(object.source!==undefined){
+  if(object.kind==="term_relation"){
+    box.append(node("h3",relationText(object.relation)));
+    rows.push(["Kind","Term relation"],["Type",object.relation.relation.replaceAll("_"," ")],["From term",object.relation.from],["To term",object.relation.to],["Note",object.relation.note]);
+  }else if(object.source!==undefined){
     const p=object.props||{};
     box.append(node("h3",p.join||object.id));
     rows.push(["Kind","Relationship (RANGE)"],["From field",object.source],["To field",p.target_field||object.target],["Cardinality",humanize(p.cardinality)],["Meaning",p.meaning],["Evidence",humanize(p.provenance)||"No evidence recorded"],["Status",humanize(p.status)||"Not recorded"]);
@@ -1412,7 +1461,7 @@ function showOntologyObject(object){
     const used=object.kind==="attribute"?model.usage.get(object.id)||[]:object.kind==="dataset"?[...new Set(fields.flatMap(f=>model.usage.get(f)||[]))]:[];
     const mapped=object.kind==="dataset"?fields:object.kind==="attribute"?[object.id,...(model.termsFor.get(object.id)||[]).map(t=>`term ${t.label}`)]:object.kind==="metric"?model.edges.filter(e=>e.target===object.id&&e.kind==="sql_dependency").map(e=>e.source):object.kind==="term"?object.mappedColumns:[];
     const evidence=[humanize(object.props?.evidence),...ontologyDocuments(object)].filter(Boolean);
-    rows.push(["Kind",kinds[object.kind]],["Definition",object.meaning||object.description||"No definition recorded"],["Expression",object.expression],["Data type",object.data_type],["Mapped columns",mapped.length?mapped.join(", "):"None"],["Used by metrics",object.kind==="metric"?"":used.length?used.map(k=>k.replace(/^metric:/,"")).join(", "):"None"],["Evidence",evidence.length?evidence.join(", "):"No evidence recorded"],["Status",humanize(object.status)||"Not recorded"]);
+    rows.push(["Kind",kinds[object.kind]],["Definition",object.meaning||object.description||"No definition recorded"],["Expression",object.expression],["Data type",object.data_type],["Mapped columns",mapped.length?mapped.join(", "):"None"],["Term relations",object.kind==="term"?(ontologyData.edges.filter(e=>e.kind==="term_relation"&&(e.source===object.id||e.target===object.id)).map(e=>relationText(e.relation)).join("; ")||"None"):""],["Used by metrics",object.kind==="metric"?"":used.length?used.map(k=>k.replace(/^metric:/,"")).join(", "):"None"],["Evidence",evidence.length?evidence.join(", "):"No evidence recorded"],["Status",humanize(object.status)||"Not recorded"]);
   }
   versionProperties(box,rows);
 }
@@ -1441,12 +1490,14 @@ async function loadOntology(focusId){
   const version=select.value,empty=message=>{$("ontology-counts").textContent=message;ontologyData=null;$("ontology-detail").replaceChildren();$("ontology-unmapped").replaceChildren();ontologyCanvas?.destroy();ontologyCanvas=null;};
   $("ontology-note").textContent=version==="draft"?`Saved draft revision ${workspace.draft.revision}.${dirty?" Unsaved edits are not shown until you save.":""}`:`Reviewed version ${version}.`;
   try{
-    const model=ontologyModel(await api(`/demo/api/context/artifacts?version=${encodeURIComponent(version)}`));
+    const bundle=await api(`/demo/api/context/artifacts?version=${encodeURIComponent(version)}`);
+    const shown=version==="draft"?workspace.draft.definition:(await api(`/demo/api/context/version?version=${encodeURIComponent(version)}`)).definition;
+    const model=ontologyModel(bundle,shown?.term_relations||[]);
     if(seq!==ontologySeq)return;
     if(!model.counts.classes){empty("This ontology has no classes because the draft has no datasets.");return;}
     ontologyData=model;
     const c=model.counts;
-    $("ontology-counts").textContent=[`${c.classes} ${c.classes===1?"class":"classes"}`,plural(c.attributes,"attribute"),plural(c.metrics,"metric"),plural(c.relationships,"relationship"),plural(c.terms,"glossary term")].join(" · ");
+    $("ontology-counts").textContent=[`${c.classes} ${c.classes===1?"class":"classes"}`,plural(c.attributes,"attribute"),plural(c.metrics,"metric"),plural(c.relationships,"relationship"),plural(c.terms,"glossary term"),...(c.termRelations?[plural(c.termRelations,"term relation")]:[])].join(" · ");
     if(!ontologyCanvas)ontologyCanvas=window.HeliosCanvas.mount($("ontology-canvas"),{readOnly:true,layout:"grouped",onSelect:showOntologyObject});
     ontologyCanvas.update({nodes:model.nodes,edges:model.edges,scope:`ontology:${version}:${model.version}`});
     showOntologyObject(null);renderUnmappedTerms();

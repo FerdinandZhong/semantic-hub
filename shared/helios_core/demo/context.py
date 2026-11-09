@@ -30,6 +30,9 @@ from .local import LocalPackEngine
 from .registry import Contract, DemoError, PackSnapshot, canonical, confined, digest
 
 
+RELATION_TYPES = ("broader", "narrower", "related", "part_of", "synonym")
+
+
 class MetricFilter(Contract):
     field: str = Field(max_length=260)
     op: Literal["=", "!=", "<>", ">", ">=", "<", "<=", "in", "not in", "between", "like", "is null", "is not null"]
@@ -128,6 +131,15 @@ class ContextDefinition(Contract):
     dataset_meanings: dict[str, str] = Field(default_factory=dict, max_length=50)
     field_roles: dict[str, Literal["identifier", "foreign_key", "time", "measure", "dimension", "attribute"]] = Field(default_factory=dict, max_length=100)
     glossary_terms: list[dict] = Field(default_factory=list, max_length=100)
+    term_relations: list[dict] = Field(default_factory=list, max_length=200)
+
+    @model_serializer(mode="wrap")
+    def omit_empty_relations(self, handler):
+        # Definitions without relations must serialize and hash exactly as before this field existed.
+        result = handler(self)
+        if not self.term_relations:
+            result.pop("term_relations", None)
+        return result
 
 
 class ContextBinding(Contract):
@@ -448,6 +460,46 @@ class ContextWorkspace:
             if name.lower() in seen:
                 raise DemoError(f"Glossary term names must be unique: '{name}' appears twice")
             seen.add(name.lower())
+
+    def check_relations(self, relations: list, terms: list, stored_terms: list = ()) -> None:
+        """Input check for typed term relations; every endpoint must be a term of the same draft."""
+        names = {str(t.get("name") or t.get("term") or "").strip().lower() for t in terms}
+        old = {str(t.get("name") or t.get("term") or "").strip().lower() for t in stored_terms}
+        seen, up = set(), {}
+        for rel in relations:
+            if set(rel) - {"from", "relation", "to", "note"} or not all(isinstance(rel.get(k), str) for k in ("from", "relation", "to")):
+                raise DemoError("A term relation needs text values for from, relation and to, and may add a note")
+            label = f"{rel['from']} {rel['relation']} {rel['to']}"
+            if rel["relation"] not in RELATION_TYPES:
+                raise DemoError(f"Relation '{label}' has an unknown type; use one of {', '.join(RELATION_TYPES)}")
+            if not isinstance(rel.get("note", ""), str) or len(rel.get("note", "")) > 500:
+                raise DemoError(f"Relation '{label}' has a note over 500 characters")
+            ends = [rel["from"].strip().lower(), rel["to"].strip().lower()]
+            for end in ends:
+                if end not in names:
+                    hint = "; remove the relation before deleting or renaming the term" if end in old else ""
+                    raise DemoError(f"Relation '{label}' refers to term '{end}', which is not in this draft{hint}")
+            if ends[0] == ends[1]:
+                raise DemoError(f"Relation '{label}' links a term to itself")
+            key = (ends[0], rel["relation"], ends[1])
+            if key in seen:
+                raise DemoError(f"Relation '{label}' appears twice")
+            seen.add(key)
+            if rel["relation"] in ("broader", "narrower"):
+                child, parent = ends if rel["relation"] == "broader" else ends[::-1]
+                up.setdefault(child, set()).add(parent)
+        state = {}
+        def visit(node, path):
+            state[node] = 1
+            for parent in up.get(node, ()):
+                if state.get(parent) == 1:
+                    raise DemoError("Broader/narrower relations form a cycle: " + " -> ".join(path + [node, parent]))
+                if parent not in state:
+                    visit(parent, path + [node])
+            state[node] = 2
+        for node in list(up):
+            if node not in state:
+                visit(node, [])
 
     def save(
         self, revision: int, definition: ContextDefinition, baseline_version=None
@@ -981,6 +1033,9 @@ class ContextWorkspace:
                     key = f"{key}#{index + 1}"
                 used.add(key)
                 result[key] = ("glossary", label, term)
+            for rel in value.get("term_relations", []):
+                result["relation:" + "|".join((rel["from"], rel["relation"], rel["to"]))] = (
+                    "term_relation", f"{rel['from']} {rel['relation']} {rel['to']}", rel)
             for attachment in value.get("document_attachments", []):
                 result["document:" + attachment["id"]] = (
                     "document", attachment["filename"], attachment
@@ -1086,7 +1141,7 @@ class ContextWorkspace:
         for item in items:
             reasons = (
                 list(validation.get("errors", []))
-                if item["kind"] in ("context", "field", "document", "ontology", "glossary")
+                if item["kind"] in ("context", "field", "document", "ontology", "glossary", "term_relation")
                 else []
             )
             if not validation:

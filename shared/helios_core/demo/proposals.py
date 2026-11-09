@@ -109,6 +109,10 @@ class ProposalWorkspace:
             value['dataset_meanings'] = {}
             value['field_roles'] = {}
             value['glossary_terms'] = proposed['glossary_terms']
+            kept = {str(t.get('name') or t.get('term') or '').strip().lower() for t in value['glossary_terms']}
+            lost = [f"{r['from']} {r['relation']} {r['to']}" for r in value.get('term_relations', []) if not {r['from'].strip().lower(), r['to'].strip().lower()} <= kept]
+            if lost:
+                raise DemoError('Proposal would drop glossary terms that relations still use (' + '; '.join(lost) + '); draft preserved')
             for term in value['glossary_terms']:
                 if self.workspace.unknown_term_columns(term):
                     raise DemoError('Proposal glossary invented a source field')

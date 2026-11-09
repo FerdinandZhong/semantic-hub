@@ -219,3 +219,4 @@ body[data-view="version"] .provenance{display:none!important}
 .validation-progress[data-state=error] .validation-progress-icon {border-color:#c18e58;}
 @keyframes validation-spin {to{transform:rotate(360deg);}}
 @media(prefers-reduced-motion:reduce) {.validation-progress[data-state=running] .validation-progress-icon{animation:none;}}
+.term-relations{margin-top:16px}.term-relation-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}.term-relation-form{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}.term-relation-form select{min-width:0;max-width:100%}
