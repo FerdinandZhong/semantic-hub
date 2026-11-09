@@ -1,13 +1,13 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: P0–P5 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`, `110e188`, `958c089`); P6 planned. Nothing here is pushed or deployed.
+Recorded 4 November 2026. Status: P0–P6 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`, `110e188`, `958c089`, `72e0839`). Nothing here is pushed or deployed.
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`ddd53a4` are local only.
+Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`72e0839` are local only.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 
@@ -130,12 +130,14 @@ The version page lists each term with definition, synonyms and mapped columns.
 Fix found on the way: the Ontology tab failed with "Cannot read properties of undefined (reading 'y')" once a term mapped to a field, because term nodes used a `columns` key that the canvas read as dataset columns. Term nodes now use `mappedColumns`.
 Deferred: term edits are not drawn in the Studio canvas; no import or export of terms; the Ontology tab reads saved drafts only, so unsaved terms appear after Save draft.
 
-### P6 — Typed term relations (requires a separate approval)
+### P6 — Typed term relations
 
-1. Add `term_relations: [{from, to, relation, status, note}]` to the definition, using a SKOS-style set: broader, narrower, related, part-of, synonym.
-2. Add one ontology edge type, `RELATED_TERM`, with `relation` as a property.
-3. Before shipping, check the Helios graph loader, the consumer API export, and MCP clients against the new edge.
-4. Version the artifact schema if any consumer rejects unknown edge types.
+1. Store `term_relations: [{from, relation, to, note}]` in the draft definition next to `glossary_terms`, capped at 200. Relation types are `broader`, `narrower`, `related`, `part_of` and `synonym`.
+2. Relations live in the definition only. The ontology graph, its edge whitelist, the Helios loader and the artifact hashes are unchanged.
+3. Consumers see an additive `definition.term_relations` in the version detail. Definitions without relations omit the field, so existing context, definition, artifact and review hashes stay identical.
+4. Graph and Memgraph support is deferred to a separate, versioned change.
+
+Status: Done in `72e0839`. The save handler rejects an unknown type, an endpoint that is not a term in the draft, a self relation, a duplicate, a broader/narrower cycle, and a delete or rename of a term that a relation still uses (the message names the relation). Names match case-insensitively. LLM proposals fail rather than drop a term that relations use. Each relation is a review item (`relation:<from>|<relation>|<to>`, kind `term_relation`), so edits clear validation and need approval. Studio shows relations per term with a count in the term list. The Ontology tab draws related terms with labelled edges and adds "· N term relations" to the counts line. The version page lists relations under the terms. Only the console OpenAPI changes, by an optional `term_relations` property.
 
 ## Verification for every phase
 
@@ -148,4 +150,3 @@ Deferred: term edits are not drawn in the Studio canvas; no import or export of 
 ## Open questions
 
 - Decided 5 November 2026: term edits require the same review as other semantic edits.
-- P6: approve typed relations now, or after P4 and P5 ship?
