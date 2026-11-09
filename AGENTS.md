@@ -13,10 +13,10 @@ Recorded 3 November 2026; local development status updated 7 November 2026. Read
 - UI commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
   They add the answer canvas, per-answer checks, harness stop reasons, the materials cleanup, and the validation summary.
 - The 23:28 Singapore restart passed seven UI asset comparisons and a live finance query with a canvas and 6/6 answer checks.
-- Later commits, `6960649` to `ddd53a4` (21 commits), are local only. They are not pushed or deployed.
-  They finish phases P0–P5 of the [UI polish and ontology plan](docs/semantic-hub-v2/ui-ontology-plan.md):
+- Later commits, `6960649` to `5987ae2`, are local only. They are not pushed or deployed.
+  They finish phases P0–P6 of the [UI polish and ontology plan](docs/semantic-hub-v2/ui-ontology-plan.md):
   a shared page frame, chat answer tabs, a read-only Ontology tab, and glossary authoring with per-term review.
-  P6, typed term relations, was approved on 7 November 2026 in a low-risk form and is in progress: relations are stored in the definition only, and the ontology graph, edge whitelist, Helios loader and artifact hashes stay unchanged.
+  P6, typed term relations, is done locally in `72e0839` in the low-risk form approved on 7 November 2026: relations are stored in the definition only, and the ontology graph, edge whitelist, Helios loader and artifact hashes are unchanged.
 
 This is a dated handoff, not a continuous health check. Verify current Git and application state before deploying.
 
@@ -62,7 +62,7 @@ Legacy bundled scripts and the ignored `external/helios` checkout are not the cu
 | Supporting materials UI | `apps/helios/console/static/demo-materials.js` |
 | Studio, Ontology tab, and glossary editor | `apps/helios/console/static/demo-context.js`, `apps/helios/console/static/demo-canvas.js` |
 | Shared page frame patching | `semantic_hub/editor.py`, `semantic_hub/support_pages.py` |
-| Glossary term checks and per-term review items | `shared/helios_core/demo/context.py` (`check_glossary`, `objects`) |
+| Glossary term and relation checks, per-term and per-relation review items | `shared/helios_core/demo/context.py` (`check_glossary`, `check_relations`, `objects`) |
 | Provider and deployment tests | `tests/providers/`, `tests/amp/` |
 | Chat regression tests | `apps/helios/tests/test_chat.py` |
 

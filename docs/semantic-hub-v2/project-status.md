@@ -38,7 +38,7 @@ Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 
 ### Local commits after the deployed commit
 
-Commits `6960649` to `ddd53a4` are local. They are not pushed or deployed. Checked on 7 November 2026: the remote branch has no newer commits.
+Commits `6960649` to `5987ae2` are local. They are not pushed or deployed. Checked on 7 November 2026: the remote branch has no newer commits.
 
 | Commits | Change |
 | --- | --- |
@@ -50,12 +50,14 @@ Commits `6960649` to `ddd53a4` are local. They are not pushed or deployed. Check
 | `3609359`, `d704414`, `6e905b3`, `0b68dfc` | P3: chat answer details behind Table, Semantic canvas, SQL & checks and Provenance tabs; Overview breadcrumb names the workspace |
 | `110e188`, `ce7428e` | P4: read-only Ontology tab built from the existing ontology graph |
 | `958c089`, `ddd53a4` | P5: glossary authoring in Studio, save-time term checks, and per-term review items |
+| `d22d1b4` | Docs: P6 approval and CAI acceptance steps for the new UI |
+| `72e0839`, `5987ae2` | P6: typed term relations stored in the definition, save-time relation checks, per-relation review items, and relation edges on the Ontology tab |
 
 These commits change CSS, JavaScript, templates, browser checks, and Python.
 The Python changes are the template patching in `semantic_hub/editor.py` and `semantic_hub/support_pages.py`,
 the glossary key fix, and the P5 term checks and review items in `shared/helios_core/demo/context.py`,
 `shared/helios_core/demo/proposals.py`, and `apps/helios/console/demo.py`.
-No route was added and no consumer payload changed shape.
+No route was added. The only payload change is an additive `definition.term_relations`, present only when a definition holds relations.
 
 ## Implemented architecture
 
@@ -133,7 +135,8 @@ Local commits after `cc4890e` add the following. They are not deployed.
 | P2–P3, `5cfbcaa`–`0b68dfc` | 75 tests passed; tabs at 110 px on every workspace page at 1440 and 980 px; chat history and chat experience browser scripts passed | At 390 px the Overview bar wraps more than the shared bar |
 | P4, `110e188` | 75 tests passed; route list and OpenAPI identical; existing Studio, version and chat canvases render identical SVG | Draft view not tried on a fresh unvalidated draft |
 | P5, `958c089` | 117 tests passed, plus 92 in the Playground, agent, document, consumer, Hub and AMP suites; add, edit, delete and rejection flow passed in the browser | Version page checked with a stubbed response; no CAI check |
-| Browser smoke after P2–P5 | Passes chat and all page-route checks, then stops at provider registration, which needs external endpoints | Same stopping point as before this work |
+| P6, `72e0839` | 155 tests passed; relation add, review, Ontology edge and seven rejection cases passed in the browser and API; consumer route list and OpenAPI identical; console OpenAPI gains only the optional `term_relations` property; finance `v1` definition, semantic model, ontology and metadata hashes identical before and after | Local only; no CAI check |
+| Browser smoke after P2–P6 | Passes chat and all page-route checks, then stops at provider registration, which needs external endpoints | Same stopping point as before this work |
 | Exposed API, local commits | Route list and both OpenAPI documents are identical to `998904c` | JSON bodies gain the additive fields listed below |
 
 Progress screenshots used delayed delivery of real backend events to capture transient states.
@@ -224,7 +227,7 @@ Existing JSON responses gain only additive fields. No field is removed or rename
 | Hosted UI interaction acceptance | Complete manual browser review of materials and Studio validation; asset checks and saved-metric chat passed |
 | Local UI and ontology commits | Push and deploy `6960649`–`ddd53a4`; repeat Studio, Ontology, Glossary, Validation, Materials and chat-tab checks on CAI |
 | Drafts that already hold terms | Re-approve once after deployment; terms moved from the context review item to per-term items |
-| UI polish and ontology | P0–P5 done locally. P6 approved 7 November in the low-risk form and in progress; consumers will see an additive `definition.term_relations`, with the ontology graph unchanged |
+| UI polish and ontology | P0–P6 done locally. Graph, Memgraph and Helios support for term relations is deferred to a versioned schema change |
 | Branch integration | Review and merge the fixes into `main`; this record does not claim that merge occurred |
 | Later architecture work | External release import, delegated execution, and optional built-in package extraction |
 
