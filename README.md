@@ -7,7 +7,7 @@ The existing built-in runtime remains in place during the v2 migration.
 
 The [v2 local preview](docs/semantic-hub-v2/local-preview.md) adds a compact provider workspace at `/v2` and an isolated Helios launcher.
 V2 checks optional Helios endpoints and registers a healthy provider at startup.
-The independent Hub AMP launch, restart, authenticated API checks, and saved finance query passed on 3 November 2026.
+The independent Hub AMP launched on 3 November 2026. Its 9 November restart, MCP checks, and saved finance query passed.
 See the [current project status](docs/semantic-hub-v2/project-status.md) for deployed code and remaining acceptance checks.
 External release import and delegated queries remain planned.
 
@@ -34,7 +34,7 @@ The final AMP task starts the authenticated Hub application for the UI, Swagger,
 The default `auto` mode connects configured, healthy Helios endpoints. Without them, a fresh install contains only the built-in builder.
 Choose `builtin_only` to skip Helios checks.
 See the [AMP deployment guide](docs/amp-deployment.md) for persistence, model configuration, MCP credentials, and acceptance checks.
-The live deployment runs commit `cc4890e` from `fix/amp-provider-bootstrap`; these fixes are not yet recorded as merged into `main`.
+The live deployment runs commit `17d03b9` from `fix/amp-provider-bootstrap`; these fixes are not yet recorded as merged into `main`.
 
 ## Current semantic foundation progress
 

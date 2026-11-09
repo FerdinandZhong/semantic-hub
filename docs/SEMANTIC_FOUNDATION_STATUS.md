@@ -1,9 +1,17 @@
 # Semantic foundation: progress and consumer handoff
 
-Current snapshot: [project status](semantic-hub-v2/project-status.md), updated 3 November 2026.
+Current snapshot: [project status](semantic-hub-v2/project-status.md), updated 9 November 2026.
 See also the [implementation progress and plan](implementation-progress-and-plan.md).
 For current v2 deployment scope, see the [operator guide](semantic-hub-v2/amp-operator-guide.md) and [live test runbook](semantic-hub-v2/live-test-runbook.md).
 The entries below are chronological milestone records. Older pending statements can be superseded by later entries.
+
+**P0–P6 reviewed and deployed — 9 November 2026:** CAI runs `17d03b9` on `fix/amp-provider-bootstrap`.
+The review fixed relation ID collisions for delimiter-containing term names.
+All 12 MCP tools passed against the hosted application. Existing finance release and consumer OpenAPI hashes remained unchanged.
+The live finance query returned **SGD 686,572.96**. Ten assets and the scoped browser checks passed.
+Local relation authoring passed; live relation authoring and free-text inference remain pending.
+See the [review and deployment record](semantic-hub-v2/review-and-deployment-2026-11-09.md).
+Older entries below preserve their evidence as recorded at the time.
 
 **UI upgrade deployed — 3 November 2026, 23:28 Singapore:** CAI restarted at commit `cc4890e` from `fix/amp-provider-bootstrap`.
 This release includes the semantic answer canvas, deterministic answer checks, harness stop reasons, materials cleanup, and validation summary.

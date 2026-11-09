@@ -1,7 +1,7 @@
 # Semantic Hub project status
 
-Recorded 3 November 2026; local development status updated 7 November 2026. The independent Hub AMP is running in CAI.
-The updated chat and validation UI are deployed. Full acceptance remains incomplete.
+Recorded 9 November 2026. The independent Hub AMP is running in CAI.
+The P0–P6 UI and glossary changes are deployed. Full acceptance remains incomplete.
 This record describes completed checks; it does not monitor the application continuously.
 
 ## Source and deployment
@@ -10,21 +10,21 @@ This record describes completed checks; it does not monitor the application cont
 | --- | --- |
 | Repository | `FerdinandZhong/semantic-hub` |
 | Branch | `fix/amp-provider-bootstrap` |
-| Deployed application commit | `cc4890e9022f49ef68cd8523424c011537696460` |
-| Previous deployed commit | `998904caaf053ec35a035384bc6162dc397dde0e` |
+| Deployed application commit | `17d03b96b44a0e8598a2c0143765ac91f2b9d6a2` |
+| Previous deployed commit | `cc4890e9022f49ef68cd8523424c011537696460` |
 | Main branch | These branch fixes have not been recorded as merged into `main` |
 | CAI project ID | `imgz-mrce-iohy-pjhf` |
 | Application ID | `vak0-9xsv-45cm-pkql` |
 | Application entry point | `deployment/launchers/hub.py` |
 | Setup entry point | `cai_integration/setup_environment.py` |
 | Runtime | `docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-pbj-jupyterlab-python3.11-standard:2026.04.1-b7` |
-| Latest confirmed restart | 3 November 2026, 15:28:05 UTC / 23:28:05 Singapore |
+| Latest confirmed restart | 9 November 2026, 06:26:06 UTC / 14:26:06 Singapore |
 
 [CAI project](https://ml-7ca67a86-1f3.qzhong-a.a465-9q4k.cloudera.site/qzhong/semantic-hub) · [Hub application](https://semantic-hub-yjs4ct.ml-7ca67a86-1f3.qzhong-a.a465-9q4k.cloudera.site)
 
 Documentation changes after this record do not imply another application deployment.
 
-### UI commits included in the latest deployment
+### Earlier UI changes retained in the current deployment
 
 Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 
@@ -36,9 +36,10 @@ Commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
 | `80e5a05` | Supporting-material analysis shows counts, grouped claims, formatted locations, and status badges |
 | `4929695` | Validation opens with an n/n check summary; Studio tabs match the workspace tabs |
 
-### Local commits after the deployed commit
+### P0–P6 changes included in the 9 November deployment
 
-Commits `6960649` to `5987ae2` are local. They are not pushed or deployed. Checked on 7 November 2026: the remote branch has no newer commits.
+Commits `6960649` through `17d03b9` are pushed and deployed on `fix/amp-provider-bootstrap`.
+The final review fixed relation review ID collisions for term names containing delimiters.
 
 | Commits | Change |
 | --- | --- |
@@ -112,7 +113,7 @@ Each answer reports **Answer checks · n/n passed**:
 
 These checks verify structure and evidence. They do not measure business correctness, and there is no LLM judge.
 
-Local commits after `cc4890e` add the following. They are not deployed.
+The 9 November deployment adds the following to `cc4890e`.
 
 - One page frame on every workspace page: breadcrumb "Workspace / <workspace> / <page>", workspace bar, then workflow tabs at the same position.
 - Chat answers keep the headline visible and move Table, Semantic canvas, "SQL & checks · n/n passed", and Provenance into tabs.
@@ -120,6 +121,19 @@ Local commits after `cc4890e` add the following. They are not deployed.
 - Studio has a Glossary tab. Each term edit is a separate review item and must be approved before publication.
 
 ## Verification evidence
+
+### Latest deployment: 9 November 2026
+
+The fast-forward update job `q51j-mc20-szu2-oyen` succeeded with run `w0rb0z0mvlwk7uo8`.
+The update report verified `17d03b9`; CAI reported `APPLICATION_RUNNING` after restart at 06:26:06 UTC.
+All 12 MCP tools passed through the actual stdio adapter and authenticated Hub API.
+Ten hosted assets matched the reviewed checkout. Health, Swagger, and consumer OpenAPI returned HTTP 200.
+The existing finance release and consumer OpenAPI hashes matched their pre-update values.
+The finance query returned **SGD 686,572.96** through MCP and the browser.
+Live browser checks passed editor tabs at 1440 and 390 pixels, answer tabs, restored history, and materials loading.
+Local authoring checks passed; live draft editing and publication were deliberately not performed.
+See the [review and deployment record](review-and-deployment-2026-11-09.md) for scope, regression results, and remaining acceptance work.
+
 
 ### Local checks recorded for these changes
 
@@ -142,7 +156,7 @@ Local commits after `cc4890e` add the following. They are not deployed.
 Progress screenshots used delayed delivery of real backend events to capture transient states.
 They do not establish production response time.
 
-### Latest UI deployment: 15:28 UTC
+### Historical UI deployment: 3 November, 15:28 UTC
 
 The fast-forward update job `7tzs-o3vu-1v6p-8gm7` succeeded with run `xrytlxv2zn8za1bj`.
 Its report verified commit `cc4890e9022f49ef68cd8523424c011537696460` before restart.
@@ -227,7 +241,7 @@ Existing JSON responses gain only additive fields. No field is removed or rename
 | Hosted UI interaction acceptance | Complete manual browser review of materials and Studio validation; asset checks and saved-metric chat passed |
 | Local UI and ontology commits | Push and deploy `6960649`–`ddd53a4`; repeat Studio, Ontology, Glossary, Validation, Materials and chat-tab checks on CAI |
 | Drafts that already hold terms | Re-approve once after deployment; terms moved from the context review item to per-term items |
-| UI polish and ontology | P0–P6 done locally. Graph, Memgraph and Helios support for term relations is deferred to a versioned schema change |
+| UI polish and ontology | P0–P6 deployed; live relation authoring acceptance remains. Graph, Memgraph and Helios support needs a versioned schema change |
 | Branch integration | Review and merge the fixes into `main`; this record does not claim that merge occurred |
 | Later architecture work | External release import, delegated execution, and optional built-in package extraction |
 

@@ -1,13 +1,15 @@
 # UI polish and ontology plan
 
-Recorded 4 November 2026. Status: P0–P6 done locally (`36ed508`, `eb62311`, `5cfbcaa`, `3609359`, `110e188`, `958c089`, `72e0839`). Nothing here is pushed or deployed.
+Recorded 4 November 2026; deployment status updated 9 November 2026. P0–P6 are pushed and deployed in `17d03b9`.
+The final review fixed relation review ID collisions. See the [deployment evidence](review-and-deployment-2026-11-09.md).
 This plan combines the UI review, the ontology design review, and the OpenMetadata assessment.
 Read the [project status](project-status.md) for what is deployed.
 
 ## Context
 
 The chat canvas, answer checks, materials cleanup, and Studio restyle are done.
-Commits `9c1acb1`–`4929695` are deployed in `cc4890e`. Commits `6960649`–`72e0839` are local only.
+The current deployment `17d03b9` includes the earlier `cc4890e` UI and all P0–P6 changes.
+The findings below retain the original planning baseline.
 A review against the UOB reference app and OpenMetadata screenshots scored the current UI 6.5/10.
 A review of the first ontology design scored it 5.5/10, because three assumptions were wrong in the code.
 

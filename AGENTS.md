@@ -2,21 +2,21 @@
 
 ## Current status
 
-Recorded 3 November 2026; local development status updated 7 November 2026. Read the [project status](docs/semantic-hub-v2/project-status.md) before changing deployment or reporting readiness.
+Recorded 9 November 2026. Read the [project status](docs/semantic-hub-v2/project-status.md) before changing deployment or reporting readiness.
 
 - Active branch: `fix/amp-provider-bootstrap`.
-- Deployed application commit: `cc4890e9022f49ef68cd8523424c011537696460`.
+- Deployed application commit: `17d03b96b44a0e8598a2c0143765ac91f2b9d6a2`.
 - The branch is pushed to the `semantic-hub` remote. These fixes are not recorded as merged into `main`.
 - The independent Hub AMP runs in CAI. Its latest restart and authenticated HTTP checks passed.
 - Live saved-metric execution returned **SGD 686,572.96** for finance `v1.0`.
 - Separate-project Helios acceptance and live free-text chat verification remain pending.
-- UI commits `9c1acb1` to `4929695` are pushed and deployed in `cc4890e`.
-  They add the answer canvas, per-answer checks, harness stop reasons, the materials cleanup, and the validation summary.
-- The 23:28 Singapore restart passed seven UI asset comparisons and a live finance query with a canvas and 6/6 answer checks.
-- Later commits, `6960649` to `5987ae2`, are local only. They are not pushed or deployed.
-  They finish phases P0–P6 of the [UI polish and ontology plan](docs/semantic-hub-v2/ui-ontology-plan.md):
-  a shared page frame, chat answer tabs, a read-only Ontology tab, and glossary authoring with per-term review.
-  P6, typed term relations, is done locally in `72e0839` in the low-risk form approved on 7 November 2026: relations are stored in the definition only, and the ontology graph, edge whitelist, Helios loader and artifact hashes are unchanged.
+- P0–P6 UI and glossary changes are pushed and deployed, including typed term relations.
+- Review fix `17d03b9` encodes relation ID components, so delimiter-containing term names cannot merge independent review items.
+- The 9 November restart passed ten asset comparisons and all 12 MCP tools against the authenticated application.
+- The existing finance release and consumer OpenAPI hashes stayed unchanged. No MCP configuration change is required.
+- Local relation authoring and review checks passed. Live browser checks covered editor tabs, saved-metric chat, history, and materials loading.
+- Live glossary/relation authoring remains an acceptance step; this deployment did not change any published model or draft.
+- See the [review and deployment record](docs/semantic-hub-v2/review-and-deployment-2026-11-09.md) for test scope and limits.
 
 This is a dated handoff, not a continuous health check. Verify current Git and application state before deploying.
 

@@ -1,0 +1,271 @@
+{
+  "before": {
+    "/healthz": {
+      "http": 200,
+      "sha256": "a094f9b6d3eeb93b52e3a36c08c385be873a7907e1325dfc625c9d8f2ef43701"
+    },
+    "/docs": {
+      "http": 200,
+      "sha256": "caf1743409b0e8349a696db9a7bae4d78e36b5c5c71078c7704f4f5b9b88b3f0"
+    },
+    "/api/semantic-hub/v1/openapi.json": {
+      "http": 200,
+      "sha256": "77f6f7b96982dcf1269c642105605cbbd6f1ea5bc59d0f5b4c9a8a635f97fc8e"
+    },
+    "finance": {
+      "context_sha256": "ca2348d85fa8b76d3c555bbb631d2f3c1bb0610f216a6ff6e86b28c856a5269f",
+      "fields": {
+        "model_id": "44523c4507d3e5ab6de315c7e8c5c0334cd69f552bab7c2c47fd491c12dae36e",
+        "version": "5afcad7100eb4feed3b94a35ccba570edca44c5f86ff2c47473c7cec8011b20c",
+        "context_sha256": "4b3bdf9b742c7efedc462974f2499df68cb220cec99619c882c04033a2a2012c",
+        "snapshot_sha256": "ef6d4ba64f6503d4492c12d3757f46bbfbf6240f37c871cb77322f798a95e44f",
+        "manifest": "795de7ef73f9ca113cec2f366d769b3ccbf92c3118580a578f28cad65adcd408",
+        "definition": "5b692a23f2a50f1b8f7c9deb5ec39f19c6483cb05773c0e5cfc5d958cd9f60ae",
+        "semantic_model": "bd7ae42e3e1056364bae358e62e360cac5c462a11b9f3020536cc07143532828",
+        "metadata": "c8fd5f584db6f7a202411c2b7166189a17fa0270c7c40fc091b912a94b1752fa",
+        "ontology": "96be804695c639b2e515c12d140a9f91d2f98c085f75cafbb92b8d7b6a02af72",
+        "document_count": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "immutable": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "has_relations": false
+    }
+  },
+  "after": {
+    "/healthz": {
+      "http": 200,
+      "sha256": "a094f9b6d3eeb93b52e3a36c08c385be873a7907e1325dfc625c9d8f2ef43701"
+    },
+    "/docs": {
+      "http": 200,
+      "sha256": "caf1743409b0e8349a696db9a7bae4d78e36b5c5c71078c7704f4f5b9b88b3f0"
+    },
+    "/api/semantic-hub/v1/openapi.json": {
+      "http": 200,
+      "sha256": "77f6f7b96982dcf1269c642105605cbbd6f1ea5bc59d0f5b4c9a8a635f97fc8e"
+    },
+    "finance": {
+      "context_sha256": "ca2348d85fa8b76d3c555bbb631d2f3c1bb0610f216a6ff6e86b28c856a5269f",
+      "fields": {
+        "model_id": "44523c4507d3e5ab6de315c7e8c5c0334cd69f552bab7c2c47fd491c12dae36e",
+        "version": "5afcad7100eb4feed3b94a35ccba570edca44c5f86ff2c47473c7cec8011b20c",
+        "context_sha256": "4b3bdf9b742c7efedc462974f2499df68cb220cec99619c882c04033a2a2012c",
+        "snapshot_sha256": "ef6d4ba64f6503d4492c12d3757f46bbfbf6240f37c871cb77322f798a95e44f",
+        "manifest": "795de7ef73f9ca113cec2f366d769b3ccbf92c3118580a578f28cad65adcd408",
+        "definition": "5b692a23f2a50f1b8f7c9deb5ec39f19c6483cb05773c0e5cfc5d958cd9f60ae",
+        "semantic_model": "bd7ae42e3e1056364bae358e62e360cac5c462a11b9f3020536cc07143532828",
+        "metadata": "c8fd5f584db6f7a202411c2b7166189a17fa0270c7c40fc091b912a94b1752fa",
+        "ontology": "96be804695c639b2e515c12d140a9f91d2f98c085f75cafbb92b8d7b6a02af72",
+        "document_count": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "immutable": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+      },
+      "has_relations": false
+    }
+  },
+  "assets": {
+    "/v2/assets/workspace.js": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "ed093d3953a8278437ad22e26630e272124e68772be467dbb587031701a8ef59"
+    },
+    "/v2/assets/workspace.css": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "8fbeefde487c88220ba61d8627539d8d842ecbe2b379e7bab24c7364481fec48"
+    },
+    "/v2/assets/chat-history.css": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "99de505f419a53b1b1d74716bf8029b5a755df9284d1126b37257dbd206c1f93"
+    },
+    "/v2/assets/editor-shell.css": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "06442297999ff8e6bbb14e50f765a9310db6153aa5072f71878cd7c0241314f4"
+    },
+    "/v2/assets/support-shell.css": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "262df077669a8c3853c89b167fc16d926bea85f68ce6d320be8963cd1deb8798"
+    },
+    "/v2/assets/support-shell.js": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "e30ab3ec82e2dfbea5eaef27acb5f0301f34ea3018392e9703cbbe8861aafbf5"
+    },
+    "/static/demo-canvas.js": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "cfb58443022ae4578c384e0eb5c096c7bc2f294f96b633d4a227d9554e86d230"
+    },
+    "/static/demo-canvas.css": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "6d32692f5ba551bc04ea471d9ab71a5e20a8da5d8525fdce88c53dcc23787972"
+    },
+    "/static/demo-materials.css": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "a8d0bd0ebd6a5c831260df61ee4e99b4681c6f68581cd16772606ed7a69a1149"
+    },
+    "/v2/editor-assets/context.js": {
+      "http": 200,
+      "matches_local": true,
+      "sha256": "c97c3b74f8d83f29db2e09b2ba6ad777fbada8b5d24c7c1b20eb6e9c1b922ef0"
+    }
+  },
+  "mcp-before": {
+    "calls": [
+      "hub_status",
+      "list_semantic_models",
+      "get_semantic_model",
+      "list_model_versions",
+      "get_model_version",
+      "get_model_lineage",
+      "get_published_documents",
+      "search_semantics",
+      "inspect_metric_coverage",
+      "resolve_semantic_context",
+      "compile_semantic_query",
+      "query_sample_data"
+    ],
+    "model_writes": 0,
+    "generation_llm_calls": 0,
+    "tools": [
+      "compile_semantic_query",
+      "get_model_lineage",
+      "get_model_version",
+      "get_published_documents",
+      "get_semantic_model",
+      "hub_status",
+      "inspect_metric_coverage",
+      "list_model_versions",
+      "list_semantic_models",
+      "query_sample_data",
+      "resolve_semantic_context",
+      "search_semantics"
+    ],
+    "tool_schema_sha256": "2a6e202f1d3f00a0e71a872e91b25122f937f0ea5a87b0c0375ae377b8af571f",
+    "term_relations": [],
+    "coverage_status": "supported",
+    "model_id": "finance",
+    "version": "v1.0",
+    "context_sha256": "ca2348d85fa8b76d3c555bbb631d2f3c1bb0610f216a6ff6e86b28c856a5269f",
+    "total_sgd": "686572.96000000",
+    "ok": true
+  },
+  "mcp-after": {
+    "calls": [
+      "hub_status",
+      "list_semantic_models",
+      "get_semantic_model",
+      "list_model_versions",
+      "get_model_version",
+      "get_model_lineage",
+      "get_published_documents",
+      "search_semantics",
+      "inspect_metric_coverage",
+      "resolve_semantic_context",
+      "compile_semantic_query",
+      "query_sample_data"
+    ],
+    "model_writes": 0,
+    "generation_llm_calls": 0,
+    "tools": [
+      "compile_semantic_query",
+      "get_model_lineage",
+      "get_model_version",
+      "get_published_documents",
+      "get_semantic_model",
+      "hub_status",
+      "inspect_metric_coverage",
+      "list_model_versions",
+      "list_semantic_models",
+      "query_sample_data",
+      "resolve_semantic_context",
+      "search_semantics"
+    ],
+    "tool_schema_sha256": "2a6e202f1d3f00a0e71a872e91b25122f937f0ea5a87b0c0375ae377b8af571f",
+    "term_relations": [],
+    "coverage_status": "supported",
+    "model_id": "finance",
+    "version": "v1.0",
+    "context_sha256": "ca2348d85fa8b76d3c555bbb631d2f3c1bb0610f216a6ff6e86b28c856a5269f",
+    "total_sgd": "686572.96000000",
+    "ok": true
+  },
+  "mcp-local-relations": {
+    "calls": [
+      "hub_status",
+      "list_semantic_models",
+      "get_semantic_model",
+      "list_model_versions",
+      "get_model_version",
+      "get_model_lineage",
+      "get_published_documents",
+      "search_semantics",
+      "inspect_metric_coverage",
+      "resolve_semantic_context",
+      "compile_semantic_query",
+      "query_sample_data"
+    ],
+    "model_writes": 0,
+    "generation_llm_calls": 0,
+    "tools": [
+      "compile_semantic_query",
+      "get_model_lineage",
+      "get_model_version",
+      "get_published_documents",
+      "get_semantic_model",
+      "hub_status",
+      "inspect_metric_coverage",
+      "list_model_versions",
+      "list_semantic_models",
+      "query_sample_data",
+      "resolve_semantic_context",
+      "search_semantics"
+    ],
+    "tool_schema_sha256": "2a6e202f1d3f00a0e71a872e91b25122f937f0ea5a87b0c0375ae377b8af571f",
+    "term_relations": [
+      {
+        "from": "Alpha",
+        "relation": "narrower",
+        "to": "Beta"
+      }
+    ],
+    "coverage_status": "supported",
+    "model_id": "finance",
+    "version": "v1",
+    "context_sha256": "4b618415d60c95b5db46799b7d3a7d6de42d978479389434dc027c9bd8784c77",
+    "total_sgd": "686572.96000000",
+    "ok": true
+  },
+  "browser-local": {
+    "mode": "local",
+    "checks": [
+      "Create, save, reload, review, and display typed relations",
+      "All editor pages and no horizontal overflow at 1440px",
+      "All editor pages and no horizontal overflow at 390px",
+      "Finance answer, four detail tabs, and restored conversation canvas",
+      "Supporting materials page loads"
+    ],
+    "draft_writes": true,
+    "page_errors": []
+  },
+  "browser-live": {
+    "mode": "live",
+    "checks": [
+      "All editor pages and no horizontal overflow at 1440px",
+      "All editor pages and no horizontal overflow at 390px",
+      "Finance answer, four detail tabs, and restored conversation canvas",
+      "Supporting materials page loads"
+    ],
+    "draft_writes": false,
+    "page_errors": []
+  },
+  "update-report": {
+    "status": "succeeded",
+    "target": "17d03b96b44a0e8598a2c0143765ac91f2b9d6a2",
+    "before": "cc4890e9022f49ef68cd8523424c011537696460",
+    "commit": "17d03b96b44a0e8598a2c0143765ac91f2b9d6a2"
+  }
+}

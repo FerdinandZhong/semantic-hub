@@ -174,7 +174,7 @@ Local mode does not prove ingress authentication.
 10. Confirm unavailable periods return missing data rather than another period's value.
 
 Local checks cover manifest ordering, persistent settings, startup guards, shared runtime, and combined UI/API/Swagger routes.
-On 3 November 2026, the independent Hub launch, restart, authenticated endpoint checks, and saved finance query passed.
+The independent Hub launched on 3 November 2026. Its 9 November restart, MCP checks, and saved finance query passed.
 Anonymous rejection, caller isolation, complete persistence, live free-text inference, and hosted MCP acceptance still require checks.
 See the [current project status](semantic-hub-v2/project-status.md) for the exact deployed branch and evidence.
 
@@ -214,4 +214,4 @@ It also removes the bootstrap project argument before the server parses its comm
 
 No dependency reinstall is required if the repaired setup job already passed.
 This fix passed local supervision, child-failure, and shutdown tests.
-The latest 3 November CAI restart passed for commit `cc4890e`; confirm this check again after future launcher changes.
+The latest 9 November CAI restart passed for commit `17d03b9`; confirm this check again after future launcher changes.

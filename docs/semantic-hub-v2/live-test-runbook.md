@@ -1,10 +1,18 @@
 # Separate-project AMP live-test runbook
 
-Updated 3 November 2026. Use branch `fix/amp-provider-bootstrap` for this implementation.
+Updated 9 November 2026. Use branch `fix/amp-provider-bootstrap` for this implementation.
 The Hub repository has no tracked Git submodule. The AMP never fetches Helios.
 The previous copy failure with exit status 24 remains unexplained until CAI supplies detailed clone/copy logs.
 
-## Recorded checkpoint: 3 November 2026
+## Recorded checkpoint: 9 November 2026
+
+CAI runs `17d03b9`. All 12 MCP tools passed before and after deployment.
+The existing finance release and consumer OpenAPI stayed unchanged; the finance query returned **SGD 686,572.96**.
+Ten assets matched local source. Live browser checks passed editor tabs at 1440 and 390 pixels, answer tabs, history, and materials loading.
+Live checks did not edit drafts or publish releases. Overview alignment, phone chat, and detailed materials controls were not rechecked in this run.
+The [review record](review-and-deployment-2026-11-09.md) distinguishes local authoring tests from live acceptance.
+
+## Historical checkpoint: 3 November 2026
 
 The independent Hub AMP launched successfully and was last updated to `cc4890e` on `fix/amp-provider-bootstrap`.
 Its restart, authenticated health, Swagger, OpenAPI, inventory, and updated-asset checks passed.
@@ -46,6 +54,21 @@ Run these after deploying the UI polish and ontology commits. Record each result
 8. Repeat steps 1, 2, and 4 at a phone width and confirm there is no horizontal scrolling.
 
 Drafts that already hold glossary terms need their review decisions approved again once, because terms now have their own review items.
+
+## Typed relation acceptance on CAI
+
+Use a disposable workspace. Preserve existing finance drafts and published releases.
+
+1. Add two glossary terms and a typed relation, then save and reload.
+2. Confirm the term list relation count and the labelled edge in Ontology.
+3. Reject unknown targets, unknown types, self-links, duplicates, and broader/narrower cycles.
+4. Confirm that deleting or renaming a referenced term fails with a clear message.
+5. Validate the draft and confirm each relation has a separate review item.
+6. Leave one relation pending and confirm final review cannot complete.
+7. Approve every required item, publish, and inspect `definition.term_relations` through MCP.
+8. Repeat with term names containing `|` and `%7C`; confirm independent review items.
+
+Local automated checks cover this behavior. Live authoring acceptance remains pending.
 
 ## Optional provider checks
 
