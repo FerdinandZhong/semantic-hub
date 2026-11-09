@@ -17,6 +17,7 @@ from datetime import date, datetime, timezone
 from decimal import Decimal
 from pathlib import Path
 from typing import Literal
+from urllib.parse import quote
 
 import sqlglot
 from pydantic import Field, field_validator, model_serializer
@@ -1034,7 +1035,10 @@ class ContextWorkspace:
                 used.add(key)
                 result[key] = ("glossary", label, term)
             for rel in value.get("term_relations", []):
-                result["relation:" + "|".join((rel["from"], rel["relation"], rel["to"]))] = (
+                # Escape separators so each relation keeps its own approval item.
+                key = "relation:" + "|".join(quote(part, safe="") for part in
+                                               (rel["from"], rel["relation"], rel["to"]))
+                result[key] = (
                     "term_relation", f"{rel['from']} {rel['relation']} {rel['to']}", rel)
             for attachment in value.get("document_attachments", []):
                 result["document:" + attachment["id"]] = (

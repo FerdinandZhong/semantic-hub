@@ -6,12 +6,12 @@ from fastapi.testclient import TestClient
 
 from apps.helios.console.demo_hub import DemoHub
 from apps.helios.console.semantic_hub_api import PREFIX, create_application
-from apps.helios.tests.test_demo_context import approve_items, definition, pack, publish, review_request, validated
+from apps.helios.tests.test_demo_context import approve_items, binding, definition, pack, publish, review_request, validated
 from apps.helios.tests.test_glossary_authoring import client_for, post
 from apps.helios.tests.test_pharma_intelligence import FIXTURES, registry
 from helios_core.demo.builder_artifacts import BuilderArtifacts
-from helios_core.demo.context import ContextDefinition
-from helios_core.demo.registry import canonical, digest
+from helios_core.demo.context import BatchReview, ContextDefinition
+from helios_core.demo.registry import DemoError, canonical, digest
 from helios_core.demo.runtime import DemoRuntime
 
 TERMS = [{"name": n, "definition": "d"} for n in ("Alpha", "Beta", "Gamma")]
@@ -79,6 +79,38 @@ def test_relation_is_its_own_review_item_and_needs_approval(tmp_path):
     assert "term_relations" not in (items["context"]["after"] or {})
     w.validate(2)
     assert {i["id"]: i["status"] for i in w.view()["review"]["items"]}["relation:Alpha|part_of|Beta"] == "pending"
+
+
+def test_relation_review_ids_do_not_collide_for_term_name_delimiters(tmp_path):
+    runtime = DemoRuntime(pack(), tmp_path)
+    try:
+        w = runtime.workspace
+        terms = [{"name": name, "definition": "d"} for name in
+                 ("Alpha", "Alpha|related", "Beta", "related|Beta", "Alpha%7Crelated")]
+        relations = [rel("Alpha|related", "related", "Beta"),
+                     rel("Alpha", "related", "related|Beta"),
+                     rel("Alpha%7Crelated", "related", "Beta")]
+        w.check_relations(relations, terms)
+        state = w.save(0, ContextDefinition.model_validate(
+            definition(w) | {"glossary_terms": terms, "term_relations": relations}))
+        items = [item for item in state["review"]["items"] if item["kind"] == "term_relation"]
+        assert len(items) == len(relations)
+        assert len({item["id"] for item in items}) == len(relations)
+        assert {json.dumps(item["after"], sort_keys=True) for item in items} == {
+            json.dumps(relation, sort_keys=True) for relation in relations}
+        state = w.validate(1)
+        unapproved = items[0]["id"]
+        w.batch_review(BatchReview(
+            **binding(runtime), revision=1,
+            validation_sha256=state["draft"]["validation"]["validation_sha256"],
+            item_ids=[item["id"] for item in state["review"]["items"] if item["id"] != unapproved],
+            decision="approve", reviewer="test reviewer", note="Approve all except one relation", confirmed=True))
+        with pytest.raises(DemoError, match="Approve every required item"):
+            w.review(review_request(runtime))
+        approve_items(runtime)
+        w.review(review_request(runtime))
+    finally:
+        runtime.close()
 
 
 @pytest.fixture(scope="module")
